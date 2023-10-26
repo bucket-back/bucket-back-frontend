@@ -1,4 +1,4 @@
-# omc-frontend
+# bucket-back-frontend
 <table>
  <tr>
     <td align="center"><a href="https://github.com/GBAJS754"><img src="https://avatars.githubusercontent.com/GBAJS754" width="130px;" alt=""></a></td>
