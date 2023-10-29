@@ -9,14 +9,19 @@ interface CommonTabsProps {
   tabsType?: 'soft-rounded' | 'line';
   isFitted?: TabsProps['isFitted'];
   tabsData: TabsData[];
+  onClick?: () => void;
 }
 
-const CommonTabs = ({ tabsData, isFitted = true, tabsType = 'line' }: CommonTabsProps) => {
+const CommonTabs = ({ tabsData, isFitted = true, tabsType = 'line', onClick }: CommonTabsProps) => {
+  const handleOnClick = () => {
+    onClick && onClick();
+  };
   return (
     <Tabs isFitted={isFitted} variant={tabsType} size="sm">
       <TabList>
         {tabsData.map((tab, index) => (
           <Tab
+            onClick={handleOnClick}
             color="blue.900"
             bg="none"
             _selected={
