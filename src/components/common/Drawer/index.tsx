@@ -32,8 +32,8 @@ const CommonDrawer = ({
   return (
     <>
       <Drawer isOpen={isOpen} placement="bottom" onClose={onClose} size={isFull ? 'full' : 'md'}>
-        <DrawerOverlay />
-        <DrawerContent>
+        <DrawerOverlay minH="290px" />
+        <DrawerContent minH="290px">
           <DrawerCloseButton />
           <DrawerHeader pt="28px">{isFull && headerContent}</DrawerHeader>
 
