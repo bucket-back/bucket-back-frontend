@@ -12,6 +12,10 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['react-refresh'],
   rules: {
+    'padding-line-between-statements': [
+      'error',
+      { blankLine: 'always', prev: '*', next: 'return' },
+    ],
     'no-console': 'warn',
     'react/self-closing-comp': 'warn',
     'react/react-in-jsx-scope': 'off',
