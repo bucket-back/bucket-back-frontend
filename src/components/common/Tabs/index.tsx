@@ -13,7 +13,7 @@ interface CommonTabsProps {
 }
 
 const CommonTabs = ({ tabsData, isFitted = true, tabsType = 'line', onClick }: CommonTabsProps) => {
-  const handleOnClick = () => {
+  const handleClick = () => {
     onClick && onClick();
   };
   return (
@@ -21,7 +21,7 @@ const CommonTabs = ({ tabsData, isFitted = true, tabsType = 'line', onClick }: C
       <TabList>
         {tabsData.map((tab, index) => (
           <Tab
-            onClick={handleOnClick}
+            onClick={handleClick}
             color="blue.900"
             bg="none"
             _selected={
