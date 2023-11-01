@@ -6,10 +6,10 @@ interface CommonTextareaProps {
   name: string;
   registerOptions: RegisterOptions;
   label?: string;
-  size: 'xs' | 'sm' | 'base';
+  size: keyof typeof TEXTAREA_SIZE;
 }
 
-const TextareaSize = {
+const TEXTAREA_SIZE = {
   xs: { width: '20.5rem', height: '5.8125rem' },
   sm: { width: '21.9375rem', height: '9.875rem' },
   base: { width: '21.9375rem', height: '14.375rem' },
@@ -36,7 +36,7 @@ const CommonTextarea = ({
         isInvalid={!!errors[name]}
         _focusVisible={{ boxShadow: 'none', outline: 'none' }}
         placeholder={placeholder}
-        {...TextareaSize[size]}
+        {...TEXTAREA_SIZE[size]}
         {...register(name, registerOptions)}
       />
       {errors[name] && <FormErrorMessage>{errors[name]?.message as string}</FormErrorMessage>}
