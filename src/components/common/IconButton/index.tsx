@@ -78,6 +78,18 @@ const CommonIconButton = ({ type, onClick }: CommonIconButtonProps) => {
         onClick={onClick}
       />
     ),
+    back: (
+      <IconButton
+        variant="unstyled"
+        aria-label={`${type}`}
+        w={width || '2.5rem'}
+        h={height || '2.5rem'}
+        fontSize={fontSize || '1.25rem'}
+        display="flex"
+        icon={<CommonIcon type="chevronLeft" />}
+        onClick={onClick}
+      />
+    ),
   };
 
   return <>{iconButton[type]}</>;
