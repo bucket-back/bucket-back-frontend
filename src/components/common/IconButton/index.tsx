@@ -3,9 +3,9 @@ import CommonIcon from '../Icon';
 
 interface CommonIconButtonProps {
   type: 'delete' | 'create' | 'up' | 'update' | 'add' | 'detail' | 'back';
-  width?: string;
-  height?: string;
-  fontSize?: string;
+  width?: `${number}rem`;
+  height?: `${number}rem`;
+  fontSize?: `${number}rem`;
   onClick: () => void;
 }
 
