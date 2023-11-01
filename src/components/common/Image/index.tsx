@@ -1,13 +1,13 @@
 import { Image } from '@chakra-ui/react';
 
 interface CommonImageProps {
-  size: 'xs' | 'sm' | 'base' | 'md' | 'lg' | 'xl';
+  size: keyof typeof IMAGE_SIZE;
   src: string;
   alt?: string;
   onClick?: () => void;
 }
 
-const imageSize = {
+const IMAGE_SIZE = {
   xs: { borderRadius: 'full', width: '3.1875rem', height: '3.1875rem' },
   sm: { width: '7rem', height: '6.4375rem', borderRadius: '0.625rem' },
   base: { borderRadius: '0.625rem', width: '9.0625rem', height: '6.5rem' },
@@ -25,7 +25,7 @@ const CommonImage = ({ size, alt, src, onClick }: CommonImageProps) => {
     <Image
       src={src}
       alt={alt}
-      {...imageSize[size]}
+      {...IMAGE_SIZE[size]}
       objectFit="cover"
       fallbackSrc="https://placehold.co/800?text=Bucket+Back&font=roboto"
       onClick={handleClick}
