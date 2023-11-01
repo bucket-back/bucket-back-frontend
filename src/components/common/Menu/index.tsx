@@ -4,7 +4,7 @@ import CommonIcon from '../Icon';
 interface CommonMenuProps {
   type: 'update' | 'logout' | 'create';
   onUpdate?: () => void;
-  onDelete?: () => void;
+  onDelete: () => void;
   onLogout?: () => void;
   onCreate?: () => void;
 }
@@ -12,10 +12,6 @@ interface CommonMenuProps {
 const CommonMenu = ({ type, onUpdate, onDelete, onLogout, onCreate }: CommonMenuProps) => {
   const handleUpdate = () => {
     onUpdate && onUpdate();
-  };
-
-  const handleDelete = () => {
-    onDelete && onDelete();
   };
 
   const handleLogout = () => {
@@ -31,21 +27,21 @@ const CommonMenu = ({ type, onUpdate, onDelete, onLogout, onCreate }: CommonMenu
       <>
         <MenuItem onClick={handleUpdate}>수정</MenuItem>
         <MenuDivider m="0" />
-        <MenuItem onClick={handleDelete}>삭제</MenuItem>
+        <MenuItem onClick={onDelete}>삭제</MenuItem>
       </>
     ),
     logout: (
       <>
         <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
         <MenuDivider m="0" />
-        <MenuItem onClick={handleDelete}>탈퇴</MenuItem>
+        <MenuItem onClick={onDelete}>탈퇴</MenuItem>
       </>
     ),
     create: (
       <>
         <MenuItem onClick={handleCreate}>생성</MenuItem>
         <MenuDivider m="0" />
-        <MenuItem onClick={handleDelete}>삭제</MenuItem>
+        <MenuItem onClick={onDelete}>삭제</MenuItem>
       </>
     ),
   };
