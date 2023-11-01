@@ -9,7 +9,7 @@ interface HeaderProps {
 const Header = ({ type }: HeaderProps) => {
   const navigate = useNavigate();
 
-  const HeaderType = {
+  const HEADER_TYPE = {
     logo: (
       <Text fontSize="2xl" as="b" color="blue.900">
         버킷백
@@ -20,7 +20,7 @@ const Header = ({ type }: HeaderProps) => {
 
   return (
     <Box height="5rem" display="flex" alignItems="center" pl="1.75rem" pos="fixed" width="full">
-      {HeaderType[type]}
+      {HEADER_TYPE[type]}
     </Box>
   );
 };
