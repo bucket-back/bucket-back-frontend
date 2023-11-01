@@ -30,7 +30,7 @@ import {
   FaRegRectangleList,
 } from 'react-icons/fa6';
 
-const icons = {
+const ICONS = {
   trashcan: FaRegTrashCan,
   chevronLeft: FaChevronLeft,
   chevronRight: FaChevronRight,
@@ -62,13 +62,13 @@ const icons = {
 };
 
 interface CommonIconProps {
-  type: keyof typeof icons;
+  type: keyof typeof ICONS;
   size?: string;
   color?: string;
 }
 
 const CommonIcon = ({ type, size, color }: CommonIconProps) => {
-  return <Icon as={icons[type]} boxSize={size} color={color} />;
+  return <Icon as={ICONS[type]} boxSize={size} color={color} />;
 };
 
 export default CommonIcon;
