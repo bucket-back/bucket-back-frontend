@@ -1,5 +1,5 @@
 import { Box, Avatar, AvatarProps, Circle } from '@chakra-ui/react';
-import { FaPen } from 'react-icons/fa';
+import CommonIcon from '../Icon';
 
 interface CommonAvatar {
   isOwner: boolean;
@@ -27,7 +27,7 @@ const CommonAvatar = ({
             right="0.45rem"
             onClick={() => onClick()}
           >
-            <FaPen />
+            <CommonIcon type="pen" />
           </Circle>
         </Box>
       ) : (
