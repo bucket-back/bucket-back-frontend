@@ -2,17 +2,13 @@ import { Heading, Text } from '@chakra-ui/react';
 import conformText from '../../../utils/conformText';
 
 interface CommonTextProps {
-  type: string;
+  type: keyof typeof TEXT_TYPE;
   color: string;
   noOfLines: number | number[];
   children: string;
 }
 
-interface TextType {
-  [key: string]: { fontSize: string; weight: number };
-}
-
-const TEXT_TYPE: TextType = {
+const TEXT_TYPE = {
   strongTitle: { fontSize: '3rem', weight: 700 },
   normalTitle: { fontSize: '1.5rem', weight: 700 },
   smallTitle: { fontSize: '1.25rem', weight: 700 },
