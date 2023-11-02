@@ -11,7 +11,7 @@ import RadioCard from './RadioCard';
 interface CommonRadio {
   values: string[];
   name: string;
-  defaultValue: string;
+  defaultValue?: string;
   onChange: () => void;
 }
 
