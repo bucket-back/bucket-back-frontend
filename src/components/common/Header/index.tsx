@@ -1,6 +1,6 @@
 import { Box, Text } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { FaChevronLeft } from 'react-icons/fa6';
+import CommonIconButton from '../IconButton';
 
 interface HeaderProps {
   type: 'logo' | 'back';
@@ -15,7 +15,7 @@ const Header = ({ type }: HeaderProps) => {
         버킷백
       </Text>
     ),
-    back: <FaChevronLeft size="1.25rem" onClick={() => navigate(-1)} />,
+    back: <CommonIconButton type="back" onClick={() => navigate(-1)} />,
   };
 
   return (
