@@ -1,5 +1,6 @@
 import { Box, Button } from '@chakra-ui/react';
 import CommonIcon from '../Icon';
+import { MouseEvent } from 'react';
 
 interface CommonButtonProps {
   type:
@@ -19,6 +20,11 @@ interface CommonButtonProps {
 }
 
 const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonButtonProps) => {
+  const handleClick = (e: MouseEvent) => {
+    e.stopPropagation();
+    onClick();
+  };
+
   const button = {
     md_full: (
       <Button
@@ -28,7 +34,7 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         variant="solid"
         width="100%"
         px="1rem"
-        onClick={onClick}
+        onClick={handleClick}
         isDisabled={isDisabled}
       >
         {children}
@@ -42,7 +48,7 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         variant="solid"
         width="18.125rem"
         px="1rem"
-        onClick={onClick}
+        onClick={handleClick}
         isDisabled={isDisabled}
       >
         {children}
@@ -56,7 +62,7 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         variant="solid"
         width="15rem"
         px="1rem"
-        onClick={onClick}
+        onClick={handleClick}
         isDisabled={isDisabled}
       >
         {children}
@@ -70,7 +76,7 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         variant="solid"
         width="7.25rem"
         px="1rem"
-        onClick={onClick}
+        onClick={handleClick}
         isDisabled={isDisabled}
       >
         {children}
@@ -85,7 +91,7 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         bg={isClick ? 'blue.300' : undefined}
         color={isClick ? 'white' : 'blue.300'}
         leftIcon={<CommonIcon type="heart" />}
-        onClick={onClick}
+        onClick={handleClick}
         isDisabled={isDisabled}
       >
         {children}
@@ -98,19 +104,19 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         variant="outline"
         border="1px solid var(--white, #FFF);"
         leftIcon={<CommonIcon type="chevronRight" />}
-        onClick={onClick}
+        onClick={handleClick}
         isDisabled={isDisabled}
       >
         {children}
       </Button>
     ),
     text: (
-      <Button colorScheme="blue" onClick={onClick} variant="link" isDisabled={isDisabled}>
+      <Button colorScheme="blue" onClick={handleClick} variant="link" isDisabled={isDisabled}>
         {children}
       </Button>
     ),
     sm_text: (
-      <Button colorScheme="gray" onClick={onClick} variant="link" isDisabled={isDisabled}>
+      <Button colorScheme="gray" onClick={handleClick} variant="link" isDisabled={isDisabled}>
         {children}
       </Button>
     ),
@@ -121,7 +127,7 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         height="5.625rem"
         borderRadius="0.625rem"
         bg=" linear-gradient(90deg, #E2E8F0 0%, #EDF2F7 100%)"
-        onClick={onClick}
+        onClick={handleClick}
         disabled={isDisabled}
       >
         <CommonIcon type="plus" />
