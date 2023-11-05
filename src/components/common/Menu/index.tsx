@@ -33,27 +33,9 @@ const CommonMenu = ({
   };
 
   const menus = {
-    update: (
-      <>
-        <MenuItem onClick={handleUpdate}>수정</MenuItem>
-        <MenuDivider m="0" />
-        <MenuItem onClick={onDelete}>삭제</MenuItem>
-      </>
-    ),
-    logout: (
-      <>
-        <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
-        <MenuDivider m="0" />
-        <MenuItem onClick={onDelete}>탈퇴</MenuItem>
-      </>
-    ),
-    create: (
-      <>
-        <MenuItem onClick={handleCreate}>생성</MenuItem>
-        <MenuDivider m="0" />
-        <MenuItem onClick={onDelete}>삭제</MenuItem>
-      </>
-    ),
+    update: <MenuItem onClick={handleUpdate}>수정</MenuItem>,
+    logout: <MenuItem onClick={handleLogout}>로그아웃</MenuItem>,
+    create: <MenuItem onClick={handleCreate}>생성</MenuItem>,
   };
 
   return (
@@ -67,6 +49,8 @@ const CommonMenu = ({
       />
       <MenuList p="0" minW="0" w="6rem" fontSize={fontSize}>
         {menus[type]}
+        <MenuDivider m="0" />
+        <MenuItem onClick={onDelete}>{type === 'logout' ? '탈퇴' : '삭제'}</MenuItem>
       </MenuList>
     </Menu>
   );
