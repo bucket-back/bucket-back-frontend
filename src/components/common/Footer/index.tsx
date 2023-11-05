@@ -4,24 +4,24 @@ import CommonText from '../Text';
 
 const FOOTER_INFO = [
   {
-    icon: 'home',
-    text: '홈',
+    ICON: 'home',
+    TEXT: '홈',
   },
   {
-    icon: 'search',
-    text: '검색',
+    ICON: 'search',
+    TEXT: '검색',
   },
   {
-    icon: 'basket',
-    text: '버킷생성',
+    ICON: 'basket',
+    TEXT: '버킷생성',
   },
   {
-    icon: 'bag',
-    text: '아이템목록',
+    ICON: 'bag',
+    TEXT: '아이템목록',
   },
   {
-    icon: 'my',
-    text: 'MY',
+    ICON: 'my',
+    TEXT: 'MY',
   },
 ];
 type FooterIcon = 'home' | 'search' | 'basket' | 'bag' | 'my';
@@ -42,11 +42,11 @@ const Footer = () => {
       w="full"
       zIndex={999}
     >
-      {FOOTER_INFO.map(({ icon, text }, index) => (
-        <Flex key={index} flexDirection="column" alignItems="center" onClick={handleClick}>
-          <CommonIcon type={icon as FooterIcon} size="2rem" color="blue.900" />
+      {FOOTER_INFO.map(({ ICON, TEXT }) => (
+        <Flex key={ICON} flexDirection="column" alignItems="center" onClick={handleClick}>
+          <CommonIcon type={ICON as FooterIcon} size="2rem" color="blue.900" />
           <CommonText type="smallInfo" color="blue.900" noOfLines={0}>
-            {text}
+            {TEXT}
           </CommonText>
         </Flex>
       ))}
