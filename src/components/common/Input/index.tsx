@@ -38,7 +38,7 @@ const CommonInput = forwardRef(
     ref
   ) => {
     return (
-      <FormControl isInvalid={error?.message ? true : false}>
+      <FormControl isInvalid={Boolean(error?.message)}>
         <FormLabel>{label}</FormLabel>
         <InputGroup width={width} size={size}>
           {leftIcon && <InputLeftElement>{leftIcon}</InputLeftElement>}
