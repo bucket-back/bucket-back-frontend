@@ -11,9 +11,9 @@ const CommonToast = ({ message, type }: OpenToastProps) => {
         alignItems="center"
         justifyContent="center"
         color="blue.900"
-        p={3}
+        p="0.69rem"
         bg="blue.100"
-        gap={2}
+        gap="0.5rem"
       >
         {type === 'success' ? (
           <CommonIcon type="circleCheck" size="1.5rem" color="green.400" />

@@ -19,9 +19,7 @@ const useCustomToast = () => {
     });
   };
 
-  return {
-    openToast,
-  };
+  return openToast;
 };
 
 export default useCustomToast;
