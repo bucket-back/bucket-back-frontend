@@ -5,27 +5,33 @@ import CommonIcon from '../Icon/index';
 interface CommonTagProps {
   type: 'feed' | 'search';
   children: ReactElement;
-  onClick: () => void;
+  onClick?: () => void;
   onDelete?: () => void;
 }
 
 const CommonTag = ({ type, children, onClick, onDelete }: CommonTagProps) => {
-  const handleDelete = (e: MouseEvent) => {
+  const handleClick = (e: MouseEvent, onEvent?: () => void) => {
     e.stopPropagation();
-    onDelete && onDelete();
+    onEvent && onEvent();
   };
 
   const tag = {
     feed: (
-      <Tag onClick={onClick} size="md" variant="subtle" color="white" bg="blackAlpha.700">
+      <Tag
+        onClick={(e) => handleClick(e, onClick)}
+        size="md"
+        variant="subtle"
+        color="white"
+        bg="blackAlpha.700"
+      >
         <TagLabel>{children}</TagLabel>
         <CommonIcon type="chevronRight" />
       </Tag>
     ),
     search: (
-      <Tag onClick={onClick} size="md" variant="subtle" bg="blue.100">
+      <Tag onClick={(e) => handleClick(e, onClick)} size="md" variant="subtle" bg="blue.100">
         <TagLabel>{children}</TagLabel>
-        <TagCloseButton onClick={handleDelete} />
+        <TagCloseButton onClick={(e) => handleClick(e, onDelete)} />
       </Tag>
     ),
   };
