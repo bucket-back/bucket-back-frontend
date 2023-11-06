@@ -1,4 +1,5 @@
 import { Box, useRadio, RadioProps } from '@chakra-ui/react';
+import CommonText from '../Text';
 
 const RadioCard = (props: RadioProps) => {
   const { getInputProps, getRadioProps } = useRadio(props);
@@ -12,17 +13,18 @@ const RadioCard = (props: RadioProps) => {
       <Box
         {...checkbox}
         cursor="pointer"
-        borderWidth={0.38}
+        borderWidth="0.024rem"
         borderRadius="0.375rem"
         _checked={{
           bg: 'blue.300',
           color: 'white',
           borderColor: 'teal.600',
         }}
-        px={2}
-        py={2}
+        p="0rem 1rem"
       >
-        {props.children}
+        <CommonText type="strongInfo" color={input.checked ? 'white' : 'blue.300'} noOfLines={1}>
+          {String(props.value)}
+        </CommonText>
       </Box>
     </Box>
   );
