@@ -1,18 +1,9 @@
 import { Box, Button } from '@chakra-ui/react';
-import CommonIcon from '../Icon';
 import { MouseEvent } from 'react';
+import CommonIcon from '../Icon';
 
 interface CommonButtonProps {
-  type:
-    | 'md_full'
-    | 'md_middle'
-    | 'md_base'
-    | 'md_small'
-    | 'sm'
-    | 'xs'
-    | 'text'
-    | 'sm_text'
-    | 'custom';
+  type: 'MdFull' | 'MdMiddle' | 'MdBase' | 'MdSmall' | 'sm' | 'xs' | 'text' | 'smText' | 'custom';
   isClick?: boolean;
   isDisabled: boolean;
   children: string;
@@ -26,7 +17,7 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
   };
 
   const button = {
-    md_full: (
+    MdFull: (
       <Button
         size="md"
         bg="blue.300"
@@ -40,7 +31,7 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         {children}
       </Button>
     ),
-    md_middle: (
+    MdMiddle: (
       <Button
         size="md"
         bg="blue.300"
@@ -54,7 +45,7 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         {children}
       </Button>
     ),
-    md_base: (
+    MdBase: (
       <Button
         size="md"
         bg="blue.300"
@@ -68,7 +59,7 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         {children}
       </Button>
     ),
-    md_small: (
+    MdSmall: (
       <Button
         size="md"
         bg="blue.700"
@@ -115,7 +106,7 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         {children}
       </Button>
     ),
-    sm_text: (
+    SmText: (
       <Button colorScheme="gray" onClick={handleClick} variant="link" isDisabled={isDisabled}>
         {children}
       </Button>
