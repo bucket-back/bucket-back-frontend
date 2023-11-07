@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
 import { ChakraProvider } from '@chakra-ui/react';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './routes';
 
 async function deferRender() {
   if (process.env.NODE_ENV !== 'development') {
@@ -17,7 +18,7 @@ deferRender().then(() => {
   ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
       <ChakraProvider>
-        <App />
+        <RouterProvider router={router} />
       </ChakraProvider>
     </React.StrictMode>
   );
