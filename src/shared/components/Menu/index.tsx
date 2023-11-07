@@ -1,5 +1,5 @@
 import { IconButton, Menu, MenuButton, MenuList, MenuItem, MenuDivider } from '@chakra-ui/react';
-import CommonIcon from '../Icon';
+import { CommonIcon } from '@/shared/components';
 
 interface CommonMenuProps {
   type: 'update' | 'logout' | 'create';

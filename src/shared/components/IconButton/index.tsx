@@ -1,5 +1,5 @@
 import { IconButton } from '@chakra-ui/react';
-import CommonIcon from '../Icon';
+import { CommonIcon } from '@/shared/components';
 
 interface CommonIconButtonProps {
   type: 'delete' | 'create' | 'up' | 'update' | 'add' | 'detail' | 'back';

@@ -1,5 +1,5 @@
 import { Box, Avatar, AvatarProps, Circle } from '@chakra-ui/react';
-import CommonIcon from '../Icon';
+import { CommonIcon } from '@/shared/components';
 
 interface CommonAvatarProps {
   isOwner: boolean;

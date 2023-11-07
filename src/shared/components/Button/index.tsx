@@ -1,5 +1,5 @@
 import { Box, Button } from '@chakra-ui/react';
-import CommonIcon from '../Icon';
+import { CommonIcon } from '@/shared/components';
 
 interface CommonButtonProps {
   type: 'mdFull' | 'mdMiddle' | 'mdBase' | 'mdSmall' | 'sm' | 'xs' | 'text' | 'smText' | 'custom';

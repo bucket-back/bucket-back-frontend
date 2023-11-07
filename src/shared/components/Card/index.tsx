@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardBody } from '@chakra-ui/react';
 import { ReactElement } from 'react';
-import CommonBadge from '../Badge';
+import { CommonBadge } from '@/shared/components';
 
 interface CommonCardProps {
   count: number;

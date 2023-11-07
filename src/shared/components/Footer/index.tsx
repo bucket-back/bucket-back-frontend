@@ -1,6 +1,5 @@
 import { Flex } from '@chakra-ui/react';
-import CommonIcon from '../Icon';
-import CommonText from '../Text';
+import { CommonIcon, CommonText } from '@/shared/components';
 
 const FOOTER_INFO = [
   {

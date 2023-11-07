@@ -1,5 +1,5 @@
 import { Box, useRadio, RadioProps } from '@chakra-ui/react';
-import CommonText from '../Text';
+import { CommonText } from '@/shared/components';
 
 const RadioCard = (props: RadioProps) => {
   const { getInputProps, getRadioProps } = useRadio(props);

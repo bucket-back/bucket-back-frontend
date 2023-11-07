@@ -1,7 +1,5 @@
 import { Box, Flex, HStack } from '@chakra-ui/react';
-import CommonAvatar from '../Avatar';
-import CommonText from '../Text';
-import CommonBadge from '../Badge';
+import { CommonAvatar, CommonText, CommonBadge } from '@/shared/components';
 
 interface ProfileProps {
   src?: string;
