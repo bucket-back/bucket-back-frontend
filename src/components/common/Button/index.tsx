@@ -1,9 +1,8 @@
 import { Box, Button } from '@chakra-ui/react';
-import { MouseEvent } from 'react';
 import CommonIcon from '../Icon';
 
 interface CommonButtonProps {
-  type: 'MdFull' | 'MdMiddle' | 'MdBase' | 'MdSmall' | 'sm' | 'xs' | 'text' | 'smText' | 'custom';
+  type: 'mdFull' | 'mdMiddle' | 'mdBase' | 'mdSmall' | 'sm' | 'xs' | 'text' | 'smText' | 'custom';
   isClick?: boolean;
   isDisabled: boolean;
   children: string;
@@ -11,13 +10,8 @@ interface CommonButtonProps {
 }
 
 const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonButtonProps) => {
-  const handleClick = (e: MouseEvent) => {
-    e.stopPropagation();
-    onClick();
-  };
-
   const button = {
-    MdFull: (
+    mdFull: (
       <Button
         size="md"
         bg="blue.300"
@@ -25,13 +19,13 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         variant="solid"
         width="100%"
         px="1rem"
-        onClick={handleClick}
+        onClick={onClick}
         isDisabled={isDisabled}
       >
         {children}
       </Button>
     ),
-    MdMiddle: (
+    mdMiddle: (
       <Button
         size="md"
         bg="blue.300"
@@ -39,13 +33,13 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         variant="solid"
         width="18.125rem"
         px="1rem"
-        onClick={handleClick}
+        onClick={onClick}
         isDisabled={isDisabled}
       >
         {children}
       </Button>
     ),
-    MdBase: (
+    mdBase: (
       <Button
         size="md"
         bg="blue.300"
@@ -53,13 +47,13 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         variant="solid"
         width="15rem"
         px="1rem"
-        onClick={handleClick}
+        onClick={onClick}
         isDisabled={isDisabled}
       >
         {children}
       </Button>
     ),
-    MdSmall: (
+    mdSmall: (
       <Button
         size="md"
         bg="blue.700"
@@ -67,7 +61,7 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         variant="solid"
         width="7.25rem"
         px="1rem"
-        onClick={handleClick}
+        onClick={onClick}
         isDisabled={isDisabled}
       >
         {children}
@@ -78,11 +72,11 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         size="sm"
         colorScheme="blue"
         variant="outline"
-        border="1px solid var(--blue-300, #63B3ED);"
+        borderColor="blue.300"
         bg={isClick ? 'blue.300' : undefined}
         color={isClick ? 'white' : 'blue.300'}
         leftIcon={<CommonIcon type="heart" />}
-        onClick={handleClick}
+        onClick={onClick}
         isDisabled={isDisabled}
       >
         {children}
@@ -93,21 +87,21 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         size="xs"
         colorScheme="gray"
         variant="outline"
-        border="1px solid var(--white, #FFF);"
+        borderColor="white"
         leftIcon={<CommonIcon type="chevronRight" />}
-        onClick={handleClick}
+        onClick={onClick}
         isDisabled={isDisabled}
       >
         {children}
       </Button>
     ),
     text: (
-      <Button colorScheme="blue" onClick={handleClick} variant="link" isDisabled={isDisabled}>
+      <Button colorScheme="blue" onClick={onClick} variant="link" isDisabled={isDisabled}>
         {children}
       </Button>
     ),
-    SmText: (
-      <Button colorScheme="gray" onClick={handleClick} variant="link" isDisabled={isDisabled}>
+    smText: (
+      <Button colorScheme="gray" onClick={onClick} variant="link" isDisabled={isDisabled}>
         {children}
       </Button>
     ),
@@ -118,7 +112,7 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         height="5.625rem"
         borderRadius="0.625rem"
         bg=" linear-gradient(90deg, #E2E8F0 0%, #EDF2F7 100%)"
-        onClick={handleClick}
+        onClick={onClick}
         disabled={isDisabled}
       >
         <CommonIcon type="plus" />
