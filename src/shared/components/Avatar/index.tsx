@@ -1,7 +1,7 @@
 import { Box, Avatar, AvatarProps, Circle } from '@chakra-ui/react';
 import CommonIcon from '../Icon';
 
-interface CommonAvatar {
+interface CommonAvatarProps {
   isOwner: boolean;
   size: string;
   src: AvatarProps['src'];
@@ -13,7 +13,7 @@ const CommonAvatar = ({
   size,
   src = 'https://bit.ly/broken-link',
   onClick,
-}: CommonAvatar) => {
+}: CommonAvatarProps) => {
   return (
     <>
       {isOwner ? (
