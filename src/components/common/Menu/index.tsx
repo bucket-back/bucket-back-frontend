@@ -20,22 +20,14 @@ const CommonMenu = ({
   onLogout,
   onCreate,
 }: CommonMenuProps) => {
-  const handleUpdate = () => {
-    onUpdate && onUpdate();
-  };
-
-  const handleLogout = () => {
-    onLogout && onLogout();
-  };
-
-  const handleCreate = () => {
-    onCreate && onCreate();
+  const handleClick = (onEvent?: () => void) => {
+    onEvent && onEvent();
   };
 
   const menus = {
-    update: <MenuItem onClick={handleUpdate}>수정</MenuItem>,
-    logout: <MenuItem onClick={handleLogout}>로그아웃</MenuItem>,
-    create: <MenuItem onClick={handleCreate}>생성</MenuItem>,
+    update: <MenuItem onClick={() => handleClick(onUpdate)}>수정</MenuItem>,
+    logout: <MenuItem onClick={() => handleClick(onLogout)}>로그아웃</MenuItem>,
+    create: <MenuItem onClick={() => handleClick(onCreate)}>생성</MenuItem>,
   };
 
   return (
