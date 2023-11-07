@@ -2,14 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ChakraProvider } from '@chakra-ui/react';
 import { RouterProvider } from 'react-router-dom';
-import { router } from './routes';
+import { router } from './core/routes';
 
 async function deferRender() {
   if (process.env.NODE_ENV !== 'development') {
     return;
   }
 
-  const { worker } = await import('./mocks/browser');
+  const { worker } = await import('./core/mocks/browser');
 
   return worker.start();
 }

@@ -1,5 +1,5 @@
 import { useToast } from '@chakra-ui/react';
-import CommonToast from '../components/common/Toast';
+import CommonToast from '../components/Toast';
 
 export interface OpenToastProps {
   message: string;

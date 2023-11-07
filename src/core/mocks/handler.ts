@@ -13,6 +13,7 @@ export const handler = [
     // 제대로 들어왔는지 확인
     const userInfo = await request.json();
     console.log(userInfo);
+
     return new HttpResponse(null, 200);
   }),
 ];

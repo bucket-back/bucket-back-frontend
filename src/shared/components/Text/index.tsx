@@ -1,5 +1,5 @@
 import { Heading, Text } from '@chakra-ui/react';
-import conformText from '../../../utils/conformText';
+import conformText from '../../utils/conformText';
 
 interface CommonTextProps {
   type: keyof typeof TEXT_TYPE;
