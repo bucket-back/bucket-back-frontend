@@ -25,14 +25,14 @@ const CommonAvatar = ({
             position="absolute"
             top="6.165rem"
             right="0.45rem"
-            onClick={() => onClick()}
+            onClick={onClick}
           >
             <CommonIcon type="pen" />
           </Circle>
         </Box>
       ) : (
         <Box>
-          <Avatar src={src} width={size} height={size} onClick={() => onClick()} />
+          <Avatar src={src} width={size} height={size} onClick={onClick} />
         </Box>
       )}
     </>
