@@ -4,13 +4,13 @@ interface CommonDividerProps {
   size: 'sm' | 'lg';
 }
 
-const sizes = {
+const SIZES = {
   sm: 'none',
   lg: 'thick',
 };
 
 const CommonDivider = ({ size }: CommonDividerProps) => {
-  return <Divider width="inherit" borderWidth={sizes[size]} />;
+  return <Divider width="inherit" borderWidth={SIZES[size]} />;
 };
 
 export default CommonDivider;
