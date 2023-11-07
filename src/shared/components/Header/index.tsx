@@ -1,6 +1,6 @@
 import { Box, Text } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import CommonIconButton from '../IconButton';
+import { CommonIconButton } from '@/shared/components';
 
 interface HeaderProps {
   type: 'logo' | 'back';
