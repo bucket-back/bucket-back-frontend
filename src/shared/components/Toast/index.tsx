@@ -1,6 +1,6 @@
 import { Flex } from '@chakra-ui/react';
 import CommonIcon from '../Icon';
-import { OpenToastProps } from '../../../hooks/useCustomToast';
+import { OpenToastProps } from '../../hooks/useCustomToast';
 import CommonText from '../Text';
 
 const CommonToast = ({ message, type }: OpenToastProps) => {

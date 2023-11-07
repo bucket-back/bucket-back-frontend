@@ -16,6 +16,7 @@ const CommonTabs = ({ tabsData, isFitted = true, tabsType = 'line', onClick }: C
   const handleClick = () => {
     onClick && onClick();
   };
+
   return (
     <Tabs isFitted={isFitted} variant={tabsType} size="sm">
       <TabList>
