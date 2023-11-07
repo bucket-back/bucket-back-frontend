@@ -5,13 +5,12 @@ interface DateTextProps {
 }
 
 const DateText = ({ createdDate }: DateTextProps) => {
-  const DATE = new Date(createdDate);
-  console.log(DATE);
+  const dt = new Date(createdDate);
   const [month, date, hours, minutes] = [
-    DATE.getMonth() + 1,
-    DATE.getDate(),
-    DATE.getHours(),
-    DATE.getMinutes(),
+    dt.getMonth() + 1,
+    dt.getDate(),
+    dt.getHours(),
+    dt.getMinutes(),
   ];
 
   return <Text fontSize="0.75rem" color="gray.400">{`${month}/${date} ${hours}:${minutes}`}</Text>;
