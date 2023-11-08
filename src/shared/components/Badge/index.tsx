@@ -38,9 +38,12 @@ const CommonBadge = ({ type, levelNumber, count }: CommonBadgeProps) => {
   const badge = {
     level: levelNumber && (
       <Badge
+        width="fit-content"
         color={LEVEL_COLOR.FONT[levelNumber]}
         bgColor={LEVEL_COLOR.BACKGROUND[levelNumber]}
-      >{`LV. ${levelNumber}`}</Badge>
+      >
+        {`LV. ${levelNumber}`}
+      </Badge>
     ),
     adopt: (
       <Badge width="fit-content" color="purple.800" bgColor="purple.100">
@@ -51,7 +54,7 @@ const CommonBadge = ({ type, levelNumber, count }: CommonBadgeProps) => {
       </Badge>
     ),
     vote: (
-      <Badge color="blue.900" bgColor="blue.100">
+      <Badge width="fit-content" color="blue.900" bgColor="blue.100">
         {count}명 참여
       </Badge>
     ),
