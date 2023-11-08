@@ -1,5 +1,5 @@
-import { Heading, Text } from '@chakra-ui/react';
 import { ReactNode } from 'react';
+import { Heading, Text } from '@chakra-ui/react';
 import conformText from '@/shared/utils/conformText';
 
 interface CommonTextProps {
