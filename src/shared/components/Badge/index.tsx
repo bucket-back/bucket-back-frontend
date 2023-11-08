@@ -1,5 +1,5 @@
-import { Badge, Box } from '@chakra-ui/react';
-import { FaCrown } from 'react-icons/fa6';
+import { Badge, Flex } from '@chakra-ui/react';
+import { CommonIcon } from '@/shared/components';
 
 const LEVEL_COLOR = {
   FONT: {
@@ -38,20 +38,23 @@ const CommonBadge = ({ type, levelNumber, count }: CommonBadgeProps) => {
   const badge = {
     level: levelNumber && (
       <Badge
+        width="fit-content"
         color={LEVEL_COLOR.FONT[levelNumber]}
         bgColor={LEVEL_COLOR.BACKGROUND[levelNumber]}
-      >{`LV. ${levelNumber}`}</Badge>
+      >
+        {`LV. ${levelNumber}`}
+      </Badge>
     ),
     adopt: (
-      <Badge w="2.8rem" color="purple.800" bgColor="purple.100">
-        <Box display="flex" alignItems="center" gap="4px">
+      <Badge width="fit-content" color="purple.800" bgColor="purple.100">
+        <Flex alignItems="center" gap="0.25rem">
           채택
-          <FaCrown />
-        </Box>
+          <CommonIcon type="crown" />
+        </Flex>
       </Badge>
     ),
     vote: (
-      <Badge color="blue.900" bgColor="blue.100">
+      <Badge width="fit-content" color="blue.900" bgColor="blue.100">
         {count}명 참여
       </Badge>
     ),
