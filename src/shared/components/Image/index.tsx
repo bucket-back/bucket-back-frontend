@@ -1,9 +1,9 @@
-import { Image } from '@chakra-ui/react';
+import { Image, ImageProps } from '@chakra-ui/react';
 
 interface CommonImageProps {
   size: keyof typeof IMAGE_SIZE;
-  src: string;
-  alt?: string;
+  src?: ImageProps['src'];
+  alt?: ImageProps['alt'];
   onClick?: () => void;
 }
 
