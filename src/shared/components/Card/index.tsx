@@ -1,14 +1,15 @@
-import { ReactElement } from 'react';
-import { Card, CardHeader, CardBody } from '@chakra-ui/react';
-import { CommonBadge } from '@/shared/components';
+import { ReactNode } from 'react';
+import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react';
+import { CommonBadge, DateText } from '@/shared/components';
 
 interface CommonCardProps {
   count: number;
-  children: ReactElement;
+  date: string;
+  children: ReactNode;
   onClick: () => void;
 }
 
-const CommonCard = ({ count, children, onClick }: CommonCardProps) => {
+const CommonCard = ({ count, date, children, onClick }: CommonCardProps) => {
   return (
     <Card
       onClick={onClick}
@@ -20,6 +21,9 @@ const CommonCard = ({ count, children, onClick }: CommonCardProps) => {
         <CommonBadge type="vote" count={count} />
       </CardHeader>
       <CardBody px="1.56rem">{children}</CardBody>
+      <CardFooter justify="end">
+        <DateText createdDate={date} />
+      </CardFooter>
     </Card>
   );
 };
