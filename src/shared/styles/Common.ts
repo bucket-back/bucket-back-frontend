@@ -1,9 +1,9 @@
 export const COMMON = {
   COLORS: {
-    MAINCOLOR: '#63B3ED',
-    FONTCOLOR: '#1A365D',
-    PLACEHOLDERCOLOR: '#A0AEC0',
-    LIGHTGRAY: '#F7FAFC',
+    MAIN_COLOR: '#63B3ED',
+    FONT_COLOR: '#1A365D',
+    PLACEHOLDER_COLOR: '#A0AEC0',
+    LIGHT_GRAY: '#F7FAFC',
     WHITE: '#ffffff',
   },
 };
