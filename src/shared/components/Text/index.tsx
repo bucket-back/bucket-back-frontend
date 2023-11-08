@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Heading, Text } from '@chakra-ui/react';
-import conformText from '@/shared/utils/conformText';
+import { conformText } from '@/shared/utils/';
 
 interface CommonTextProps {
   type: keyof typeof TEXT_TYPE;
