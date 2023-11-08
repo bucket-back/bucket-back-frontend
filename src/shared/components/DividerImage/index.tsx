@@ -30,7 +30,8 @@ const CommonDividerImage = ({ item, count, type }: CommonDividerImageProps) => {
           return (
             <GridItem
               key={index}
-              borderLeft={isLastImage(index) ? '1px solid black' : undefined}
+              borderWidth="1px"
+              borderLeft={isLastImage(index) ? BORDERTYPE : undefined}
               width="100%"
               height="100%"
             >
