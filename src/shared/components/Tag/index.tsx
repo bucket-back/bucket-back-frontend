@@ -1,10 +1,10 @@
-import { ReactElement, MouseEvent } from 'react';
+import { ReactNode, MouseEvent } from 'react';
 import { Tag, TagLabel, TagCloseButton } from '@chakra-ui/react';
 import { CommonIcon } from '@/shared/components';
 
 interface CommonTagProps {
   type: 'feed' | 'search';
-  children: ReactElement;
+  children: ReactNode;
   onClick?: () => void;
   onDelete?: () => void;
 }
