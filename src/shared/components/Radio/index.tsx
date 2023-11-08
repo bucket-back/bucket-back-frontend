@@ -8,14 +8,14 @@ import RadioCard from './RadioCard';
 // onClick -> 상태 변경
 // 디바운스 필요
 
-interface CommonRadio {
+interface CommonRadioProps {
   values: string[];
   name: string;
   defaultValue?: string;
   onChange: () => void;
 }
 
-const CommonRadio = ({ values, defaultValue, name, onChange }: CommonRadio) => {
+const CommonRadio = ({ values, defaultValue, name, onChange }: CommonRadioProps) => {
   const options = [...values];
 
   const { getRootProps, getRadioProps } = useRadioGroup({
