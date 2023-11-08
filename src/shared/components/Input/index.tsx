@@ -1,3 +1,5 @@
+import { ReactElement } from 'react';
+import { FieldError } from 'react-hook-form';
 import {
   FormControl,
   Input,
@@ -8,8 +10,6 @@ import {
   InputRightElement,
   InputLeftElement,
 } from '@chakra-ui/react';
-import { ReactElement } from 'react';
-import { FieldError } from 'react-hook-form';
 
 interface CommonInputProps {
   placeholder: string;

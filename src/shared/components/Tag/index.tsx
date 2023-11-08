@@ -1,5 +1,5 @@
-import { Tag, TagLabel, TagCloseButton } from '@chakra-ui/react';
 import { ReactElement, MouseEvent } from 'react';
+import { Tag, TagLabel, TagCloseButton } from '@chakra-ui/react';
 import { CommonIcon } from '@/shared/components';
 
 interface CommonTagProps {

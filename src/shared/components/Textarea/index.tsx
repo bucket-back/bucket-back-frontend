@@ -1,5 +1,5 @@
-import { FormControl, Textarea, FormErrorMessage, FormLabel, forwardRef } from '@chakra-ui/react';
 import { FieldError } from 'react-hook-form';
+import { FormControl, Textarea, FormErrorMessage, FormLabel, forwardRef } from '@chakra-ui/react';
 
 interface CommonTextareaProps {
   placeholder: string;

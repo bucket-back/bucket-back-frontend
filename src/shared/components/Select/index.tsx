@@ -1,5 +1,5 @@
-import { Select } from '@chakra-ui/react';
 import { ChangeEventHandler } from 'react';
+import { Select } from '@chakra-ui/react';
 
 interface CommonSelectProps {
   width?: `${number}rem`;

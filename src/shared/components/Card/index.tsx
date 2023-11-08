@@ -1,5 +1,5 @@
-import { Card, CardHeader, CardBody } from '@chakra-ui/react';
 import { ReactElement } from 'react';
+import { Card, CardHeader, CardBody } from '@chakra-ui/react';
 import { CommonBadge } from '@/shared/components';
 
 interface CommonCardProps {
