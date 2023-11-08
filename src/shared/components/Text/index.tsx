@@ -1,11 +1,12 @@
 import { Heading, Text } from '@chakra-ui/react';
+import { ReactNode } from 'react';
 import conformText from '@/shared/utils/conformText';
 
 interface CommonTextProps {
   type: keyof typeof TEXT_TYPE;
-  color: string;
-  noOfLines: number | number[];
-  children: string;
+  color?: string;
+  noOfLines?: number | number[];
+  children: ReactNode;
 }
 
 const TEXT_TYPE = {
@@ -19,7 +20,7 @@ const TEXT_TYPE = {
   smallInfo: { fontSize: '0.75rem', weight: 400 },
 };
 
-const CommonText = ({ type, color, noOfLines, children }: CommonTextProps) => {
+const CommonText = ({ type, color = 'inherit', noOfLines = 1, children }: CommonTextProps) => {
   return (
     <>
       {conformText(type, 'title') ? (
