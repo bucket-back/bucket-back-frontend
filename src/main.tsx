@@ -4,7 +4,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import ReactDOM from 'react-dom/client';
 import { router } from './core/routes';
 import GlobalStyle from './shared/styles/GlobalStyle';
-import './index.css';
+import './main.css';
 
 async function deferRender() {
   if (process.env.NODE_ENV !== 'development') {
