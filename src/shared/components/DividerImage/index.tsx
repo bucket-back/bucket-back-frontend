@@ -1,19 +1,20 @@
-import { useCallback, useMemo } from 'react';
 import { Grid, GridItem, Image } from '@chakra-ui/react';
 
-interface CommonDividerImageProps {
-  item: string[];
-  count: number;
+interface DividerImageProps {
+  images: string[];
   type: 'base' | 'live';
 }
 
-const BORDERTYPE = 'solid black';
-const ISFIRSTANDTHIRD = (index: number) => index === 1 || index === 3;
-const ISFIRSTANDSECOND = (index: number) => index === 0 || index === 1;
+const BORDER_TYPE = '1px solid black';
+const GRID_REPEAT = 'repeat(2,1fr)';
 
-const CommonDividerImage = ({ item, count, type }: CommonDividerImageProps) => {
-  const isLastImage = useCallback((index: number) => count - 1 === index, [count]);
-  const isSecondAndThird = useMemo(() => count === 2 || count === 3, [count]);
+const isFirstAndThird = (index: number) => index === 1 || index === 3;
+const isFirstAndSecond = (index: number) => index === 0 || index === 1;
+const isLastImage = (index: number, count: number) => count - 1 === index;
+const isSecondAndThird = (count: number) => count === 2 || count === 3;
+
+const DividerImage = ({ images, type }: DividerImageProps) => {
+  const count = images.length;
 
   const dividerImage = {
     live: (
@@ -26,16 +27,15 @@ const CommonDividerImage = ({ item, count, type }: CommonDividerImageProps) => {
         borderWidth="3px"
         borderColor="blue.300"
       >
-        {item.map((image, index) => {
+        {images.map((image, index) => {
           return (
             <GridItem
               key={index}
-              borderWidth="1px"
-              borderLeft={isLastImage(index) ? BORDERTYPE : undefined}
+              borderLeft={isLastImage(index, count) ? BORDER_TYPE : undefined}
               width="100%"
               height="100%"
             >
-              <Image src={image} width="100%" height="100%" />
+              <Image src={image} width="100%" height="100%" objectFit="cover" />
             </GridItem>
           );
         })}
@@ -43,33 +43,32 @@ const CommonDividerImage = ({ item, count, type }: CommonDividerImageProps) => {
     ),
     base: (
       <Grid
-        templateColumns={count >= 2 ? 'repeat(2,1fr)' : '1fr'}
-        templateRows={count >= 3 ? 'repeat(2,1fr)' : undefined}
+        templateColumns={count >= 2 ? GRID_REPEAT : '1fr'}
+        templateRows={count >= 3 ? GRID_REPEAT : undefined}
         width="7rem"
         height="6.4375rem"
         borderRadius="0.625rem"
         background="linear-gradient(90deg, #DCE1E8 0%, #EDF2F7 100%);"
         overflow="hidden"
       >
-        {item.map((image, index) => {
+        {images.map((image, index) => {
           return (
             <GridItem
               key={index}
               width="100%"
               height="100%"
               rowSpan={count === 3 && index === 0 ? 2 : undefined}
-              borderWidth="1px"
-              borderLeft={count === 4 && ISFIRSTANDTHIRD(index) ? BORDERTYPE : undefined}
-              borderRight={isSecondAndThird && index === 0 ? BORDERTYPE : undefined}
+              borderLeft={count === 4 && isFirstAndThird(index) ? BORDER_TYPE : undefined}
+              borderRight={isSecondAndThird(count) && index === 0 ? BORDER_TYPE : undefined}
               borderBottom={
                 count > 2 && index === 1
-                  ? BORDERTYPE
-                  : count === 4 && ISFIRSTANDSECOND(index)
-                  ? BORDERTYPE
+                  ? BORDER_TYPE
+                  : count === 4 && isFirstAndSecond(index)
+                  ? BORDER_TYPE
                   : undefined
               }
             >
-              <Image src={image} width="100%" height="100%" />
+              <Image src={image} width="100%" height="100%" objectFit="cover" />
             </GridItem>
           );
         })}
@@ -80,4 +79,4 @@ const CommonDividerImage = ({ item, count, type }: CommonDividerImageProps) => {
   return <>{dividerImage[type]}</>;
 };
 
-export default CommonDividerImage;
+export default DividerImage;

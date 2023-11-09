@@ -22,4 +22,4 @@ export { default as CommonTag } from './Tag';
 export { default as CommonText } from './Text';
 export { default as CommonTextarea } from './Textarea';
 export { default as CommonToast } from './Toast';
-export { default as CommonDividerImage } from './DividerImage';
+export { default as DividerImage } from './DividerImage';
