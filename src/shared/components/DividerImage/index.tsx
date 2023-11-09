@@ -6,7 +6,7 @@ interface DividerImageProps {
 }
 
 const BORDER_TYPE = '1px solid black';
-const GRID_REPEAT = 'repeat(2,1fr)';
+const GRID_REPEAT = 'repeat(2,minmax(3rem,1fr))';
 
 const isFirstAndThird = (index: number) => index === 1 || index === 3;
 const isFirstAndSecond = (index: number) => index === 0 || index === 1;
@@ -76,7 +76,7 @@ const DividerImage = ({ images, type }: DividerImageProps) => {
     ),
   };
 
-  return <>{dividerImage[type]}</>;
+  return <>{count <= 4 && dividerImage[type]}</>;
 };
 
 export default DividerImage;
