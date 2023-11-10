@@ -5,19 +5,18 @@ interface CommonImageProps {
   src?: ImageProps['src'];
   alt?: ImageProps['alt'];
   onClick?: () => void;
-  ratio?: string;
 }
 
 const IMAGE_SIZE = {
-  xs: { borderRadius: 'full', maxWidth: '3.1875rem', maxHeight: '3.1875rem' },
-  sm: { maxWidth: '7rem', maxHeight: '6.4375rem', borderRadius: '0.625rem' },
-  base: { borderRadius: '0.625rem', maxWidth: '9.0625rem', maxHeight: '6.5rem' },
-  md: { borderRadius: '0.625rem', maxWidth: '22.6875rem', maxHeight: '11.6875rem' },
-  lg: { borderRadius: '0.625rem', maxWidth: '21.875rem', maxHeight: '15.6875rem' },
-  xl: { borderRadius: '0.625rem', maxWidth: '20.1875rem', maxHeight: '16.5rem' },
+  xs: { width: '3.1875rem', aspectRatio: '1/1' },
+  sm: { width: '7rem', aspectRatio: '112/103' },
+  base: { width: '9.0625rem', aspectRatio: '145/104' },
+  md: { width: '22.6875rem', aspectRatio: '363/187' },
+  lg: { width: '21.875rem', aspectRatio: '350/251' },
+  xl: { width: '20.1875rem', aspectRatio: '323/264' },
 };
 
-const CommonImage = ({ size, alt, src, onClick, ratio }: CommonImageProps) => {
+const CommonImage = ({ size, alt, src, onClick }: CommonImageProps) => {
   const handleClick = () => {
     onClick && onClick();
   };
@@ -27,13 +26,12 @@ const CommonImage = ({ size, alt, src, onClick, ratio }: CommonImageProps) => {
       src={src}
       alt={alt}
       {...IMAGE_SIZE[size]}
+      maxW="100%"
       objectFit="cover"
-      width="100%"
-      height="auto"
-      aspectRatio={ratio}
+      cursor="pointer"
+      borderRadius={size === 'xs' ? 'full' : '0.625rem'}
       fallbackSrc="https://placehold.co/800?text=Bucket+Back&font=roboto"
       onClick={handleClick}
-      cursor="pointer"
     />
   );
 };
