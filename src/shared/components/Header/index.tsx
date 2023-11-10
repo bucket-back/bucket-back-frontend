@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import { CommonIconButton } from '@/shared/components';
 
 interface HeaderProps {
@@ -19,8 +19,10 @@ const Header = ({ type }: HeaderProps) => {
   };
 
   return (
-    <Box height="5rem" display="flex" alignItems="center" pl="1.75rem" pos="fixed" width="full">
-      {headerType[type]}
+    <Box height="5rem" pl="1.75rem" width="full" as="header">
+      <Flex h="full" alignItems="center">
+        {headerType[type]}
+      </Flex>
     </Box>
   );
 };
