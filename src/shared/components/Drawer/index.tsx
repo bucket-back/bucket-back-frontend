@@ -40,14 +40,7 @@ const CommonDrawer = ({
           left="0"
           m="auto"
         />
-        <DrawerContent
-          w="100%"
-          maxW="26.875rem !important"
-          position="absolute"
-          right="0"
-          left="0"
-          m="auto"
-        >
+        <DrawerContent w="100%" maxW="26.875rem !important" m="auto">
           <DrawerCloseButton />
           <DrawerHeader pt="1.75rem">{isFull && headerContent}</DrawerHeader>
 
