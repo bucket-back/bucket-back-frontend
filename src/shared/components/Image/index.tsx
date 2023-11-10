@@ -5,6 +5,7 @@ interface CommonImageProps {
   src?: ImageProps['src'];
   alt?: ImageProps['alt'];
   onClick?: () => void;
+  ratio?: string;
 }
 
 const IMAGE_SIZE = {
@@ -16,7 +17,7 @@ const IMAGE_SIZE = {
   xl: { borderRadius: '0.625rem', maxWidth: '20.1875rem', maxHeight: '16.5rem' },
 };
 
-const CommonImage = ({ size, alt, src, onClick }: CommonImageProps) => {
+const CommonImage = ({ size, alt, src, onClick, ratio }: CommonImageProps) => {
   const handleClick = () => {
     onClick && onClick();
   };
@@ -29,6 +30,7 @@ const CommonImage = ({ size, alt, src, onClick }: CommonImageProps) => {
       objectFit="cover"
       width="100%"
       height="auto"
+      aspectRatio={ratio}
       fallbackSrc="https://placehold.co/800?text=Bucket+Back&font=roboto"
       onClick={handleClick}
       cursor="pointer"
