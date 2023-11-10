@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '@/App';
+import VoteDetail from '@/pages/Vote/VoteDetail';
 
 export const router = createBrowserRouter([
   {
@@ -36,7 +37,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'vote/:voteId',
-        element: <div>vote voteId</div>,
+        element: <VoteDetail />,
       },
       {
         path: 'search',
