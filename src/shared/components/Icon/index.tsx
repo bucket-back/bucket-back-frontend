@@ -68,7 +68,6 @@ interface CommonIconProps {
 }
 
 const CommonIcon = ({ type, size, color }: CommonIconProps) => {
-  return <Icon as={ICONS[type]} boxSize={size} color={color} />;
+  return <Icon as={ICONS[type]} boxSize={size} color={color} height="100%" />;
 };
-
 export default CommonIcon;
