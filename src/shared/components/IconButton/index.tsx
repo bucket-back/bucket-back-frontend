@@ -2,7 +2,7 @@ import { IconButton } from '@chakra-ui/react';
 import { CommonIcon } from '@/shared/components';
 
 interface CommonIconButtonProps {
-  type: 'delete' | 'create' | 'up' | 'update' | 'add' | 'detail' | 'back';
+  type: 'delete' | 'create' | 'up' | 'update' | 'add' | 'detail' | 'back' | 'cancel';
   width?: `${number}rem`;
   height?: `${number}rem`;
   fontSize?: `${number}rem`;
@@ -93,6 +93,18 @@ const CommonIconButton = ({ type, width, height, fontSize, onClick }: CommonIcon
         fontSize={fontSize || '1.25rem'}
         display="flex"
         icon={<CommonIcon type="chevronLeft" />}
+        onClick={onClick}
+      />
+    ),
+    cancel: (
+      <IconButton
+        variant="unstyled"
+        aria-label={`${type}`}
+        w={width || '2.5rem'}
+        h={height || '2.5rem'}
+        fontSize={fontSize || '1.25rem'}
+        display="flex"
+        icon={<CommonIcon type="circleXmark" />}
         onClick={onClick}
       />
     ),

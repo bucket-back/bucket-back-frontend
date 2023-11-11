@@ -32,20 +32,27 @@ const CommonDrawer = ({
   return (
     <>
       <Drawer isOpen={isOpen} placement="bottom" onClose={onClose} size={isFull ? 'full' : 'md'}>
-        <DrawerOverlay minH="290px" />
-        <DrawerContent minH="290px">
+        <DrawerOverlay
+          w="100%"
+          maxW="26.875rem !important"
+          position="absolute"
+          right="0"
+          left="0"
+          m="auto"
+        />
+        <DrawerContent w="100%" maxW="26.875rem !important" m="auto">
           <DrawerCloseButton />
-          <DrawerHeader pt="28px">{isFull && headerContent}</DrawerHeader>
+          <DrawerHeader pt="1.75rem">{isFull && headerContent}</DrawerHeader>
 
           <DrawerBody>{children}</DrawerBody>
 
           {isFull ? (
-            <DrawerFooter justifyContent="center" pb="65px">
+            <DrawerFooter justifyContent="center" pb="4.0625rem">
               <Button
                 color="white"
                 bgColor="blue.300"
-                height="40px"
-                width="290px"
+                height="2.5rem"
+                width="18.125rem"
                 _hover={{ bgColor: 'blue.300' }}
                 onClick={onClickFooterButton}
               >
@@ -54,7 +61,7 @@ const CommonDrawer = ({
             </DrawerFooter>
           ) : (
             <DrawerFooter>
-              <Button variant="outline" mr={3} onClick={onClose}>
+              <Button variant="outline" mr="0.75rem" onClick={onClose}>
                 취소
               </Button>
               <Button
