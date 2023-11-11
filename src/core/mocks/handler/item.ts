@@ -99,7 +99,6 @@ const BASEURL = '/api/items';
 export const handler = [
   http.post<PathParams, CreateItemReq>(`${BASEURL}`, CreateItem),
   http.post<PathParams, TakeItemReq>(`${BASEURL}/myitems`, TakeItem),
-  http.get<PathParams, DefaultBodyType, ReadDetailItemRes>(`${BASEURL}/:itemId`, ReadDetailItem),
   http.get<PathParams, DefaultBodyType, ReadReviewListRes>(
     `${BASEURL}/:itemId/reviews`,
     ReadReviewList
@@ -116,4 +115,5 @@ export const handler = [
     EditItemReview
   ),
   http.delete<PathParams>(`${BASEURL}/:itemId/reviews/:reviewId`, DeleteItemReview),
+  http.get<PathParams, DefaultBodyType, ReadDetailItemRes>(`${BASEURL}/:itemId`, ReadDetailItem),
 ];
