@@ -77,7 +77,7 @@ interface MemberInfo {
   level: number;
 }
 
-interface Item {
+export interface Item {
   cursorId: string;
   itemSummary: ItemSummary;
 }
