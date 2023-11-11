@@ -9,9 +9,9 @@ interface CommonTextareaProps {
 }
 
 const TEXTAREA_SIZE = {
-  xs: { maxWidth: '20.5rem', height: '5.8125rem' },
-  sm: { maxWidth: '21.9375rem', height: '9.875rem' },
-  base: { maxWidth: '21.9375rem', height: '14.375rem' },
+  xs: { width: 'full', height: '5.8125rem' },
+  sm: { width: 'full', height: '9.875rem' },
+  base: { width: 'full', height: '14.375rem' },
 };
 
 const CommonTextarea = forwardRef(
@@ -20,7 +20,7 @@ const CommonTextarea = forwardRef(
       <FormControl isInvalid={Boolean(error?.message)}>
         <FormLabel>{label}</FormLabel>
         <Textarea
-          size="sm"
+          fontSize="sm"
           placeholder={placeholder}
           ref={ref}
           {...TEXTAREA_SIZE[size]}
