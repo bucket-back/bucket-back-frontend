@@ -82,7 +82,7 @@ interface Item {
   itemSummary: ItemSummary;
 }
 
-interface ItemSummary {
+export interface ItemSummary {
   id: number;
   name: string;
   price: number;
