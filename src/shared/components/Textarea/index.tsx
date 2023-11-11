@@ -9,9 +9,9 @@ interface CommonTextareaProps {
 }
 
 const TEXTAREA_SIZE = {
-  xs: { width: '20.5rem', height: '5.8125rem' },
-  sm: { width: '21.9375rem', height: '9.875rem' },
-  base: { width: '21.9375rem', height: '14.375rem' },
+  xs: { maxWidth: '20.5rem', height: '5.8125rem' },
+  sm: { maxWidth: '21.9375rem', height: '9.875rem' },
+  base: { maxWidth: '21.9375rem', height: '14.375rem' },
 };
 
 const CommonTextarea = forwardRef(
