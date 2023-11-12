@@ -23,6 +23,7 @@ export const BucketBox = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 0.25rem;
+  cursor: pointer;
 `;
 
 export const AddBucketButtonBox = styled.div`
