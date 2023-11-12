@@ -12,7 +12,7 @@ interface CommonRadioProps {
   values: string[];
   name: string;
   defaultValue?: string;
-  onChange: () => void;
+  onChange: (value: string) => void;
 }
 
 const CommonRadio = ({ values, defaultValue, name, onChange }: CommonRadioProps) => {

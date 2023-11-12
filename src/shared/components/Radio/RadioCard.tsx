@@ -15,12 +15,12 @@ const RadioCard = (props: RadioProps) => {
         cursor="pointer"
         borderWidth="0.024rem"
         borderRadius="0.375rem"
+        borderColor="blue.300"
         _checked={{
           bg: 'blue.300',
           color: 'white',
-          borderColor: 'teal.600',
         }}
-        p="0rem 1rem"
+        p="0.2rem 1rem"
       >
         <CommonText type="strongInfo" color={input.checked ? 'white' : 'blue.300'} noOfLines={1}>
           {String(props.value)}
