@@ -6,14 +6,13 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2rem 4rem 2rem;
+  padding: 0 2.44rem 2.44rem 2.44rem;
 `;
 
 export const ContentsWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 2rem;
 `;
 
