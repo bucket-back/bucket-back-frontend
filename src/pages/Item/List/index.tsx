@@ -9,6 +9,7 @@ import {
   ItemTextContaienr,
   ItemListContainer,
   AddContainer,
+  RelativeContainer,
 } from './style';
 import { ItemSummary, Item } from '@/core/mocks/handler/item';
 import { ItemList } from '@/features/item/components';
@@ -63,9 +64,11 @@ const List = () => {
             />
           ))}
         </ItemListContainer>
-        <AddContainer>
-          <CommonIconButton type="add" onClick={() => navigate('create')} />
-        </AddContainer>
+        <RelativeContainer>
+          <AddContainer>
+            <CommonIconButton type="add" onClick={() => navigate('create')} />
+          </AddContainer>
+        </RelativeContainer>
       </CommonContainer>
       <Footer />
     </>
