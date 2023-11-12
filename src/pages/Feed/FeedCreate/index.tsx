@@ -10,6 +10,7 @@ import {
   Header,
 } from '@/shared/components';
 import { Container, ContentsWrapper, ContentsBox } from './style';
+import { FeedSelectBucket } from '@/features/feed/components';
 
 const initalHobby = ['수영', '자전거', '농구'];
 
@@ -19,13 +20,14 @@ interface Textarea {
 
 const FeedCreate = () => {
   const [selectedHobby, setSelectedHobby] = useState(initalHobby[0]);
+  const [selectedBucket, setSelectedBucket] = useState(0);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Textarea>();
   const onSubmit: SubmitHandler<Textarea> = (data) => {
-    console.log(data, selectedHobby);
+    console.log(data, selectedHobby, selectedBucket);
   };
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -62,17 +64,22 @@ const FeedCreate = () => {
           </ContentsBox>
         </ContentsWrapper>
 
-        <CommonButton type="mdMiddle" isDisabled={false} onClick={() => {}}>
+        <CommonButton type="mdMiddle" onClick={() => {}}>
           생성 완료
         </CommonButton>
         <CommonDrawer
           isOpen={isOpen}
           onClose={onClose}
-          onClickFooterButton={() => {}}
+          onClickFooterButton={onClose}
           isFull={true}
           footerButtonText="선택 완료"
         >
-          1
+          <FeedSelectBucket
+            onClick={(id) => {
+              console.log(id);
+              setSelectedBucket(id);
+            }}
+          />
         </CommonDrawer>
       </Container>
     </>
