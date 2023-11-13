@@ -1,4 +1,4 @@
-const formatNumberWithCommas = (price: number) => {
+const formatNumber = (price: number) => {
   if (price >= 1000) {
     const temp = String(price);
     const lastCount = temp.slice(-3);
@@ -9,4 +9,4 @@ const formatNumberWithCommas = (price: number) => {
 
   return String(price);
 };
-export default formatNumberWithCommas;
+export default formatNumber;

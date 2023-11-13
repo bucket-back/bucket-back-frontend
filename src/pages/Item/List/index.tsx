@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { CommonIconButton, CommonText, Header, Footer } from '@/shared/components';
-import { formatNumberWithCommas } from '@/shared/utils';
+import { formatNumber } from '@/shared/utils';
 import {
   CommonContainer,
   TitleContainer,
@@ -11,13 +11,13 @@ import {
   AddContainer,
 } from './style';
 import { ItemSummary, Item } from '@/core/mocks/handler/item';
-import { ItemList } from '@/features/item/components';
+import { ListItem } from '@/features/item/components';
 
 interface itemProps {
   itemSummary: Item['itemSummary'];
 }
 
-const List = () => {
+const ItemList = () => {
   const [isDelete, setIsDelete] = useState<boolean>(false);
   const [data, setData] = useState<ItemSummary[]>([]);
   const navigate = useNavigate();
@@ -46,13 +46,11 @@ const List = () => {
           )}
         </TitleContainer>
         <ItemTextContaienr>
-          <CommonText type="smallInfo">
-            총 {formatNumberWithCommas(data.length)}개의 아이템
-          </CommonText>
+          <CommonText type="smallInfo">총 {formatNumber(data.length)}개의 아이템</CommonText>
         </ItemTextContaienr>
         <ItemListContainer>
           {data.map(({ id, image, name, price }) => (
-            <ItemList
+            <ListItem
               key={id}
               id={id}
               image={image}
@@ -63,13 +61,14 @@ const List = () => {
             />
           ))}
         </ItemListContainer>
+      </CommonContainer>
+      <Footer>
         <AddContainer>
           <CommonIconButton type="add" onClick={() => navigate('create')} />
         </AddContainer>
-      </CommonContainer>
-      <Footer />
+      </Footer>
     </>
   );
 };
 
-export default List;
+export default ItemList;

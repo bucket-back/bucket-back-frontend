@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '@/App';
-import List from '@/pages/Item/List/index';
+import ItemList from '@/pages/Item/List';
 import VoteDetail from '@/pages/Vote/VoteDetail';
 
 export const router = createBrowserRouter([
@@ -50,7 +50,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'item',
-        element: <List />,
+        element: <ItemList />,
       },
       {
         path: 'item/create',

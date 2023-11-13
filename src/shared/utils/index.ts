@@ -1,2 +1,2 @@
 export { default as conformText } from './conformText';
-export { default as formatNumberWithCommas } from './formatNumberWithCommas';
+export { default as formatNumber } from './formatNumber';

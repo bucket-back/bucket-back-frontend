@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { CommonIconButton, CommonImage, CommonText } from '@/shared/components';
-import { formatNumberWithCommas } from '@/shared/utils';
+import { formatNumber } from '@/shared/utils';
+import { PositionWrapper, ButtonWrapper, ItemListWrapper } from './style';
 import { ItemSummary } from '@/core/mocks/handler/item';
-import { PositionWrapper, ButtonWrapper, ItemListWrapper } from '@/pages/Item/List/style';
 
 interface ItemListProps {
   id: ItemSummary['id'];
@@ -13,7 +13,7 @@ interface ItemListProps {
   onClick?: (id: number) => void;
 }
 
-const ItemList = ({ id, image, price, name, isDelete, onClick }: ItemListProps) => {
+const ListItem = ({ id, image, price, name, isDelete, onClick }: ItemListProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -36,7 +36,7 @@ const ItemList = ({ id, image, price, name, isDelete, onClick }: ItemListProps) 
       )}
       <ItemListWrapper onClick={handleClick}>
         <CommonImage size="sm" alt={name} src={image} />
-        <CommonText type="normalInfo">{formatNumberWithCommas(price)}</CommonText>
+        <CommonText type="normalInfo">{formatNumber(price)}</CommonText>
         <CommonText type="smallInfo" noOfLines={0}>
           {name}
         </CommonText>
@@ -45,4 +45,4 @@ const ItemList = ({ id, image, price, name, isDelete, onClick }: ItemListProps) 
   );
 };
 
-export default ItemList;
+export default ListItem;
