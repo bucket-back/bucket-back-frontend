@@ -1,6 +1,8 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Flex } from '@chakra-ui/react';
 import { CommonIcon, CommonText } from '@/shared/components';
+import useSamePath from '@/shared/hooks/useSamePath';
 import { COMMON } from '@/shared/styles/Common';
 
 const FOOTER_INFO = [
@@ -26,15 +28,17 @@ const FOOTER_INFO = [
   },
 ];
 
+interface FooterProps {
+  children: ReactNode;
+}
+
 type FooterIcon = 'home' | 'search' | 'bucket' | 'item' | 'user';
 
-const isSamePath = (pathname: string, type: string) => pathname.slice(1) === type;
-
-const Footer = () => {
+const Footer = ({ children }: FooterProps) => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const isSamePath = useSamePath();
   const handleClick = (type: string) => {
-    if (isSamePath(location.pathname, type)) {
+    if (isSamePath(type)) {
       return;
     }
     // 추후 페이지 이동 + 아이콘 클릭하면 페이지 상단으로 올라갈수있도록 로직 추가
@@ -51,11 +55,11 @@ const Footer = () => {
         navigate('/bucket/create');
         break;
       }
-      case 'bag': {
+      case 'item': {
         navigate('/item');
         break;
       }
-      case 'my': {
+      case 'user': {
         // navigate(`/user/${:userId}`);
         break;
       }
@@ -68,12 +72,10 @@ const Footer = () => {
       bg={COMMON.COLORS.LIGHT_GRAY}
       alignItems="center"
       justifyContent="space-evenly"
-      pos="fixed"
-      bottom="0"
-      maxW="26.875rem"
       w="100%"
       zIndex={999}
     >
+      {children}
       {FOOTER_INFO.map(({ ICON, TEXT }) => (
         <Flex
           key={ICON}
@@ -84,11 +86,11 @@ const Footer = () => {
           <CommonIcon
             type={ICON as FooterIcon}
             size="1.5rem"
-            color={isSamePath(location.pathname, ICON) ? 'blue.300' : 'blue.900'}
+            color={isSamePath(ICON) ? 'blue.300' : 'blue.900'}
           />
           <CommonText
             type="smallInfo"
-            color={isSamePath(location.pathname, ICON) ? 'blue.300' : 'blue.900'}
+            color={isSamePath(ICON) ? 'blue.300' : 'blue.900'}
             noOfLines={0}
           >
             {TEXT}
