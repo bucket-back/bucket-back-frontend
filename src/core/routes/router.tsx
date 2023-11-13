@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '@/App';
+import { FeedCreate } from '@/pages';
 import VoteCreate from '@/pages/Vote/VoteCreate';
 import VoteDetail from '@/pages/Vote/VoteDetail';
 
@@ -18,7 +19,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'feed/create',
-        element: <div>feed create</div>,
+        element: <FeedCreate />,
       },
       {
         path: 'feed/:feedId',
