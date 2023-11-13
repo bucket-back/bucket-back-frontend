@@ -9,6 +9,8 @@ export const Container = styled.div`
 `;
 
 export const ProfileWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
   padding: 0 1.5rem;
 `;
 
@@ -17,6 +19,10 @@ export const ContentsWrapper = styled.div`
   flex-direction: column;
   gap: 0.3rem;
   padding: 0 2.5rem;
+`;
+
+export const BucketInfoBox = styled.div`
+  margin-top: 1rem;
 `;
 
 export const ImageBox = styled.div`

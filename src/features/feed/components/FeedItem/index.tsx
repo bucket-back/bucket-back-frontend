@@ -5,6 +5,8 @@ import {
   Profile,
   DateText,
   CommonImage,
+  CommonMenu,
+  CommonButton,
 } from '@/shared/components';
 import {
   Container,
@@ -18,6 +20,7 @@ import {
   LikeNumber,
   CommentBox,
   CommentNumber,
+  BucketInfoBox,
 } from './style';
 
 interface Member {
@@ -42,7 +45,10 @@ interface FeedItemProps {
   commentCount: number;
   createAt: string;
   feedItems: Item[];
+  isDetail: boolean;
   onClick: (id: number) => void;
+  onUpdate: (id: number) => void;
+  onDelete: (id: number) => void;
 }
 
 const FeedItem = ({
@@ -90,8 +96,11 @@ const FeedItem = ({
       itemUrl: 'https://www.naver.com/',
     },
   ],
+  isDetail = false,
   onClick,
-}: FeedItemProps) => {
+  onUpdate,
+  onDelete,
+}: Partial<FeedItemProps>) => {
   return (
     <Container>
       <ProfileWrapper>
@@ -101,32 +110,54 @@ const FeedItem = ({
           levelNumber={memberInfo.level}
           isAdopted={false}
         />
+        {isDetail && (
+          <CommonMenu
+            type="update"
+            iconSize="0.35rem"
+            onUpdate={() => onUpdate && onUpdate(feedId)}
+            onDelete={() => onDelete && onDelete(feedId)}
+          />
+        )}
       </ProfileWrapper>
-      <ContentsWrapper onClick={() => onClick(feedId)}>
-        <CommonText type="smallInfo" color="inherit" noOfLines={3}>
+      <ContentsWrapper onClick={() => onClick && onClick(feedId)}>
+        <CommonText type="smallInfo" color="inherit" noOfLines={isDetail ? 10 : 3}>
           {feedContent}
         </CommonText>
+        {isDetail && (
+          <BucketInfoBox>
+            <CommonText type="normalInfo">하얀 개구리 조합</CommonText>
+            <CommonText type="normalInfo">29,000원</CommonText>
+          </BucketInfoBox>
+        )}
         <ImageBox>
           {feedItems.map((item) => (
             <CommonImage key={item.itemId} size="sm" src={item.itemImage} />
           ))}
-          <BucketTitleTag>
-            <CommonTag type="feed">
-              <CommonText type="smallInfo">하얀 개구리 조합</CommonText>
-            </CommonTag>
-          </BucketTitleTag>
+          {!isDetail && (
+            <BucketTitleTag>
+              <CommonTag type="feed">
+                <CommonText type="smallInfo">하얀 개구리 조합</CommonText>
+              </CommonTag>
+            </BucketTitleTag>
+          )}
         </ImageBox>
         <DetailInfoWrapper>
           <DateText createdDate={createAt} />
           <InteractPanel>
-            <LikeBox>
-              <CommonIcon type={isLike ? 'fillHeart' : 'heart'} />
-              <LikeNumber>{likeCount}</LikeNumber>
-            </LikeBox>
-            <CommentBox>
-              <CommonIcon type="comment" />
-              <CommentNumber>{commentCount}</CommentNumber>
-            </CommentBox>
+            {isDetail ? (
+              <CommonButton type="sm">3</CommonButton>
+            ) : (
+              <>
+                <LikeBox>
+                  <CommonIcon type={isLike ? 'fillHeart' : 'heart'} />
+                  <LikeNumber>{likeCount}</LikeNumber>
+                </LikeBox>
+                <CommentBox>
+                  <CommonIcon type="comment" />
+                  <CommentNumber>{commentCount}</CommentNumber>
+                </CommentBox>
+              </>
+            )}
           </InteractPanel>
         </DetailInfoWrapper>
       </ContentsWrapper>
