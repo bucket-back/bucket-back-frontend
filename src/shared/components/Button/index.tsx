@@ -2,7 +2,17 @@ import { Box, Button } from '@chakra-ui/react';
 import { CommonIcon } from '@/shared/components';
 
 interface CommonButtonProps {
-  type: 'mdFull' | 'mdMiddle' | 'mdBase' | 'mdSmall' | 'sm' | 'xs' | 'text' | 'smText' | 'custom';
+  type:
+    | 'mdFull'
+    | 'mdMiddle'
+    | 'mdBase'
+    | 'mdSmall'
+    | 'sm'
+    | 'xs'
+    | 'text'
+    | 'smText'
+    | 'xsText'
+    | 'custom';
   isClick?: boolean;
   isDisabled?: boolean;
   children?: string;
@@ -131,6 +141,21 @@ const CommonButton = ({
     ),
     smText: (
       <Button
+        colorScheme="gray"
+        onClick={handleClick}
+        variant="link"
+        isDisabled={isDisabled}
+        _hover={{
+          textDecor: 'none',
+        }}
+        type={isSubmit ? 'submit' : 'button'}
+      >
+        {children}
+      </Button>
+    ),
+    xsText: (
+      <Button
+        size="xs"
         colorScheme="gray"
         onClick={handleClick}
         variant="link"
