@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'Cafe24Bold';
+  src: url('./assets/fonts/Cafe24Ohsquare-v2.0.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Cafe24Regular';
+  src: url('./assets/fonts/Cafe24OhsquareAir-v2.0.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}

@@ -4,23 +4,35 @@ import { CommonIcon } from '@/shared/components';
 interface CommonButtonProps {
   type: 'mdFull' | 'mdMiddle' | 'mdBase' | 'mdSmall' | 'sm' | 'xs' | 'text' | 'smText' | 'custom';
   isClick?: boolean;
-  isDisabled: boolean;
-  children: string;
-  onClick: () => void;
+  isDisabled?: boolean;
+  children?: string;
+  onClick?: () => void;
+  isSubmit?: boolean;
 }
 
-const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonButtonProps) => {
+const CommonButton = ({
+  type,
+  isDisabled = false,
+  isClick,
+  children,
+  onClick,
+  isSubmit = false,
+}: CommonButtonProps) => {
+  const handleClick = () => {
+    onClick && onClick();
+  };
+
   const button = {
     mdFull: (
       <Button
         size="md"
         bg="blue.300"
         colorScheme="blue"
-        variant="solid"
         width="100%"
         px="1rem"
-        onClick={onClick}
+        onClick={handleClick}
         isDisabled={isDisabled}
+        type={isSubmit ? 'submit' : 'button'}
       >
         {children}
       </Button>
@@ -30,11 +42,12 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         size="md"
         bg="blue.300"
         colorScheme="blue"
-        variant="solid"
-        width="18.125rem"
+        width="100%"
+        maxW="18.125rem"
         px="1rem"
-        onClick={onClick}
+        onClick={handleClick}
         isDisabled={isDisabled}
+        type={isSubmit ? 'submit' : 'button'}
       >
         {children}
       </Button>
@@ -44,11 +57,12 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         size="md"
         bg="blue.300"
         colorScheme="blue"
-        variant="solid"
-        width="15rem"
+        width="100%"
+        maxW="15rem"
         px="1rem"
-        onClick={onClick}
+        onClick={handleClick}
         isDisabled={isDisabled}
+        type={isSubmit ? 'submit' : 'button'}
       >
         {children}
       </Button>
@@ -58,11 +72,12 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         size="md"
         bg="blue.700"
         colorScheme="blue"
-        variant="solid"
-        width="7.25rem"
+        width="100%"
+        maxW="7.25rem"
         px="1rem"
-        onClick={onClick}
+        onClick={handleClick}
         isDisabled={isDisabled}
+        type={isSubmit ? 'submit' : 'button'}
       >
         {children}
       </Button>
@@ -76,8 +91,9 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         bg={isClick ? 'blue.300' : undefined}
         color={isClick ? 'white' : 'blue.300'}
         leftIcon={<CommonIcon type="heart" />}
-        onClick={onClick}
+        onClick={handleClick}
         isDisabled={isDisabled}
+        type={isSubmit ? 'submit' : 'button'}
       >
         {children}
       </Button>
@@ -89,19 +105,41 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         variant="outline"
         borderColor="white"
         leftIcon={<CommonIcon type="chevronRight" />}
-        onClick={onClick}
+        onClick={handleClick}
         isDisabled={isDisabled}
+        _hover={{
+          bg: 'none',
+        }}
+        type={isSubmit ? 'submit' : 'button'}
       >
         {children}
       </Button>
     ),
     text: (
-      <Button colorScheme="blue" onClick={onClick} variant="link" isDisabled={isDisabled}>
+      <Button
+        colorScheme="blue.900"
+        onClick={handleClick}
+        variant="link"
+        isDisabled={isDisabled}
+        _hover={{
+          textDecor: 'none',
+        }}
+        type={isSubmit ? 'submit' : 'button'}
+      >
         {children}
       </Button>
     ),
     smText: (
-      <Button colorScheme="gray" onClick={onClick} variant="link" isDisabled={isDisabled}>
+      <Button
+        colorScheme="gray"
+        onClick={handleClick}
+        variant="link"
+        isDisabled={isDisabled}
+        _hover={{
+          textDecor: 'none',
+        }}
+        type={isSubmit ? 'submit' : 'button'}
+      >
         {children}
       </Button>
     ),
@@ -111,9 +149,10 @@ const CommonButton = ({ type, isDisabled, isClick, children, onClick }: CommonBu
         width="6.125rem"
         height="5.625rem"
         borderRadius="0.625rem"
-        bg=" linear-gradient(90deg, #E2E8F0 0%, #EDF2F7 100%)"
-        onClick={onClick}
+        bg="linear-gradient(90deg, #E2E8F0 0%, #EDF2F7 100%)"
+        onClick={handleClick}
         disabled={isDisabled}
+        type={isSubmit ? 'submit' : 'button'}
       >
         <CommonIcon type="plus" />
       </Box>
