@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
-import styled from '@emotion/styled';
 import { CommonDivider, CommonTabs } from '@/shared/components';
+import { Container } from './style';
 import { FeedItem } from '@/features/feed/components';
 
 const hobby = ['cycle', 'swim', 'basketball'];
@@ -24,7 +24,7 @@ const FeedHome = () => {
           label: '자전거',
           content: (
             <>
-              <Contianer>
+              <Container>
                 <FeedItem />
                 <CommonDivider size="sm" />
                 <FeedItem />
@@ -33,7 +33,7 @@ const FeedHome = () => {
                 <CommonDivider size="sm" />
                 <FeedItem />
                 <CommonDivider size="sm" />
-              </Contianer>
+              </Container>
             </>
           ),
         },
@@ -42,7 +42,7 @@ const FeedHome = () => {
           label: '수영',
           content: (
             <>
-              <Contianer>
+              <Container>
                 <FeedItem />
                 <CommonDivider size="sm" />
                 <FeedItem />
@@ -51,7 +51,7 @@ const FeedHome = () => {
                 <CommonDivider size="sm" />
                 <FeedItem />
                 <CommonDivider size="sm" />
-              </Contianer>
+              </Container>
             </>
           ),
         },
@@ -60,7 +60,7 @@ const FeedHome = () => {
           label: '농구',
           content: (
             <>
-              <Contianer>
+              <Container>
                 <FeedItem />
                 <CommonDivider size="sm" />
                 <FeedItem />
@@ -69,7 +69,7 @@ const FeedHome = () => {
                 <CommonDivider size="sm" />
                 <FeedItem />
                 <CommonDivider size="sm" />
-              </Contianer>
+              </Container>
             </>
           ),
         },
@@ -79,8 +79,3 @@ const FeedHome = () => {
 };
 
 export default FeedHome;
-
-const Contianer = styled.div`
-  height: calc(100vh - 14.5rem);
-  overflow-y: scroll;
-`;
