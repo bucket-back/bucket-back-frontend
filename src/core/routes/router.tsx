@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '@/App';
-import { FeedCreate, FeedDetail } from '@/pages';
+import { FeedCreate, FeedDetail, FeedHome, Home } from '@/pages';
 import ItemList from '@/pages/Item/List';
 import VoteCreate from '@/pages/Vote/VoteCreate';
 import VoteDetail from '@/pages/Vote/VoteDetail';
@@ -13,11 +13,21 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <div>feed</div>,
-      },
-      {
-        path: 'feed',
-        element: <div>feed</div>,
+        element: <Home />,
+        children: [
+          {
+            path: '',
+            element: <FeedHome />,
+          },
+          {
+            path: 'feed',
+            element: <FeedHome />,
+          },
+          {
+            path: 'vote',
+            element: <VoteHome />,
+          },
+        ],
       },
       {
         path: 'feed/create',
@@ -30,10 +40,6 @@ export const router = createBrowserRouter([
       {
         path: 'feed/:feedId/edit',
         element: <div>feed feedId edit</div>,
-      },
-      {
-        path: 'vote',
-        element: <VoteHome />,
       },
       {
         path: 'vote/create',
