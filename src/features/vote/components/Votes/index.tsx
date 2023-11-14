@@ -22,7 +22,6 @@ const Votes = () => {
             label: '종료된 투표',
             content: (
               <ContentsWrapper>
-                <div>1</div>
                 <VoteItem />
                 <VoteItem />
                 <VoteItem />
@@ -35,7 +34,6 @@ const Votes = () => {
             label: '올린 투표',
             content: (
               <ContentsWrapper>
-                <div>2</div>
                 <VoteItem />
                 <VoteItem />
                 <VoteItem />
@@ -48,7 +46,6 @@ const Votes = () => {
             label: '참여한 투표',
             content: (
               <ContentsWrapper>
-                <div>3</div>
                 <VoteItem />
                 <VoteItem />
                 <VoteItem />
