@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import styled from '@emotion/styled';
 import { CommonIconButton, CommonTabs, Footer, Header } from '@/shared/components';
+import { Container, AddButtonWrapper } from './style';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -47,15 +47,3 @@ const Home = () => {
 };
 
 export default Home;
-
-const Container = styled.div`
-  height: 100%;
-  overflow: hidden;
-`;
-
-const AddButtonWrapper = styled.div`
-  position: absolute;
-  bottom: 90px;
-  right: 20px;
-  z-index: 10;
-`;
