@@ -60,7 +60,7 @@ interface ItemInfo {
   image: string;
 }
 
-interface Review {
+export interface Review {
   cursorId: string;
   memberInfo: MemberInfo;
   reviewId: number;
