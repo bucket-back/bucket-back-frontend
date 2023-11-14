@@ -19,7 +19,7 @@ const Header = ({ type }: HeaderProps) => {
   };
 
   return (
-    <Box height="5rem" pl="1.75rem" width="full" as="header">
+    <Box height="5rem" pl="1.75rem" width="full" flexShrink={0} as="header">
       <Flex h="full" alignItems="center">
         {headerType[type]}
       </Flex>

@@ -2,7 +2,17 @@ import { Box, Button } from '@chakra-ui/react';
 import { CommonIcon } from '@/shared/components';
 
 interface CommonButtonProps {
-  type: 'mdFull' | 'mdMiddle' | 'mdBase' | 'mdSmall' | 'sm' | 'xs' | 'text' | 'smText' | 'custom';
+  type:
+    | 'mdFull'
+    | 'mdMiddle'
+    | 'mdBase'
+    | 'mdSmall'
+    | 'sm'
+    | 'xs'
+    | 'text'
+    | 'smText'
+    | 'xsText'
+    | 'custom';
   isClick?: boolean;
   isDisabled?: boolean;
   children?: string;
@@ -28,7 +38,7 @@ const CommonButton = ({
         size="md"
         bg="blue.300"
         colorScheme="blue"
-        maxW="100%"
+        width="100%"
         px="1rem"
         onClick={handleClick}
         isDisabled={isDisabled}
@@ -42,6 +52,7 @@ const CommonButton = ({
         size="md"
         bg="blue.300"
         colorScheme="blue"
+        width="100%"
         maxW="18.125rem"
         px="1rem"
         onClick={handleClick}
@@ -56,6 +67,7 @@ const CommonButton = ({
         size="md"
         bg="blue.300"
         colorScheme="blue"
+        width="100%"
         maxW="15rem"
         px="1rem"
         onClick={handleClick}
@@ -70,6 +82,7 @@ const CommonButton = ({
         size="md"
         bg="blue.700"
         colorScheme="blue"
+        width="100%"
         maxW="7.25rem"
         px="1rem"
         onClick={handleClick}
@@ -128,6 +141,21 @@ const CommonButton = ({
     ),
     smText: (
       <Button
+        colorScheme="gray"
+        onClick={handleClick}
+        variant="link"
+        isDisabled={isDisabled}
+        _hover={{
+          textDecor: 'none',
+        }}
+        type={isSubmit ? 'submit' : 'button'}
+      >
+        {children}
+      </Button>
+    ),
+    xsText: (
+      <Button
+        size="xs"
         colorScheme="gray"
         onClick={handleClick}
         variant="link"

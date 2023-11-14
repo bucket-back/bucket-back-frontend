@@ -6,7 +6,7 @@ interface DividerImageProps {
 }
 
 const BORDER_TYPE = '1px solid black';
-const GRID_REPEAT = 'repeat(2,minmax(3rem,1fr))';
+const GRID_REPEAT = 'repeat(2, 1fr)';
 
 const isFirstAndThird = (index: number) => index === 1 || index === 3;
 const isFirstAndSecond = (index: number) => index === 0 || index === 1;
@@ -19,10 +19,10 @@ const DividerImage = ({ images, type }: DividerImageProps) => {
   const dividerImage = {
     live: (
       <Grid
-        templateColumns="repeat(2,1fr)"
+        templateColumns={GRID_REPEAT}
         borderRadius="50%"
         width="5.625rem"
-        height="5.625rem"
+        aspectRatio="1/1"
         overflow="hidden"
         borderWidth="3px"
         borderColor="blue.300"
@@ -45,8 +45,8 @@ const DividerImage = ({ images, type }: DividerImageProps) => {
       <Grid
         templateColumns={count >= 2 ? GRID_REPEAT : '1fr'}
         templateRows={count >= 3 ? GRID_REPEAT : undefined}
-        width="7rem"
-        height="6.4375rem"
+        width="100%"
+        aspectRatio="70/64"
         borderRadius="0.625rem"
         background="linear-gradient(90deg, #DCE1E8 0%, #EDF2F7 100%);"
         overflow="hidden"

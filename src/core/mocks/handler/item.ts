@@ -77,12 +77,12 @@ interface MemberInfo {
   level: number;
 }
 
-interface Item {
+export interface Item {
   cursorId: string;
   itemSummary: ItemSummary;
 }
 
-interface ItemSummary {
+export interface ItemSummary {
   id: number;
   name: string;
   price: number;
@@ -90,8 +90,8 @@ interface ItemSummary {
   createdAt: string;
 }
 export interface ReviewInfo {
-  content: '아주 잘 찢어져요!';
-  rating?: 3;
+  content: string;
+  rating?: number;
 }
 
 const BASEURL = '/api/items';
@@ -99,7 +99,6 @@ const BASEURL = '/api/items';
 export const handler = [
   http.post<PathParams, CreateItemReq>(`${BASEURL}`, CreateItem),
   http.post<PathParams, TakeItemReq>(`${BASEURL}/myitems`, TakeItem),
-  http.get<PathParams, DefaultBodyType, ReadDetailItemRes>(`${BASEURL}/:itemId`, ReadDetailItem),
   http.get<PathParams, DefaultBodyType, ReadReviewListRes>(
     `${BASEURL}/:itemId/reviews`,
     ReadReviewList
@@ -116,4 +115,5 @@ export const handler = [
     EditItemReview
   ),
   http.delete<PathParams>(`${BASEURL}/:itemId/reviews/:reviewId`, DeleteItemReview),
+  http.get<PathParams, DefaultBodyType, ReadDetailItemRes>(`${BASEURL}/:itemId`, ReadDetailItem),
 ];
