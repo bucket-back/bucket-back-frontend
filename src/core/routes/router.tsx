@@ -1,8 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
+import Login from '@/pages/Login';
 import App from '@/App';
 import { FeedCreate, FeedDetail } from '@/pages';
-import ItemList from '@/pages/Item/List';
 import ItemCreate from '@/pages/Item/Create';
+import ItemList from '@/pages/Item/List';
 import VoteCreate from '@/pages/Vote/VoteCreate';
 import VoteDetail from '@/pages/Vote/VoteDetail';
 import VoteHome from '@/pages/Vote/VoteHome';
@@ -114,7 +115,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'login',
-        element: <div>login</div>,
+        element: <Login />,
       },
       {
         path: 'signup',
