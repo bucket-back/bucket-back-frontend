@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
-import styled from '@emotion/styled';
 import { CommonTabs } from '@/shared/components';
+import { Container } from './style';
 import VoteInProgress from '@/features/vote/components/VoteInProgress';
 import Votes from '@/features/vote/components/Votes';
 
@@ -57,7 +57,3 @@ const VoteHome = () => {
 };
 
 export default VoteHome;
-
-const Container = styled.div`
-  background-color: #f7fafc;
-`;
