@@ -3,6 +3,7 @@ import App from '@/App';
 import { FeedCreate, FeedDetail } from '@/pages';
 import ItemDetail from '@/pages/Item/Detail';
 import ItemList from '@/pages/Item/List';
+import ItemCreate from '@/pages/Item/Create';
 import VoteCreate from '@/pages/Vote/VoteCreate';
 import VoteDetail from '@/pages/Vote/VoteDetail';
 import VoteHome from '@/pages/Vote/VoteHome';
@@ -58,7 +59,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'item/create',
-        element: <div>item create</div>,
+        element: <ItemCreate />,
       },
       {
         path: 'item/:itemId',
