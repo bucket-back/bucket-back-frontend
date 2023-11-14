@@ -1,4 +1,5 @@
-import styled from '@emotion/styled';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import {
   CommonButton,
   CommonDivider,
@@ -7,78 +8,93 @@ import {
   CommonText,
   Header,
 } from '@/shared/components';
+import { useAuthCheck } from '@/shared/hooks';
 import { formatNumber } from '@/shared/utils';
+import {
+  Container,
+  ItemWrapper,
+  ItemBox,
+  ButtonWrapper,
+  CommentNumberWrapper,
+  CommentsContainer,
+  Box,
+} from './style';
+import { ReadDetailItemRes, ReadReviewListRes } from '@/core/mocks/handler/item';
 import ItemComment from '@/features/item/components/ItemComment/index';
 
 const ItemDetail = () => {
+  // 로그인 시 리뷰 클릭이 가능하도록 하기
+  // 본인이 작성한 게시글은 리뷰를 작성하도록 할까?
+  const isLogin = useAuthCheck();
+  const [itemInfo, setItemInfo] = useState<ReadDetailItemRes>();
+  const [reviewInfo, setReviewInfo] = useState<ReadReviewListRes>();
+
+  const handleItem = () => {
+    // TODO: 로그인 한 사용자가 아이템을 담을수 있는 기능
+  };
+
+  const handleBuy = () => {
+    // TODO: api를 통해 받은 링크를 이동할수 있는 기능
+  };
+
+  useEffect(() => {
+    axios.get('/api/items/1').then((res) => setItemInfo(res.data));
+    axios.get('/api/items/1/reviews').then((res) => setReviewInfo(res.data));
+  }, []);
+
   return (
     <>
       <Header type="back" />
       <Container>
         <CommonImage size="md" />
         <ItemWrapper>
-          <CommonText type="boldNormalInfo" noOfLines={0}>
-            아레나 취미활동 수영복
+          <CommonText type="normalTitle" noOfLines={0}>
+            {itemInfo?.itemInfo.name}
           </CommonText>
           <ItemBox>
-            <CommonIcon type="star" />
-            <CommonText type="smallInfo" noOfLines={0}>
-              4.5 / 5
-            </CommonText>
+            <CommonIcon type="fillStar" color="blue.300" />
+            <Box>
+              <CommonText type="smallInfo" noOfLines={0}>
+                {itemInfo?.itemAvgRate} / 5
+              </CommonText>
+            </Box>
           </ItemBox>
         </ItemWrapper>
-        <CommonText type="boldNormalInfo">{formatNumber(23900)}</CommonText>
+        <CommonText type="normalInfo">{formatNumber(Number(itemInfo?.itemInfo.price))}</CommonText>
         <ButtonWrapper>
-          <CommonButton type="mdSmall">아이템 담기</CommonButton>
-          <CommonButton type="mdBase">구매하러 가기</CommonButton>
+          <CommonButton type="mdSmall" onClick={handleItem}>
+            아이템 담기
+          </CommonButton>
+          <CommonButton type="mdBase" onClick={handleBuy}>
+            구매하러 가기
+          </CommonButton>
         </ButtonWrapper>
-        <CommonButton type="mdFull">리뷰 쓰기</CommonButton>
+        {isLogin && <CommonButton type="mdFull">리뷰 쓰기</CommonButton>}
       </Container>
       <div>
         <CommonDivider size="lg" />
         <CommentNumberWrapper>
-          <CommonText type="normalInfo">총 0개의 댓글</CommonText>
+          <CommonText type="normalInfo">총 {reviewInfo?.reviewCount}개의 댓글</CommonText>
         </CommentNumberWrapper>
         <CommonDivider size="sm" />
       </div>
       <CommentsContainer>
-        <ItemComment />
-        <CommonDivider size="sm" />
+        {reviewInfo?.reviews.map(({ content, createdAt, memberInfo, rate, reviewId }) => (
+          <>
+            <ItemComment
+              key={reviewId}
+              content={content}
+              createAt={createdAt}
+              memberInfo={memberInfo}
+              rate={rate}
+              reviewId={reviewId}
+            />
+            <CommonDivider size="sm" />
+          </>
+        ))}
       </CommentsContainer>
     </>
   );
 };
 
 export default ItemDetail;
-
-const Container = styled.main`
-  padding: 0 2.44rem 2.44rem 2.44rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-`;
-
-const ItemWrapper = styled.section`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const ItemBox = styled.div`
-  display: flex;
-  gap: 0 0.2rem;
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  gap: 0 0.2rem;
-`;
-
-const CommentsContainer = styled.section`
-  height: 100%;
-  overflow-y: scroll;
-`;
-
-const CommentNumberWrapper = styled.div`
-  padding: 1rem 1.75rem;
-`;
