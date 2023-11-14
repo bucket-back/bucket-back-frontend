@@ -3,12 +3,12 @@ import { Storage } from '@/shared/utils';
 
 const BASE_ENDPOINT_URL = import.meta.env.VITE_ENDPOINT_URL;
 
-export const request = axios.create({
+export const axiosClient = axios.create({
   baseURL: BASE_ENDPOINT_URL,
   timeout: 15000,
 });
 
-request.interceptors.request.use(
+axiosClient.interceptors.request.use(
   (config) => {
     const aT = Storage.getLocalStoraged('aT');
     if (aT) {
@@ -20,7 +20,7 @@ request.interceptors.request.use(
   (error: AxiosError) => Promise.reject(error.response)
 );
 
-request.interceptors.response.use(
+axiosClient.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
     if (!isAxiosError(error)) {
