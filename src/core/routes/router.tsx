@@ -2,7 +2,6 @@ import { createBrowserRouter } from 'react-router-dom';
 import App from '@/App';
 import { FeedCreate, FeedDetail } from '@/pages';
 import ItemList from '@/pages/Item/List';
-import { FeedCreate } from '@/pages';
 import VoteCreate from '@/pages/Vote/VoteCreate';
 import VoteDetail from '@/pages/Vote/VoteDetail';
 import VoteHome from '@/pages/Vote/VoteHome';
