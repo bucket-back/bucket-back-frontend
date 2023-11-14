@@ -10,9 +10,9 @@ export const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
   (config) => {
-    const aT = Storage.getLocalStoraged('aT');
-    if (aT) {
-      config.headers.Authorization = `Bearer ${aT}`;
+    const token = Storage.getLocalStoraged('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
 
     return config;
