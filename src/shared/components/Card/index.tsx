@@ -20,8 +20,8 @@ const CommonCard = ({ count, date, children, onClick }: CommonCardProps) => {
       <CardHeader p="0">
         <CommonBadge type="vote" count={count} />
       </CardHeader>
-      <CardBody px="1.56rem">{children}</CardBody>
-      <CardFooter justify="end">
+      <CardBody paddingBottom="0">{children}</CardBody>
+      <CardFooter padding="0 1rem 0.75rem 0" justify="end">
         <DateText createdDate={date} />
       </CardFooter>
     </Card>

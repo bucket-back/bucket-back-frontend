@@ -173,10 +173,6 @@ export const SearchItemList: ResponseResolver<
   if (!keyword || !cursorId || !size) {
     return HttpResponse.error();
   }
-  const cursorInfo = await request.json();
-  if (!cursorInfo.size) {
-    return HttpResponse.error();
-  }
 
   return HttpResponse.json({
     nextCursorId: '2023110115510658369000000003',
@@ -196,6 +192,61 @@ export const SearchItemList: ResponseResolver<
         cursorId: '2023110115510658369000000002',
         itemSummary: {
           id: 2,
+          name: '스타스포츠 STAR 스타 농구공 점보 매직 5호 BB605',
+          price: 10920,
+          image:
+            'https://team-02-bucket.s3.ap-northeast-2.amazonaws.com/bucket-back-images/%EB%B8%8C%EB%9E%9C%EB%93%9C%EC%8A%A4%ED%83%80%ED%8F%AC%EC%B8%A0+%EB%86%8D%EA%B5%AC%EA%B3%B5.PNG',
+          createdAt: '2023-11-01T15:51:06.58369',
+        },
+      },
+      {
+        cursorId: '2023110115510658369000000002',
+        itemSummary: {
+          id: 3,
+          name: '스타스포츠 STAR 스타 농구공 점보 매직 5호 BB605',
+          price: 10920,
+          image:
+            'https://team-02-bucket.s3.ap-northeast-2.amazonaws.com/bucket-back-images/%EB%B8%8C%EB%9E%9C%EB%93%9C%EC%8A%A4%ED%83%80%ED%8F%AC%EC%B8%A0+%EB%86%8D%EA%B5%AC%EA%B3%B5.PNG',
+          createdAt: '2023-11-01T15:51:06.58369',
+        },
+      },
+      {
+        cursorId: '2023110115510658369000000002',
+        itemSummary: {
+          id: 4,
+          name: '스타스포츠 STAR 스타 농구공 점보 매직 5호 BB605',
+          price: 10920,
+          image:
+            'https://team-02-bucket.s3.ap-northeast-2.amazonaws.com/bucket-back-images/%EB%B8%8C%EB%9E%9C%EB%93%9C%EC%8A%A4%ED%83%80%ED%8F%AC%EC%B8%A0+%EB%86%8D%EA%B5%AC%EA%B3%B5.PNG',
+          createdAt: '2023-11-01T15:51:06.58369',
+        },
+      },
+      {
+        cursorId: '2023110115510658369000000002',
+        itemSummary: {
+          id: 5,
+          name: '스타스포츠 STAR 스타 농구공 점보 매직 5호 BB605',
+          price: 10920,
+          image:
+            'https://team-02-bucket.s3.ap-northeast-2.amazonaws.com/bucket-back-images/%EB%B8%8C%EB%9E%9C%EB%93%9C%EC%8A%A4%ED%83%80%ED%8F%AC%EC%B8%A0+%EB%86%8D%EA%B5%AC%EA%B3%B5.PNG',
+          createdAt: '2023-11-01T15:51:06.58369',
+        },
+      },
+      {
+        cursorId: '2023110115510658369000000002',
+        itemSummary: {
+          id: 6,
+          name: '스타스포츠 STAR 스타 농구공 점보 매직 5호 BB605',
+          price: 10920,
+          image:
+            'https://team-02-bucket.s3.ap-northeast-2.amazonaws.com/bucket-back-images/%EB%B8%8C%EB%9E%9C%EB%93%9C%EC%8A%A4%ED%83%80%ED%8F%AC%EC%B8%A0+%EB%86%8D%EA%B5%AC%EA%B3%B5.PNG',
+          createdAt: '2023-11-01T15:51:06.58369',
+        },
+      },
+      {
+        cursorId: '2023110115510658369000000002',
+        itemSummary: {
+          id: 7,
           name: '스타스포츠 STAR 스타 농구공 점보 매직 5호 BB605',
           price: 10920,
           image:

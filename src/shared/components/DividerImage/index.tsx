@@ -21,7 +21,7 @@ const DividerImage = ({ images, type }: DividerImageProps) => {
       <Grid
         templateColumns={GRID_REPEAT}
         borderRadius="50%"
-        width="100%"
+        width="5.625rem"
         aspectRatio="1/1"
         overflow="hidden"
         borderWidth="3px"

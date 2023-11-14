@@ -19,7 +19,7 @@ const CommonTabs = ({ tabsData, isFitted = true, tabsType = 'line', onClick }: C
 
   return (
     <Tabs isFitted={isFitted} variant={tabsType} size="sm">
-      <TabList>
+      <TabList padding={tabsType === 'soft-rounded' ? '1rem 0 0 1rem' : undefined}>
         {tabsData.map((tab, index) => (
           <Tab
             onClick={handleClick}
@@ -38,7 +38,7 @@ const CommonTabs = ({ tabsData, isFitted = true, tabsType = 'line', onClick }: C
       </TabList>
       <TabPanels>
         {tabsData.map((tab, index) => (
-          <TabPanel p={4} key={index}>
+          <TabPanel padding="0" key={index}>
             {tab.content}
           </TabPanel>
         ))}
