@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import {
   CommonButton,
   CommonIcon,
@@ -7,22 +6,38 @@ import {
   DateText,
   Profile,
 } from '@/shared/components';
+import { Container, ProfileWrapper, ContentsWrapper, InteractPanel } from './style';
+import { Review } from '@/core/mocks/handler/item';
 
-const ItemComment = () => {
+export interface ItemCommentProps {
+  content: Review['content'];
+  createAt: Review['createdAt'];
+  memberInfo: Review['memberInfo'];
+  rate: Review['rate'];
+  reviewId: Review['reviewId'];
+}
+
+const ItemComment = ({ content, createAt, memberInfo, rate }: ItemCommentProps) => {
   return (
     <Container>
       <ProfileWrapper>
-        <Profile nickName="테스트" levelNumber={10} isAdopted />
+        <Profile
+          id={memberInfo.memberId}
+          nickName={memberInfo.nickName}
+          levelNumber={2}
+          src={memberInfo.profileImage}
+        />
         <CommonMenu type="update" iconSize="0.25rem" onDelete={() => {}} onUpdate={() => {}} />
       </ProfileWrapper>
       <ContentsWrapper>
-        <CommonText type="smallInfo">테스트</CommonText>
+        <CommonText type="smallInfo">{content}</CommonText>
       </ContentsWrapper>
       <ContentsWrapper>
-        <DateText createdDate="2021-10-15T20:48:19.816Z" />
+        <DateText createdDate={createAt} />
         <InteractPanel>
+          {/* 본인이 클릭했다면 채워주기 */}
           <CommonIcon type="heart" size="0.75rem" />
-          <CommonText type="smallInfo">0</CommonText>
+          <CommonText type="smallInfo">{rate}</CommonText>
           <CommonButton type="xsText">좋아요</CommonButton>
           <CommonButton type="xsText">인벤토리</CommonButton>
           <CommonButton type="xsText">채택하기</CommonButton>
@@ -33,26 +48,3 @@ const ItemComment = () => {
 };
 
 export default ItemComment;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 1.25rem 1.75rem;
-`;
-
-const ProfileWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.25rem;
-`;
-
-const ContentsWrapper = styled.div`
-  display: flex;
-  padding: 0.25rem 0.5rem;
-`;
-
-const InteractPanel = styled.div`
-  display: flex;
-  gap: 0.2rem;
-  padding-left: 0.2rem;
-`;
