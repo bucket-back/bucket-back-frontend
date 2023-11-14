@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import styled from '@emotion/styled';
 import { CommonButton, CommonInput, CommonRadio, CommonText, Header } from '@/shared/components';
-
+import { Container, Wrapper, Form, BoxTop, Box } from './style';
 // 취미 불러오는 api
 const initalHobby = ['수영', '자전거', '농구'];
 
@@ -20,7 +19,7 @@ const ItemCreate = () => {
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
     reset,
-  } = useForm<ItemText>({ mode: 'onChange' });
+  } = useForm<ItemText>({ mode: 'onBlur' });
 
   const onSubmit: SubmitHandler<ItemText> = ({ url }) => {
     console.log(selectedHobby);
@@ -31,8 +30,6 @@ const ItemCreate = () => {
     // 실패했다면 input 빈칸
     reset();
   };
-
-  // 크롤링해서 검색한 결과 간단하게 보여주면 좋을것 같다!
 
   return (
     <>
@@ -91,37 +88,3 @@ const ItemCreate = () => {
 };
 
 export default ItemCreate;
-
-const Container = styled.main`
-  padding: 0 2.44rem 2.44rem 2.44rem;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  height: 100%;
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-`;
-
-const BoxTop = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const Box = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-`;
-
-const Form = styled.form`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
