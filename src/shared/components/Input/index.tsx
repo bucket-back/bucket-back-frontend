@@ -19,7 +19,7 @@ interface CommonInputProps {
   leftIcon?: ReactElement;
   rightIcon?: ReactElement;
   size?: 'sm' | 'md' | 'lg';
-  width?: `${number}rem`;
+  width?: string;
 }
 
 const CommonInput = forwardRef(
