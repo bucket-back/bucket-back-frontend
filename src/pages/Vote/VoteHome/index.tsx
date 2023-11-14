@@ -1,11 +1,11 @@
-import { Box } from '@chakra-ui/react';
+import styled from '@emotion/styled';
 import { CommonTabs } from '@/shared/components';
 import VoteInProgress from '@/features/vote/components/VoteInProgress';
 import Votes from '@/features/vote/components/Votes';
 
 const VoteHome = () => {
   return (
-    <Box>
+    <Container>
       <CommonTabs
         tabsType="soft-rounded"
         isFitted={false}
@@ -13,10 +13,10 @@ const VoteHome = () => {
           {
             label: '자전거',
             content: (
-              <Box gap="5rem">
+              <>
                 <VoteInProgress />
                 <Votes />
-              </Box>
+              </>
             ),
           },
           {
@@ -29,8 +29,12 @@ const VoteHome = () => {
           },
         ]}
       />
-    </Box>
+    </Container>
   );
 };
 
 export default VoteHome;
+
+const Container = styled.div`
+  background-color: #f7fafc;
+`;
