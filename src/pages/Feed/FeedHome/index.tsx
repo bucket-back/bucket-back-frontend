@@ -1,4 +1,5 @@
-import { useSearchParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { CommonDivider, CommonTabs } from '@/shared/components';
 import { Container } from './style';
 import { FeedItem } from '@/features/feed/components';
@@ -7,6 +8,14 @@ const hobby = ['cycle', 'swim', 'basketball'];
 
 const FeedHome = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { search } = useLocation();
+
+  useEffect(() => {
+    if (search.length === 0) {
+      setSearchParams({ hobby: hobby[0] });
+    }
+  }, [search.length, setSearchParams]);
+
   const currentTabIndex = hobby.indexOf(searchParams.get('hobby') || hobby[0]);
 
   return (
