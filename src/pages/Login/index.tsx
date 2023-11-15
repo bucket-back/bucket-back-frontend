@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { CommonButton, CommonIcon, CommonInput } from '@/shared/components';
 import { ButtonWrapper, Container, Form, IconWrapper, InputWrapper } from './style';
-import { useLogin } from '@/features/SingIn/service/login';
+import { useLogin } from '@/features/Singin/service/login';
 import useValidateForm from '@/shared/hooks/useValidateForm';
 
 interface Login {
