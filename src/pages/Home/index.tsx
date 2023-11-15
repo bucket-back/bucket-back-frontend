@@ -3,13 +3,29 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { CommonIconButton, CommonTabs, Footer, Header } from '@/shared/components';
 import { Container, AddButtonWrapper } from './style';
 
+const ROOT_PATH = '/';
+
+const TABS = {
+  FEED: {
+    INDEX: 0,
+    VALUE: 'feed',
+    LABEL: '피드',
+  },
+  VOTE: {
+    INDEX: 1,
+    VALUE: 'vote',
+    LABEL: '투표',
+  },
+};
+
 const Home = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const isVoteInPathname = pathname.includes(TABS.VOTE.VALUE);
 
   useEffect(() => {
-    if (pathname === '/') {
-      navigate('feed?hobby=cycle');
+    if (pathname === ROOT_PATH) {
+      navigate(`${TABS.FEED.VALUE}?hobby=cycle`);
     }
   }, [navigate, pathname]);
 
@@ -18,17 +34,17 @@ const Home = () => {
       <Header type="logo" />
       <Container>
         <CommonTabs
-          currentTabIndex={pathname.includes('vote') ? 1 : 0}
+          currentTabIndex={isVoteInPathname ? TABS.VOTE.INDEX : TABS.FEED.INDEX}
           tabsType="line"
           isFitted
-          onClick={() => navigate(pathname.includes('vote') ? 'feed' : 'vote')}
+          onClick={() => navigate(isVoteInPathname ? TABS.FEED.VALUE : TABS.VOTE.VALUE)}
           tabsData={[
             {
-              label: '피드',
+              label: TABS.FEED.LABEL,
               content: <Outlet />,
             },
             {
-              label: '투표',
+              label: TABS.VOTE.LABEL,
               content: <Outlet />,
             },
           ]}
@@ -38,7 +54,9 @@ const Home = () => {
         <AddButtonWrapper>
           <CommonIconButton
             type="add"
-            onClick={() => navigate(pathname.includes('vote') ? 'vote/create' : 'feed/create')}
+            onClick={() =>
+              navigate(isVoteInPathname ? `${TABS.VOTE.VALUE}/create` : `${TABS.FEED.VALUE}/create`)
+            }
           />
         </AddButtonWrapper>
       </Footer>
