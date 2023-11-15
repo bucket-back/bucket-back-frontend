@@ -1,7 +1,6 @@
 import {
   CommonIcon,
   CommonText,
-  CommonTag,
   Profile,
   DateText,
   CommonImage,
@@ -13,7 +12,6 @@ import {
   ProfileWrapper,
   ContentsWrapper,
   ImageBox,
-  BucketTitleTag,
   DetailInfoWrapper,
   InteractPanel,
   LikeBox,
@@ -133,13 +131,6 @@ const FeedItem = ({
           {feedItems.map((item) => (
             <CommonImage key={item.itemId} size="sm" src={item.itemImage} />
           ))}
-          {!isDetail && (
-            <BucketTitleTag>
-              <CommonTag type="feed">
-                <CommonText type="smallInfo">하얀 개구리 조합</CommonText>
-              </CommonTag>
-            </BucketTitleTag>
-          )}
         </ImageBox>
         <DetailInfoWrapper>
           <DateText createdDate={createAt} />
