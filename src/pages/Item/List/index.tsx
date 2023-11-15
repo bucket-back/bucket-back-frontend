@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { CommonIconButton, CommonText, Header, Footer } from '@/shared/components';
 import { formatNumber } from '@/shared/utils';
 import {
@@ -10,12 +9,8 @@ import {
   ItemListContainer,
   AddContainer,
 } from './style';
-import { ItemSummary, Item } from '@/core/mocks/handler/item';
 import { ListItem } from '@/features/item/components';
-
-interface itemProps {
-  itemSummary: Item['itemSummary'];
-}
+import { ItemSummary } from '@/shared/types/item';
 
 const ItemList = () => {
   const [isDelete, setIsDelete] = useState<boolean>(false);
@@ -25,13 +20,6 @@ const ItemList = () => {
     const filterData = data.filter(({ id }) => id !== deleteId);
     setData(filterData);
   };
-
-  useEffect(() => {
-    axios
-      .get('/api/items/search?keyword="baseball"&cursorId="asdf"&size="3"')
-      .then((res) => res.data.items.map(({ itemSummary }: itemProps) => itemSummary))
-      .then((data) => setData(data));
-  }, []);
 
   return (
     <>
