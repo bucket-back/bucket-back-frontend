@@ -1,5 +1,4 @@
 import { useDisclosure } from '@chakra-ui/react';
-import styled from '@emotion/styled';
 import {
   CommonButton,
   CommonDivider,
@@ -8,6 +7,12 @@ import {
   CommonText,
   Header,
 } from '@/shared/components';
+import {
+  FeedDetailContainer,
+  CommentNumberWrapper,
+  CommentsContainer,
+  CommentInputContainer,
+} from './style';
 import { FeedBucketDetail, FeedComment, FeedItem } from '@/features/feed/components';
 
 const FeedDetail = () => {
@@ -16,11 +21,8 @@ const FeedDetail = () => {
   return (
     <>
       <Header type="back" />
-
       <FeedDetailContainer>
-        <FeedDetailWrapper>
-          <FeedItem isDetail onClick={onOpen} />
-        </FeedDetailWrapper>
+        <FeedItem isDetail onClick={onOpen} />
       </FeedDetailContainer>
       <div>
         <CommonDivider size="lg" />
@@ -29,7 +31,6 @@ const FeedDetail = () => {
         </CommentNumberWrapper>
         <CommonDivider size="sm" />
       </div>
-
       <CommentsContainer>
         <FeedComment />
         <CommonDivider size="sm" />
@@ -68,27 +69,3 @@ const FeedDetail = () => {
 };
 
 export default FeedDetail;
-
-const FeedDetailContainer = styled.div`
-  /* display: flex;
-  flex-direction: column; */
-`;
-
-const FeedDetailWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 0 0.5rem;
-`;
-
-const CommentsContainer = styled.div`
-  height: 100%;
-  overflow-y: scroll;
-`;
-
-const CommentNumberWrapper = styled.div`
-  padding: 1rem 1.75rem;
-`;
-
-const CommentInputContainer = styled.div`
-  padding: 0 0.5rem 0.5rem 0.5rem;
-`;

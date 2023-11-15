@@ -1,16 +1,26 @@
-import styled from '@emotion/styled';
+import { useSearchParams } from 'react-router-dom';
 import { CommonTabs } from '@/shared/components';
+import { Container } from './style';
 import VoteInProgress from '@/features/vote/components/VoteInProgress';
 import Votes from '@/features/vote/components/Votes';
 
+const hobby = ['cycle', 'swim', 'basketball'];
+
 const VoteHome = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   return (
     <Container>
       <CommonTabs
+        currentTabIndex={hobby.indexOf(searchParams.get('hobby') || hobby[0])}
         tabsType="soft-rounded"
         isFitted={false}
+        onClick={(value) => {
+          setSearchParams({ hobby: value });
+        }}
         tabsData={[
           {
+            value: 'cycle',
             label: '자전거',
             content: (
               <>
@@ -20,12 +30,24 @@ const VoteHome = () => {
             ),
           },
           {
+            value: 'swim',
             label: '수영',
-            content: '',
+            content: (
+              <>
+                <VoteInProgress />
+                <Votes />
+              </>
+            ),
           },
           {
+            value: 'basketball',
             label: '농구',
-            content: '',
+            content: (
+              <>
+                <VoteInProgress />
+                <Votes />
+              </>
+            ),
           },
         ]}
       />
@@ -34,7 +56,3 @@ const VoteHome = () => {
 };
 
 export default VoteHome;
-
-const Container = styled.div`
-  background-color: #f7fafc;
-`;
