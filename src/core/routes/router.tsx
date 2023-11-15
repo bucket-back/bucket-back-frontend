@@ -1,8 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '@/App';
 import { FeedCreate, FeedDetail } from '@/pages';
-import ItemList from '@/pages/Item/List';
+import BucketCreate from '@/pages/Bucket/BucketCreate';
 import ItemCreate from '@/pages/Item/Create';
+import ItemList from '@/pages/Item/List';
 import VoteCreate from '@/pages/Vote/VoteCreate';
 import VoteDetail from '@/pages/Vote/VoteDetail';
 import VoteHome from '@/pages/Vote/VoteHome';
@@ -106,7 +107,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'bucket/create',
-        element: <div>bucket create</div>,
+        element: <BucketCreate />,
       },
       {
         path: 'user/:userId/feed',
