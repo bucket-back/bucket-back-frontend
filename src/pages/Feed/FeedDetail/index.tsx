@@ -1,15 +1,25 @@
+import { useDisclosure } from '@chakra-ui/react';
 import styled from '@emotion/styled';
-import { CommonButton, CommonDivider, CommonInput, CommonText, Header } from '@/shared/components';
-import { FeedComment, FeedItem } from '@/features/feed/components';
+import {
+  CommonButton,
+  CommonDivider,
+  CommonDrawer,
+  CommonInput,
+  CommonText,
+  Header,
+} from '@/shared/components';
+import { FeedBucketDetail, FeedComment, FeedItem } from '@/features/feed/components';
 
 const FeedDetail = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <>
       <Header type="back" />
 
       <FeedDetailContainer>
         <FeedDetailWrapper>
-          <FeedItem isDetail />
+          <FeedItem isDetail onClick={onOpen} />
         </FeedDetailWrapper>
       </FeedDetailContainer>
       <div>
@@ -49,6 +59,10 @@ const FeedDetail = () => {
           rightIcon={<CommonButton type="mdFull">등록</CommonButton>}
         />
       </CommentInputContainer>
+
+      <CommonDrawer isOpen={isOpen} onClose={onClose} onClickFooterButton={onClose} isFull={true}>
+        <FeedBucketDetail />
+      </CommonDrawer>
     </>
   );
 };
