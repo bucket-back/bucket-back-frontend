@@ -4,7 +4,6 @@ import App from '@/App';
 import { FeedCreate, FeedDetail, FeedHome, Home } from '@/pages';
 import ItemCreate from '@/pages/Item/Create';
 import ItemList from '@/pages/Item/List';
-import ItemList from '@/pages/Item/List';
 import VoteCreate from '@/pages/Vote/VoteCreate';
 import VoteDetail from '@/pages/Vote/VoteDetail';
 import VoteHome from '@/pages/Vote/VoteHome';

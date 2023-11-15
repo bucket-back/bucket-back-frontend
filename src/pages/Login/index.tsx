@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import styled from '@emotion/styled';
 import { CommonButton, CommonIcon, CommonInput } from '@/shared/components';
-import { axiosClient } from '@/core/service/axios';
+import { ButtonWrapper, Container, Form, IconWrapper, InputWrapper } from './style';
+import { useLogin } from '@/features/SingIn/service/login';
 import useValidateForm from '@/shared/hooks/useValidateForm';
+
 interface Login {
   email: string;
   password: string;
@@ -16,15 +17,11 @@ const Login = () => {
     formState: { errors },
   } = useForm<Login>();
   const [showPassword, setShowPassword] = useState(false);
+  const { mutate: loginMutate } = useLogin();
   const registerOptions = useValidateForm();
 
   const onSubmit: SubmitHandler<Login> = (data) => {
-    console.log(data);
-    const { email, password } = data;
-    axiosClient.post('/members/login', {
-      email,
-      password,
-    });
+    loginMutate(data);
   };
 
   return (
@@ -63,32 +60,3 @@ const Login = () => {
 };
 
 export default Login;
-
-export const Container = styled.main`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-`;
-
-export const InputWrapper = styled.article`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-`;
-export const ButtonWrapper = styled.article`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-export const IconWrapper = styled.div`
-  display: flex;
-`;
