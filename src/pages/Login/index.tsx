@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import styled from '@emotion/styled';
 import { CommonButton, CommonIcon, CommonInput } from '@/shared/components';
-
+import { axiosClient } from '@/core/service/axios';
+import useValidateForm from '@/shared/hooks/useValidateForm';
 interface Login {
   email: string;
   password: string;
@@ -15,9 +16,15 @@ const Login = () => {
     formState: { errors },
   } = useForm<Login>();
   const [showPassword, setShowPassword] = useState(false);
+  const registerOptions = useValidateForm();
 
   const onSubmit: SubmitHandler<Login> = (data) => {
     console.log(data);
+    const { email, password } = data;
+    axiosClient.post('/members/login', {
+      email,
+      password,
+    });
   };
 
   return (
@@ -29,7 +36,7 @@ const Login = () => {
             label="이메일"
             placeholder="이메일을 입력해주세요."
             error={errors.email}
-            {...register('email', { required: '이메일 입력은 필수입니다.' })}
+            {...register('email', ...registerOptions.email)}
           />
           <CommonInput
             type={showPassword ? 'text' : 'password'}
@@ -37,11 +44,11 @@ const Login = () => {
             placeholder="비밀번호를 입력해주세요."
             error={errors.password}
             rightIcon={
-              <div onClick={() => setShowPassword(() => !showPassword)}>
+              <IconWrapper onClick={() => setShowPassword(() => !showPassword)}>
                 <CommonIcon type={showPassword ? 'eye' : 'eyeSlash'} size="1.25rem" />
-              </div>
+              </IconWrapper>
             }
-            {...register('password', { required: '비밀번호 입력은 필수입니다.' })}
+            {...register('password', ...registerOptions.password)}
           />
         </InputWrapper>
         <ButtonWrapper>
@@ -80,4 +87,8 @@ export const ButtonWrapper = styled.article`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+`;
+
+export const IconWrapper = styled.div`
+  display: flex;
 `;
