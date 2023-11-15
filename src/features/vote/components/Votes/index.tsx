@@ -1,13 +1,23 @@
-import styled from '@emotion/styled';
+import { useSearchParams } from 'react-router-dom';
 import { CommonTabs } from '@/shared/components';
 import VoteItem from '../VoteItem';
+import { Container, ContentsWrapper } from './style';
+
+const voteState = ['ended', 'uploaded', 'participated'];
 
 const Votes = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   return (
     <Container>
       <CommonTabs
+        currentTabIndex={voteState.indexOf(searchParams.get('state') || voteState[0])}
+        onClick={(value) => {
+          setSearchParams({ state: value });
+        }}
         tabsData={[
           {
+            value: 'ended',
             label: '종료된 투표',
             content: (
               <ContentsWrapper>
@@ -19,12 +29,28 @@ const Votes = () => {
             ),
           },
           {
+            value: 'uploaded',
             label: '올린 투표',
-            content: '',
+            content: (
+              <ContentsWrapper>
+                <VoteItem />
+                <VoteItem />
+                <VoteItem />
+                <VoteItem />
+              </ContentsWrapper>
+            ),
           },
           {
+            value: 'participated',
             label: '참여한 투표',
-            content: '',
+            content: (
+              <ContentsWrapper>
+                <VoteItem />
+                <VoteItem />
+                <VoteItem />
+                <VoteItem />
+              </ContentsWrapper>
+            ),
           },
         ]}
       />
@@ -33,19 +59,3 @@ const Votes = () => {
 };
 
 export default Votes;
-
-const Container = styled.div`
-  background-color: white;
-  padding-top: 2rem;
-  border-radius: 2rem 2rem 0 0;
-`;
-
-const ContentsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  overflow-y: scroll;
-  height: calc(100vh - 20rem);
-  padding: 1rem 0;
-`;
