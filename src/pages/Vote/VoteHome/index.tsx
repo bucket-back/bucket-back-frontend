@@ -16,8 +16,7 @@ const VoteHome = () => {
         tabsType="soft-rounded"
         isFitted={false}
         onClick={(value) => {
-          searchParams.set('hobby', value);
-          setSearchParams(searchParams);
+          setSearchParams({ hobby: value });
         }}
         tabsData={[
           {

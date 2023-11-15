@@ -13,8 +13,7 @@ const Votes = () => {
       <CommonTabs
         currentTabIndex={voteState.indexOf(searchParams.get('state') || voteState[0])}
         onClick={(value) => {
-          searchParams.set('state', value);
-          setSearchParams(searchParams);
+          setSearchParams({ state: value });
         }}
         tabsData={[
           {
