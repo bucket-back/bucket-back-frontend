@@ -32,7 +32,7 @@ const CommonTabs = ({
   };
 
   return (
-    <Tabs defaultIndex={currentTabIndex} isFitted={isFitted} variant={tabsType} size="sm">
+    <Tabs index={currentTabIndex} isFitted={isFitted} variant={tabsType} size="sm">
       <TabList padding={tabsType === 'soft-rounded' ? '1rem 0 0 1rem' : undefined}>
         {tabsData.map((tab, index) => (
           <Tab
@@ -40,9 +40,9 @@ const CommonTabs = ({
             color="blue.900"
             bg="none"
             _selected={selectedStyle(tabsType)}
-            key={index}
             _disabled={selectedStyle(tabsType)}
             isDisabled={currentTabIndex === index}
+            key={index}
           >
             {tab.label}
           </Tab>
