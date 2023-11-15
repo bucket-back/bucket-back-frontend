@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import {
   CommonButton,
   CommonIcon,
@@ -7,6 +6,7 @@ import {
   DateText,
   Profile,
 } from '@/shared/components';
+import { Container, ProfileWrapper, ContentsWrapper, InteractPanel } from './style';
 
 const FeedComment = () => {
   return (
@@ -33,26 +33,3 @@ const FeedComment = () => {
 };
 
 export default FeedComment;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 1.25rem 1.75rem;
-`;
-
-const ProfileWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.25rem;
-`;
-
-const ContentsWrapper = styled.div`
-  display: flex;
-  padding: 0.25rem 0.5rem;
-`;
-
-const InteractPanel = styled.div`
-  display: flex;
-  gap: 0.2rem;
-  padding-left: 0.2rem;
-`;

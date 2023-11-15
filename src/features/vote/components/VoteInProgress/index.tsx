@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
 import { CommonText, DividerImage } from '@/shared/components';
+import { Container, TitleWrapper, ContentsWrapper, ContentsBox } from './style';
 
 const TEMP_IMAGE = 'https://placehold.co/800?text=Bucket+Back&font=roboto';
 
@@ -24,30 +24,3 @@ const VoteInProgress = () => {
 };
 
 export default VoteInProgress;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const TitleWrapper = styled.div`
-  padding-top: 1rem;
-  padding-left: 1.25rem;
-`;
-
-const ContentsWrapper = styled.div`
-  display: flex;
-  gap: 0.7rem;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-  padding-bottom: 1rem;
-  overflow-x: scroll;
-`;
-
-const ContentsBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-`;
