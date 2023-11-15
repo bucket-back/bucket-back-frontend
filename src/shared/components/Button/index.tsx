@@ -12,7 +12,8 @@ interface CommonButtonProps {
     | 'text'
     | 'smText'
     | 'xsText'
-    | 'custom';
+    | 'custom'
+    | 'profile';
   isClick?: boolean;
   isDisabled?: boolean;
   children?: string;
@@ -181,6 +182,19 @@ const CommonButton = ({
       >
         <CommonIcon type="plus" />
       </Box>
+    ),
+    profile: (
+      <Button
+        size="xs"
+        bg="gray.100"
+        color="gray.800"
+        width="fit-content"
+        onClick={handleClick}
+        isDisabled={isDisabled}
+        type={isSubmit ? 'submit' : 'button'}
+      >
+        {children}
+      </Button>
     ),
   };
 
