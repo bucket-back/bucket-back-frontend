@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { CommonIconButton, CommonImage, CommonText } from '@/shared/components';
 import { formatNumber } from '@/shared/utils';
 import { PositionWrapper, ButtonWrapper, ItemListWrapper } from './style';
-import { ItemSummary } from '@/core/mocks/handler/item';
+import { ItemSummary } from '@/shared/types/item';
 
 interface ItemListProps {
   id: ItemSummary['id'];
