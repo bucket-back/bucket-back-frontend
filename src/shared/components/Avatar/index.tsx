@@ -2,10 +2,10 @@ import { Box, Avatar, AvatarProps, Circle } from '@chakra-ui/react';
 import { CommonIcon } from '@/shared/components';
 
 interface CommonAvatarProps {
-  isOwner: boolean;
-  size: string;
-  src: AvatarProps['src'];
-  onClick: () => void;
+  isOwner?: boolean;
+  size?: string;
+  src?: AvatarProps['src'];
+  onClick?: () => void;
 }
 
 const CommonAvatar = ({
@@ -14,6 +14,10 @@ const CommonAvatar = ({
   src = 'https://bit.ly/broken-link',
   onClick,
 }: CommonAvatarProps) => {
+  const handleClick = () => {
+    onClick && onClick();
+  };
+
   return (
     <>
       {isOwner ? (
@@ -25,14 +29,14 @@ const CommonAvatar = ({
             position="absolute"
             top="6.165rem"
             right="0.45rem"
-            onClick={onClick}
+            onClick={handleClick}
           >
             <CommonIcon type="pen" />
           </Circle>
         </Box>
       ) : (
         <Box>
-          <Avatar src={src} width={size} height={size} onClick={onClick} />
+          <Avatar src={src} width={size} height={size} onClick={handleClick} />
         </Box>
       )}
     </>
