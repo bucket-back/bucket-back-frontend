@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import {
   CommonButton,
   CommonDivider,
@@ -19,14 +18,14 @@ import {
   CommentsContainer,
   Box,
 } from './style';
-import { ReadDetailItemRes, ReadReviewListRes } from '@/core/mocks/handler/item';
 import ItemComment from '@/features/item/components/ItemComment/index';
+import { ReadReviewListRes } from '@/shared/types/item';
 
 const ItemDetail = () => {
   // 로그인 시 리뷰 클릭이 가능하도록 하기
   // 본인이 작성한 게시글은 리뷰를 작성하도록 할까?
   const isLogin = useAuthCheck();
-  const [itemInfo, setItemInfo] = useState<ReadDetailItemRes>();
+
   const [reviewInfo, setReviewInfo] = useState<ReadReviewListRes>();
 
   const handleItem = () => {
@@ -35,12 +34,9 @@ const ItemDetail = () => {
 
   const handleBuy = () => {
     // TODO: api를 통해 받은 링크를 이동할수 있는 기능
+    // 이거는 임의로 넣어놨습니다!
+    setReviewInfo();
   };
-
-  useEffect(() => {
-    axios.get('/api/items/1').then((res) => setItemInfo(res.data));
-    axios.get('/api/items/1/reviews').then((res) => setReviewInfo(res.data));
-  }, []);
 
   return (
     <>
@@ -69,7 +65,9 @@ const ItemDetail = () => {
             구매하러 가기
           </CommonButton>
         </ButtonWrapper>
-        {isLogin && <CommonButton type="mdFull">리뷰 쓰기</CommonButton>}
+        <CommonButton type="mdFull" isDisabled={!!isLogin}>
+          리뷰 쓰기
+        </CommonButton>
       </Container>
       <div>
         <CommonDivider size="lg" />

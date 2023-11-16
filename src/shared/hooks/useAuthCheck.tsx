@@ -3,9 +3,11 @@ import { Storage } from '@/shared/utils';
 
 const useAuthCheck = () => {
   const [isLogin, setIsLogin] = useState<boolean>(false);
+
   useEffect(() => {
     const token = Storage.getLocalStoraged('token');
-    if (token !== 'null') {
+
+    if (token) {
       setIsLogin(true);
     } else {
       setIsLogin(false);
