@@ -1,28 +1,11 @@
-export interface ReadDetailItemRes {
-  itemInfo: ItemInfo;
-  itemUrl: string;
-  itemAvgRate: number;
-  isMemberItem: boolean;
-}
-
 export interface CursorInfo {
   cursorId: null;
   size: 5;
 }
 
-export interface ReadReviewListRes {
-  reviewCount: number;
-  nextCursorId: string;
-  reviews: Review[];
-}
-
-export interface SearchItemListRes {
-  nextCursorId: string;
-  items: Item[];
-}
-
-export interface SearchKeywordItemListRes {
-  itemNameGetResults: ItemNameGetResult[];
+export interface PostItem {
+  hobby: string;
+  itemUrl: string;
 }
 
 export interface ItemNameGetResult {
