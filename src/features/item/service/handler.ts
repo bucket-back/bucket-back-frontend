@@ -1,4 +1,3 @@
-import { axiosClient } from '@/core/service/axios';
 import {
   postItemRequest,
   postItemResponse,
@@ -13,7 +12,8 @@ import {
   postReviewItemRequest,
   putEditReviewItemRequest,
   deleteReviewItemRequest,
-} from '@/features/item/service';
+} from './types';
+import { axiosClient } from '@/core/service/axios';
 
 const BASE_URL = 'items';
 
