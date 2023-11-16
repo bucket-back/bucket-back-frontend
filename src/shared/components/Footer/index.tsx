@@ -29,7 +29,7 @@ const FOOTER_INFO = [
 ];
 
 interface FooterProps {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 type FooterIcon = 'home' | 'search' | 'bucket' | 'item' | 'user';
