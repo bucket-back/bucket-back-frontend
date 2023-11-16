@@ -120,6 +120,7 @@ const CommonButton = ({
         _hover={{
           bg: 'none',
         }}
+        lineHeight={1.6}
         type={isSubmit ? 'submit' : 'button'}
       >
         {children}

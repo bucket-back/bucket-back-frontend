@@ -47,18 +47,20 @@ const CommonDrawer = ({
           <DrawerBody>{children}</DrawerBody>
 
           {isFull ? (
-            <DrawerFooter justifyContent="center" pb="4.0625rem">
-              <Button
-                color="white"
-                bgColor="blue.300"
-                height="2.5rem"
-                width="18.125rem"
-                _hover={{ bgColor: 'blue.300' }}
-                onClick={onClickFooterButton}
-              >
-                {footerButtonText}
-              </Button>
-            </DrawerFooter>
+            Boolean(footerButtonText) && (
+              <DrawerFooter justifyContent="center" pb="4.0625rem">
+                <Button
+                  color="white"
+                  bgColor="blue.300"
+                  height="2.5rem"
+                  width="18.125rem"
+                  _hover={{ bgColor: 'blue.300' }}
+                  onClick={onClickFooterButton}
+                >
+                  {footerButtonText}
+                </Button>
+              </DrawerFooter>
+            )
           ) : (
             <DrawerFooter>
               <Button variant="outline" mr="0.75rem" onClick={onClose}>
