@@ -1,3 +1,5 @@
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { CommonButton, CommonDivider, CommonInput, CommonText, Header } from '@/shared/components';
 import {
   FeedDetailContainer,
@@ -6,8 +8,17 @@ import {
   CommentInputContainer,
 } from './style';
 import { FeedComment, FeedItem } from '@/features/feed/components';
+import { getFeedDetail } from '@/features/feed/service/handler';
 
 const FeedDetail = () => {
+  const { feedId } = useParams();
+  const { data } = useQuery({
+    queryKey: ['feedDetail'],
+    queryFn: () => getFeedDetail(Number(feedId)),
+  });
+
+  console.log(data);
+
   return (
     <>
       <Header type="back" />

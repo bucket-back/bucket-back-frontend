@@ -1,13 +1,30 @@
 import { useSearchParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { CommonDivider, CommonTabs } from '@/shared/components';
 import { Container } from './style';
 import { FeedItem } from '@/features/feed/components';
+import { getFeeds } from '@/features/feed/service/handler';
+import { getHobbies } from '@/shared/service/handler';
 
 const hobby = ['cycle', 'swim', 'basketball'];
 
 const FeedHome = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentTabIndex = hobby.indexOf(searchParams.get('hobby') || hobby[0]);
+
+  const { data } = useQuery({
+    queryKey: ['feeds'],
+    queryFn: () => getFeeds({ hobbyName: 'BASEBALL', size: 10 }),
+  });
+
+  console.log(data);
+
+  const { data: hobbies } = useQuery({
+    queryKey: ['hobbies'],
+    queryFn: () => getHobbies(),
+  });
+
+  console.log(hobbies);
 
   return (
     <CommonTabs
