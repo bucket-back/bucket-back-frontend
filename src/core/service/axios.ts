@@ -35,6 +35,6 @@ axiosClient.interceptors.response.use(
     // 2. 다른 에러라면
     // 2-1) redirection하는 코드 작성
 
-    return Promise.reject(error.response);
+    return Promise.reject(error);
   }
 );

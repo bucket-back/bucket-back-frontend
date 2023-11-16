@@ -13,7 +13,11 @@ const CommonAvatar = ({
   size,
   src = 'https://bit.ly/broken-link',
   onClick,
-}: CommonAvatarProps) => {
+}: Partial<CommonAvatarProps>) => {
+  const handleClick = () => {
+    onClick && onClick();
+  };
+
   return (
     <>
       {isOwner ? (
@@ -25,14 +29,14 @@ const CommonAvatar = ({
             position="absolute"
             top="6.165rem"
             right="0.45rem"
-            onClick={onClick}
+            onClick={handleClick}
           >
             <CommonIcon type="pen" />
           </Circle>
         </Box>
       ) : (
         <Box>
-          <Avatar src={src} width={size} height={size} onClick={onClick} />
+          <Avatar src={src} width={size} height={size} onClick={handleClick} />
         </Box>
       )}
     </>

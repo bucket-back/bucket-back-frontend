@@ -1,16 +1,21 @@
+import { useNavigate } from 'react-router-dom';
 import { Box, Flex, HStack } from '@chakra-ui/react';
 import { CommonAvatar, CommonText, CommonBadge } from '@/shared/components';
 
 interface ProfileProps {
+  id: number;
   src?: string;
   nickName: string;
   levelNumber: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
-  isAdopted: boolean;
+  isAdopted?: boolean;
 }
 
-const Profile = ({ nickName, src, levelNumber, isAdopted }: ProfileProps) => {
+const Profile = ({ id, nickName, src, levelNumber, isAdopted }: ProfileProps) => {
+  const navigate = useNavigate();
+
   const handleClick = () => {
     // 추후 프로필로 이동
+    navigate(`/user/${id}`);
   };
 
   return (

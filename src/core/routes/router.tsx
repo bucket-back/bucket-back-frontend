@@ -1,9 +1,18 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Login from '@/pages/Login';
 import App from '@/App';
-import { FeedCreate, FeedDetail, FeedHome, Home } from '@/pages';
-import ItemCreate from '@/pages/Item/Create';
-import ItemList from '@/pages/Item/List';
+import {
+  FeedCreate,
+  FeedDetail,
+  FeedHome,
+  MemberHome,
+  Home,
+  ItemList,
+  ItemCreate,
+  ItemReview,
+  ItemDetail,
+} from '@/pages';
+import BucketCreate from '@/pages/Bucket/BucketCreate';
 import VoteCreate from '@/pages/Vote/VoteCreate';
 import VoteDetail from '@/pages/Vote/VoteDetail';
 import VoteHome from '@/pages/Vote/VoteHome';
@@ -69,55 +78,55 @@ export const router = createBrowserRouter([
       },
       {
         path: 'item/:itemId',
-        element: <div>item itemId</div>,
+        element: <ItemDetail />,
       },
       {
         path: 'item/:itemId/review/create',
-        element: <div>item itemId review create</div>,
+        element: <ItemReview />,
       },
       {
         path: 'review/:reviewId/edit',
         element: <div>review reviewId edit</div>,
       },
       {
-        path: 'user/edit',
-        element: <div>user edit</div>,
+        path: 'member/edit',
+        element: <div>member edit</div>,
       },
       {
-        path: 'user/edit/password',
-        element: <div>user edit password</div>,
+        path: 'member/edit/password',
+        element: <div>member edit password</div>,
       },
       {
-        path: 'user/:userId',
-        element: <div>user userId</div>,
+        path: 'member/:memberId',
+        element: <MemberHome />,
       },
       {
-        path: 'user/:userId/inventory',
-        element: <div>user userId inventory</div>,
+        path: 'member/:memberId/inventory',
+        element: <div>member memberId inventory</div>,
       },
       {
-        path: 'user/:userId/inventory/:inventoryId',
-        element: <div>user userId inventory inventoryId</div>,
+        path: 'member/:memberId/inventory/:inventoryId',
+        element: <div>member memberId inventory inventoryId</div>,
       },
       {
         path: 'inventory/create',
         element: <div>inventory create</div>,
       },
       {
-        path: 'user/:userId/bucket',
-        element: <div>user userId bucket</div>,
+        path: 'member/:memberId/bucket',
+        element: <div>member memberId bucket</div>,
       },
       {
-        path: 'user/:userId/bucket/:bucketId',
-        element: <div>user userId bucket bucketId</div>,
+        path: 'member/:memberId/bucket/:bucketId',
+        element: <div>member memberId bucket bucketId</div>,
       },
       {
         path: 'bucket/create',
-        element: <div>bucket create</div>,
+        element: <BucketCreate />,
       },
       {
-        path: 'user/:userId/feed',
-        element: <div>user userId feed</div>,
+        path: 'member/:memberId/feed',
+        element: <div>member memberId feed</div>,
       },
       {
         path: 'login',
