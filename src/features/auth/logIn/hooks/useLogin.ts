@@ -12,12 +12,10 @@ export const useLogin = () => {
     mutationFn: postLogin,
     onSuccess: (res) => {
       const { jwtToken, memberId, nickname } = res.data;
-      const userInfo = {
-        memberId: memberId,
-        nickname: nickname,
-      };
-      const userInfoString = JSON.stringify(userInfo);
-      Storage.setLocalStoraged('userInfo', userInfoString);
+      Storage.setLocalStoraged('userInfo', {
+        memberId,
+        nickname,
+      });
       Storage.setLocalStoraged('token', jwtToken);
       openToast({ message: '로그인에 성공하셨습니다.', type: 'success' });
       navigate('/');
