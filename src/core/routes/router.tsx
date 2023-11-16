@@ -11,9 +11,6 @@ import {
   ItemDetail,
 } from '@/pages';
 import BucketCreate from '@/pages/Bucket/BucketCreate';
-import ItemCreate from '@/pages/Item/Create';
-import ItemDetail from '@/pages/Item/Detail';
-import ItemList from '@/pages/Item/List';
 import VoteCreate from '@/pages/Vote/VoteCreate';
 import VoteDetail from '@/pages/Vote/VoteDetail';
 import VoteHome from '@/pages/Vote/VoteHome';
