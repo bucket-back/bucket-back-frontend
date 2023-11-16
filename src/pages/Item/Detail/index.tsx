@@ -35,7 +35,7 @@ const ItemDetail = () => {
   const handleBuy = () => {
     // TODO: api를 통해 받은 링크를 이동할수 있는 기능
     // 이거는 임의로 넣어놨습니다!
-    setReviewInfo();
+    setReviewInfo((prev) => prev);
   };
 
   return (
@@ -45,18 +45,18 @@ const ItemDetail = () => {
         <CommonImage size="md" />
         <ItemWrapper>
           <CommonText type="normalTitle" noOfLines={0}>
-            {itemInfo?.itemInfo.name}
+            아레나 취미활동 수영복
           </CommonText>
           <ItemBox>
             <CommonIcon type="fillStar" color="blue.300" />
             <Box>
               <CommonText type="smallInfo" noOfLines={0}>
-                {itemInfo?.itemAvgRate} / 5
+                4.5 / 5
               </CommonText>
             </Box>
           </ItemBox>
         </ItemWrapper>
-        <CommonText type="normalInfo">{formatNumber(Number(itemInfo?.itemInfo.price))}</CommonText>
+        <CommonText type="normalInfo">{formatNumber(23000)}</CommonText>
         <ButtonWrapper>
           <CommonButton type="mdSmall" onClick={handleItem}>
             아이템 담기
