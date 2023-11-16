@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Login from '@/pages/Login';
+
 import App from '@/App';
 import {
   FeedCreate,
@@ -11,11 +11,12 @@ import {
   ItemCreate,
   ItemReview,
   ItemDetail,
+  VoteHome,
+  VoteCreate,
+  VoteDetail,
+  BucketCreate,
+  Login,
 } from '@/pages';
-import BucketCreate from '@/pages/Bucket/BucketCreate';
-import VoteCreate from '@/pages/Vote/VoteCreate';
-import VoteDetail from '@/pages/Vote/VoteDetail';
-import VoteHome from '@/pages/Vote/VoteHome';
 
 export const router = createBrowserRouter([
   {
