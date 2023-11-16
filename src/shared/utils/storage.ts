@@ -2,7 +2,7 @@ const getLocalStoraged = (key: string) => {
   try {
     const value = window.localStorage.getItem(key);
 
-    return JSON.stringify(value);
+    return value ? JSON.stringify(value) : '';
   } catch (error) {
     console.error(error);
   }

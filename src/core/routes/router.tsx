@@ -1,9 +1,16 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '@/App';
-import { FeedCreate, FeedDetail } from '@/pages';
-import ItemDetail from '@/pages/Item/Detail';
-import ItemList from '@/pages/Item/List';
-import ItemCreate from '@/pages/Item/Create';
+import {
+  FeedCreate,
+  FeedDetail,
+  FeedHome,
+  Home,
+  ItemList,
+  ItemCreate,
+  ItemReview,
+  ItemDetail,
+} from '@/pages';
+import BucketCreate from '@/pages/Bucket/BucketCreate';
 import VoteCreate from '@/pages/Vote/VoteCreate';
 import VoteDetail from '@/pages/Vote/VoteDetail';
 import VoteHome from '@/pages/Vote/VoteHome';
@@ -15,11 +22,21 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <div>feed</div>,
-      },
-      {
-        path: 'feed',
-        element: <div>feed</div>,
+        element: <Home />,
+        children: [
+          {
+            path: '',
+            element: <FeedHome />,
+          },
+          {
+            path: 'feed',
+            element: <FeedHome />,
+          },
+          {
+            path: 'vote',
+            element: <VoteHome />,
+          },
+        ],
       },
       {
         path: 'feed/create',
@@ -32,10 +49,6 @@ export const router = createBrowserRouter([
       {
         path: 'feed/:feedId/edit',
         element: <div>feed feedId edit</div>,
-      },
-      {
-        path: 'vote',
-        element: <VoteHome />,
       },
       {
         path: 'vote/create',
@@ -67,7 +80,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'item/:itemId/review/create',
-        element: <div>item itemId review create</div>,
+        element: <ItemReview />,
       },
       {
         path: 'review/:reviewId/edit',
@@ -107,7 +120,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'bucket/create',
-        element: <div>bucket create</div>,
+        element: <BucketCreate />,
       },
       {
         path: 'user/:userId/feed',
