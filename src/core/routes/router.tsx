@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '@/App';
+import BucketCreate from '@/pages/Bucket/BucketCreate';
 import { FeedCreate, FeedDetail, FeedHome, Home } from '@/pages';
 import ItemCreate from '@/pages/Item/Create';
 import ItemList from '@/pages/Item/List';
@@ -112,7 +113,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'bucket/create',
-        element: <div>bucket create</div>,
+        element: <BucketCreate />,
       },
       {
         path: 'user/:userId/feed',
