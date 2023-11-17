@@ -1,4 +1,6 @@
+import { useParams } from 'react-router-dom';
 import { useDisclosure } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
 import {
   CommonButton,
   CommonDivider,
@@ -14,9 +16,17 @@ import {
   CommentInputContainer,
 } from './style';
 import { FeedBucketDetail, FeedComment, FeedItem } from '@/features/feed/components';
+import { feedApi } from '@/features/feed/service';
 
 const FeedDetail = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { feedId } = useParams();
+  const { data } = useQuery({
+    queryKey: ['feedDetail'],
+    queryFn: () => feedApi.getFeedDetail(Number(feedId)),
+  });
+
+  console.log(data);
 
   return (
     <>
