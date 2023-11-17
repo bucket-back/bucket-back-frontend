@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { CommonButton, CommonIcon, CommonInput } from '@/shared/components';
 import { useValidateForm } from '@/shared/hooks';
 import { ButtonWrapper, Container, Form, IconWrapper, InputWrapper } from './style';
@@ -15,6 +16,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { mutate: loginMutate } = useLogin();
   const registerOptions = useValidateForm();
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<PostLoginRequest> = (data) => {
     loginMutate(data);
@@ -48,7 +50,14 @@ const Login = () => {
           <CommonButton type="mdMiddle" isSubmit={true}>
             로그인
           </CommonButton>
-          <CommonButton type="mdMiddle">회원가입</CommonButton>
+          <CommonButton
+            type="mdMiddle"
+            onClick={() => {
+              navigate('/signup');
+            }}
+          >
+            회원가입
+          </CommonButton>
         </ButtonWrapper>
       </Form>
     </Container>
