@@ -8,7 +8,7 @@ const getLocalStoraged = (key: string) => {
   }
 };
 
-const setLocalStoraged = (key: string, value: string) => {
+const setLocalStoraged = <T>(key: string, value: T) => {
   try {
     localStorage.setItem(key, JSON.stringify(value));
   } catch (error) {
