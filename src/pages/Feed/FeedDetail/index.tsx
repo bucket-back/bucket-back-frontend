@@ -16,14 +16,14 @@ import {
   CommentInputContainer,
 } from './style';
 import { FeedBucketDetail, FeedComment, FeedItem } from '@/features/feed/components';
-import { getFeedDetail } from '@/features/feed/service/handler';
+import { feedApi } from '@/features/feed/service';
 
 const FeedDetail = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { feedId } = useParams();
   const { data } = useQuery({
     queryKey: ['feedDetail'],
-    queryFn: () => getFeedDetail(Number(feedId)),
+    queryFn: () => feedApi.getFeedDetail(Number(feedId)),
   });
 
   console.log(data);
