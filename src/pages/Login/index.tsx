@@ -1,26 +1,22 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { CommonButton, CommonIcon, CommonInput } from '@/shared/components';
+import { useValidateForm } from '@/shared/hooks';
 import { ButtonWrapper, Container, Form, IconWrapper, InputWrapper } from './style';
-import { useLogin } from '@/features/auth/login/hooks/useLogin';
-import useValidateForm from '@/shared/hooks/useValidateForm';
-
-interface Login {
-  email: string;
-  password: string;
-}
+import { useLogin } from '@/features/member/hooks';
+import { PostLoginRequest } from '@/features/member/service';
 
 const Login = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Login>();
+  } = useForm<PostLoginRequest>();
   const [showPassword, setShowPassword] = useState(false);
   const { mutate: loginMutate } = useLogin();
   const registerOptions = useValidateForm();
 
-  const onSubmit: SubmitHandler<Login> = (data) => {
+  const onSubmit: SubmitHandler<PostLoginRequest> = (data) => {
     loginMutate(data);
   };
 

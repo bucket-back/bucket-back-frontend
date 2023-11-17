@@ -2,16 +2,16 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { useCustomToast } from '@/shared/hooks';
 import { Storage } from '@/shared/utils';
-import { postLogin } from '../service/handler';
+import memberApi from '../service/handler';
 
-export const useLogin = () => {
+const useLogin = () => {
   const openToast = useCustomToast();
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: postLogin,
-    onSuccess: (res) => {
-      const { jwtToken, memberId, nickname } = res.data;
+    mutationFn: memberApi.postLogin,
+    onSuccess: (data) => {
+      const { jwtToken, memberId, nickname } = data;
       Storage.setLocalStoraged('userInfo', {
         memberId,
         nickname,
@@ -25,3 +25,5 @@ export const useLogin = () => {
     },
   });
 };
+
+export default useLogin;
