@@ -8,3 +8,15 @@ export interface PostLoginResponse {
   memberId: number;
   nickname: string;
 }
+
+export interface PostSignupRequest {
+  email: string;
+  password: string;
+  passwordConfirm: string;
+  nickname: string;
+  emailAuthString: string;
+}
+
+export interface PostCheckEmailResponse {
+  code: string;
+}
