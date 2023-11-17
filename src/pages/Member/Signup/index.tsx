@@ -42,18 +42,17 @@ const SignUp = () => {
   };
 
   const handleCheckNickname = () => {
-    if (errors.nickname) {
+    if (errors.nickname || !nickname) {
       return;
     }
     checkNicknameMutate(nickname);
   };
 
   const handleCheckEmail = () => {
-    if (errors.email) {
+    if (errors.email || !email) {
       return;
-    } else {
-      checkEmailMutate(email);
     }
+    checkEmailMutate(email);
   };
 
   const handleEmailAuthNumber = () => {

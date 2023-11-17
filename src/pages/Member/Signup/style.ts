@@ -11,7 +11,6 @@ export const Container = styled.main`
 export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: baseline;
 `;
 
 export const Form = styled.form`
