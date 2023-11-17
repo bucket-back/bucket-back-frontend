@@ -1,80 +1,39 @@
-import {
-  PostItem,
-  ItemInfo,
-  Review,
-  Item,
-  ItemNameGetResult,
-  ReviewInfo,
-} from '@/shared/types/item';
+import { ItemInfo, Item, ItemNameGetResult } from '@/shared/types';
 
-export interface postItemRequest {
-  params: PostItem;
+export interface PostItemRequest {
+  hobby: string;
+  itemUrl: string;
+}
+export interface PostItemResponse {
+  itemId: number;
 }
 
-export interface getTakeItemReqest {
+export interface PostTakeItemRequest {
   itemIds: string[];
 }
 
-export interface getTakeItemResponse {
+export interface PostTakeItemResponse {
   itemIds: string[];
 }
 
-export interface getDetailItemResponse {
+export interface GetDetailItemResponse {
   itemInfo: ItemInfo;
   itemUrl: string;
   itemAvgRate: number;
   isMemberItem: boolean;
 }
 
-export interface getSearchReviewListRequest {
-  itemId: number;
-  cursorId: string;
-  size: number;
-}
-
-export interface getSearchReviewListResponse {
-  reviewCount: number;
-  nextCursorId: string;
-  reviews: Review[];
-}
-
-export interface getSearchItemRequest {
+export interface GetSearchItemRequest {
   keyword: string;
   cursorId: string;
   size: number;
 }
 
-export interface getSearchItemResponse {
+export interface GetSearchItemResponse {
   nextCursorId: string;
   items: Item[];
 }
 
-export interface getSearchReviewListRequest {
-  itemId: number;
-  cursorId: string;
-  size: number;
-}
-
-export interface getSearchKeywordResponse {
+export interface GetSearchKeywordResponse {
   itemNameGetResults: ItemNameGetResult[];
-}
-
-export interface postReviewItemRequest {
-  itemId: number;
-  params: ReviewInfo;
-}
-
-export interface putEditReviewItemRequest {
-  itemId: number;
-  reviewId: string;
-  params: ReviewInfo;
-}
-
-export interface deleteReviewItemRequest {
-  itemId: number;
-  reviewId: string;
-}
-
-export interface postItemResponse {
-  itemId: number;
 }
