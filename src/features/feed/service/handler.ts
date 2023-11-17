@@ -9,7 +9,7 @@ import { axiosClient } from '@/core/service/axios';
 
 const BASE_URL = 'feeds';
 
-export const feedApi = {
+const feedApi = {
   getFeeds: async ({ hobbyName, nickname, sortCondition, cursorId, size }: GetFeedsRequest) => {
     const res = await axiosClient.get<GetFeedsResponse>(
       `${BASE_URL}?hobbyName=${hobbyName}${nickname ? `&nickname=${nickname}` : ''}${
@@ -31,3 +31,5 @@ export const feedApi = {
     return res.data;
   },
 };
+
+export default feedApi;
