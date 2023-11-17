@@ -10,11 +10,12 @@ import {
   ItemCreate,
   ItemReview,
   ItemDetail,
+  VoteHome,
+  VoteCreate,
+  VoteDetail,
+  BucketCreate,
+  Login,
 } from '@/pages';
-import BucketCreate from '@/pages/Bucket/BucketCreate';
-import VoteCreate from '@/pages/Vote/VoteCreate';
-import VoteDetail from '@/pages/Vote/VoteDetail';
-import VoteHome from '@/pages/Vote/VoteHome';
 
 export const router = createBrowserRouter([
   {
@@ -129,7 +130,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'login',
-        element: <div>login</div>,
+        element: <Login />,
       },
       {
         path: 'signup',
