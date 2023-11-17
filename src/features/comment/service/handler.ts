@@ -12,23 +12,31 @@ const createBaseUrl = (feedId: number) => `feeds/${feedId}/comments`;
 
 const commentApi = {
   getComments: async ({ feedId, cursorId, size }: GetCommentsRequest) => {
-    const res = await axiosClient.get<GetCommentsResponse>(createBaseUrl(feedId), {
-      params: cursorId ? { cursorId, size } : { size },
+    const params = cursorId ? { cursorId, size } : { size };
+
+    const response = await axiosClient.get<GetCommentsResponse>(createBaseUrl(feedId), {
+      params,
     });
 
-    return res.data;
+    return response.data;
   },
   postComment: async ({ feedId, content }: PostCommentRequest) => {
     return await axiosClient.post<null>(createBaseUrl(feedId), { content });
   },
   postCommentAdoption: async ({ feedId, commentId }: PostCommentAdoptionRequest) => {
-    return await axiosClient.post<null>(`${createBaseUrl(feedId)}/${commentId}/adoption`);
+    const url = `${createBaseUrl(feedId)}/${commentId}/adoption`;
+
+    return await axiosClient.post<null>(url);
   },
   putComment: async ({ feedId, commentId, content }: PutCommentRequest) => {
-    return await axiosClient.put<null>(`${createBaseUrl(feedId)}/${commentId}`, { content });
+    const url = `${createBaseUrl(feedId)}/${commentId}`;
+
+    return await axiosClient.put<null>(url, { content });
   },
   deleteComment: async ({ feedId, commentId }: DeleteCommentRequest) => {
-    return await axiosClient.delete<null>(`${createBaseUrl(feedId)}/${commentId}`);
+    const url = `${createBaseUrl(feedId)}/${commentId}`;
+
+    return await axiosClient.delete<null>(url);
   },
 };
 
