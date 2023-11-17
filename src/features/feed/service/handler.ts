@@ -4,6 +4,7 @@ import {
   GetFeedsResponse,
   PostFeedRequest,
   PostFeedResponse,
+  PutFeedRequest,
 } from './types';
 import { axiosClient } from '@/core/service/axios';
 
@@ -29,6 +30,18 @@ const feedApi = {
     const res = await axiosClient.post<PostFeedResponse>(BASE_URL, { bucketId, content });
 
     return res.data;
+  },
+  postFeedLike: async (feedId: number) => {
+    await axiosClient.post(`${BASE_URL}/${feedId}/like`);
+  },
+  putFeed: async ({ feedId, content }: PutFeedRequest) => {
+    await axiosClient.post(`${BASE_URL}/${feedId}`, { content });
+  },
+  deleteFeed: async (feedId: number) => {
+    await axiosClient.delete(`${BASE_URL}/${feedId}`);
+  },
+  deleteFeedLike: async (feedId: number) => {
+    await axiosClient.delete(`${BASE_URL}/${feedId}/unlike`);
   },
 };
 
