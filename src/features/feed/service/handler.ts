@@ -4,6 +4,7 @@ import {
   GetFeedsResponse,
   PostFeedRequest,
   PostFeedResponse,
+  PutFeedRequest,
 } from './types';
 import { axiosClient } from '@/core/service/axios';
 
@@ -11,24 +12,47 @@ const BASE_URL = 'feeds';
 
 const feedApi = {
   getFeeds: async ({ hobbyName, nickname, sortCondition, cursorId, size }: GetFeedsRequest) => {
-    const res = await axiosClient.get<GetFeedsResponse>(
-      `${BASE_URL}?hobbyName=${hobbyName}${nickname ? `&nickname=${nickname}` : ''}${
-        sortCondition ? `&sortCondition=${sortCondition}` : ''
-      }`,
-      { params: cursorId ? { cursorId, size } : { size } }
-    );
+    const nicknameQueryString = nickname ? `&nickname=${nickname}` : '';
+    const sortConditionQueryString = sortCondition ? `&sortCondition=${sortCondition}` : '';
 
-    return res.data;
+    const url = `${BASE_URL}?hobbyName=${hobbyName}${nicknameQueryString}${sortConditionQueryString}`;
+    const params = cursorId ? { cursorId, size } : { size };
+
+    const response = await axiosClient.get<GetFeedsResponse>(url, { params });
+
+    return response.data;
   },
   getFeedDetail: async (feedId: number) => {
-    const res = await axiosClient.get<GetFeedDetailResponse>(`${BASE_URL}/${feedId}`);
+    const url = `${BASE_URL}/${feedId}`;
 
-    return res.data;
+    const response = await axiosClient.get<GetFeedDetailResponse>(url);
+
+    return response.data;
   },
   postFeed: async ({ bucketId, content }: PostFeedRequest) => {
-    const res = await axiosClient.post<PostFeedResponse>(BASE_URL, { bucketId, content });
+    const response = await axiosClient.post<PostFeedResponse>(BASE_URL, { bucketId, content });
 
-    return res.data;
+    return response.data;
+  },
+  postFeedLike: async (feedId: number) => {
+    const url = `${BASE_URL}/${feedId}/like`;
+
+    return await axiosClient.post<null>(url);
+  },
+  putFeed: async ({ feedId, content }: PutFeedRequest) => {
+    const url = `${BASE_URL}/${feedId}`;
+
+    return await axiosClient.post<null>(url, { content });
+  },
+  deleteFeed: async (feedId: number) => {
+    const url = `${BASE_URL}/${feedId}`;
+
+    return await axiosClient.delete<null>(url);
+  },
+  deleteFeedLike: async (feedId: number) => {
+    const url = `${BASE_URL}/${feedId}/unlike`;
+
+    return await axiosClient.delete<null>(url);
   },
 };
 

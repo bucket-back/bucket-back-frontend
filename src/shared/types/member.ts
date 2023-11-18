@@ -1,3 +1,10 @@
+export interface MemberInfo {
+  memberId: number;
+  nickName: string;
+  profileImage: string;
+  level: number;
+}
+
 export interface MemberProfile {
   memberId: number;
   nickname: string;
