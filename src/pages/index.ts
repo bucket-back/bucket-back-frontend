@@ -12,3 +12,4 @@ export { default as VoteCreate } from './Vote/VoteCreate';
 export { default as VoteDetail } from './Vote/VoteDetail';
 export { default as VoteHome } from './Vote/VoteHome';
 export { default as Login } from './Login';
+export { default as MemberEdit } from './Member/MemberEdit';
