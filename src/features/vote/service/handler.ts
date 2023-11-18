@@ -15,24 +15,24 @@ const voteApi = {
     const sortQueryString = sort ? `&sort=${sort}` : '';
     const params = cursorId ? { cursorId, size } : { size };
 
-    const res = await axiosClient.get<GetVotesResponse>(
+    const response = await axiosClient.get<GetVotesResponse>(
       `${BASE_URL}/?hobby=${hobby}&status=${status}${sortQueryString}`,
       {
         params,
       }
     );
 
-    return res.data;
+    return response.data;
   },
   postVotes: async ({ hobby, content, item1Id, item2Id }: PostVotesRequest) => {
-    const res = await axiosClient.post<PostVotesResponse>(BASE_URL, {
+    const response = await axiosClient.post<PostVotesResponse>(BASE_URL, {
       hobby,
       content,
       item1Id,
       item2Id,
     });
 
-    return res.data;
+    return response.data;
   },
   postVoteParticipation: async ({ voteId, itemId }: PostVoteParticipationRequest) => {
     return await axiosClient.post<null>(`${BASE_URL}/${voteId}/participation`, {
@@ -40,9 +40,9 @@ const voteApi = {
     });
   },
   getVoteDetail: async (voteId: number) => {
-    const res = await axiosClient.get<GetVoteDetailResponse>(`${BASE_URL}/${voteId}`);
+    const response = await axiosClient.get<GetVoteDetailResponse>(`${BASE_URL}/${voteId}`);
 
-    return res.data;
+    return response.data;
   },
   deleteVote: async (voteId: number) => {
     return await axiosClient.delete<null>(`${BASE_URL}/${voteId}`);
