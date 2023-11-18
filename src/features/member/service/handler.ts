@@ -54,38 +54,6 @@ const memberApi = {
     });
   },
 
-  postCheckEmail: async (email: string) => {
-    const url = `${BASE_URL}/check/email`;
-
-    const response = await axiosClient.post<PostCheckEmailResponse>(url, {
-      email,
-    });
-
-    return response.data;
-  },
-
-  postCheckNickname: async (nickname: string) => {
-    const url = `${BASE_URL}/check/nickname`;
-
-    return await axiosClient.post<null>(url, {
-      nickname,
-    });
-  },
-
-  postSignup: async ({
-    email,
-    password,
-    nickname,
-  }: Omit<PostSignupRequest, 'passwordConfirm' | 'emailAuthNumber'>) => {
-    const url = `${BASE_URL}/signup`;
-
-    return await axiosClient.post<null>(url, {
-      email,
-      password,
-      nickname,
-    });
-  },
-
   getMember: async (nickname: string) => {
     const url = `${BASE_URL}/${nickname}`;
 
