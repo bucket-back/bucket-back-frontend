@@ -11,22 +11,22 @@ const memberApi = {
   postLogin: async ({ email, password }: PostLoginRequest) => {
     const url = `${BASE_URL}/login`;
 
-    const res = await axiosClient.post<PostLoginResponse>(url, {
+    const response = await axiosClient.post<PostLoginResponse>(url, {
       email,
       password,
     });
 
-    return res.data;
+    return response.data;
   },
 
   postCheckEmail: async (email: string) => {
     const url = `${BASE_URL}/check/email`;
 
-    const res = await axiosClient.post<PostCheckEmailResponse>(url, {
+    const response = await axiosClient.post<PostCheckEmailResponse>(url, {
       email,
     });
 
-    return res.data;
+    return response.data;
   },
 
   postCheckNickname: async (nickname: string) => {
