@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CommonIconButton, CommonText, Header, Footer } from '@/shared/components';
+import { ItemSummary } from '@/shared/types';
 import { formatNumber } from '@/shared/utils';
 import {
   CommonContainer,
@@ -10,7 +11,6 @@ import {
   AddContainer,
 } from './style';
 import { ListItem } from '@/features/item/components';
-import { ItemSummary } from '@/shared/types/item';
 
 const ItemList = () => {
   const [isDelete, setIsDelete] = useState<boolean>(false);

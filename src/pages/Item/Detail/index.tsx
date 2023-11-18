@@ -19,14 +19,14 @@ import {
   Box,
 } from './style';
 import ItemComment from '@/features/item/components/ItemComment/index';
-import { getSearchReviewListResponse } from '@/features/item/service/types';
+import { GetSearchReviewListResponse } from '@/features/review/service';
 
 const ItemDetail = () => {
   // 로그인 시 리뷰 클릭이 가능하도록 하기
   // 본인이 작성한 게시글은 리뷰를 작성하도록 할까?
   const isLogin = useAuthCheck();
 
-  const [reviewInfo, setReviewInfo] = useState<getSearchReviewListResponse>();
+  const [reviewInfo, setReviewInfo] = useState<GetSearchReviewListResponse>();
 
   const handleItem = () => {
     // TODO: 로그인 한 사용자가 아이템을 담을수 있는 기능
