@@ -19,6 +19,7 @@ interface CommonButtonProps {
   children?: string;
   onClick?: () => void;
   isSubmit?: boolean;
+  width?: string;
 }
 
 const CommonButton = ({
@@ -28,6 +29,7 @@ const CommonButton = ({
   children,
   onClick,
   isSubmit = false,
+  width = '100%',
 }: CommonButtonProps) => {
   const handleClick = () => {
     onClick && onClick();
@@ -68,7 +70,7 @@ const CommonButton = ({
         size="md"
         bg="blue.300"
         colorScheme="blue"
-        width="100%"
+        width={width}
         maxW="15rem"
         px="1rem"
         onClick={handleClick}
