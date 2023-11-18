@@ -6,8 +6,8 @@ import {
   DateText,
   Profile,
 } from '@/shared/components';
+import { Review } from '@/shared/types';
 import { Container, ProfileWrapper, ContentsWrapper, InteractPanel } from './style';
-import { Review } from '@/shared/types/item';
 
 export interface ItemCommentProps {
   content: Review['content'];

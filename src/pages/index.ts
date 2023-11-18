@@ -13,3 +13,4 @@ export { default as VoteDetail } from './Vote/VoteDetail';
 export { default as VoteHome } from './Vote/VoteHome';
 export { default as Login } from './Member/Login';
 export { default as Signup } from './Member/Signup';
+export { default as MemberEdit } from './Member/MemberEdit';
