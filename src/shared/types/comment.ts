@@ -1,9 +1,4 @@
-interface MemberInfo {
-  memberId: number;
-  nickName: string;
-  profileImage: string;
-  level: number;
-}
+import { MemberInfo } from './member';
 
 export interface Comment {
   cursorId: string;
