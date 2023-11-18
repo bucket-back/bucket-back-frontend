@@ -71,37 +71,42 @@ const SignUp = () => {
           <CommonText type="strongInfo">이메일</CommonText>
           <InputAndButtonBox>
             <CommonInput
-              width="14.5rem"
+              width="100%"
               type="text"
               placeholder="이메일을 입력해주세요."
               error={errors.email}
               {...register('email', ...registerOptions.email)}
             />
 
-            <CommonButton type="mdMiddle" onClick={handleCheckEmail} isDisabled={checkEmailPending}>
+            <CommonButton
+              type="mdBase"
+              width="fit-content"
+              onClick={handleCheckEmail}
+              isDisabled={checkEmailPending}
+            >
               인증
             </CommonButton>
           </InputAndButtonBox>
           {checkEmailSuccess && (
             <InputAndButtonBox>
               <CommonInput
-                width="14.5rem"
+                width="100%"
                 type="text"
                 placeholder="인증번호를 입력해주세요."
                 error={errors.emailAuthString}
                 disabled={sameEmailAuthString}
                 {...register('emailAuthString', { required: '인증번호 입력은 필수입니다.' })}
               />
-              <CommonButton type="mdMiddle" onClick={handleEmailAuthNumber}>
+              <CommonButton type="mdBase" width="fit-content" onClick={handleEmailAuthNumber}>
                 확인
               </CommonButton>
             </InputAndButtonBox>
           )}
         </InputWrapper>
 
-        <div>
+        <InputWrapper>
           <CommonInput
-            width="18.4375rem"
+            width="100%"
             label="비밀번호"
             type={showPassword ? 'text' : 'password'}
             placeholder="비밀번호를 입력해주세요."
@@ -114,7 +119,7 @@ const SignUp = () => {
             {...register('password', ...registerOptions.password)}
           />
           <CommonInput
-            width="18.4375rem"
+            width="100%"
             type={showPasswordConfirm ? 'text' : 'password'}
             placeholder="비밀번호를 입력해주세요."
             error={errors.passwordConfirm}
@@ -129,19 +134,21 @@ const SignUp = () => {
                 value === password || '비밀번호가 동일하지 않습니다.',
             })}
           />
-        </div>
+        </InputWrapper>
+
         <InputWrapper>
           <CommonText type="strongInfo">닉네임</CommonText>
           <InputAndButtonBox>
             <CommonInput
               type="text"
-              width="14.5rem"
+              width="100%"
               placeholder="닉네임을 입력해주세요."
               error={errors.nickname}
               {...register('nickname', ...registerOptions.nickname)}
             />
             <CommonButton
-              type="mdMiddle"
+              type="mdBase"
+              width="fit-content"
               onClick={handleCheckNickname}
               isDisabled={checkNicknamePending}
             >

@@ -11,6 +11,7 @@ export const Container = styled.main`
 export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 `;
 
 export const Form = styled.form`
@@ -25,6 +26,6 @@ export const IconWrapper = styled.div`
 
 export const InputAndButtonBox = styled.div`
   display: flex;
-  align-items: baseline;
+  align-items: start;
   gap: 0.2rem;
 `;
