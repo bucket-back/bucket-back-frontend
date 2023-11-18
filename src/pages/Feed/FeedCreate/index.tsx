@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useDisclosure } from '@chakra-ui/react';
 import {
   CommonButton,
   CommonDrawer,
@@ -9,6 +8,7 @@ import {
   CommonTextarea,
   Header,
 } from '@/shared/components';
+import { useDrawer } from '@/shared/hooks';
 import { Container, ContentsWrapper, ContentsBox } from './style';
 import { FeedSelectBucket } from '@/features/feed/components';
 
@@ -29,7 +29,7 @@ const FeedCreate = () => {
   const onSubmit: SubmitHandler<Textarea> = (data) => {
     console.log(data, selectedHobby, selectedBucket);
   };
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDrawer();
 
   return (
     <>
