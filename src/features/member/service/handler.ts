@@ -66,11 +66,13 @@ const memberApi = {
 
     return await axiosClient.put<null>(url, { nickname, introduction });
   },
+
   putMemberPassword: async (password: string) => {
     const url = `${BASE_URL}/password`;
 
     return await axiosClient.put<null>(url, { password });
   },
+
   deleteMember: async () => {
     const url = `${BASE_URL}/delete`;
 
