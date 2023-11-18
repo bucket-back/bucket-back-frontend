@@ -1,10 +1,10 @@
 import { useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { hobbyApi } from '@/features/hobby';
 import { CommonDivider, CommonTabs } from '@/shared/components';
 import { Container } from './style';
 import { FeedItem } from '@/features/feed/components';
 import { feedApi } from '@/features/feed/service';
+import { useHobby } from '@/features/hobby/hooks';
 
 const hobby = ['cycle', 'swim', 'basketball'];
 
@@ -19,10 +19,7 @@ const FeedHome = () => {
 
   console.log(data);
 
-  const { data: hobbies } = useQuery({
-    queryKey: ['hobbies'],
-    queryFn: () => hobbyApi.getHobbies(),
-  });
+  const { data: hobbies } = useHobby();
 
   console.log(hobbies);
 
