@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useDisclosure } from '@chakra-ui/react';
 import {
   CommonButton,
   CommonDrawer,
@@ -9,6 +8,7 @@ import {
   CommonText,
   Header,
 } from '@/shared/components';
+import { useDrawer } from '@/shared/hooks';
 import { Box, ButtonWrapper, Container, Form, Wrapper } from './style';
 import BucketSelectItem from '@/features/bucket/components/BucketSelectItem';
 
@@ -25,7 +25,7 @@ const BucketCreate = () => {
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm<ItemText>({ mode: 'onBlur' });
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDrawer();
 
   const onSubmit: SubmitHandler<ItemText> = () => {};
 
