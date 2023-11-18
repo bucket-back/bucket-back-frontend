@@ -27,6 +27,7 @@ export const AvatarBox = styled.div`
 
 export const InputBox = styled.div`
   display: flex;
+  align-items: start;
   gap: 0.5rem;
 `;
 
