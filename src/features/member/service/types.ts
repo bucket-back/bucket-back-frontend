@@ -1,3 +1,5 @@
+import { BucketProfile, InventoryProfile, MemberProfile } from '@/shared/types/member';
+
 export interface PostLoginRequest {
   email: string;
   password: string;
@@ -19,4 +21,15 @@ export interface PostSignupRequest {
 
 export interface PostCheckEmailResponse {
   code: string;
+}
+
+export interface GetMemberResponse {
+  memberProfile: MemberProfile;
+  bucketProfiles: BucketProfile[];
+  inventoryProfiles: InventoryProfile[];
+}
+
+export interface PutMemberRequest {
+  nickname: string;
+  introduction: string;
 }
