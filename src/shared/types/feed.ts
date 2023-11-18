@@ -1,4 +1,5 @@
 import { MemberInfo } from './member';
+
 export interface FeedItems {
   id: number;
   image: string;

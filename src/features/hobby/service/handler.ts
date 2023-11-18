@@ -1,11 +1,13 @@
 import { GetHobbiesResponse } from './types';
 import { axiosClient } from '@/core/service/axios';
 
+const BASE_URL = 'hobbies';
+
 const hobbyApi = {
   getHobbies: async () => {
-    const res = await axiosClient.get<GetHobbiesResponse>('hobbies');
+    const response = await axiosClient.get<GetHobbiesResponse>(BASE_URL);
 
-    return res.data;
+    return response.data;
   },
 };
 
