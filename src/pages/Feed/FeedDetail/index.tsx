@@ -1,18 +1,38 @@
-import { CommonButton, CommonDivider, CommonInput, CommonText, Header } from '@/shared/components';
+import { useParams } from 'react-router-dom';
+import { useDisclosure } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
+import {
+  CommonButton,
+  CommonDivider,
+  CommonDrawer,
+  CommonInput,
+  CommonText,
+  Header,
+} from '@/shared/components';
 import {
   FeedDetailContainer,
   CommentNumberWrapper,
   CommentsContainer,
   CommentInputContainer,
 } from './style';
-import { FeedComment, FeedItem } from '@/features/feed/components';
+import { FeedBucketDetail, FeedComment, FeedItem } from '@/features/feed/components';
+import { feedApi } from '@/features/feed/service';
 
 const FeedDetail = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { feedId } = useParams();
+  const { data } = useQuery({
+    queryKey: ['feedDetail'],
+    queryFn: () => feedApi.getFeedDetail(Number(feedId)),
+  });
+
+  console.log(data);
+
   return (
     <>
       <Header type="back" />
       <FeedDetailContainer>
-        <FeedItem isDetail />
+        <FeedItem isDetail onClick={onOpen} />
       </FeedDetailContainer>
       <div>
         <CommonDivider size="lg" />
@@ -50,6 +70,10 @@ const FeedDetail = () => {
           rightIcon={<CommonButton type="mdFull">등록</CommonButton>}
         />
       </CommentInputContainer>
+
+      <CommonDrawer isOpen={isOpen} onClose={onClose} onClickFooterButton={onClose} isFull={true}>
+        <FeedBucketDetail />
+      </CommonDrawer>
     </>
   );
 };

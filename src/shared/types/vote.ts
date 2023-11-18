@@ -1,35 +1,18 @@
-export interface SearchVoteRes {
-  nextCursorId: string;
-  voteSummaries: VoteSummary[];
-}
+import { ItemInfo } from './item';
 
-export interface DetailRes {
-  option1Item: OptionItem;
-  option2Item: OptionItem;
+export interface Votes {
   voteInfo: VoteInfo;
-  isOwner: boolean;
-  selectOptionId: number;
-}
-
-export interface VoteSummary {
-  voteInfo: VoteInfo;
-  option1Item: OptionItem;
-  option2Item: OptionItem;
+  item1Info: ItemInfo;
+  item2Info: ItemInfo;
   cursorId: string;
-}
-export interface OptionItem {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
 }
 
 export interface VoteInfo {
   id: number;
   content: string;
-  createAt: string;
+  startTime: string;
   isVoting: boolean;
   participants: number;
-  option1Votes: number;
-  option2Votes: number;
+  item1Votes: number;
+  item2Votes: number;
 }

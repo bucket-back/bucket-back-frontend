@@ -12,7 +12,7 @@ const FeedComment = () => {
   return (
     <Container>
       <ProfileWrapper>
-        <Profile nickName="테스트" levelNumber={10} isAdopted />
+        <Profile id={1} nickName="테스트" levelNumber={10} isAdopted />
         <CommonMenu type="update" iconSize="0.25rem" onDelete={() => {}} onUpdate={() => {}} />
       </ProfileWrapper>
       <ContentsWrapper>

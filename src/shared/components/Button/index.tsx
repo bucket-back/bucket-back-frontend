@@ -12,12 +12,14 @@ interface CommonButtonProps {
     | 'text'
     | 'smText'
     | 'xsText'
-    | 'custom';
+    | 'custom'
+    | 'profile';
   isClick?: boolean;
   isDisabled?: boolean;
   children?: string;
   onClick?: () => void;
   isSubmit?: boolean;
+  width?: string;
 }
 
 const CommonButton = ({
@@ -27,6 +29,7 @@ const CommonButton = ({
   children,
   onClick,
   isSubmit = false,
+  width = '100%',
 }: CommonButtonProps) => {
   const handleClick = () => {
     onClick && onClick();
@@ -67,7 +70,7 @@ const CommonButton = ({
         size="md"
         bg="blue.300"
         colorScheme="blue"
-        width="100%"
+        width={width}
         maxW="15rem"
         px="1rem"
         onClick={handleClick}
@@ -120,6 +123,7 @@ const CommonButton = ({
         _hover={{
           bg: 'none',
         }}
+        lineHeight={1.6}
         type={isSubmit ? 'submit' : 'button'}
       >
         {children}
@@ -181,6 +185,19 @@ const CommonButton = ({
       >
         <CommonIcon type="plus" />
       </Box>
+    ),
+    profile: (
+      <Button
+        size="xs"
+        bg="gray.100"
+        color="gray.800"
+        width="fit-content"
+        onClick={handleClick}
+        isDisabled={isDisabled}
+        type={isSubmit ? 'submit' : 'button'}
+      >
+        {children}
+      </Button>
     ),
   };
 

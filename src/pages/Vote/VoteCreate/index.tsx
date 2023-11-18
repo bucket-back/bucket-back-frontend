@@ -11,7 +11,7 @@ import {
   Header,
 } from '@/shared/components';
 import { Body, Container, Form } from './style';
-import VoteSelectItem from '@/features/vote/components/VoteSelectItem';
+import { VoteSelectItem } from '@/features/vote/components';
 
 interface Textarea {
   textarea: string;

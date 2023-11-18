@@ -103,6 +103,7 @@ const FeedItem = ({
     <Container>
       <ProfileWrapper>
         <Profile
+          id={memberInfo.memberId}
           nickName={memberInfo.nickname}
           src={memberInfo.profileImage}
           levelNumber={memberInfo.level}
