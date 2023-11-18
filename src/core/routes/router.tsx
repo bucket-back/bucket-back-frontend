@@ -17,6 +17,7 @@ import {
   Login,
   Signup,
   MemberEdit,
+  MemberPassword,
 } from '@/pages';
 
 export const router = createBrowserRouter([
@@ -96,7 +97,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'member/edit/password',
-        element: <div>member edit password</div>,
+        element: <MemberPassword />,
       },
       {
         path: 'member/:memberId',
