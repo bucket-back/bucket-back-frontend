@@ -1,4 +1,4 @@
-import { FeedInfo, FeedItem, FeedsData, MemberInfo } from '@/shared/types/feed';
+import { FeedInfo, FeedItem, FeedsData, MemberInfo } from '@/shared/types';
 
 export interface GetFeedsResponse {
   nextCursorId: string;
@@ -25,5 +25,10 @@ export interface PostFeedResponse {
 
 export interface PostFeedRequest {
   bucketId: number;
+  content: string;
+}
+
+export interface PutFeedRequest {
+  feedId: number;
   content: string;
 }

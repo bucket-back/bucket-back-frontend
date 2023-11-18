@@ -1,14 +1,8 @@
+import { MemberInfo } from './member';
 export interface FeedItems {
   id: number;
   image: string;
   url: string;
-}
-
-export interface MemberInfo {
-  memberId: number;
-  nickName: string;
-  profileImage: string;
-  level: number;
 }
 
 export interface FeedsData {

@@ -15,6 +15,7 @@ import {
   VoteDetail,
   BucketCreate,
   Login,
+  MemberEdit,
 } from '@/pages';
 
 export const router = createBrowserRouter([
@@ -90,7 +91,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'member/edit',
-        element: <div>member edit</div>,
+        element: <MemberEdit />,
       },
       {
         path: 'member/edit/password',
