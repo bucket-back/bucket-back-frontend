@@ -1,36 +1,62 @@
-import { useEffect } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+// import { useEffect, useState } from 'react';
+import { Fragment } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { CommonDivider, CommonTabs } from '@/shared/components';
 import { Container } from './style';
 import { FeedItem } from '@/features/feed/components';
-import { feedApi } from '@/features/feed/service';
+import { useFeeds } from '@/features/feed/hooks';
 import { useHobby } from '@/features/hobby/hooks';
 
-const hobby = ['cycle', 'swim', 'basketball'];
+// const hobbyDefault = [
+//   {
+//     name: 'basketball',
+//     value: '농구',
+//   },
+//   {
+//     name: 'baseball',
+//     value: '야구',
+//   },
+//   {
+//     name: 'soccer',
+//     value: '축구',
+//   },
+//   {
+//     name: 'cycle',
+//     value: '사이클',
+//   },
+//   {
+//     name: 'keyboard',
+//     value: '키보드',
+//   },
+//   {
+//     name: 'swimming',
+//     value: '수영',
+//   },
+// ];
 
 const FeedHome = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { search } = useLocation();
+  // const [nextCursorId, setNextCursorId] = useState<string | undefined>(undefined);
+  const hobbies = useHobby();
 
-  useEffect(() => {
-    if (search.length === 0) {
-      setSearchParams({ hobby: hobby[0] });
-    }
-  }, [search.length, setSearchParams]);
+  if (!searchParams.get('hobby') && hobbies.status === 'success') {
+    setSearchParams({ hobby: hobbies.data?.hobbies[0].name });
+  }
 
-  const currentTabIndex = hobby.indexOf(searchParams.get('hobby') || hobby[0]);
-
-  const { data } = useQuery({
-    queryKey: ['feeds'],
-    queryFn: () => feedApi.getFeeds({ hobbyName: 'BASEBALL', size: 10 }),
+  const feeds = useFeeds({
+    hobbyName: searchParams.get('hobby')?.toUpperCase() || 'BASEBALL',
+    size: 10,
   });
 
-  console.log(data);
+  // useEffect(() => {
+  //   if (feeds.data?.nextCursorId) {
+  //     setNextCursorId(feeds.data?.nextCursorId);
+  //   }
+  // }, [feeds.data?.nextCursorId]);
 
-  const { data: hobbies } = useHobby();
-
-  console.log(hobbies);
+  const currentTabIndex = hobbies.data?.hobbies
+    .map(({ name }) => name)
+    .indexOf(searchParams.get('hobby') || hobbies.data.hobbies[0].name);
 
   return (
     <CommonTabs
@@ -40,62 +66,22 @@ const FeedHome = () => {
       onClick={(value) => {
         setSearchParams({ hobby: value });
       }}
-      tabsData={[
-        {
-          value: 'cycle',
-          label: '자전거',
+      tabsData={
+        hobbies.data?.hobbies.map(({ name, value }) => ({
+          value: name,
+          label: value,
           content: (
-            <>
-              <Container>
-                <FeedItem />
-                <CommonDivider size="sm" />
-                <FeedItem />
-                <CommonDivider size="sm" />
-                <FeedItem />
-                <CommonDivider size="sm" />
-                <FeedItem />
-                <CommonDivider size="sm" />
-              </Container>
-            </>
+            <Container>
+              {feeds.data?.feeds.map((feed) => (
+                <Fragment key={feed.feedId}>
+                  <FeedItem onClick={() => {}} />
+                  <CommonDivider size="sm" />
+                </Fragment>
+              ))}
+            </Container>
           ),
-        },
-        {
-          value: 'swim',
-          label: '수영',
-          content: (
-            <>
-              <Container>
-                <FeedItem />
-                <CommonDivider size="sm" />
-                <FeedItem />
-                <CommonDivider size="sm" />
-                <FeedItem />
-                <CommonDivider size="sm" />
-                <FeedItem />
-                <CommonDivider size="sm" />
-              </Container>
-            </>
-          ),
-        },
-        {
-          value: 'basketball',
-          label: '농구',
-          content: (
-            <>
-              <Container>
-                <FeedItem />
-                <CommonDivider size="sm" />
-                <FeedItem />
-                <CommonDivider size="sm" />
-                <FeedItem />
-                <CommonDivider size="sm" />
-                <FeedItem />
-                <CommonDivider size="sm" />
-              </Container>
-            </>
-          ),
-        },
-      ]}
+        })) || []
+      }
     />
   );
 };
