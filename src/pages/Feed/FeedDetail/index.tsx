@@ -27,20 +27,22 @@ const FeedDetail = () => {
     <>
       <Header type="back" />
       <FeedDetailContainer>
-        <FeedItem
-          memberInfo={feed.data?.memberInfo}
-          feedId={feed.data?.feedInfo.id}
-          feedContent={feed.data?.feedInfo.content}
-          isLike={feed.data?.feedInfo.isLiked}
-          likeCount={feed.data?.feedInfo.likeCount}
-          commentCount={3}
-          createdAt={feed.data?.feedInfo.createdAt}
-          feedItems={feed.data?.feedItems}
-          bucketName={feed.data?.feedInfo.bucketName}
-          bucketBudget={feed.data?.feedInfo.bucketBudget}
-          isDetail
-          onClick={onOpen}
-        />
+        {feed.isSuccess && (
+          <FeedItem
+            memberInfo={feed.data?.memberInfo}
+            feedId={feed.data?.feedInfo.id}
+            feedContent={feed.data?.feedInfo.content}
+            isLike={feed.data?.feedInfo.isLiked}
+            likeCount={feed.data?.feedInfo.likeCount}
+            commentCount={3}
+            createdAt={feed.data?.feedInfo.createdAt}
+            feedItems={feed.data?.feedItems}
+            bucketName={feed.data?.feedInfo.bucketName}
+            bucketBudget={feed.data?.feedInfo.bucketBudget}
+            isDetail
+            onClick={onOpen}
+          />
+        )}
       </FeedDetailContainer>
       <div>
         <CommonDivider size="lg" />
