@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom';
-import { useDisclosure } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import {
   CommonButton,
@@ -9,6 +8,7 @@ import {
   CommonText,
   Header,
 } from '@/shared/components';
+import { useDrawer } from '@/shared/hooks';
 import {
   FeedDetailContainer,
   CommentNumberWrapper,
@@ -19,7 +19,7 @@ import { FeedBucketDetail, FeedComment, FeedItem } from '@/features/feed/compone
 import { feedApi } from '@/features/feed/service';
 
 const FeedDetail = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDrawer();
   const { feedId } = useParams();
   const { data } = useQuery({
     queryKey: ['feedDetail'],
