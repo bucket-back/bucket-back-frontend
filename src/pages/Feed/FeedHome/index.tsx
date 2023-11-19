@@ -1,6 +1,6 @@
 // import { useEffect, useState } from 'react';
 import { Fragment } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CommonDivider, CommonTabs } from '@/shared/components';
 import { Container } from './style';
 import { FeedItem } from '@/features/feed/components';
@@ -36,6 +36,7 @@ import { useHobby } from '@/features/hobby/hooks';
 
 const FeedHome = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   // const [nextCursorId, setNextCursorId] = useState<string | undefined>(undefined);
   const hobbies = useHobby();
 
@@ -43,8 +44,10 @@ const FeedHome = () => {
     setSearchParams({ hobby: hobbies.data?.hobbies[0].name });
   }
 
+  // console.log(searchParams.get('hobby')?.toUpperCase());
+
   const feeds = useFeeds({
-    hobbyName: searchParams.get('hobby')?.toUpperCase() || 'BASEBALL',
+    hobbyName: 'BASEBALL',
     size: 10,
   });
 
@@ -72,12 +75,33 @@ const FeedHome = () => {
           label: value,
           content: (
             <Container>
-              {feeds.data?.feeds.map((feed) => (
-                <Fragment key={feed.feedId}>
-                  <FeedItem onClick={() => {}} />
-                  <CommonDivider size="sm" />
-                </Fragment>
-              ))}
+              {feeds.data?.feeds.map(
+                ({
+                  feedId,
+                  memberInfo,
+                  content,
+                  isLike,
+                  likeCount,
+                  commentCount,
+                  createdAt,
+                  feedItems,
+                }) => (
+                  <Fragment key={feedId}>
+                    <FeedItem
+                      memberInfo={memberInfo}
+                      feedId={feedId}
+                      feedContent={content}
+                      isLike={isLike}
+                      likeCount={likeCount}
+                      commentCount={commentCount}
+                      createdAt={createdAt}
+                      feedItems={feedItems}
+                      onClick={() => navigate(`./${feedId}`)}
+                    />
+                    <CommonDivider size="sm" />
+                  </Fragment>
+                )
+              )}
             </Container>
           ),
         })) || []

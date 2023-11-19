@@ -7,6 +7,7 @@ import {
   CommonMenu,
   CommonButton,
 } from '@/shared/components';
+import { FeedItemInfo, MemberInfo } from '@/shared/types';
 import {
   Container,
   ProfileWrapper,
@@ -21,28 +22,17 @@ import {
   BucketInfoBox,
 } from './style';
 
-interface Member {
-  nickname: string;
-  profileImage: string;
-  level: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
-  memberId: number;
-}
-
-interface Item {
-  itemId: number;
-  itemImage: string;
-  itemUrl: string;
-}
-
 interface FeedItemProps {
-  memberInfo: Member;
+  memberInfo: MemberInfo;
   feedId: number;
   feedContent: string;
   isLike: boolean;
   likeCount: number;
   commentCount: number;
-  createAt: string;
-  feedItems: Item[];
+  createdAt: string;
+  feedItems: FeedItemInfo[];
+  bucketName: string;
+  bucketBudget: number;
   isDetail: boolean;
   onClick: (id: number) => void;
   onUpdate: (id: number) => void;
@@ -51,7 +41,7 @@ interface FeedItemProps {
 
 const FeedItem = ({
   memberInfo = {
-    nickname: '잘생긴 하얀 개굴',
+    nickName: '잘생긴 하얀 개굴',
     profileImage: 'https://via.placeholder.com/100x100',
     level: 1,
     memberId: 2,
@@ -59,41 +49,49 @@ const FeedItem = ({
   feedId = 1,
   feedContent = '애들아 내 조합 어떰? ㅋㅋㅋㅋ',
   isLike = true,
-  likeCount = 3,
+  likeCount,
   commentCount = 3,
-  createAt = '2021-10-15T20:48:19.816Z',
+  createdAt = '2021-10-15T20:48:19.816Z',
   feedItems = [
     {
-      itemId: 1,
-      itemImage: 'https://via.placeholder.com/100x100',
-      itemUrl: 'https://www.naver.com/',
+      id: 1,
+      image: 'https://via.placeholder.com/100x100',
+      name: '',
+      price: 0,
     },
     {
-      itemId: 2,
-      itemImage: 'https://via.placeholder.com/100x100',
-      itemUrl: 'https://www.naver.com/',
+      id: 2,
+      image: 'https://via.placeholder.com/100x100',
+      name: '',
+      price: 0,
     },
     {
-      itemId: 3,
-      itemImage: 'https://via.placeholder.com/100x100',
-      itemUrl: 'https://www.naver.com/',
+      id: 3,
+      image: 'https://via.placeholder.com/100x100',
+      name: '',
+      price: 0,
     },
     {
-      itemId: 4,
-      itemImage: 'https://via.placeholder.com/100x100',
-      itemUrl: 'https://www.naver.com/',
+      id: 4,
+      image: 'https://via.placeholder.com/100x100',
+      name: '',
+      price: 0,
     },
     {
-      itemId: 5,
-      itemImage: 'https://via.placeholder.com/100x100',
-      itemUrl: 'https://www.naver.com/',
+      id: 5,
+      image: 'https://via.placeholder.com/100x100',
+      name: '',
+      price: 0,
     },
     {
-      itemId: 6,
-      itemImage: 'https://via.placeholder.com/100x100',
-      itemUrl: 'https://www.naver.com/',
+      id: 6,
+      image: 'https://via.placeholder.com/100x100',
+      name: '',
+      price: 0,
     },
   ],
+  bucketName,
+  bucketBudget,
   isDetail = false,
   onClick,
   onUpdate,
@@ -104,7 +102,7 @@ const FeedItem = ({
       <ProfileWrapper>
         <Profile
           id={memberInfo.memberId}
-          nickName={memberInfo.nickname}
+          nickName={memberInfo.nickName}
           src={memberInfo.profileImage}
           levelNumber={memberInfo.level}
           isAdopted={false}
@@ -124,20 +122,20 @@ const FeedItem = ({
         </CommonText>
         {isDetail && (
           <BucketInfoBox>
-            <CommonText type="normalInfo">하얀 개구리 조합</CommonText>
-            <CommonText type="normalInfo">29,000원</CommonText>
+            <CommonText type="normalInfo">{bucketName}</CommonText>
+            <CommonText type="normalInfo">{bucketBudget}원</CommonText>
           </BucketInfoBox>
         )}
         <ImageBox>
           {feedItems.map((item) => (
-            <CommonImage key={item.itemId} size="sm" src={item.itemImage} />
+            <CommonImage key={item.id} size="sm" src={item.image} />
           ))}
         </ImageBox>
         <DetailInfoWrapper>
-          <DateText createdDate={createAt} />
+          <DateText createdDate={createdAt} />
           <InteractPanel>
             {isDetail ? (
-              <CommonButton type="sm">3</CommonButton>
+              <CommonButton type="sm">{String(likeCount)}</CommonButton>
             ) : (
               <>
                 <LikeBox>
