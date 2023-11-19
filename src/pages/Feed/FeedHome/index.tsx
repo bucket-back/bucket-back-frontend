@@ -2,60 +2,24 @@
 import { Fragment } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CommonDivider, CommonTabs } from '@/shared/components';
-import { Container } from './style';
+import { Container, NoResult } from './style';
 import { FeedItem } from '@/features/feed/components';
 import { useFeeds } from '@/features/feed/hooks';
 import { useHobby } from '@/features/hobby/hooks';
 
-// const hobbyDefault = [
-//   {
-//     name: 'basketball',
-//     value: '농구',
-//   },
-//   {
-//     name: 'baseball',
-//     value: '야구',
-//   },
-//   {
-//     name: 'soccer',
-//     value: '축구',
-//   },
-//   {
-//     name: 'cycle',
-//     value: '사이클',
-//   },
-//   {
-//     name: 'keyboard',
-//     value: '키보드',
-//   },
-//   {
-//     name: 'swimming',
-//     value: '수영',
-//   },
-// ];
-
 const FeedHome = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  // const [nextCursorId, setNextCursorId] = useState<string | undefined>(undefined);
   const hobbies = useHobby();
 
-  if (!searchParams.get('hobby') && hobbies.status === 'success') {
+  if (!searchParams.get('hobby') && hobbies.isSuccess) {
     setSearchParams({ hobby: hobbies.data?.hobbies[0].name });
   }
 
-  // console.log(searchParams.get('hobby')?.toUpperCase());
-
   const feeds = useFeeds({
-    hobbyName: 'BASEBALL',
+    hobbyName: searchParams.get('hobby')?.toUpperCase() || '',
     size: 10,
   });
-
-  // useEffect(() => {
-  //   if (feeds.data?.nextCursorId) {
-  //     setNextCursorId(feeds.data?.nextCursorId);
-  //   }
-  // }, [feeds.data?.nextCursorId]);
 
   const currentTabIndex = hobbies.data?.hobbies
     .map(({ name }) => name)
@@ -75,32 +39,37 @@ const FeedHome = () => {
           label: value,
           content: (
             <Container>
-              {feeds.data?.feeds.map(
-                ({
-                  feedId,
-                  memberInfo,
-                  content,
-                  isLike,
-                  likeCount,
-                  commentCount,
-                  createdAt,
-                  feedItems,
-                }) => (
-                  <Fragment key={feedId}>
-                    <FeedItem
-                      memberInfo={memberInfo}
-                      feedId={feedId}
-                      feedContent={content}
-                      isLike={isLike}
-                      likeCount={likeCount}
-                      commentCount={commentCount}
-                      createdAt={createdAt}
-                      feedItems={feedItems}
-                      onClick={() => navigate(`./${feedId}`)}
-                    />
-                    <CommonDivider size="sm" />
-                  </Fragment>
+              {feeds.isSuccess ? (
+                feeds.data?.feeds.map(
+                  ({
+                    feedId,
+                    memberInfo,
+                    content,
+                    isLike,
+                    likeCount,
+                    commentCount,
+                    createdAt,
+                    feedItems,
+                  }) => (
+                    <Fragment key={feedId}>
+                      <FeedItem
+                        memberInfo={memberInfo}
+                        feedId={feedId}
+                        feedContent={content}
+                        isLike={isLike}
+                        likeCount={likeCount}
+                        commentCount={commentCount}
+                        createdAt={createdAt}
+                        feedItems={feedItems}
+                        isDetail={false}
+                        onClick={() => navigate(`./${feedId}`)}
+                      />
+                      <CommonDivider size="sm" />
+                    </Fragment>
+                  )
                 )
+              ) : (
+                <NoResult>검색 결과가 없습니다.</NoResult>
               )}
             </Container>
           ),
