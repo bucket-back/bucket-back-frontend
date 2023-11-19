@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
-  height: calc(100vh - 14.5rem);
+  height: calc(100vh - 14rem);
   overflow-y: scroll;
 `;
 
