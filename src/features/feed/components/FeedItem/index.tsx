@@ -31,72 +31,30 @@ interface FeedItemProps {
   commentCount: number;
   createdAt: string;
   feedItems: FeedItemInfo[];
-  bucketName: string;
-  bucketBudget: number;
+  bucketName?: string;
+  bucketBudget?: number;
   isDetail: boolean;
   onClick: (id: number) => void;
-  onUpdate: (id: number) => void;
-  onDelete: (id: number) => void;
+  onUpdate?: (id: number) => void;
+  onDelete?: (id: number) => void;
 }
 
 const FeedItem = ({
-  memberInfo = {
-    nickName: '잘생긴 하얀 개굴',
-    profileImage: 'https://via.placeholder.com/100x100',
-    level: 1,
-    memberId: 2,
-  },
-  feedId = 1,
-  feedContent = '애들아 내 조합 어떰? ㅋㅋㅋㅋ',
-  isLike = true,
+  memberInfo,
+  feedId,
+  feedContent,
+  isLike,
   likeCount,
-  commentCount = 3,
-  createdAt = '2021-10-15T20:48:19.816Z',
-  feedItems = [
-    {
-      id: 1,
-      image: 'https://via.placeholder.com/100x100',
-      name: '',
-      price: 0,
-    },
-    {
-      id: 2,
-      image: 'https://via.placeholder.com/100x100',
-      name: '',
-      price: 0,
-    },
-    {
-      id: 3,
-      image: 'https://via.placeholder.com/100x100',
-      name: '',
-      price: 0,
-    },
-    {
-      id: 4,
-      image: 'https://via.placeholder.com/100x100',
-      name: '',
-      price: 0,
-    },
-    {
-      id: 5,
-      image: 'https://via.placeholder.com/100x100',
-      name: '',
-      price: 0,
-    },
-    {
-      id: 6,
-      image: 'https://via.placeholder.com/100x100',
-      name: '',
-      price: 0,
-    },
-  ],
+  commentCount,
+  createdAt,
+  feedItems,
   bucketName,
   bucketBudget,
   isDetail = false,
   onClick,
   onUpdate,
   onDelete,
-}: Partial<FeedItemProps>) => {
+}: FeedItemProps) => {
   return (
     <Container>
       <ProfileWrapper>
@@ -117,9 +75,11 @@ const FeedItem = ({
         )}
       </ProfileWrapper>
       <ContentsWrapper onClick={() => onClick && onClick(feedId)}>
-        <CommonText type="smallInfo" color="inherit" noOfLines={isDetail ? 10 : 3}>
-          {feedContent}
-        </CommonText>
+        {feedContent && (
+          <CommonText type="smallInfo" color="inherit" noOfLines={isDetail ? 10 : 3}>
+            {feedContent}
+          </CommonText>
+        )}
         {isDetail && (
           <BucketInfoBox>
             <CommonText type="normalInfo">{bucketName}</CommonText>
