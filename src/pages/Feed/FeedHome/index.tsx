@@ -1,4 +1,4 @@
-// import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Fragment } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CommonDivider, CommonTabs } from '@/shared/components';
@@ -12,12 +12,14 @@ const FeedHome = () => {
   const navigate = useNavigate();
   const hobbies = useHobby();
 
-  if (!searchParams.get('hobby') && hobbies.isSuccess) {
-    setSearchParams({ hobby: hobbies.data?.hobbies[0].name });
-  }
+  useEffect(() => {
+    if (!searchParams.get('hobby') && hobbies.isSuccess) {
+      setSearchParams({ hobby: hobbies.data.hobbies[0].name });
+    }
+  }, [hobbies.data?.hobbies, hobbies.isSuccess, searchParams, setSearchParams]);
 
   const feeds = useFeeds({
-    hobbyName: searchParams.get('hobby')?.toUpperCase() || '',
+    hobbyName: searchParams.get('hobby') || hobbies.data?.hobbies[0].name || '',
     size: 10,
   });
 
