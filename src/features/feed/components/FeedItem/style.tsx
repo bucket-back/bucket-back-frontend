@@ -32,12 +32,6 @@ export const ImageBox = styled.div`
   gap: 0.25rem;
 `;
 
-export const BucketTitleTag = styled.div`
-  position: absolute;
-  right: 0.6rem;
-  bottom: 0.6rem;
-`;
-
 export const DetailInfoWrapper = styled.div`
   display: flex;
   justify-content: space-between;

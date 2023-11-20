@@ -1,8 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
 import { CommonTabs } from '@/shared/components';
 import { Container } from './style';
-import VoteInProgress from '@/features/vote/components/VoteInProgress';
-import Votes from '@/features/vote/components/Votes';
+import { VoteInProgress, Votes } from '@/features/vote/components';
 
 const hobby = ['cycle', 'swim', 'basketball'];
 

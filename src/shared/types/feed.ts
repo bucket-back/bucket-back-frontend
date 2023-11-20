@@ -1,14 +1,9 @@
+import { MemberInfo } from './member';
+
 export interface FeedItems {
   id: number;
   image: string;
   url: string;
-}
-
-export interface MemberInfo {
-  memberId: number;
-  nickName: string;
-  profileImage: string;
-  level: number;
 }
 
 export interface FeedsData {
@@ -19,7 +14,7 @@ export interface FeedsData {
   likeCount: number;
   commentCount: number;
   createdAt: string;
-  feedItems: FeedItems[];
+  feedItems: FeedItemInfo[];
   isLike: boolean;
 }
 
@@ -35,7 +30,7 @@ export interface FeedInfo {
   isLiked: boolean;
 }
 
-export interface FeedItem {
+export interface FeedItemInfo {
   id: number;
   name: string;
   price: number;

@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useDisclosure } from '@chakra-ui/react';
-
 import {
   CommonButton,
   CommonDrawer,
@@ -10,8 +8,9 @@ import {
   CommonTextarea,
   Header,
 } from '@/shared/components';
+import { useDrawer } from '@/shared/hooks';
 import { Body, Container, Form } from './style';
-import VoteSelectItem from '@/features/vote/components/VoteSelectItem';
+import { VoteSelectItem } from '@/features/vote/components';
 
 interface Textarea {
   textarea: string;
@@ -26,7 +25,7 @@ const VoteCreate = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Textarea>();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDrawer();
   const onSubmit: SubmitHandler<Textarea> = (data) => {
     // 취미,버킷 선택했는지 안했는지 체크
     console.log(data, selectedHobby, selectedItem);

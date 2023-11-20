@@ -1,30 +1,29 @@
-import { useSearchParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { hobbyApi } from '@/features/hobby';
+// import { useEffect, useState } from 'react';
+import { Fragment } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CommonDivider, CommonTabs } from '@/shared/components';
-import { Container } from './style';
+import { Container, NoResult } from './style';
 import { FeedItem } from '@/features/feed/components';
-import { feedApi } from '@/features/feed/service';
-
-const hobby = ['cycle', 'swim', 'basketball'];
+import { useFeeds } from '@/features/feed/hooks';
+import { useHobby } from '@/features/hobby/hooks';
 
 const FeedHome = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentTabIndex = hobby.indexOf(searchParams.get('hobby') || hobby[0]);
+  const navigate = useNavigate();
+  const hobbies = useHobby();
 
-  const { data } = useQuery({
-    queryKey: ['feeds'],
-    queryFn: () => feedApi.getFeeds({ hobbyName: 'BASEBALL', size: 10 }),
+  if (!searchParams.get('hobby') && hobbies.isSuccess) {
+    setSearchParams({ hobby: hobbies.data?.hobbies[0].name });
+  }
+
+  const feeds = useFeeds({
+    hobbyName: searchParams.get('hobby')?.toUpperCase() || '',
+    size: 10,
   });
 
-  console.log(data);
-
-  const { data: hobbies } = useQuery({
-    queryKey: ['hobbies'],
-    queryFn: () => hobbyApi.getHobbies(),
-  });
-
-  console.log(hobbies);
+  const currentTabIndex = hobbies.data?.hobbies
+    .map(({ name }) => name)
+    .indexOf(searchParams.get('hobby') || hobbies.data.hobbies[0].name);
 
   return (
     <CommonTabs
@@ -34,62 +33,48 @@ const FeedHome = () => {
       onClick={(value) => {
         setSearchParams({ hobby: value });
       }}
-      tabsData={[
-        {
-          value: 'cycle',
-          label: '자전거',
+      tabsData={
+        hobbies.data?.hobbies.map(({ name, value }) => ({
+          value: name,
+          label: value,
           content: (
-            <>
-              <Container>
-                <FeedItem />
-                <CommonDivider size="sm" />
-                <FeedItem />
-                <CommonDivider size="sm" />
-                <FeedItem />
-                <CommonDivider size="sm" />
-                <FeedItem />
-                <CommonDivider size="sm" />
-              </Container>
-            </>
+            <Container>
+              {feeds.isSuccess ? (
+                feeds.data?.feeds.map(
+                  ({
+                    feedId,
+                    memberInfo,
+                    content,
+                    isLike,
+                    likeCount,
+                    commentCount,
+                    createdAt,
+                    feedItems,
+                  }) => (
+                    <Fragment key={feedId}>
+                      <FeedItem
+                        memberInfo={memberInfo}
+                        feedId={feedId}
+                        feedContent={content}
+                        isLike={isLike}
+                        likeCount={likeCount}
+                        commentCount={commentCount}
+                        createdAt={createdAt}
+                        feedItems={feedItems}
+                        isDetail={false}
+                        onClick={() => navigate(`./${feedId}`)}
+                      />
+                      <CommonDivider size="sm" />
+                    </Fragment>
+                  )
+                )
+              ) : (
+                <NoResult>검색 결과가 없습니다.</NoResult>
+              )}
+            </Container>
           ),
-        },
-        {
-          value: 'swim',
-          label: '수영',
-          content: (
-            <>
-              <Container>
-                <FeedItem />
-                <CommonDivider size="sm" />
-                <FeedItem />
-                <CommonDivider size="sm" />
-                <FeedItem />
-                <CommonDivider size="sm" />
-                <FeedItem />
-                <CommonDivider size="sm" />
-              </Container>
-            </>
-          ),
-        },
-        {
-          value: 'basketball',
-          label: '농구',
-          content: (
-            <>
-              <Container>
-                <FeedItem />
-                <CommonDivider size="sm" />
-                <FeedItem />
-                <CommonDivider size="sm" />
-                <FeedItem />
-                <CommonDivider size="sm" />
-                <FeedItem />
-                <CommonDivider size="sm" />
-              </Container>
-            </>
-          ),
-        },
-      ]}
+        })) || []
+      }
     />
   );
 };

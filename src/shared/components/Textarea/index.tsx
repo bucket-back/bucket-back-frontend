@@ -18,7 +18,7 @@ const CommonTextarea = forwardRef(
   ({ placeholder, label, size, error, ...props }: CommonTextareaProps, ref) => {
     return (
       <FormControl isInvalid={Boolean(error?.message)}>
-        <FormLabel>{label}</FormLabel>
+        {label && <FormLabel>{label}</FormLabel>}
         <Textarea
           fontSize="sm"
           placeholder={placeholder}

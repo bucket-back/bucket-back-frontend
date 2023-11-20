@@ -15,6 +15,9 @@ import {
   VoteDetail,
   BucketCreate,
   Login,
+  Signup,
+  MemberEdit,
+  MemberPassword,
 } from '@/pages';
 
 export const router = createBrowserRouter([
@@ -90,11 +93,11 @@ export const router = createBrowserRouter([
       },
       {
         path: 'member/edit',
-        element: <div>member edit</div>,
+        element: <MemberEdit />,
       },
       {
         path: 'member/edit/password',
-        element: <div>member edit password</div>,
+        element: <MemberPassword />,
       },
       {
         path: 'member/:memberId',
@@ -134,7 +137,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'signup',
-        element: <div>signup</div>,
+        element: <Signup />,
       },
       {
         path: '*',

@@ -32,6 +32,24 @@ const useValidateForm = () => {
         },
       },
     ],
+    nickname: [
+      {
+        required: '닉네임 입력은 필수입니다.',
+        minLength: {
+          value: 3,
+          message: '3글자 이상으로 입력해주세요.',
+        },
+        maxLength: {
+          value: 25,
+          message: '25글자 이하로 입력해주세요.',
+        },
+        validate: {
+          onlyUnderBar: (v: string) =>
+            /^[a-zA-Z0-9_]+$/.test(v) || '영문자,숫자,_조합만을 허용합니다.',
+          hasAlpabet: (v: string) => /[a-zA-Z]+/.test(v) || '영문자를 1개 이상 입력해주세요.',
+        },
+      },
+    ],
   };
 
   return registerOptions;
