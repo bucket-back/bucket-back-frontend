@@ -1,18 +1,17 @@
 import { queryOptions } from '@tanstack/react-query';
 import { GetFeedsRequest, feedApi } from '.';
 
-const QUERY_KEY = 'feed';
-
 const feedQueryOption = {
+  all: ['feed'] as const,
   list: ({ hobbyName, nickname, sortCondition, cursorId, size }: GetFeedsRequest) =>
     queryOptions({
-      queryKey: [QUERY_KEY, hobbyName],
+      queryKey: [...feedQueryOption.all, hobbyName] as const,
       queryFn: () => feedApi.getFeeds({ hobbyName, nickname, sortCondition, cursorId, size }),
     }),
 
   detail: (feedId: number) =>
     queryOptions({
-      queryKey: [QUERY_KEY, feedId],
+      queryKey: [...feedQueryOption.all, feedId] as const,
       queryFn: () => feedApi.getFeedDetail(feedId),
     }),
 };
