@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { Fragment } from 'react';
+import { useEffect, Fragment } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CommonDivider, CommonTabs } from '@/shared/components';
 import { Container, NoResult } from './style';
