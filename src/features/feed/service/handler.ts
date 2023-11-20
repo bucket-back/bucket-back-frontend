@@ -22,6 +22,7 @@ const feedApi = {
 
     return response.data;
   },
+
   getFeedDetail: async (feedId: number) => {
     const url = `${BASE_URL}/${feedId}`;
 
@@ -29,26 +30,31 @@ const feedApi = {
 
     return response.data;
   },
+
   postFeed: async ({ bucketId, content }: PostFeedRequest) => {
     const response = await axiosClient.post<PostFeedResponse>(BASE_URL, { bucketId, content });
 
     return response.data;
   },
+
   postFeedLike: async (feedId: number) => {
     const url = `${BASE_URL}/${feedId}/like`;
 
     return await axiosClient.post<null>(url);
   },
+
   putFeed: async ({ feedId, content }: PutFeedRequest) => {
     const url = `${BASE_URL}/${feedId}`;
 
     return await axiosClient.post<null>(url, { content });
   },
+
   deleteFeed: async (feedId: number) => {
     const url = `${BASE_URL}/${feedId}`;
 
     return await axiosClient.delete<null>(url);
   },
+
   deleteFeedLike: async (feedId: number) => {
     const url = `${BASE_URL}/${feedId}/unlike`;
 

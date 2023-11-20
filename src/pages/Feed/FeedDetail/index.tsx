@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import {
   CommonButton,
   CommonDivider,
@@ -16,23 +15,34 @@ import {
   CommentInputContainer,
 } from './style';
 import { FeedBucketDetail, FeedComment, FeedItem } from '@/features/feed/components';
-import { feedApi } from '@/features/feed/service';
+import { useFeedDetail } from '@/features/feed/hooks';
 
 const FeedDetail = () => {
   const { isOpen, onOpen, onClose } = useDrawer();
   const { feedId } = useParams();
-  const { data } = useQuery({
-    queryKey: ['feedDetail'],
-    queryFn: () => feedApi.getFeedDetail(Number(feedId)),
-  });
 
-  console.log(data);
+  const feed = useFeedDetail(Number(feedId));
 
   return (
     <>
       <Header type="back" />
       <FeedDetailContainer>
-        <FeedItem isDetail onClick={onOpen} />
+        {feed.isSuccess && (
+          <FeedItem
+            memberInfo={feed.data?.memberInfo}
+            feedId={feed.data?.feedInfo.id}
+            feedContent={feed.data?.feedInfo.content}
+            isLike={feed.data?.feedInfo.isLiked}
+            likeCount={feed.data?.feedInfo.likeCount}
+            commentCount={3}
+            createdAt={feed.data?.feedInfo.createdAt}
+            feedItems={feed.data?.feedItems}
+            bucketName={feed.data?.feedInfo.bucketName}
+            bucketBudget={feed.data?.feedInfo.bucketBudget}
+            isDetail
+            onClick={onOpen}
+          />
+        )}
       </FeedDetailContainer>
       <div>
         <CommonDivider size="lg" />

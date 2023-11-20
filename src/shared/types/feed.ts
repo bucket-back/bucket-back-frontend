@@ -14,7 +14,7 @@ export interface FeedsData {
   likeCount: number;
   commentCount: number;
   createdAt: string;
-  feedItems: FeedItems[];
+  feedItems: FeedItemInfo[];
   isLike: boolean;
 }
 
@@ -30,7 +30,7 @@ export interface FeedInfo {
   isLiked: boolean;
 }
 
-export interface FeedItem {
+export interface FeedItemInfo {
   id: number;
   name: string;
   price: number;
