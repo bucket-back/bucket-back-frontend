@@ -1,4 +1,5 @@
 import { HStack, useRadioGroup } from '@chakra-ui/react';
+import styled from '@emotion/styled';
 import RadioCard from './RadioCard';
 
 // 관심사(name)
@@ -8,8 +9,13 @@ import RadioCard from './RadioCard';
 // onClick -> 상태 변경
 // 디바운스 필요
 
+interface Values {
+  hobbyValue: string;
+  value: string;
+}
+
 interface CommonRadioProps {
-  values: string[];
+  values: Values[];
   name: string;
   defaultValue?: string;
   onChange: (value: string) => void;
@@ -21,7 +27,12 @@ const CommonRadio = ({ values, defaultValue, name, onChange }: CommonRadioProps)
   const { getRootProps, getRadioProps } = useRadioGroup({
     name,
     defaultValue,
-    onChange,
+    onChange: (value) => {
+      const selectedOption = options.find((option) => option.value === value);
+      if (selectedOption) {
+        onChange(selectedOption.hobbyValue);
+      }
+    },
   });
 
   const group = getRootProps();
@@ -29,12 +40,12 @@ const CommonRadio = ({ values, defaultValue, name, onChange }: CommonRadioProps)
   return (
     <HStack {...group}>
       {options.map((value) => {
-        const radio = getRadioProps({ value });
+        const radio = getRadioProps(value);
 
         return (
-          <RadioCard key={value} {...radio}>
-            {value}
-          </RadioCard>
+          <HobbyBox key={value.value}>
+            <RadioCard {...radio}>{value.value}</RadioCard>
+          </HobbyBox>
         );
       })}
     </HStack>
@@ -42,3 +53,7 @@ const CommonRadio = ({ values, defaultValue, name, onChange }: CommonRadioProps)
 };
 
 export default CommonRadio;
+
+const HobbyBox = styled.div`
+  flex-shrink: 0;
+`;
