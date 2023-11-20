@@ -14,7 +14,7 @@ const voteApi = {
   getVotes: async ({ hobby, sort, status, cursorId, size }: GetVotesRequest) => {
     const sortQueryString = sort ? `&sort=${sort}` : '';
     const params = cursorId ? { cursorId, size } : { size };
-    const url = `${BASE_URL}/?hobby=${hobby}&status=${status}${sortQueryString}`;
+    const url = `${BASE_URL}?hobby=${hobby}&status=${status}${sortQueryString}`;
 
     const response = await axiosClient.get<GetVotesResponse>(url, {
       params,
