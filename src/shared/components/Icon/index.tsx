@@ -65,10 +65,15 @@ interface CommonIconProps {
   type: keyof typeof ICONS;
   size?: string;
   color?: string;
+  onClick?: () => void;
 }
 
-const CommonIcon = ({ type, size, color }: CommonIconProps) => {
-  return <Icon as={ICONS[type]} boxSize={size} color={color} height="100%" />;
+const CommonIcon = ({ type, size, color, onClick }: CommonIconProps) => {
+  const handleClick = () => {
+    onClick && onClick();
+  };
+
+  return <Icon as={ICONS[type]} boxSize={size} color={color} height="100%" onClick={handleClick} />;
 };
 
 export default CommonIcon;
