@@ -100,36 +100,36 @@ export const router = createBrowserRouter([
         element: <MemberPassword />,
       },
       {
-        path: 'member/:memberId',
+        path: 'member/:nickname',
         element: <MemberHome />,
       },
       {
-        path: 'member/:memberId/inventory',
-        element: <div>member memberId inventory</div>,
+        path: 'member/:nickname/inventory',
+        element: <div>member nickname inventory</div>,
       },
       {
-        path: 'member/:memberId/inventory/:inventoryId',
-        element: <div>member memberId inventory inventoryId</div>,
+        path: 'member/:nickname/inventory/:inventoryId',
+        element: <div>member nickname inventory inventoryId</div>,
       },
       {
         path: 'inventory/create',
         element: <div>inventory create</div>,
       },
       {
-        path: 'member/:memberId/bucket',
-        element: <div>member memberId bucket</div>,
+        path: 'member/:nickname/bucket',
+        element: <div>member nickname bucket</div>,
       },
       {
-        path: 'member/:memberId/bucket/:bucketId',
-        element: <div>member memberId bucket bucketId</div>,
+        path: 'member/:nickname/bucket/:bucketId',
+        element: <div>member nickname bucket bucketId</div>,
       },
       {
         path: 'bucket/create',
         element: <BucketCreate />,
       },
       {
-        path: 'member/:memberId/feed',
-        element: <div>member memberId feed</div>,
+        path: 'member/:nickname/feed',
+        element: <div>member nickname feed</div>,
       },
       {
         path: 'login',

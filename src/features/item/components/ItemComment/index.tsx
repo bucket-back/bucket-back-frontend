@@ -21,12 +21,7 @@ const ItemComment = ({ content, createAt, memberInfo, rate }: ItemCommentProps) 
   return (
     <Container>
       <ProfileWrapper>
-        <Profile
-          id={memberInfo.memberId}
-          nickName={memberInfo.nickName}
-          levelNumber={2}
-          src={memberInfo.profileImage}
-        />
+        <Profile nickname={memberInfo.nickName} levelNumber={2} src={memberInfo.profileImage} />
         <CommonMenu type="update" iconSize="0.25rem" onDelete={() => {}} onUpdate={() => {}} />
       </ProfileWrapper>
       <ContentsWrapper>
