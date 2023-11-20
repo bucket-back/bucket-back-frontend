@@ -1,11 +1,33 @@
-import { Outlet } from 'react-router-dom';
+import { useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { CommonDrawer } from './shared/components';
+import { AuthContext } from './shared/hooks/useAuthNavigate';
 
 const App = () => {
+  const [isOpen, setOpen] = useState(false);
+  const navigate = useNavigate();
+
   return (
-    <AppContainer>
-      <Outlet />
-    </AppContainer>
+    <>
+      <AuthContext.Provider value={setOpen}>
+        <AppContainer>
+          <Outlet />
+        </AppContainer>
+      </AuthContext.Provider>
+      <CommonDrawer
+        isOpen={isOpen}
+        isFull={false}
+        isCloseButton={false}
+        onClose={() => setOpen(false)}
+        onClickFooterButton={() => {
+          navigate('/login');
+          setOpen(false);
+        }}
+      >
+        로그인하시겠습니까?
+      </CommonDrawer>
+    </>
   );
 };
 

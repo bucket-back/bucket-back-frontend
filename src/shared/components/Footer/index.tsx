@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Flex } from '@chakra-ui/react';
 import { CommonIcon, CommonText } from '@/shared/components';
-import { useMovePageWithLogin, useUserInfo } from '@/shared/hooks';
+import { useAuthNavigate, useUserInfo } from '@/shared/hooks';
 import useSamePath from '@/shared/hooks/useSamePath';
 import { COMMON } from '@/shared/styles/Common';
 
@@ -39,7 +39,7 @@ const Footer = ({ children }: FooterProps) => {
   const navigate = useNavigate();
   const isSamePath = useSamePath();
   const userInfo = useUserInfo();
-  const movePage = useMovePageWithLogin();
+  const authNavigate = useAuthNavigate();
   const handleClick = (type: string) => {
     if (isSamePath(type)) {
       return;
@@ -55,15 +55,15 @@ const Footer = ({ children }: FooterProps) => {
         break;
       }
       case 'bucket': {
-        movePage('/bucket/create');
+        authNavigate('/bucket/create');
         break;
       }
       case 'item': {
-        movePage('/item');
+        authNavigate('/item');
         break;
       }
       case 'user': {
-        movePage(`/member/${userInfo?.nickname}`);
+        authNavigate(`/member/${userInfo?.nickname}`);
         break;
       }
     }
