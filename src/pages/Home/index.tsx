@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { CommonIconButton, CommonTabs, Footer, Header } from '@/shared/components';
+import { useAuthCheck } from '@/shared/hooks';
 import { Container, AddButtonWrapper } from './style';
 
 const ROOT_PATH = '/';
@@ -22,6 +23,7 @@ const Home = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const isVoteInPathname = pathname.includes(TABS.VOTE.VALUE);
+  const isLogin = useAuthCheck();
 
   useEffect(() => {
     if (pathname === ROOT_PATH) {
@@ -54,9 +56,15 @@ const Home = () => {
         <AddButtonWrapper>
           <CommonIconButton
             type="add"
-            onClick={() =>
-              navigate(isVoteInPathname ? `${TABS.VOTE.VALUE}/create` : `${TABS.FEED.VALUE}/create`)
-            }
+            onClick={() => {
+              if (isLogin) {
+                navigate(
+                  isVoteInPathname ? `${TABS.VOTE.VALUE}/create` : `${TABS.FEED.VALUE}/create`
+                );
+              } else {
+                navigate('/login');
+              }
+            }}
           />
         </AddButtonWrapper>
       </Footer>
