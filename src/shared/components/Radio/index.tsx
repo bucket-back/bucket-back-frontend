@@ -9,13 +9,8 @@ import RadioCard from './RadioCard';
 // onClick -> 상태 변경
 // 디바운스 필요
 
-interface Values {
-  hobbyValue: string;
-  value: string;
-}
-
 interface CommonRadioProps {
-  values: Values[];
+  values: string[];
   name: string;
   defaultValue?: string;
   onChange: (value: string) => void;
@@ -27,12 +22,7 @@ const CommonRadio = ({ values, defaultValue, name, onChange }: CommonRadioProps)
   const { getRootProps, getRadioProps } = useRadioGroup({
     name,
     defaultValue,
-    onChange: (value) => {
-      const selectedOption = options.find((option) => option.value === value);
-      if (selectedOption) {
-        onChange(selectedOption.hobbyValue);
-      }
-    },
+    onChange,
   });
 
   const group = getRootProps();
@@ -40,11 +30,11 @@ const CommonRadio = ({ values, defaultValue, name, onChange }: CommonRadioProps)
   return (
     <HStack {...group}>
       {options.map((value) => {
-        const radio = getRadioProps(value);
+        const radio = getRadioProps({ value });
 
         return (
-          <HobbyBox key={value.value}>
-            <RadioCard {...radio}>{value.value}</RadioCard>
+          <HobbyBox key={value}>
+            <RadioCard {...radio}>{value}</RadioCard>
           </HobbyBox>
         );
       })}

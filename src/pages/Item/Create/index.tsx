@@ -49,16 +49,7 @@ const ItemCreate = () => {
                 </CommonText>
                 <HobbyWrapper>
                   <CommonRadio
-                    values={
-                      isSuccess
-                        ? data?.hobbies.map(({ name, value }) => {
-                            return {
-                              hobbyValue: name,
-                              value,
-                            };
-                          })
-                        : []
-                    }
+                    values={isSuccess ? data?.hobbies.map(({ value }) => value) : []}
                     name="취미"
                     onChange={(value) => setSelectedHobby(value)}
                   />
