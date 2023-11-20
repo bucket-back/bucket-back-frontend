@@ -3,14 +3,26 @@ import { CommonTabs } from '@/shared/components';
 import { Container } from './style';
 import { useHobby } from '@/features/hobby/hooks';
 import { VoteInProgress, Votes } from '@/features/vote/components';
+import { useVotes } from '@/features/vote/hooks';
+import { GetVotesRequest } from '@/features/vote/service/types';
 
 const VoteHome = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const hobbies = useHobby();
+  const getHobby = searchParams.get('hobby');
+  const getStatus = searchParams.get('status');
+  const { data: hobbyData } = useHobby();
+  const { data: votesData } = useVotes({
+    hobby: getHobby || '',
+    status: (getStatus as GetVotesRequest['status']) || 'completed',
+  });
+  const { data: votesInProgressData } = useVotes({
+    hobby: getHobby || '',
+    status: 'inprogress',
+  });
 
-  const currentTabIndex = hobbies.data?.hobbies
+  const currentTabIndex = hobbyData?.hobbies
     .map(({ name }) => name)
-    .indexOf(searchParams.get('hobby') || hobbies.data.hobbies[0].name);
+    .indexOf(getHobby || hobbyData.hobbies[0].name);
 
   return (
     <Container>
@@ -22,13 +34,13 @@ const VoteHome = () => {
           setSearchParams({ hobby: value });
         }}
         tabsData={
-          hobbies.data?.hobbies.map(({ name, value }) => ({
+          hobbyData?.hobbies.map(({ name, value }) => ({
             value: name,
             label: value,
             content: (
               <>
-                <VoteInProgress />
-                <Votes />
+                <VoteInProgress votes={votesInProgressData?.votes || []} />
+                <Votes votes={votesData?.votes || []} />
               </>
             ),
           })) || []

@@ -1,5 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 import { CommonTabs } from '@/shared/components';
+import { VotesInfo } from '@/shared/types';
 import VoteItem from '../VoteItem';
 import { Container, ContentsWrapper } from './style';
 
@@ -18,11 +19,15 @@ const VOTE_STATE = [
   },
 ];
 
-const Votes = () => {
+interface VotesProps {
+  votes: VotesInfo[];
+}
+
+const Votes = ({ votes }: VotesProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const currentTabIndex = VOTE_STATE.map(({ VALUE }) => VALUE).indexOf(
-    searchParams.get('state') || VOTE_STATE[0].VALUE
+    searchParams.get('status') || VOTE_STATE[0].VALUE
   );
 
   return (
@@ -30,7 +35,7 @@ const Votes = () => {
       <CommonTabs
         currentTabIndex={currentTabIndex}
         onClick={(value) => {
-          setSearchParams({ hobby: searchParams.get('hobby') || '', state: value });
+          setSearchParams({ hobby: searchParams.get('hobby') || '', status: value });
         }}
         tabsData={VOTE_STATE.map(({ VALUE, LABEL }) => {
           return {
@@ -38,7 +43,16 @@ const Votes = () => {
             label: LABEL,
             content: (
               <ContentsWrapper>
-                <VoteItem />
+                {votes.map(({ cursorId, item1Info, item2Info, voteInfo }) => {
+                  return (
+                    <VoteItem
+                      key={cursorId}
+                      item1Info={item1Info}
+                      item2Info={item2Info}
+                      voteInfo={voteInfo}
+                    />
+                  );
+                })}
               </ContentsWrapper>
             ),
           };
