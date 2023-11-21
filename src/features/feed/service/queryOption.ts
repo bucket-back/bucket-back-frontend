@@ -3,7 +3,7 @@ import { GetFeedsRequest, feedApi } from '.';
 
 const feedQueryOption = {
   all: ['feed'] as const,
-  list: ({ hobbyName, nickname, sortCondition, cursorId, size }: GetFeedsRequest) =>
+  list: ({ hobbyName, nickname, sortCondition, cursorId, size = 10 }: GetFeedsRequest) =>
     queryOptions({
       queryKey: [...feedQueryOption.all, hobbyName] as const,
       queryFn: () => feedApi.getFeeds({ hobbyName, nickname, sortCondition, cursorId, size }),
