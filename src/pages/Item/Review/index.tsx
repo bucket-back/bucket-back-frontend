@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-
 import {
   CommonButton,
   CommonDivider,
@@ -39,9 +38,7 @@ const ItemReview = () => {
   const [value, setValue] = useState<number>(0);
 
   const onSubmit: SubmitHandler<FormProps> = (data) => {
-    if (!data.review.trim().length) {
-      return;
-    }
+    console.log(data.review);
     reset();
   };
 
@@ -96,6 +93,7 @@ const ItemReview = () => {
                 error={errors.review}
                 size="base"
                 {...register('review', {
+                  minLength: 1,
                   required: '한글자 이상 리뷰를 남겨주세요!',
                 })}
               />
