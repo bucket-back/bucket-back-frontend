@@ -12,6 +12,22 @@ import { axiosClient } from '@/core/service/axios';
 const BASE_URL = 'members';
 
 const memberApi = {
+  getMember: async (nickname: string) => {
+    const url = `${BASE_URL}/${nickname}`;
+
+    const response = await axiosClient.get<GetMemberResponse>(url);
+
+    return response.data;
+  },
+
+  getCheckJWT: async () => {
+    const url = `${BASE_URL}/check/jwt`;
+
+    const response = await axiosClient.get<GetCheckJWTResponse>(url);
+
+    return response.data;
+  },
+
   postLogin: async ({ email, password }: PostLoginRequest) => {
     const url = `${BASE_URL}/login`;
 
@@ -55,14 +71,6 @@ const memberApi = {
     });
   },
 
-  getMember: async (nickname: string) => {
-    const url = `${BASE_URL}/${nickname}`;
-
-    const response = await axiosClient.get<GetMemberResponse>(url);
-
-    return response.data;
-  },
-
   putMember: async ({ nickname, introduction }: PutMemberRequest) => {
     const url = `${BASE_URL}/profile`;
 
@@ -79,14 +87,6 @@ const memberApi = {
     const url = `${BASE_URL}/delete`;
 
     return await axiosClient.delete<null>(url);
-  },
-
-  getCheckJWT: async () => {
-    const url = `${BASE_URL}/check/jwt`;
-
-    const response = await axiosClient.get<GetCheckJWTResponse>(url);
-
-    return response.data;
   },
 };
 
