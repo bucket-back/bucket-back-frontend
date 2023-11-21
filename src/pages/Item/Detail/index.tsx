@@ -61,7 +61,7 @@ const ItemDetail = () => {
           <CommonButton type="mdSmall" onClick={handleItem}>
             아이템 담기
           </CommonButton>
-          <CommonButton type="mdBase" onClick={handleBuy}>
+          <CommonButton type="link" onClick={handleBuy}>
             구매하러 가기
           </CommonButton>
         </ButtonWrapper>
