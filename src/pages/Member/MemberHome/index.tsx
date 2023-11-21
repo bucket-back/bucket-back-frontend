@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
   CommonAvatar,
   CommonButton,
   CommonDivider,
+  CommonDrawer,
   CommonIcon,
   CommonIconButton,
   CommonMenu,
@@ -12,7 +14,7 @@ import {
   Footer,
   Header,
 } from '@/shared/components';
-import { useAuthCheck } from '@/shared/hooks';
+import { useAuthCheck, useDrawer } from '@/shared/hooks';
 import {
   Container,
   MemberInfoWrapper,
@@ -31,6 +33,8 @@ const MemberHome = () => {
   const { nickname } = useParams();
   const isLogin = useAuthCheck();
   const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDrawer();
+  const [selectedStatus, setSelectedStatus] = useState<'leave' | 'logout'>('logout');
 
   const member = useQuery(memberQueryOption.detail(nickname!));
   const logout = useLogout();
@@ -56,8 +60,14 @@ const MemberHome = () => {
             <CommonMenu
               type="logout"
               iconSize="0.3rem"
-              onLogout={() => logout()}
-              onDelete={() => {}}
+              onLogout={() => {
+                setSelectedStatus('logout');
+                onOpen();
+              }}
+              onDelete={() => {
+                setSelectedStatus('leave');
+                onOpen();
+              }}
             />
           )}
         </MemberInfoWrapper>
@@ -124,6 +134,23 @@ const MemberHome = () => {
         <CommonDivider size="sm" />
       </Container>
       <Footer />
+
+      <CommonDrawer
+        isOpen={isOpen}
+        onClose={onClose}
+        onClickFooterButton={() => {
+          if (selectedStatus === 'logout') {
+            logout();
+          } else {
+            // TODO: 탈퇴 기능 추가
+            console.log('탈퇴');
+          }
+        }}
+        isFull={false}
+        isCloseButton={false}
+      >
+        {selectedStatus === 'logout' ? '정말로 로그아웃하시겠습니까?' : '정말로 탈퇴하시겠습니까?'}
+      </CommonDrawer>
     </>
   );
 };
