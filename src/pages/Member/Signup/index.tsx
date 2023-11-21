@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { CommonButton, CommonIcon, CommonInput, CommonText } from '@/shared/components';
 import { useCustomToast } from '@/shared/hooks';
@@ -13,6 +13,7 @@ const SignUp = () => {
     handleSubmit,
     watch,
     formState: { errors },
+    resetField,
   } = useForm<PostSignupRequest>({ mode: 'onBlur' });
   const [showPassword, setShowPassword] = useState(false);
   const openToast = useCustomToast();
@@ -31,10 +32,15 @@ const SignUp = () => {
   } = useCheckEmail();
   const registerOptions = useValidateForm();
   const [nickname, email, emailAuthString] = watch(['nickname', 'email', 'emailAuthString']);
-  const [sameEmailAuthString, setSameEmailAuthString] = useState(false);
+  const [submitValue, setSubmitValue] = useState({ email: '', nickname: '' });
 
   const onSubmit: SubmitHandler<PostSignupRequest> = (data) => {
-    if (sameEmailAuthString && checkNicknameSuccess) {
+    if (
+      checkEmailSuccess &&
+      checkNicknameSuccess &&
+      email === submitValue.email &&
+      nickname === submitValue.nickname
+    ) {
       signupMutate(data);
     } else {
       openToast({ message: '인증 절차를 다시한번 더 확인해주세요.', type: 'error' });
@@ -52,17 +58,24 @@ const SignUp = () => {
     if (errors.email || !email) {
       return;
     }
+    resetField('emailAuthString');
     checkEmailMutate(email);
   };
 
   const handleEmailAuthNumber = () => {
     if (emailAuthString == checkEmailData?.code) {
-      setSameEmailAuthString(true);
+      setSubmitValue((prev) => ({ ...prev, email: email }));
       openToast({ message: '인증되었습니다.', type: 'success' });
     } else {
       openToast({ message: '안증번호가 일치하지않습니다.', type: 'error' });
     }
   };
+
+  useEffect(() => {
+    if (checkNicknameSuccess) {
+      setSubmitValue((prev) => ({ ...prev, nickname: nickname }));
+    }
+  }, [checkNicknameSuccess]);
 
   return (
     <Container>
@@ -94,7 +107,6 @@ const SignUp = () => {
                 type="text"
                 placeholder="인증번호를 입력해주세요."
                 error={errors.emailAuthString}
-                disabled={sameEmailAuthString}
                 {...register('emailAuthString', { required: '인증번호 입력은 필수입니다.' })}
               />
               <CommonButton type="mdBase" width="fit-content" onClick={handleEmailAuthNumber}>
@@ -121,7 +133,7 @@ const SignUp = () => {
           <CommonInput
             width="100%"
             type={showPasswordConfirm ? 'text' : 'password'}
-            placeholder="비밀번호를 입력해주세요."
+            placeholder="비밀번호를 확인해주세요."
             error={errors.passwordConfirm}
             rightIcon={
               <IconWrapper onClick={() => setShowPasswordConfirm(() => !showPasswordConfirm)}>
@@ -152,7 +164,7 @@ const SignUp = () => {
               onClick={handleCheckNickname}
               isDisabled={checkNicknamePending}
             >
-              종복확인
+              중복확인
             </CommonButton>
           </InputAndButtonBox>
         </InputWrapper>
