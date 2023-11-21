@@ -40,8 +40,8 @@ const FeedHome = () => {
           label: value,
           content: (
             <Container>
-              {feeds.isSuccess ? (
-                feeds.data?.feeds.map(
+              {feeds.isSuccess && feeds.data.feeds.length > 0 ? (
+                feeds.data.feeds.map(
                   ({
                     feedId,
                     memberInfo,
@@ -70,7 +70,7 @@ const FeedHome = () => {
                   )
                 )
               ) : (
-                <NoResult>검색 결과가 없습니다.</NoResult>
+                <NoResult>피드가 존재하지 않습니다.</NoResult>
               )}
             </Container>
           ),
