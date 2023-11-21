@@ -18,3 +18,11 @@ export const CommentNumberWrapper = styled.div`
 export const CommentInputContainer = styled.div`
   padding: 0 0.5rem 0.5rem 0.5rem;
 `;
+
+export const NoResult = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
