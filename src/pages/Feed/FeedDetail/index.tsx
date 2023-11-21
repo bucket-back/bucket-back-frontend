@@ -22,19 +22,20 @@ import { CommentItem } from '@/features/comment/components';
 import useAddComment from '@/features/comment/hooks/useAddComment';
 import { PostCommentRequest, commentQueryQption } from '@/features/comment/service';
 import { FeedItemsDetail, FeedItem } from '@/features/feed/components';
-import { useFeedDetail } from '@/features/feed/hooks';
+import { feedQueryOption } from '@/features/feed/service';
 
 const FeedDetail = () => {
   const { isOpen, onOpen, onClose } = useDrawer();
   const { feedId } = useParams();
+  const feedIdNumber = Number(feedId);
 
-  const feed = useFeedDetail(Number(feedId));
-  const comment = useQuery(commentQueryQption.list({ feedId: Number(feedId) || 1, size: 10 }));
+  const feedDetail = useQuery(feedQueryOption.detail(feedIdNumber));
+  const comment = useQuery(commentQueryQption.list({ feedId: feedIdNumber || 1, size: 10 }));
 
   const { register, handleSubmit, reset } = useForm<PostCommentRequest>();
   const { mutate } = useAddComment();
   const onSubmit: SubmitHandler<PostCommentRequest> = (data) => {
-    mutate({ feedId: Number(feedId), content: data.content });
+    mutate({ feedId: feedIdNumber, content: data.content });
     reset();
   };
 
@@ -42,18 +43,18 @@ const FeedDetail = () => {
     <>
       <Header type="back" />
       <FeedDetailContainer>
-        {feed.isSuccess && (
+        {feedDetail.isSuccess && (
           <FeedItem
-            memberInfo={feed.data.memberInfo}
-            feedId={feed.data.feedInfo.id}
-            feedContent={feed.data.feedInfo.content}
-            isLike={feed.data.feedInfo.isLiked}
-            likeCount={feed.data.feedInfo.likeCount}
+            memberInfo={feedDetail.data.memberInfo}
+            feedId={feedDetail.data.feedInfo.id}
+            feedContent={feedDetail.data.feedInfo.content}
+            isLike={feedDetail.data.feedInfo.isLiked}
+            likeCount={feedDetail.data.feedInfo.likeCount}
             commentCount={comment.data?.totalCount || 0}
-            createdAt={feed.data.feedInfo.createdAt}
-            feedItems={feed.data.feedItems}
-            bucketName={feed.data.feedInfo.bucketName}
-            bucketBudget={feed.data.feedInfo.bucketBudget}
+            createdAt={feedDetail.data.feedInfo.createdAt}
+            feedItems={feedDetail.data.feedItems}
+            bucketName={feedDetail.data.feedInfo.bucketName}
+            bucketBudget={feedDetail.data.feedInfo.bucketBudget}
             isDetail
             onClick={onOpen}
           />
@@ -71,7 +72,7 @@ const FeedDetail = () => {
           comment.data.comments.map((data) => (
             <Fragment key={data.commentId}>
               <CommentItem
-                feedId={Number(feedId)}
+                feedId={feedIdNumber}
                 commentId={data.commentId}
                 memberInfo={data.memberInfo}
                 content={data.content}
@@ -101,7 +102,7 @@ const FeedDetail = () => {
       </CommentInputContainer>
 
       <CommonDrawer isOpen={isOpen} onClose={onClose} onClickFooterButton={onClose} isFull={true}>
-        <FeedItemsDetail items={feed.data?.feedItems} />
+        <FeedItemsDetail items={feedDetail.data?.feedItems} />
       </CommonDrawer>
     </>
   );
