@@ -38,5 +38,8 @@ export const Box = styled.div`
 `;
 
 export const ReviewBox = styled.article`
-  padding: 1.75rem;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

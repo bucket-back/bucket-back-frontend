@@ -21,6 +21,7 @@ import {
   ReviewBox,
 } from './style';
 import ItemComment from '@/features/item/components/ItemComment/index';
+import { useTakeItem } from '@/features/item/hooks';
 import itemQueryOption from '@/features/item/service/queryOption';
 import reviewQueryOption from '@/features/review/service/queryOption';
 
@@ -29,6 +30,7 @@ const ItemDetail = () => {
   const { itemId } = useParams();
 
   const navigate = useNavigate();
+
   const isLogin = useAuthCheck();
 
   const { data, isPending, isError } = useQuery({
@@ -54,8 +56,10 @@ const ItemDetail = () => {
     },
   });
 
+  const { mutate } = useTakeItem();
+
   const handleItem = () => {
-    // TODO: 로그인 한 사용자가 아이템을 담을수 있는 기능
+    mutate([String(data.itemInfo.id)]);
   };
 
   if (isPending || reviewPending) {
@@ -70,7 +74,9 @@ const ItemDetail = () => {
     <>
       <Header type="back" />
       <Container>
-        <CommonImage size="md" src={data.itemInfo.image} alt={data.itemInfo.name} />
+        <div>
+          <CommonImage size="md" src={data.itemInfo.image} alt={data.itemInfo.name} />
+        </div>
         <ItemWrapper>
           <CommonText type="normalTitle" noOfLines={0}>
             {data.itemInfo.name}
