@@ -1,4 +1,5 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import {
   CommonAvatar,
   CommonButton,
@@ -11,6 +12,7 @@ import {
   Footer,
   Header,
 } from '@/shared/components';
+import { useAuthCheck } from '@/shared/hooks';
 import {
   Container,
   MemberInfoWrapper,
@@ -22,9 +24,16 @@ import {
   SubTitleBox,
   ImagePanel,
 } from './style';
+import { useLogout } from '@/features/member/hooks';
+import { memberQueryOption } from '@/features/member/service';
 
 const MemberHome = () => {
-  const { memberId } = useParams();
+  const { nickname } = useParams();
+  const isLogin = useAuthCheck();
+  const navigate = useNavigate();
+
+  const member = useQuery(memberQueryOption.detail(nickname!));
+  const logout = useLogout();
 
   return (
     <>
@@ -34,12 +43,23 @@ const MemberHome = () => {
           <MemberInfoPanel>
             <CommonAvatar size="5rem" />
             <MemberInfoBox>
-              <CommonText type="strongInfo">LV. 10</CommonText>
-              <CommonText type="smallTitle">{memberId}</CommonText>
-              <CommonButton type="profile">프로필 수정</CommonButton>
+              <CommonText type="strongInfo">LV. {member.data?.memberProfile.levelPoint}</CommonText>
+              <CommonText type="smallTitle">{nickname}</CommonText>
+              {isLogin && (
+                <CommonButton type="profile" onClick={() => navigate('/member/edit')}>
+                  프로필 수정
+                </CommonButton>
+              )}
             </MemberInfoBox>
           </MemberInfoPanel>
-          <CommonMenu type="logout" iconSize="0.3rem" onDelete={() => {}} />
+          {isLogin && (
+            <CommonMenu
+              type="logout"
+              iconSize="0.3rem"
+              onLogout={() => logout()}
+              onDelete={() => {}}
+            />
+          )}
         </MemberInfoWrapper>
         <MemberIntroWrapper>
           <CommonText type="normalInfo" noOfLines={3}>
