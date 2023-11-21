@@ -1,15 +1,29 @@
 import { CommonButton, CommonMenu, CommonText, DateText, Profile } from '@/shared/components';
+import { useUserInfo } from '@/shared/hooks';
 import { MemberInfo } from '@/shared/types';
+import { useDeleteComment } from '../../hooks';
 import { Container, ProfileWrapper, ContentsWrapper, InteractPanel } from './style';
 
-interface FeedCommentProps {
+interface CommentItemProps {
+  feedId: number;
+  commentId: number;
   content: string;
   createdAt: string;
   isAdopted: boolean;
   memberInfo: MemberInfo;
 }
 
-const FeedComment = ({ content, createdAt, isAdopted, memberInfo }: FeedCommentProps) => {
+const CommentItem = ({
+  feedId,
+  commentId,
+  content,
+  createdAt,
+  isAdopted,
+  memberInfo,
+}: CommentItemProps) => {
+  const userInfo = useUserInfo();
+  const deletComment = useDeleteComment();
+
   return (
     <Container>
       <ProfileWrapper>
@@ -19,7 +33,16 @@ const FeedComment = ({ content, createdAt, isAdopted, memberInfo }: FeedCommentP
           levelNumber={memberInfo.level}
           isAdopted={isAdopted}
         />
-        <CommonMenu type="update" iconSize="0.25rem" onDelete={() => {}} onUpdate={() => {}} />
+        {userInfo?.nickname === memberInfo.nickName && (
+          <CommonMenu
+            type="update"
+            iconSize="0.25rem"
+            onDelete={() => {
+              deletComment.mutate({ feedId, commentId });
+            }}
+            onUpdate={() => {}}
+          />
+        )}
       </ProfileWrapper>
       <ContentsWrapper>
         <CommonText type="smallInfo">{content}</CommonText>
@@ -35,4 +58,4 @@ const FeedComment = ({ content, createdAt, isAdopted, memberInfo }: FeedCommentP
   );
 };
 
-export default FeedComment;
+export default CommentItem;
