@@ -10,7 +10,7 @@ import {
   CommonText,
   Header,
 } from '@/shared/components';
-import { useDrawer } from '@/shared/hooks';
+import { useAuthCheck, useDrawer } from '@/shared/hooks';
 import {
   FeedDetailContainer,
   CommentNumberWrapper,
@@ -28,6 +28,7 @@ const FeedDetail = () => {
   const { isOpen, onOpen, onClose } = useDrawer();
   const { feedId } = useParams();
   const feedIdNumber = Number(feedId);
+  const isLogin = useAuthCheck();
 
   const feedDetail = useQuery(feedQueryOption.detail(feedIdNumber));
   const comment = useQuery(commentQueryQption.list({ feedId: feedIdNumber || 1, size: 10 }));
@@ -91,9 +92,10 @@ const FeedDetail = () => {
           size="md"
           type="text"
           width="100%"
-          placeholder="댓글을 입력해주세요"
+          placeholder={isLogin ? '댓글을 입력해주세요' : '로그인후 이용가능합니다'}
+          isDisabled={!isLogin}
           rightIcon={
-            <CommonButton isSubmit type="mdFull">
+            <CommonButton type="mdFull" isSubmit isDisabled={!isLogin}>
               등록
             </CommonButton>
           }
