@@ -1,39 +1,32 @@
-import { Box, Button, Flex } from '@chakra-ui/react';
+import { MouseEvent } from 'react';
 import { CommonImage, CommonText } from '@/shared/components';
+import { ItemInfo } from '@/shared/types';
+import { Button, ItemWrapper, TextWrapper } from './style';
 
 interface VoteOptionItemProps {
-  onClick?: () => void;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  itemInfo?: ItemInfo;
+  votes?: number;
 }
 
-const VoteOptionItem = ({ onClick }: VoteOptionItemProps) => {
-  const handleClick = () => {
-    onClick && onClick();
+const VoteOptionItem = ({ onClick, itemInfo, votes }: VoteOptionItemProps) => {
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    onClick && onClick(e);
   };
 
   return (
-    <Box>
-      <Flex flexDir="column" pos="relative">
-        <CommonImage size="lg" src="" />
-        <Button
-          pos="absolute"
-          bottom="-2rem"
-          right="40%"
-          color="white"
-          bgColor="blue.300"
-          borderRadius="50%"
-          w="4.0625rem"
-          h="4.0625rem"
-          onClick={handleClick}
-        >
-          10
+    <div>
+      <ItemWrapper>
+        <CommonImage size="lg" src={itemInfo?.image} />
+        <Button value={itemInfo?.id} type="button" onClick={(e) => handleClick(e)}>
+          {votes}
         </Button>
-      </Flex>
-
-      <Flex flexDir="column">
-        <CommonText type="smallTitle">29,800</CommonText>
-        <CommonText type="smallInfo">아이템 이름입니다.</CommonText>
-      </Flex>
-    </Box>
+      </ItemWrapper>
+      <TextWrapper>
+        <CommonText type="smallTitle">{itemInfo?.price}</CommonText>
+        <CommonText type="smallInfo">{itemInfo?.name}</CommonText>
+      </TextWrapper>
+    </div>
   );
 };
 
