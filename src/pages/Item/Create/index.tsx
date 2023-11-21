@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import styled from '@emotion/styled';
-import { useMutation } from '@tanstack/react-query';
 import { CommonButton, CommonInput, CommonRadio, CommonText, Header } from '@/shared/components';
-import { Container, Wrapper, Form, BoxTop, Box } from './style';
+import { Container, Wrapper, Form, BoxTop, Box, HobbyWrapper } from './style';
 import { useHobby } from '@/features/hobby/hooks';
-import { PostItemRequest, itemApi } from '@/features/item/service';
+import { usePostItem } from '@/features/item/hooks';
 
 interface ItemText {
   url: string;
@@ -15,22 +13,22 @@ const validateInput = (v: string) =>
   !(v.includes('<script>') || v.includes('</script>')) || '스크립트 태그를 사용할수 없습니다';
 
 const ItemCreate = () => {
-  const [selectedHobby, setSelectedHobby] = useState<string>('');
-
-  const { isSuccess, data } = useHobby();
-
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
+    reset,
   } = useForm<ItemText>({ mode: 'onBlur' });
 
-  const { mutate } = useMutation({
-    mutationFn: (newItem: PostItemRequest) => itemApi.postItem({ ...newItem }),
-  });
+  const [selectedHobby, setSelectedHobby] = useState<string>('');
+
+  const { mutate } = usePostItem();
+
+  const { isSuccess, data } = useHobby();
 
   const onSubmit: SubmitHandler<ItemText> = ({ url }) => {
     mutate({ hobbyValue: selectedHobby, itemUrl: url });
+    reset();
   };
 
   return (
@@ -92,9 +90,3 @@ const ItemCreate = () => {
 };
 
 export default ItemCreate;
-
-const HobbyWrapper = styled.section`
-  display: flex;
-  align-items: center;
-  overflow-x: scroll;
-`;
