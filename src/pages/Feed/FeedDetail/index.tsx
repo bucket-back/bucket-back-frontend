@@ -17,7 +17,7 @@ import {
   NoResult,
 } from './style';
 import useComments from '@/features/comment/hooks/useComments';
-import { FeedBucketDetail, FeedComment, FeedItem } from '@/features/feed/components';
+import { FeedItemsDetail, FeedComment, FeedItem } from '@/features/feed/components';
 import { useFeedDetail } from '@/features/feed/hooks';
 
 const FeedDetail = () => {
@@ -51,15 +51,13 @@ const FeedDetail = () => {
       <div>
         <CommonDivider size="lg" />
         <CommentNumberWrapper>
-          <CommonText type="normalInfo">
-            총 {comment.data?.commentCursorSummary.summaryCount || 0}개의 댓글
-          </CommonText>
+          <CommonText type="normalInfo">총 {comment.data?.totalCount || 0}개의 댓글</CommonText>
         </CommentNumberWrapper>
         <CommonDivider size="sm" />
       </div>
       <CommentsContainer>
-        {comment.isSuccess && comment.data.commentCursorSummary.summaryCount > 0 ? (
-          comment.data.commentCursorSummary.summaries.map((data) => (
+        {comment.isSuccess && comment.data.totalCount > 0 ? (
+          comment.data.comments.map((data) => (
             <Fragment key={data.commentId}>
               <FeedComment
                 memberInfo={data.memberInfo}
@@ -85,7 +83,7 @@ const FeedDetail = () => {
       </CommentInputContainer>
 
       <CommonDrawer isOpen={isOpen} onClose={onClose} onClickFooterButton={onClose} isFull={true}>
-        <FeedBucketDetail />
+        <FeedItemsDetail items={feed.data?.feedItems} />
       </CommonDrawer>
     </>
   );
