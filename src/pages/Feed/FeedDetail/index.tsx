@@ -1,5 +1,7 @@
 import { Fragment } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import {
   CommonButton,
   CommonDivider,
@@ -16,8 +18,10 @@ import {
   CommentInputContainer,
   NoResult,
 } from './style';
-import useComments from '@/features/comment/hooks/useComments';
-import { FeedItemsDetail, FeedComment, FeedItem } from '@/features/feed/components';
+import { CommentItem } from '@/features/comment/components';
+import useAddComment from '@/features/comment/hooks/useAddComment';
+import { PostCommentRequest, commentQueryQption } from '@/features/comment/service';
+import { FeedItemsDetail, FeedItem } from '@/features/feed/components';
 import { useFeedDetail } from '@/features/feed/hooks';
 
 const FeedDetail = () => {
@@ -25,7 +29,14 @@ const FeedDetail = () => {
   const { feedId } = useParams();
 
   const feed = useFeedDetail(Number(feedId));
-  const comment = useComments({ feedId: Number(feedId) || 1, size: 10 });
+  const comment = useQuery(commentQueryQption.list({ feedId: Number(feedId) || 1, size: 10 }));
+
+  const { register, handleSubmit, reset } = useForm<PostCommentRequest>();
+  const { mutate } = useAddComment();
+  const onSubmit: SubmitHandler<PostCommentRequest> = (data) => {
+    mutate({ feedId: Number(feedId), content: data.content });
+    reset();
+  };
 
   return (
     <>
@@ -38,7 +49,7 @@ const FeedDetail = () => {
             feedContent={feed.data.feedInfo.content}
             isLike={feed.data.feedInfo.isLiked}
             likeCount={feed.data.feedInfo.likeCount}
-            commentCount={3}
+            commentCount={comment.data?.totalCount || 0}
             createdAt={feed.data.feedInfo.createdAt}
             feedItems={feed.data.feedItems}
             bucketName={feed.data.feedInfo.bucketName}
@@ -59,7 +70,9 @@ const FeedDetail = () => {
         {comment.isSuccess && comment.data.totalCount > 0 ? (
           comment.data.comments.map((data) => (
             <Fragment key={data.commentId}>
-              <FeedComment
+              <CommentItem
+                feedId={Number(feedId)}
+                commentId={data.commentId}
                 memberInfo={data.memberInfo}
                 content={data.content}
                 createdAt={data.createdAt}
@@ -72,13 +85,18 @@ const FeedDetail = () => {
           <NoResult>댓글이 없습니다.</NoResult>
         )}
       </CommentsContainer>
-      <CommentInputContainer>
+      <CommentInputContainer onSubmit={handleSubmit(onSubmit)}>
         <CommonInput
           size="md"
           type="text"
           width="100%"
           placeholder="댓글을 입력해주세요"
-          rightIcon={<CommonButton type="mdFull">등록</CommonButton>}
+          rightIcon={
+            <CommonButton isSubmit type="mdFull">
+              등록
+            </CommonButton>
+          }
+          {...register('content', { required: true, minLength: 1 })}
         />
       </CommentInputContainer>
 
