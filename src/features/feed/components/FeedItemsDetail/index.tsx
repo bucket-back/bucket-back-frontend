@@ -1,6 +1,6 @@
-import styled from '@emotion/styled';
 import { CommonButton, CommonImage } from '@/shared/components';
 import { FeedItemInfo } from '@/shared/types';
+import { ButtonBox, Container, ContentsWrapper } from './style';
 
 interface FeedItemsDetailProps {
   items?: FeedItemInfo[];
@@ -27,23 +27,3 @@ const FeedItemsDetail = ({ items, onClick }: FeedItemsDetailProps) => {
 };
 
 export default FeedItemsDetail;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-  padding-bottom: 1rem;
-`;
-
-const ContentsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const ButtonBox = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-`;
