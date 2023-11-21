@@ -33,3 +33,8 @@ export interface PutMemberRequest {
   nickname: string;
   introduction: string;
 }
+
+export interface GetCheckJWTResponse {
+  memberId: number;
+  nickname: string;
+}

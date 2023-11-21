@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Flex } from '@chakra-ui/react';
 import { CommonIcon, CommonText } from '@/shared/components';
+import { useAuthNavigate, useUserInfo } from '@/shared/hooks';
 import useSamePath from '@/shared/hooks/useSamePath';
 import { COMMON } from '@/shared/styles/Common';
 
@@ -37,11 +38,13 @@ type FooterIcon = 'home' | 'search' | 'bucket' | 'item' | 'user';
 const Footer = ({ children }: FooterProps) => {
   const navigate = useNavigate();
   const isSamePath = useSamePath();
+  const userInfo = useUserInfo();
+  const authNavigate = useAuthNavigate();
   const handleClick = (type: string) => {
     if (isSamePath(type)) {
       return;
     }
-    // 추후 페이지 이동 + 아이콘 클릭하면 페이지 상단으로 올라갈수있도록 로직 추가
+
     switch (type) {
       case 'home': {
         navigate('/');
@@ -52,15 +55,15 @@ const Footer = ({ children }: FooterProps) => {
         break;
       }
       case 'bucket': {
-        navigate('/bucket/create');
+        authNavigate('/bucket/create');
         break;
       }
       case 'item': {
-        navigate('/item');
+        authNavigate('/item');
         break;
       }
       case 'user': {
-        // navigate(`/user/${:userId}`);
+        authNavigate(`/member/${userInfo?.nickname}`);
         break;
       }
     }
@@ -82,6 +85,7 @@ const Footer = ({ children }: FooterProps) => {
           flexDirection="column"
           alignItems="center"
           onClick={() => handleClick(ICON)}
+          cursor="pointer"
         >
           <CommonIcon
             type={ICON as FooterIcon}

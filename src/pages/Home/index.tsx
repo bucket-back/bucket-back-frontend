@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { CommonIconButton, CommonTabs, Footer, Header } from '@/shared/components';
+import { useAuthNavigate } from '@/shared/hooks';
 import { Container, AddButtonWrapper } from './style';
 
 const ROOT_PATH = '/';
@@ -22,10 +23,11 @@ const Home = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const isVoteInPathname = pathname.includes(TABS.VOTE.VALUE);
+  const authNavigate = useAuthNavigate();
 
   useEffect(() => {
     if (pathname === ROOT_PATH) {
-      navigate(`${TABS.FEED.VALUE}?hobby=cycle`);
+      navigate(`${TABS.FEED.VALUE}?hobby=basketball`);
     }
   }, [navigate, pathname]);
 
@@ -54,9 +56,11 @@ const Home = () => {
         <AddButtonWrapper>
           <CommonIconButton
             type="add"
-            onClick={() =>
-              navigate(isVoteInPathname ? `${TABS.VOTE.VALUE}/create` : `${TABS.FEED.VALUE}/create`)
-            }
+            onClick={() => {
+              authNavigate(
+                isVoteInPathname ? `${TABS.VOTE.VALUE}/create` : `${TABS.FEED.VALUE}/create`
+              );
+            }}
           />
         </AddButtonWrapper>
       </Footer>

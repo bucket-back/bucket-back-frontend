@@ -1,4 +1,5 @@
 import {
+  GetCheckJWTResponse,
   GetMemberResponse,
   PostCheckEmailResponse,
   PostLoginRequest,
@@ -78,6 +79,14 @@ const memberApi = {
     const url = `${BASE_URL}/delete`;
 
     return await axiosClient.delete<null>(url);
+  },
+
+  getCheckJWT: async () => {
+    const url = `${BASE_URL}/check/jwt`;
+
+    const response = await axiosClient.get<GetCheckJWTResponse>(url);
+
+    return response.data;
   },
 };
 
