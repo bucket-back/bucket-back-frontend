@@ -1,17 +1,17 @@
-import { VoteInfo, Votes } from '@/shared/types';
+import { VoteInfo, VotesInfo } from '@/shared/types';
 import { ItemInfo } from '@/shared/types/item';
 
 export interface GetVotesRequest {
   hobby: string;
-  sort?: string;
-  status: string;
-  cursorId: string;
-  size: number;
+  sort?: 'popularity' | 'recent';
+  status: 'inprogress' | 'completed' | 'posted' | 'participated';
+  cursorId?: string;
+  size?: number;
 }
 
 export interface GetVotesResponse {
   nextCursorId: string;
-  votes: Votes[];
+  votes: VotesInfo[];
 }
 
 export interface PostVotesRequest {
