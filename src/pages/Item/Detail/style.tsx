@@ -36,3 +36,7 @@ export const CommentNumberWrapper = styled.div`
 export const Box = styled.div`
   flex-shrink: 0;
 `;
+
+export const ReviewBox = styled.article`
+  padding: 1.75rem;
+`;
