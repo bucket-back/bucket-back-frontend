@@ -1,23 +1,32 @@
 import { useSearchParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { CommonTabs } from '@/shared/components';
 import { Container } from './style';
 import { useHobby } from '@/features/hobby/hooks';
 import { VoteInProgress, Votes } from '@/features/vote/components';
-import { useVotes } from '@/features/vote/hooks';
-import { GetVotesRequest } from '@/features/vote/service/types';
+import { GetVotesRequest, voteQueryOption } from '@/features/vote/service';
 
 const VoteHome = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const getHobby = searchParams.get('hobby');
   const getStatus = searchParams.get('status');
+  const getSort = searchParams.get('sort');
   const { data: hobbyData } = useHobby();
-  const { data: votesData } = useVotes({
-    hobby: getHobby || '',
-    status: (getStatus as GetVotesRequest['status']) || 'completed',
+  const { data: votesData } = useQuery({
+    ...voteQueryOption.list({
+      hobby: getHobby || '',
+      status: (getStatus as GetVotesRequest['status']) || 'completed',
+      sort: (getSort as GetVotesRequest['sort']) || 'recent',
+    }),
+    initialData: { nextCursorId: '', votes: [] },
   });
-  const { data: votesInProgressData } = useVotes({
-    hobby: getHobby || '',
-    status: 'inprogress',
+
+  const { data: votesInProgressData } = useQuery({
+    ...voteQueryOption.list({
+      hobby: getHobby || '',
+      status: 'inprogress',
+    }),
+    initialData: { nextCursorId: '', votes: [] },
   });
 
   const currentTabIndex = hobbyData?.hobbies
@@ -39,8 +48,8 @@ const VoteHome = () => {
             label: value,
             content: (
               <>
-                <VoteInProgress votes={votesInProgressData?.votes || []} />
-                <Votes votes={votesData?.votes || []} />
+                <VoteInProgress votes={votesInProgressData.votes} />
+                <Votes votes={votesData.votes} />
               </>
             ),
           })) || []

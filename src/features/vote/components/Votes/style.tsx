@@ -15,3 +15,10 @@ export const ContentsWrapper = styled.div`
   height: calc(100vh - 30.5rem);
   padding: 1rem 0;
 `;
+
+export const SelectWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  padding-right: 0.5rem;
+`;

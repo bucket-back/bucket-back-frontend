@@ -1,8 +1,8 @@
 import { useSearchParams } from 'react-router-dom';
-import { CommonTabs } from '@/shared/components';
+import { CommonSelect, CommonTabs } from '@/shared/components';
 import { VotesInfo } from '@/shared/types';
 import VoteItem from '../VoteItem';
-import { Container, ContentsWrapper } from './style';
+import { Container, ContentsWrapper, SelectWrapper } from './style';
 
 const VOTE_STATE = [
   {
@@ -43,6 +43,18 @@ const Votes = ({ votes }: VotesProps) => {
             label: LABEL,
             content: (
               <ContentsWrapper>
+                <SelectWrapper>
+                  <CommonSelect
+                    onChange={(e) => {
+                      const sort = e.target.value;
+                      setSearchParams({
+                        hobby: searchParams.get('hobby') || '',
+                        status: searchParams.get('status') || '',
+                        sort: sort,
+                      });
+                    }}
+                  />
+                </SelectWrapper>
                 {votes.map(({ cursorId, item1Info, item2Info, voteInfo }) => {
                   return (
                     <VoteItem
