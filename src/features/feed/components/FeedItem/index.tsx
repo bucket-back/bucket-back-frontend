@@ -9,7 +9,7 @@ import {
 } from '@/shared/components';
 import { useUserInfo } from '@/shared/hooks';
 import { FeedItemInfo, MemberInfo } from '@/shared/types';
-import { useFeedLike } from '../../hooks';
+import { useFeedLike, useFeedUnLike } from '../../hooks';
 import {
   Container,
   ProfileWrapper,
@@ -60,10 +60,13 @@ const FeedItem = ({
   const userInfo = useUserInfo();
 
   const feedLike = useFeedLike();
+  const feedUnLike = useFeedUnLike();
 
   const handleClickLike = () => {
     if (!isLike) {
       feedLike.mutate(feedId);
+    } else {
+      feedUnLike.mutate(feedId);
     }
   };
 
