@@ -1,2 +1,1 @@
-export { default as useFeeds } from './useFeeds';
-export { default as useFeedDetail } from './useFeedDetail';
+export { default as useFeedLike } from './useFeedLike';
