@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { CommonCard, CommonImage, CommonText } from '@/shared/components';
 import { ItemInfo, VoteInfo } from '@/shared/types';
 import { ContentsContainer, ContentsWrapper, VoteImageWrapper, VsBox } from './style';
@@ -9,8 +10,16 @@ interface VoteItemProps {
 }
 
 const VoteItem = ({ item1Info, item2Info, voteInfo }: VoteItemProps) => {
+  const navigate = useNavigate();
+
   return (
-    <CommonCard count={voteInfo.participants} date={voteInfo.startTime} onClick={() => {}}>
+    <CommonCard
+      count={voteInfo.participants}
+      date={voteInfo.startTime}
+      onClick={() => {
+        navigate(`${voteInfo.id}`);
+      }}
+    >
       <ContentsContainer>
         <CommonText type="smallInfo">{voteInfo.content}</CommonText>
         <ContentsWrapper>
