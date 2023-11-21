@@ -1,5 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 import { CommonSelect, CommonTabs } from '@/shared/components';
+import { useAuthCheck } from '@/shared/hooks';
 import { VotesInfo } from '@/shared/types';
 import VoteItem from '../VoteItem';
 import { Container, ContentsWrapper, SelectWrapper } from './style';
@@ -25,7 +26,7 @@ interface VotesProps {
 
 const Votes = ({ votes }: VotesProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const isLogin = useAuthCheck();
   const currentTabIndex = VOTE_STATE.map(({ VALUE }) => VALUE).indexOf(
     searchParams.get('status') || VOTE_STATE[0].VALUE
   );
@@ -55,16 +56,20 @@ const Votes = ({ votes }: VotesProps) => {
                     }}
                   />
                 </SelectWrapper>
-                {votes.map(({ cursorId, item1Info, item2Info, voteInfo }) => {
-                  return (
-                    <VoteItem
-                      key={cursorId}
-                      item1Info={item1Info}
-                      item2Info={item2Info}
-                      voteInfo={voteInfo}
-                    />
-                  );
-                })}
+                {VALUE !== 'completed' && !isLogin ? (
+                  <div>로그인이 필요한 서비스입니다.</div>
+                ) : (
+                  votes.map(({ cursorId, item1Info, item2Info, voteInfo }) => {
+                    return (
+                      <VoteItem
+                        key={cursorId}
+                        item1Info={item1Info}
+                        item2Info={item2Info}
+                        voteInfo={voteInfo}
+                      />
+                    );
+                  })
+                )}
               </ContentsWrapper>
             ),
           };

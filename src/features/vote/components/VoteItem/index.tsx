@@ -1,6 +1,6 @@
 import { CommonCard, CommonImage, CommonText } from '@/shared/components';
 import { ItemInfo, VoteInfo } from '@/shared/types';
-import { ContentsContainer, ContentsWrapper, VsBox } from './style';
+import { ContentsContainer, ContentsWrapper, VoteImageWrapper, VsBox } from './style';
 
 interface VoteItemProps {
   voteInfo: VoteInfo;
@@ -14,21 +14,21 @@ const VoteItem = ({ item1Info, item2Info, voteInfo }: VoteItemProps) => {
       <ContentsContainer>
         <CommonText type="smallInfo">{voteInfo.content}</CommonText>
         <ContentsWrapper>
-          <div>
+          <VoteImageWrapper>
             <CommonImage size="base" src={item1Info.image} />
             <CommonText type="smallInfo">{item1Info.price}</CommonText>
             <CommonText type="smallInfo">{item1Info.name}</CommonText>
-          </div>
+          </VoteImageWrapper>
           <VsBox>
             <CommonText type="smallInfo" noOfLines={0}>
               VS
             </CommonText>
           </VsBox>
-          <div>
+          <VoteImageWrapper>
             <CommonImage size="base" src={item2Info.image} />
             <CommonText type="smallInfo">{item2Info.price}</CommonText>
             <CommonText type="smallInfo">{item2Info.name}</CommonText>
-          </div>
+          </VoteImageWrapper>
         </ContentsWrapper>
       </ContentsContainer>
     </CommonCard>

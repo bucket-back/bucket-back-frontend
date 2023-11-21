@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { CommonTabs } from '@/shared/components';
@@ -11,7 +12,7 @@ const VoteHome = () => {
   const getHobby = searchParams.get('hobby');
   const getStatus = searchParams.get('status');
   const getSort = searchParams.get('sort');
-  const { data: hobbyData } = useHobby();
+  const { data: hobbyData, isSuccess: hobbySuccess } = useHobby();
   const { data: votesData } = useQuery({
     ...voteQueryOption.list({
       hobby: getHobby || '',
@@ -28,6 +29,12 @@ const VoteHome = () => {
     }),
     initialData: { nextCursorId: '', votes: [] },
   });
+
+  useEffect(() => {
+    if (!searchParams.get('hobby') && hobbySuccess) {
+      setSearchParams({ hobby: hobbyData.hobbies[0].name });
+    }
+  }, [hobbyData?.hobbies, hobbySuccess, searchParams, setSearchParams]);
 
   const currentTabIndex = hobbyData?.hobbies
     .map(({ name }) => name)
