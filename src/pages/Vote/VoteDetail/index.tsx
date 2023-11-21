@@ -1,8 +1,11 @@
+import { useQuery } from '@tanstack/react-query';
 import { CommonIconButton, CommonText, DateText, Header } from '@/shared/components';
 import { Body, Content, Footer, Span, Title } from './style';
 import { VoteOptionItem } from '@/features/vote/components';
+import voteQueryOption from '@/features/vote/service/queryOption';
 
 const VoteDetail = () => {
+  const { data: voteDetailData } = useQuery({ ...voteQueryOption.detail(6) });
   const deleteVoteDetail = () => {};
 
   return (
@@ -11,22 +14,28 @@ const VoteDetail = () => {
       <Body>
         <Title>
           <CommonText type="normalTitle" noOfLines={0}>
-            진행중인 투표
+            {voteDetailData?.voteInfo.isVoting ? '진행중인 투표' : '종료된 투표'}
           </CommonText>
-          <CommonIconButton type="delete" onClick={deleteVoteDetail} />
+          {voteDetailData?.isOwner && <CommonIconButton type="delete" onClick={deleteVoteDetail} />}
         </Title>
         <CommonText type="smallInfo" noOfLines={0}>
-          이거 엄마한테 선물드릴려고 하는데 뭐가 더 좋아?
+          {voteDetailData?.voteInfo.content}
         </CommonText>
         <Content>
-          <VoteOptionItem />
+          <VoteOptionItem
+            itemInfo={voteDetailData?.item1Info}
+            votes={voteDetailData?.voteInfo.item1Votes}
+          />
           <Span>VS</Span>
-          <VoteOptionItem />
+          <VoteOptionItem
+            itemInfo={voteDetailData?.item2Info}
+            votes={voteDetailData?.voteInfo.item2Votes}
+          />
         </Content>
         <Footer>
-          <DateText createdDate="2023-11-10T07:35:32.716Z" />
+          <DateText createdDate={voteDetailData?.voteInfo.startTime || ''} />
           <CommonText type="smallInfo" noOfLines={0}>
-            00명 참여
+            {voteDetailData?.voteInfo.participants}명 참여
           </CommonText>
         </Footer>
       </Body>
