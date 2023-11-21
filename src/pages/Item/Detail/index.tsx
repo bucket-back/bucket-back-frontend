@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import {
   CommonButton,
   CommonDivider,
@@ -19,49 +21,59 @@ import {
   Box,
 } from './style';
 import ItemComment from '@/features/item/components/ItemComment/index';
+import itemQueryOption from '@/features/item/service/queryOption';
 import { GetSearchReviewListResponse } from '@/features/review/service';
 
 const ItemDetail = () => {
   // 로그인 시 리뷰 클릭이 가능하도록 하기
   // 본인이 작성한 게시글은 리뷰를 작성하도록 할까?
+  const { itemId } = useParams();
   const isLogin = useAuthCheck();
+
+  const { data, isPending, isError } = useQuery({
+    ...itemQueryOption.detail(Number(itemId)),
+    // initialData: { itemInfo: {id:null,name:"",price:00000,image:''}, itemUrl: '', itemAvgRate: 0, isMemberItem: false },
+  });
 
   const [reviewInfo, setReviewInfo] = useState<GetSearchReviewListResponse>();
 
   const handleItem = () => {
     // TODO: 로그인 한 사용자가 아이템을 담을수 있는 기능
-  };
-
-  const handleBuy = () => {
-    // TODO: api를 통해 받은 링크를 이동할수 있는 기능
-    // 이거는 임의로 넣어놨습니다!
     setReviewInfo((prev) => prev);
   };
+
+  if (isPending) {
+    return <>Loading...</>;
+  }
+
+  if (isError) {
+    return <>Error...</>;
+  }
 
   return (
     <>
       <Header type="back" />
       <Container>
-        <CommonImage size="md" />
+        <CommonImage size="md" src={data.itemInfo.image} alt={data.itemInfo.name} />
         <ItemWrapper>
           <CommonText type="normalTitle" noOfLines={0}>
-            아레나 취미활동 수영복
+            {data.itemInfo.name}
           </CommonText>
           <ItemBox>
             <CommonIcon type="fillStar" color="blue.300" />
             <Box>
               <CommonText type="smallInfo" noOfLines={0}>
-                4.5 / 5
+                {data.itemAvgRate === null ? 0 : data.itemAvgRate} / 5
               </CommonText>
             </Box>
           </ItemBox>
         </ItemWrapper>
-        <CommonText type="normalInfo">{formatNumber(23000)}</CommonText>
+        <CommonText type="normalInfo">{formatNumber(data.itemInfo.price)}</CommonText>
         <ButtonWrapper>
-          <CommonButton type="mdSmall" onClick={handleItem}>
+          <CommonButton type="mdSmall" onClick={handleItem} isDisabled={data.isMemberItem}>
             아이템 담기
           </CommonButton>
-          <CommonButton type="link" onClick={handleBuy}>
+          <CommonButton type="link" src={data.itemUrl}>
             구매하러 가기
           </CommonButton>
         </ButtonWrapper>

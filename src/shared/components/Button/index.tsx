@@ -106,7 +106,6 @@ const CommonButton = ({
         width={width}
         maxW="15rem"
         px="1rem"
-        onClick={handleClick}
         href={src}
         as="a"
       >
