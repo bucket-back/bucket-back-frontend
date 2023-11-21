@@ -36,7 +36,7 @@ const CommonAvatar = ({
         </Box>
       ) : (
         <Box>
-          <Avatar src={src} width={size} height={size} onClick={handleClick} />
+          <Avatar src={src} width={size} height={size} onClick={handleClick} cursor="pointer" />
         </Box>
       )}
     </>
