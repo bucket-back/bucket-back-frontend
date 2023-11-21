@@ -85,6 +85,7 @@ const Footer = ({ children }: FooterProps) => {
           flexDirection="column"
           alignItems="center"
           onClick={() => handleClick(ICON)}
+          cursor="pointer"
         >
           <CommonIcon
             type={ICON as FooterIcon}
