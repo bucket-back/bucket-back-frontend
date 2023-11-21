@@ -5,7 +5,7 @@ import { CommonIconButton, CommonText, DateText, Header } from '@/shared/compone
 import { Body, Content, Footer, Span, Title } from './style';
 import { VoteOptionItem } from '@/features/vote/components';
 import { useDeleteVote, useParticipationVote } from '@/features/vote/hooks';
-import voteQueryOption from '@/features/vote/service/queryOption';
+import { voteQueryOption } from '@/features/vote/service';
 
 const VoteDetail = () => {
   const { voteId } = useParams();
