@@ -2,11 +2,12 @@ import { Review } from '@/shared/types';
 
 export interface GetSearchReviewListRequest {
   itemId: number;
-  cursorId: string;
+  cursorId?: string;
   size: number;
 }
 
 export interface GetSearchReviewListResponse {
+  itemReviewTotalCount: number;
   reviewCount: number;
   nextCursorId: string;
   reviews: Review[];
