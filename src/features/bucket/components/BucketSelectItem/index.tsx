@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import {
   CommonButton,
   CommonDivider,
@@ -7,7 +6,7 @@ import {
   CommonText,
 } from '@/shared/components';
 import { formatNumber } from '@/shared/utils';
-import { Body, Container } from './style';
+import { Body, Container, ItemBox, ItemsWrapper } from './style';
 import { GetMyItemsResponse } from '@/features/item/service';
 
 interface SelectedItem {
@@ -67,13 +66,3 @@ const BucketSelectItem = ({ items, selectedItems, onClick }: BucketSelectItemPor
 };
 
 export default BucketSelectItem;
-
-const ItemsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
-`;
-
-const ItemBox = styled.div`
-  margin-bottom: 1rem;
-`;
