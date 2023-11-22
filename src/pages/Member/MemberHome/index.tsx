@@ -26,7 +26,7 @@ import {
   SubTitleBox,
   ImagePanel,
 } from './style';
-import { useLogout } from '@/features/member/hooks';
+import { useLeave, useLogout } from '@/features/member/hooks';
 import { memberQueryOption } from '@/features/member/service';
 
 const MemberHome = () => {
@@ -38,6 +38,7 @@ const MemberHome = () => {
 
   const member = useQuery(memberQueryOption.detail(nickname!));
   const logout = useLogout();
+  const leave = useLeave();
 
   return (
     <>
@@ -141,9 +142,10 @@ const MemberHome = () => {
         onClickFooterButton={() => {
           if (selectedStatus === 'logout') {
             logout();
-          } else {
-            // TODO: 탈퇴 기능 추가
-            console.log('탈퇴');
+          }
+
+          if (selectedStatus === 'leave') {
+            leave.mutate();
           }
         }}
         isFull={false}
