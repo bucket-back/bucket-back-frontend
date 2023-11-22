@@ -48,7 +48,7 @@ const MemberHome = () => {
           <MemberInfoPanel>
             <CommonAvatar size="5rem" />
             <MemberInfoBox>
-              <CommonText type="strongInfo">LV. {member.data?.memberProfile.levelPoint}</CommonText>
+              <CommonText type="strongInfo">LV. {member.data?.memberProfile.level}</CommonText>
               <CommonText type="smallTitle">{nickname}</CommonText>
               {isLogin && (
                 <CommonButton type="profile" onClick={() => navigate('/member/edit')}>
@@ -74,7 +74,7 @@ const MemberHome = () => {
         </MemberInfoWrapper>
         <MemberIntroWrapper>
           <CommonText type="normalInfo" noOfLines={3}>
-            안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
+            {member.data?.memberProfile.introduction}
           </CommonText>
         </MemberIntroWrapper>
         <CommonDivider size="lg" />
