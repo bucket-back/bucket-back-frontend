@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -118,9 +119,8 @@ const ItemDetail = () => {
       <CommentsContainer>
         {reviewInfo.reviews.length > 0 ? (
           reviewInfo.reviews.map(({ content, createdAt, memberInfo, rate, reviewId }) => (
-            <>
+            <Fragment key={reviewId}>
               <ItemComment
-                key={reviewId}
                 content={content}
                 createAt={createdAt}
                 memberInfo={memberInfo}
@@ -128,7 +128,7 @@ const ItemDetail = () => {
                 reviewId={reviewId}
               />
               <CommonDivider size="sm" />
-            </>
+            </Fragment>
           ))
         ) : (
           <ReviewBox>리뷰가 없습니다...</ReviewBox>
