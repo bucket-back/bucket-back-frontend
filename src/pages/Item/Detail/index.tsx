@@ -108,7 +108,7 @@ const ItemDetail = () => {
           isDisabled={isLogin === false}
           onClick={() =>
             isReviewed > -1
-              ? navigate(`/item/${reviewInfo.reviews[isReviewed].reviewId}/edit`)
+              ? navigate(`/review/${reviewInfo.reviews[isReviewed].reviewId}/edit`)
               : navigate(`/item/${itemId}/review/create`)
           }
         >
