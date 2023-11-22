@@ -15,6 +15,7 @@ import {
 import { GetBucketsResponse } from '@/features/bucket/service';
 
 interface FeedSelectBucketProps {
+  selectedBucket: number;
   bucketList: GetBucketsResponse;
   onClick: (id: number) => void;
 }
@@ -28,7 +29,7 @@ const reduceImgUrl = (itemImages: ItemImages[]) => {
   return itemImages.reduce<string[]>((acc, cur) => [...acc, cur.imgUrl], []);
 };
 
-const FeedSelectBucket = ({ bucketList, onClick }: FeedSelectBucketProps) => {
+const FeedSelectBucket = ({ selectedBucket, bucketList, onClick }: FeedSelectBucketProps) => {
   return (
     <Container>
       <ContentsWrapper>
@@ -38,7 +39,11 @@ const FeedSelectBucket = ({ bucketList, onClick }: FeedSelectBucketProps) => {
       {bucketList.buckets.length > 0 ? (
         <BucketListWrapper>
           {bucketList.buckets.map((bucket) => (
-            <BucketBox key={bucket.bucketId} onClick={() => onClick(bucket.bucketId)}>
+            <BucketBox
+              style={{ border: selectedBucket === bucket.bucketId ? '1px solid' : undefined }}
+              key={bucket.bucketId}
+              onClick={() => onClick(bucket.bucketId)}
+            >
               <DividerImage images={reduceImgUrl(bucket.itemImages)} type="base" />
               <CommonText type="smallInfo">{bucket.name}</CommonText>
             </BucketBox>

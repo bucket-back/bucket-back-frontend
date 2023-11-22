@@ -104,6 +104,7 @@ const FeedCreate = () => {
         >
           {bucketList.data && (
             <FeedSelectBucket
+              selectedBucket={selectedBucket}
               bucketList={bucketList.data}
               onClick={(id) => {
                 setSelectedBucket(id);
