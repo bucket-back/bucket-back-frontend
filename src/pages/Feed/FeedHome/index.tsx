@@ -1,9 +1,10 @@
 import { useEffect, Fragment } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { CommonDivider, CommonTabs } from '@/shared/components';
 import { Container, NoResult } from './style';
 import { FeedItem } from '@/features/feed/components';
-import { useFeeds } from '@/features/feed/hooks';
+import { feedQueryOption } from '@/features/feed/service';
 import { useHobby } from '@/features/hobby/hooks';
 
 const FeedHome = () => {
@@ -17,10 +18,11 @@ const FeedHome = () => {
     }
   }, [hobbies.data?.hobbies, hobbies.isSuccess, searchParams, setSearchParams]);
 
-  const feeds = useFeeds({
-    hobbyName: searchParams.get('hobby') || hobbies.data?.hobbies[0].name || '',
-    size: 10,
-  });
+  const feeds = useQuery(
+    feedQueryOption.list({
+      hobbyName: searchParams.get('hobby') || hobbies.data?.hobbies[0].name || '',
+    })
+  );
 
   const currentTabIndex = hobbies.data?.hobbies
     .map(({ name }) => name)

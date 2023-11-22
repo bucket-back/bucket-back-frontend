@@ -10,7 +10,7 @@ export interface GetFeedsRequest {
   nickname?: string;
   sortCondition?: 'popularity' | 'latest';
   cursorId?: string;
-  size: number;
+  size?: number;
 }
 
 export interface GetFeedDetailResponse {

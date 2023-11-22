@@ -1,13 +1,20 @@
+import { useNavigate } from 'react-router-dom';
 import { CommonButton, CommonImage } from '@/shared/components';
 import { FeedItemInfo } from '@/shared/types';
+import { ellipsisName } from '@/shared/utils';
 import { ButtonBox, Container, ContentsWrapper } from './style';
 
 interface FeedItemsDetailProps {
   items?: FeedItemInfo[];
-  onClick?: () => void;
 }
 
-const FeedItemsDetail = ({ items, onClick }: FeedItemsDetailProps) => {
+const FeedItemsDetail = ({ items }: FeedItemsDetailProps) => {
+  const navigate = useNavigate();
+
+  const handleClick = (id: number) => {
+    navigate(`/item/${id}`);
+  };
+
   return (
     <Container>
       {items &&
@@ -15,11 +22,11 @@ const FeedItemsDetail = ({ items, onClick }: FeedItemsDetailProps) => {
           <ContentsWrapper key={id}>
             <ButtonBox>
               <CommonImage size="xs" src={image} />
-              <CommonButton type="xs" onClick={onClick}>
-                {name}
+              <CommonButton type="xs" onClick={() => handleClick(id)}>
+                {ellipsisName(name)}
               </CommonButton>
             </ButtonBox>
-            <CommonImage size="lg" src={image} onClick={onClick} />
+            <CommonImage size="lg" src={image} onClick={() => handleClick(id)} />
           </ContentsWrapper>
         ))}
     </Container>
