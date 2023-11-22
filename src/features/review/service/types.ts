@@ -10,6 +10,7 @@ export interface GetSearchReviewListResponse {
   itemReviewTotalCount: number;
   reviewCount: number;
   nextCursorId: string;
+  totalCount: number;
   reviews: Review[];
 }
 

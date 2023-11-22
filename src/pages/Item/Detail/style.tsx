@@ -36,3 +36,10 @@ export const CommentNumberWrapper = styled.div`
 export const Box = styled.div`
   flex-shrink: 0;
 `;
+
+export const ReviewBox = styled.article`
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

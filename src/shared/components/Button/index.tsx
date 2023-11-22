@@ -13,13 +13,15 @@ interface CommonButtonProps {
     | 'smText'
     | 'xsText'
     | 'custom'
-    | 'profile';
+    | 'profile'
+    | 'link';
   isClick?: boolean;
   isDisabled?: boolean;
   children?: string;
   onClick?: () => void;
   isSubmit?: boolean;
   width?: string;
+  src?: string;
   isLike?: boolean;
 }
 
@@ -31,6 +33,7 @@ const CommonButton = ({
   onClick,
   isSubmit = false,
   width = '100%',
+  src,
   isLike,
 }: CommonButtonProps) => {
   const handleClick = () => {
@@ -93,6 +96,20 @@ const CommonButton = ({
         onClick={handleClick}
         isDisabled={isDisabled}
         type={isSubmit ? 'submit' : 'button'}
+      >
+        {children}
+      </Button>
+    ),
+    link: (
+      <Button
+        size="md"
+        bg="blue.300"
+        colorScheme="blue"
+        width={width}
+        maxW="15rem"
+        px="1rem"
+        href={src}
+        as="a"
       >
         {children}
       </Button>
