@@ -37,3 +37,9 @@ export const Box = styled.div`
 export const HobbyBox = styled.div`
   overflow-x: auto;
 `;
+
+export const SelectedItemsBox = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+`;
