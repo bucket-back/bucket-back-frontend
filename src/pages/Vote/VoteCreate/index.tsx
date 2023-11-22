@@ -98,14 +98,15 @@ const VoteCreate = () => {
         isOpen={isOpen}
         onClose={() => {
           // x버튼 누르면 selectedItem 초기화
+          setSelectedItems([]);
           onClose();
         }}
         onClickFooterButton={() => {
-          // selectedItem을 두개 선택했을때만 선택 완료하고 닫기
           onClose();
         }}
         isFull={true}
         footerButtonText="선택 완료"
+        isDisabled={Boolean(selectedItems.length <= 1)}
       >
         <VoteSelectItem myItemsData={myItemsData} onChange={checkingItems} />
       </CommonDrawer>
