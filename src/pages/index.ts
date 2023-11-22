@@ -15,3 +15,6 @@ export { default as Login } from './Member/Login';
 export { default as Signup } from './Member/Signup';
 export { default as MemberEdit } from './Member/MemberEdit';
 export { default as MemberPassword } from './Member/MemberPassword';
+export { default as InventoryCreate } from './Inventory/InventoryCreate';
+export { default as InventoryDetail } from './Inventory/InventoryDetail';
+export { default as InventoryHome } from './Inventory/InventoryHome';
