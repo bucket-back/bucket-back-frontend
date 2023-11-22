@@ -14,7 +14,7 @@ const FeedHome = () => {
 
   useEffect(() => {
     if (!searchParams.get('hobby') && hobbies.isSuccess) {
-      setSearchParams({ hobby: hobbies.data.hobbies[0].name });
+      setSearchParams({ hobby: hobbies.data.hobbies[0].name, sort: 'RECENT' });
     }
   }, [hobbies.data?.hobbies, hobbies.isSuccess, searchParams, setSearchParams]);
 
