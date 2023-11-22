@@ -55,8 +55,7 @@ const CommentItem = ({
         <DateText createdDate={createdAt} />
         <InteractPanel>
           <CommonButton type="xsText">인벤토리</CommonButton>
-          {!hasAdoptedComment ||
-            (!isOwnFeed && <CommonButton type="xsText">채택하기</CommonButton>)}
+          {isOwnFeed && !hasAdoptedComment && <CommonButton type="xsText">채택하기</CommonButton>}
         </InteractPanel>
       </ContentsWrapper>
     </Container>
