@@ -13,14 +13,13 @@ const Profile = ({ nickname, src, levelNumber, isAdopted }: ProfileProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    // 추후 프로필로 이동
     navigate(`/member/${nickname}`);
   };
 
   return (
     <Flex alignItems="center">
       <CommonAvatar isOwner={false} size="3rem" onClick={handleClick} src={src} />
-      <Box ml="0.8rem">
+      <Box ml="0.8rem" onClick={handleClick} cursor="pointer">
         <CommonText type="smallTitle" color="blue.900" noOfLines={1}>
           {nickname}
         </CommonText>

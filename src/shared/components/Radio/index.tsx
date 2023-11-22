@@ -1,5 +1,6 @@
 import { HStack, useRadioGroup } from '@chakra-ui/react';
 import RadioCard from './RadioCard';
+import { HobbyBox } from './style';
 
 // 관심사(name)
 // value(배열형태로) -> 몇개 들어올지 알수 있다
@@ -32,9 +33,9 @@ const CommonRadio = ({ values, defaultValue, name, onChange }: CommonRadioProps)
         const radio = getRadioProps({ value });
 
         return (
-          <RadioCard key={value} {...radio}>
-            {value}
-          </RadioCard>
+          <HobbyBox key={value}>
+            <RadioCard {...radio}>{value}</RadioCard>
+          </HobbyBox>
         );
       })}
     </HStack>

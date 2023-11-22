@@ -20,6 +20,7 @@ interface CommonButtonProps {
   onClick?: () => void;
   isSubmit?: boolean;
   width?: string;
+  isLike?: boolean;
 }
 
 const CommonButton = ({
@@ -30,6 +31,7 @@ const CommonButton = ({
   onClick,
   isSubmit = false,
   width = '100%',
+  isLike,
 }: CommonButtonProps) => {
   const handleClick = () => {
     onClick && onClick();
@@ -103,7 +105,7 @@ const CommonButton = ({
         borderColor="blue.300"
         bg={isClick ? 'blue.300' : undefined}
         color={isClick ? 'white' : 'blue.300'}
-        leftIcon={<CommonIcon type="heart" />}
+        leftIcon={<CommonIcon type={isLike ? 'fillHeart' : 'heart'} />}
         onClick={handleClick}
         isDisabled={isDisabled}
         type={isSubmit ? 'submit' : 'button'}

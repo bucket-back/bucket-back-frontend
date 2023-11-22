@@ -1,7 +1,7 @@
 import { ItemInfo, Item, ItemNameGetResult } from '@/shared/types';
 
 export interface PostItemRequest {
-  hobby: string;
+  hobbyValue: string;
   itemUrl: string;
 }
 export interface PostItemResponse {

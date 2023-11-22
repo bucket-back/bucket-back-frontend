@@ -33,3 +33,9 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
 `;
+
+export const HobbyWrapper = styled.section`
+  display: flex;
+  align-items: center;
+  overflow-x: scroll;
+`;
