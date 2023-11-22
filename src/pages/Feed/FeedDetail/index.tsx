@@ -10,7 +10,7 @@ import {
   CommonText,
   Header,
 } from '@/shared/components';
-import { useAuthCheck, useDrawer } from '@/shared/hooks';
+import { useAuthCheck, useDrawer, useUserInfo } from '@/shared/hooks';
 import {
   FeedDetailContainer,
   CommentNumberWrapper,
@@ -29,16 +29,17 @@ const FeedDetail = () => {
   const { feedId } = useParams();
   const feedIdNumber = Number(feedId);
   const isLogin = useAuthCheck();
+  const userInfo = useUserInfo();
 
   const feedDetail = useQuery(feedQueryOption.detail(feedIdNumber));
   const comment = useQuery(commentQueryQption.list({ feedId: feedIdNumber || 1, size: 10 }));
-
   const { register, handleSubmit, reset } = useForm<PostCommentRequest>();
   const { mutate } = useAddComment();
   const onSubmit: SubmitHandler<PostCommentRequest> = (data) => {
     mutate({ feedId: feedIdNumber, content: data.content });
     reset();
   };
+  const isOwnFeed = feedDetail.data?.memberInfo.nickName === userInfo?.nickname;
 
   return (
     <>
@@ -79,6 +80,8 @@ const FeedDetail = () => {
                 content={data.content}
                 createdAt={data.createdAt}
                 isAdopted={data.isAdopted}
+                isOwnFeed={isOwnFeed}
+                hasAdoptedComment={feedDetail.data?.feedInfo.hasAdoptedComment || false}
               />
               <CommonDivider size="sm" />
             </Fragment>
