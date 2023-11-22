@@ -6,11 +6,11 @@ import {
   CommonImage,
   CommonText,
 } from '@/shared/components';
-import { MyItems } from '@/shared/types';
 import { Container, Grid, GridItem, ImageInput, ImageLabel, Wrapper } from './style';
+import { GetMyItemsResponse } from '@/features/item/service';
 
 interface VoteSelectItemProps {
-  myItemsData: MyItems;
+  myItemsData?: GetMyItemsResponse;
   onChange: (e: ChangeEvent<HTMLInputElement>, src: string) => void;
 }
 
@@ -19,9 +19,9 @@ const VoteSelectItem = ({ myItemsData, onChange }: VoteSelectItemProps) => {
     <>
       <Container>
         <CommonText type="normalTitle">투표 아이템 선택</CommonText>
-        <CommonText type="subStrongInfo">총 {myItemsData.totalCount}개의 아이템</CommonText>
+        <CommonText type="subStrongInfo">총 {myItemsData?.totalCount}개의 아이템</CommonText>
         <Grid>
-          {myItemsData.summaries.map(({ itemInfo }) => (
+          {myItemsData?.summaries.map(({ itemInfo }) => (
             <GridItem key={itemInfo.id}>
               <ImageInput
                 type="checkbox"
