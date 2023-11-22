@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { CommonText, DividerImage } from '@/shared/components';
 import { VotesInfo } from '@/shared/types';
 import { Container, TitleWrapper, ContentsWrapper, ContentsBox, NoVotesInProgress } from './style';
@@ -6,6 +7,8 @@ interface VoteInProgressProps {
   votes: VotesInfo[];
 }
 const VoteInProgress = ({ votes }: VoteInProgressProps) => {
+  const navigate = useNavigate();
+
   return (
     <Container>
       {votes.length ? (
@@ -14,11 +17,16 @@ const VoteInProgress = ({ votes }: VoteInProgressProps) => {
             <CommonText type="normalInfo">진행중인 투표</CommonText>
           </TitleWrapper>
           <ContentsWrapper>
-            {votes.map(({ cursorId, item1Info, item2Info }) => {
+            {votes.map(({ cursorId, item1Info, item2Info, voteInfo }) => {
               return (
-                <ContentsBox key={cursorId}>
+                <ContentsBox
+                  key={cursorId}
+                  onClick={() => {
+                    navigate(`${voteInfo.id}`);
+                  }}
+                >
                   <DividerImage type="live" images={[item1Info.image, item2Info.image]} />
-                  <CommonText type="smallInfo">00명 참여중!</CommonText>
+                  <CommonText type="smallInfo">{voteInfo.participants}명 참여중!</CommonText>
                 </ContentsBox>
               );
             })}

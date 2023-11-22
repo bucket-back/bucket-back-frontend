@@ -81,7 +81,7 @@ const FeedDetail = () => {
                 createdAt={data.createdAt}
                 isAdopted={data.isAdopted}
                 isOwnFeed={isOwnFeed}
-                hasAdoptedComment={feedDetail.data?.feedInfo.hasAdoptedComment || false}
+                hasAdoptedComment={Boolean(feedDetail.data?.feedInfo.hasAdoptedComment)}
               />
               <CommonDivider size="sm" />
             </Fragment>

@@ -22,3 +22,9 @@ export interface ItemSummary {
   image: string;
   createdAt: string;
 }
+
+export interface MyItemSummary {
+  createdAt: string;
+  cursorId: string;
+  itemInfo: ItemInfo;
+}

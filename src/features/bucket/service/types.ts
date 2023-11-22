@@ -4,7 +4,7 @@ export interface GetBucketsRequest {
   nickname: string;
   hobby: string;
   cursorId?: string;
-  size: number;
+  size?: number;
 }
 
 export interface GetBucketsResponse {

@@ -1,16 +1,15 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { voteQueryOption } from '../service';
-import voteApi from '../service/handler';
+import { voteApi, voteQueryOption } from '../service';
 
-const useDeleteVote = (voteId: number) => {
+const useCancelVote = (voteId: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: voteApi.postVoteParticipation,
+    mutationFn: voteApi.deleteVoteCancel,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: voteQueryOption.detail(voteId).queryKey });
     },
   });
 };
 
-export default useDeleteVote;
+export default useCancelVote;
