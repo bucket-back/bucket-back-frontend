@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -10,7 +10,6 @@ import {
   Header,
 } from '@/shared/components';
 import { useDrawer } from '@/shared/hooks';
-
 import { FormContainer, Wrapper, TextareaWrapper } from './style';
 import { useHobby } from '@/features/hobby/hooks';
 import { itemQueryOption } from '@/features/item/service';
@@ -25,6 +24,7 @@ const VoteCreate = () => {
   const [selectedHobby, setSelectedHobby] = useState<string>('');
   const currnetHobby = hobbyData?.hobbies.find(({ value }) => value === selectedHobby);
   const HangulHobby = hobbyData?.hobbies.map((hobby) => hobby.value);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const { data: myItemsData } = useQuery({
     ...itemQueryOption.myItems({
       hobbyName: currnetHobby?.name,
@@ -35,15 +35,24 @@ const VoteCreate = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Textarea>();
-  const [selectedItem, setSelectedItem] = useState<number>(0);
   const { isOpen, onOpen, onClose } = useDrawer();
-  const onSubmit: SubmitHandler<Textarea> = (data) => {
-    // 취미,버킷 선택했는지 안했는지 체크
-    console.log(data, selectedHobby, selectedItem);
+  const checkingItems = (e: ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked;
+    if (checked && selectedItems.length <= 1) {
+      setSelectedItems(() => [...selectedItems, e.target.id]);
+    } else if (!checked) {
+      setSelectedItems(selectedItems.filter((item) => item !== e.target.id));
+    }
+    if (selectedItems.length > 1) {
+      e.target.checked = false;
+    }
   };
   if (!HangulHobby) {
     return;
   }
+  const onSubmit: SubmitHandler<Textarea> = (data) => {
+    console.log(data);
+  };
 
   return (
     <>
@@ -93,13 +102,12 @@ const VoteCreate = () => {
         }}
         onClickFooterButton={() => {
           // selectedItem을 두개 선택했을때만 선택 완료하고 닫기
-          console.log(selectedItem);
           onClose();
         }}
         isFull={true}
         footerButtonText="선택 완료"
       >
-        <VoteSelectItem onClick={(index) => setSelectedItem(index)} myItemsData={myItemsData} />
+        <VoteSelectItem myItemsData={myItemsData} onChange={checkingItems} />
       </CommonDrawer>
     </>
   );

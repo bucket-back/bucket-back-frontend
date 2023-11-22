@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react';
 import {
   CommonButton,
   CommonDivider,
@@ -6,14 +7,14 @@ import {
   CommonText,
 } from '@/shared/components';
 import { MyItems } from '@/shared/types';
-import { Container, Grid, GridItem, Wrapper } from './style';
+import { Container, Grid, GridItem, ImageInput, ImageLabel, Wrapper } from './style';
 
 interface VoteSelectItemProps {
-  onClick: (index: number) => void;
   myItemsData: MyItems;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const VoteSelectItem = ({ onClick, myItemsData }: VoteSelectItemProps) => {
+const VoteSelectItem = ({ myItemsData, onChange }: VoteSelectItemProps) => {
   return (
     <>
       <Container>
@@ -22,7 +23,11 @@ const VoteSelectItem = ({ onClick, myItemsData }: VoteSelectItemProps) => {
         <Grid>
           {myItemsData.summaries.map(({ itemInfo }) => (
             <GridItem key={itemInfo.id}>
-              <CommonImage size="sm" src={itemInfo.image} onClick={() => onClick(itemInfo.id)} />
+              <ImageInput type="checkbox" id={String(itemInfo.id)} onChange={(e) => onChange(e)} />
+
+              <ImageLabel htmlFor={String(itemInfo.id)}>
+                <CommonImage size="sm" src={itemInfo.image} />
+              </ImageLabel>
               <CommonText type="normalInfo">{itemInfo.price}</CommonText>
               <CommonText type="smallInfo">{itemInfo.name}</CommonText>
             </GridItem>
