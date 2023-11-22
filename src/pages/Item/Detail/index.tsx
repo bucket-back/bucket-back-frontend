@@ -51,7 +51,8 @@ const ItemDetail = () => {
   } = useQuery({
     ...reviewQueryOption.lists({ itemId: Number(itemId), cursorId: '', size: 10 }),
     initialData: {
-      nextCursorId: null,
+      itemReviewTotalCount: 0,
+      nextCursorId: '',
       totalCount: 0,
       reviews: [],
     },

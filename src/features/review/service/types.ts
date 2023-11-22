@@ -8,8 +8,7 @@ export interface GetSearchReviewListRequest {
 
 export interface GetSearchReviewListResponse {
   itemReviewTotalCount: number;
-  reviewCount: number;
-  nextCursorId: string;
+  nextCursorId?: string;
   totalCount: number;
   reviews: Review[];
 }
