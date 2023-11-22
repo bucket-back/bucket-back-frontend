@@ -9,7 +9,7 @@ export interface Bucket {
   cursorId: string;
   bucketId: number;
   name: string;
-  budget: number;
+  budget: number | null;
   createdAt: string;
   itemImages: ItemImage[];
 }
