@@ -18,6 +18,10 @@ export interface PostReviewItemRequest {
   rating: number;
 }
 
+export interface PostReviewItemResponse {
+  itemId: number;
+}
+
 export interface PutEditReviewItemRequest {
   itemId: number;
   reviewId: string;

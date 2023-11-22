@@ -26,7 +26,7 @@ import {
   ItemBoxColumn,
 } from './style';
 import { itemQueryOption } from '@/features/item/service';
-// import { usePostReview } from '@/features/review/hooks';
+import { usePostReview } from '@/features/review/hooks';
 interface FormProps {
   review: string;
 }
@@ -45,12 +45,10 @@ const ItemReview = () => {
 
   const { data, isPending, isError } = useQuery({ ...itemQueryOption.detail(Number(itemId)) });
 
-  // const { mutate } = usePostReview();
+  const { mutate: reviewMutate } = usePostReview();
 
   const onSubmit: SubmitHandler<FormProps> = (data) => {
-    console.log('afdqwer');
-    console.log(data);
-    // mutate({ itemId: Number(itemId), content: data.review, rating: value });
+    reviewMutate({ itemId: Number(itemId), content: data.review, rating: value });
     reset();
   };
 
@@ -114,7 +112,7 @@ const ItemReview = () => {
               />
             </ItemBoxColumn>
           </FormWrapper>
-          <CommonButton type="mdFull" isDisabled={!value}>
+          <CommonButton type="mdFull" isDisabled={!value} isSubmit={true}>
             리뷰 쓰기
           </CommonButton>
         </Form>

@@ -1,21 +1,25 @@
-// import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-// import { itemQueryOption } from '@/features/item/service';
+import { useNavigate } from 'react-router-dom';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useCustomToast } from '@/shared/hooks';
+import { itemQueryOption } from '@/features/item/service';
 import { reviewApi } from '@/features/review/service';
-import { PostReviewItemRequest } from '@/features/review/service/types';
+import { PostReviewItemRequest, PostReviewItemResponse } from '@/features/review/service/types';
 
 const usePostReview = () => {
-  // const navigate = useNavigate();
-  // const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const toast = useCustomToast();
 
   return useMutation({
     mutationFn: ({ itemId, content, rating }: PostReviewItemRequest) =>
-      // console.log(itemId, content, rating);
       reviewApi.postReviewItem({ itemId, content, rating }),
-    // onSuccess: (itemId: number) => {
-    //   queryClient.invalidateQueries({ queryKey: [...itemQueryOption.detail(itemId).queryKey] });
-    //   navigate(`/item/${itemId}`);
-    // },
+    onSuccess: ({ itemId }: PostReviewItemResponse) => {
+      queryClient.invalidateQueries({
+        queryKey: [...itemQueryOption.detail(itemId).queryKey],
+      });
+      toast({ message: '리뷰가 등록되었습니다', type: 'success' });
+      navigate(`/item/${itemId}`);
+    },
   });
 };
 
