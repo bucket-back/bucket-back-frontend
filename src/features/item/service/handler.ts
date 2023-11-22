@@ -7,6 +7,7 @@ import {
   GetSearchItemRequest,
   GetSearchItemResponse,
   GetSearchKeywordResponse,
+  GetMyItemsRequest,
 } from './types';
 
 import { axiosClient } from '@/core/service/axios';
@@ -58,6 +59,16 @@ const itemApi = {
     const url = `${BASE_URL}/myitems/${itemId}`;
 
     return await axiosClient.delete<null>(url);
+  },
+
+  getMyItems: async ({ hobbyName, cursorId, size = 10 }: GetMyItemsRequest) => {
+    const queryString = hobbyName ? `hobbyName=${hobbyName}` : '';
+    const url = `${BASE_URL}/myitems?${queryString}`;
+    const params = cursorId ? { cursorId, size } : { size };
+
+    const response = await axiosClient.get(url, { params });
+
+    return response.data;
   },
 };
 

@@ -22,3 +22,15 @@ export interface ItemSummary {
   image: string;
   createdAt: string;
 }
+
+export interface MyItemSummary {
+  createdAt: string;
+  cursorId: string;
+  itemInfo: ItemInfo;
+}
+
+export interface MyItems {
+  cursorId: string;
+  summaries: MyItemSummary[];
+  totalCount: number;
+}
