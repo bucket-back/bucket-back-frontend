@@ -15,3 +15,7 @@ export const ContentsWrapper = styled.div`
 export const VsBox = styled.div`
   flex-shrink: 0;
 `;
+
+export const VoteImageWrapper = styled.div`
+  max-width: 50%;
+`;

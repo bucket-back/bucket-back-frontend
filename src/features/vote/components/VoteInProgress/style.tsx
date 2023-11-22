@@ -26,3 +26,10 @@ export const ContentsBox = styled.div`
   align-items: center;
   gap: 0.5rem;
 `;
+
+export const NoVotesInProgress = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+`;
