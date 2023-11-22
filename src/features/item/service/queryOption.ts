@@ -8,6 +8,11 @@ const itemQueryOption = {
       queryKey: [...itemQueryOption.all, keyword] as const,
       queryFn: () => itemApi.getSearchItem({ keyword, cursorId, size }),
     }),
+  detail: (itemId: number) =>
+    queryOptions({
+      queryKey: [...itemQueryOption.all, itemId] as const,
+      queryFn: () => itemApi.getDetailItem(itemId),
+    }),
 };
 
 export default itemQueryOption;
