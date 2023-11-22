@@ -15,6 +15,7 @@ import { FormContainer, Wrapper, TextareaWrapper, RadioBox, SelectedItems } from
 import { useHobby } from '@/features/hobby/hooks';
 import { itemQueryOption } from '@/features/item/service';
 import { VoteSelectItem } from '@/features/vote/components';
+import { useCreateVote } from '@/features/vote/hooks';
 
 interface Textarea {
   textarea: string;
@@ -35,6 +36,7 @@ const VoteCreate = () => {
       hobbyName: currnetHobby?.name,
     }),
   });
+  const { mutate: CreateVoteMuate } = useCreateVote();
   const {
     register,
     handleSubmit,
@@ -56,7 +58,12 @@ const VoteCreate = () => {
     return;
   }
   const onSubmit: SubmitHandler<Textarea> = (data) => {
-    console.log(data, '생성완료');
+    CreateVoteMuate({
+      hobby: selectedHobby,
+      content: data.textarea,
+      item1Id: Number(selectedItems[0].id),
+      item2Id: Number(selectedItems[0].id),
+    });
   };
 
   return (
@@ -76,7 +83,10 @@ const VoteCreate = () => {
             <CommonRadio
               values={HangulHobby!}
               name="취미"
-              onChange={(value: string) => setSelectedHobby(value)}
+              onChange={(value: string) => {
+                setSelectedHobby(value);
+                setSelectedItems([]);
+              }}
             />
           </RadioBox>
         </Wrapper>
@@ -89,7 +99,15 @@ const VoteCreate = () => {
           ) : (
             <SelectedItems>
               {selectedItems.map(({ id, src }) => (
-                <CommonImage key={id} src={src} size="sm" />
+                <CommonImage
+                  key={id}
+                  src={src}
+                  size="sm"
+                  onClick={() => {
+                    onOpen();
+                    setSelectedItems([]);
+                  }}
+                />
               ))}
             </SelectedItems>
           )}
