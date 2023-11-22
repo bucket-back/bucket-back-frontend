@@ -8,7 +8,7 @@ export interface GetFeedsResponse {
 export interface GetFeedsRequest {
   hobbyName: string;
   nickname?: string;
-  sortCondition?: 'popularity' | 'latest';
+  sortCondition?: string;
   cursorId?: string;
   size?: number;
 }
