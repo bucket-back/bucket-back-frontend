@@ -28,9 +28,3 @@ export interface MyItemSummary {
   cursorId: string;
   itemInfo: ItemInfo;
 }
-
-export interface MyItems {
-  cursorId: string;
-  summaries: MyItemSummary[];
-  totalCount: number;
-}
