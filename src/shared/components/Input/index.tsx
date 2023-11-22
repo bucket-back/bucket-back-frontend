@@ -20,6 +20,7 @@ interface CommonInputProps {
   rightIcon?: ReactElement;
   size?: 'sm' | 'md' | 'lg';
   width?: string;
+  isDisabled?: boolean;
 }
 
 const CommonInput = forwardRef(
@@ -33,6 +34,7 @@ const CommonInput = forwardRef(
       type,
       size = 'md',
       width = '18.4375rem',
+      isDisabled = false,
       ...props
     }: CommonInputProps,
     ref
@@ -42,7 +44,13 @@ const CommonInput = forwardRef(
         {label && <FormLabel>{label}</FormLabel>}
         <InputGroup width={width} size={size}>
           {leftIcon && <InputLeftElement>{leftIcon}</InputLeftElement>}
-          <Input placeholder={placeholder} ref={ref} {...props} type={type} />
+          <Input
+            placeholder={placeholder}
+            ref={ref}
+            {...props}
+            type={type}
+            isDisabled={isDisabled}
+          />
           {rightIcon && <InputRightElement>{rightIcon}</InputRightElement>}
         </InputGroup>
         {error?.message && <FormErrorMessage>{error.message}</FormErrorMessage>}

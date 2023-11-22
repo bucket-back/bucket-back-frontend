@@ -14,10 +14,10 @@ import { axiosClient } from '@/core/service/axios';
 const BASE_URL = 'items';
 
 const itemApi = {
-  postItem: async ({ hobby, itemUrl }: PostItemRequest) => {
+  postItem: async ({ hobbyValue, itemUrl }: PostItemRequest) => {
     const url = `${BASE_URL}/enroll`;
 
-    const response = await axiosClient.post<PostItemResponse>(url, { hobby, itemUrl });
+    const response = await axiosClient.post<PostItemResponse>(url, { hobbyValue, itemUrl });
 
     return response.data;
   },

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { CommonButton, CommonInput, CommonRadio, CommonText, Header } from '@/shared/components';
-import { Container, Wrapper, Form, BoxTop, Box } from './style';
-// 취미 불러오는 api
-const initalHobby = ['수영', '자전거', '농구'];
+import { Container, Wrapper, Form, BoxTop, Box, HobbyWrapper } from './style';
+import { useHobby } from '@/features/hobby/hooks';
+import { usePostItem } from '@/features/item/hooks';
 
 interface ItemText {
   url: string;
@@ -13,7 +13,6 @@ const validateInput = (v: string) =>
   !(v.includes('<script>') || v.includes('</script>')) || '스크립트 태그를 사용할수 없습니다';
 
 const ItemCreate = () => {
-  const [selectedHobby, setSelectedHobby] = useState<string>('');
   const {
     register,
     handleSubmit,
@@ -21,13 +20,14 @@ const ItemCreate = () => {
     reset,
   } = useForm<ItemText>({ mode: 'onBlur' });
 
+  const [selectedHobby, setSelectedHobby] = useState<string>('');
+
+  const { mutate: itemMutate } = usePostItem();
+
+  const { isSuccess, data } = useHobby();
+
   const onSubmit: SubmitHandler<ItemText> = ({ url }) => {
-    console.log(selectedHobby);
-    console.log(url);
-
-    // 성공했다면 input 유지
-
-    // 실패했다면 input 빈칸
+    itemMutate({ hobbyValue: selectedHobby, itemUrl: url });
     reset();
   };
 
@@ -45,11 +45,13 @@ const ItemCreate = () => {
                 <CommonText type="normalInfo" noOfLines={0}>
                   아이템에 맞는 취미를 선택해주세요.
                 </CommonText>
-                <CommonRadio
-                  values={initalHobby}
-                  name="취미"
-                  onChange={(value: string) => setSelectedHobby(value)}
-                />
+                <HobbyWrapper>
+                  <CommonRadio
+                    values={isSuccess ? data?.hobbies.map(({ value }) => value) : []}
+                    name="취미"
+                    onChange={(value) => setSelectedHobby(value)}
+                  />
+                </HobbyWrapper>
               </Box>
               <Box>
                 <CommonInput

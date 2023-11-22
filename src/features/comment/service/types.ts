@@ -6,14 +6,10 @@ export interface GetCommentsRequest {
   size: number;
 }
 
-interface CommentSummary {
-  nextCursorId: string;
-  summaryCount: number;
-  summaries: Comment[];
-}
-
 export interface GetCommentsResponse {
-  commentCursorSummary: CommentSummary;
+  nextCursorId: string;
+  totalCount: number;
+  comments: Comment[];
 }
 
 export interface PostCommentRequest {

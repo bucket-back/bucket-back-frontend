@@ -1,24 +1,32 @@
 import { CommonText, DividerImage } from '@/shared/components';
-import { Container, TitleWrapper, ContentsWrapper, ContentsBox } from './style';
+import { VotesInfo } from '@/shared/types';
+import { Container, TitleWrapper, ContentsWrapper, ContentsBox, NoVotesInProgress } from './style';
 
-const TEMP_IMAGE = 'https://placehold.co/800?text=Bucket+Back&font=roboto';
-
-const VoteInProgress = () => {
+interface VoteInProgressProps {
+  votes: VotesInfo[];
+}
+const VoteInProgress = ({ votes }: VoteInProgressProps) => {
   return (
     <Container>
-      <TitleWrapper>
-        <CommonText type="normalInfo">진행중인 투표</CommonText>
-      </TitleWrapper>
-      <ContentsWrapper>
-        {Array.from({ length: 10 }, (_, index) => {
-          return (
-            <ContentsBox key={index}>
-              <DividerImage type="live" images={[TEMP_IMAGE, TEMP_IMAGE]} />
-              <CommonText type="smallInfo">00명 참여중!</CommonText>
-            </ContentsBox>
-          );
-        })}
-      </ContentsWrapper>
+      {votes.length ? (
+        <>
+          <TitleWrapper>
+            <CommonText type="normalInfo">진행중인 투표</CommonText>
+          </TitleWrapper>
+          <ContentsWrapper>
+            {votes.map(({ cursorId, item1Info, item2Info }) => {
+              return (
+                <ContentsBox key={cursorId}>
+                  <DividerImage type="live" images={[item1Info.image, item2Info.image]} />
+                  <CommonText type="smallInfo">00명 참여중!</CommonText>
+                </ContentsBox>
+              );
+            })}
+          </ContentsWrapper>
+        </>
+      ) : (
+        <NoVotesInProgress> 진행중인 투표가 없습니다.</NoVotesInProgress>
+      )}
     </Container>
   );
 };
