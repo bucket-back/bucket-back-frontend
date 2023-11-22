@@ -46,16 +46,19 @@ const Votes = ({ votes }: VotesProps) => {
             content: (
               <ContentsWrapper>
                 <SelectWrapper>
-                  <CommonSelect
-                    onChange={(e) => {
-                      const sort = e.target.value;
-                      setSearchParams({
-                        hobby: searchParams.get('hobby') || '',
-                        status: searchParams.get('status') || '',
-                        sort: sort,
-                      });
-                    }}
-                  />
+                  {VALUE === 'completed' && (
+                    <CommonSelect
+                      selectedValue={searchParams.get('sort')?.toLowerCase()}
+                      onChange={(e) => {
+                        const sort = e.target.value;
+                        setSearchParams({
+                          hobby: searchParams.get('hobby') || '',
+                          status: searchParams.get('status') || '',
+                          sort: sort,
+                        });
+                      }}
+                    />
+                  )}
                 </SelectWrapper>
                 {isLoginInVotes(VALUE) ? (
                   <NoResult>로그인이 필요한 서비스입니다.</NoResult>
