@@ -19,6 +19,7 @@ interface CommonDrawerProps {
   headerContent?: ReactNode;
   footerButtonText?: string;
   isCloseButton?: boolean;
+  isDisabled?: boolean;
 }
 
 const CommonDrawer = ({
@@ -30,6 +31,7 @@ const CommonDrawer = ({
   headerContent,
   footerButtonText,
   isCloseButton = true,
+  isDisabled = false,
 }: CommonDrawerProps) => {
   return (
     <>
@@ -58,6 +60,7 @@ const CommonDrawer = ({
                   width="18.125rem"
                   _hover={{ bgColor: 'blue.300' }}
                   onClick={onClickFooterButton}
+                  isDisabled={isDisabled}
                 >
                   {footerButtonText}
                 </Button>

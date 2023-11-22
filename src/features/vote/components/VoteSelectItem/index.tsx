@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem } from '@chakra-ui/react';
+import { ChangeEvent } from 'react';
 import {
   CommonButton,
   CommonDivider,
@@ -6,38 +6,46 @@ import {
   CommonImage,
   CommonText,
 } from '@/shared/components';
-import { Body, Container } from './style';
+import { Container, Grid, GridItem, ImageInput, ImageLabel, Wrapper } from './style';
+import { GetMyItemsResponse } from '@/features/item/service';
 
 interface VoteSelectItemProps {
-  onClick: (index: number) => void;
+  myItemsData?: GetMyItemsResponse;
+  onChange: (e: ChangeEvent<HTMLInputElement>, src: string) => void;
 }
 
-const VoteSelectItem = ({ onClick }: VoteSelectItemProps) => {
+const VoteSelectItem = ({ myItemsData, onChange }: VoteSelectItemProps) => {
   return (
     <>
-      <Body>
+      <Container>
         <CommonText type="normalTitle">투표 아이템 선택</CommonText>
-        <CommonText type="subStrongInfo">총 00개의 아이템</CommonText>
-        <Grid templateRows="repeat(2, 1fr)" templateColumns="repeat(3, 1fr)" gap="0.5rem">
-          {Array.from({ length: 6 }, (_, index) => {
-            return (
-              <GridItem key={index} marginBottom="1rem">
-                <CommonImage size="sm" onClick={() => onClick(index)} />
-                <CommonText type="normalInfo">29,000</CommonText>
-                <CommonText type="smallInfo">아이템 이름입니다.</CommonText>
-              </GridItem>
-            );
-          })}
+        <CommonText type="subStrongInfo">총 {myItemsData?.totalCount}개의 아이템</CommonText>
+        <Grid>
+          {myItemsData?.summaries.map(({ itemInfo }) => (
+            <GridItem key={itemInfo.id}>
+              <ImageInput
+                type="checkbox"
+                id={String(itemInfo.id)}
+                onChange={(e) => onChange(e, itemInfo.image)}
+              />
+
+              <ImageLabel htmlFor={String(itemInfo.id)}>
+                <CommonImage size="sm" src={itemInfo.image} />
+              </ImageLabel>
+              <CommonText type="normalInfo">{itemInfo.price}</CommonText>
+              <CommonText type="smallInfo">{itemInfo.name}</CommonText>
+            </GridItem>
+          ))}
         </Grid>
         <CommonDivider size="sm" />
-        <Box>
+        <div>
           <CommonText type="smallInfo">원하시는 아이템이 없나요?</CommonText>
-          <Container>
+          <Wrapper>
             <CommonButton type="text">아이템 추가하러가기</CommonButton>
             <CommonIcon type="chevronRight" />
-          </Container>
-        </Box>
-      </Body>
+          </Wrapper>
+        </div>
+      </Container>
     </>
   );
 };
