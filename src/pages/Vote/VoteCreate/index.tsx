@@ -4,13 +4,14 @@ import { useQuery } from '@tanstack/react-query';
 import {
   CommonButton,
   CommonDrawer,
+  CommonImage,
   CommonRadio,
   CommonText,
   CommonTextarea,
   Header,
 } from '@/shared/components';
 import { useDrawer } from '@/shared/hooks';
-import { FormContainer, Wrapper, TextareaWrapper } from './style';
+import { FormContainer, Wrapper, TextareaWrapper, RadioBox, SelectedItems } from './style';
 import { useHobby } from '@/features/hobby/hooks';
 import { itemQueryOption } from '@/features/item/service';
 import { VoteSelectItem } from '@/features/vote/components';
@@ -18,13 +19,17 @@ import { VoteSelectItem } from '@/features/vote/components';
 interface Textarea {
   textarea: string;
 }
+interface SelectedItem {
+  id: string;
+  src: string;
+}
 
 const VoteCreate = () => {
   const { data: hobbyData } = useHobby();
   const [selectedHobby, setSelectedHobby] = useState<string>('');
   const currnetHobby = hobbyData?.hobbies.find(({ value }) => value === selectedHobby);
   const HangulHobby = hobbyData?.hobbies.map((hobby) => hobby.value);
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
   const { data: myItemsData } = useQuery({
     ...itemQueryOption.myItems({
       hobbyName: currnetHobby?.name,
@@ -36,12 +41,12 @@ const VoteCreate = () => {
     formState: { errors },
   } = useForm<Textarea>();
   const { isOpen, onOpen, onClose } = useDrawer();
-  const checkingItems = (e: ChangeEvent<HTMLInputElement>) => {
+  const checkingItems = (e: ChangeEvent<HTMLInputElement>, src: string) => {
     const checked = e.target.checked;
     if (checked && selectedItems.length <= 1) {
-      setSelectedItems(() => [...selectedItems, e.target.id]);
+      setSelectedItems(() => [...selectedItems, { id: e.target.id, src: src }]);
     } else if (!checked) {
-      setSelectedItems(selectedItems.filter((item) => item !== e.target.id));
+      setSelectedItems(selectedItems.filter(({ id }) => id !== e.target.id));
     }
     if (selectedItems.length > 1) {
       e.target.checked = false;
@@ -51,7 +56,7 @@ const VoteCreate = () => {
     return;
   }
   const onSubmit: SubmitHandler<Textarea> = (data) => {
-    console.log(data);
+    console.log(data, '생성완료');
   };
 
   return (
@@ -67,17 +72,27 @@ const VoteCreate = () => {
           <CommonText type="normalInfo" noOfLines={0}>
             취미를 선택해주세요.
           </CommonText>
-          <CommonRadio
-            values={HangulHobby!}
-            name="취미"
-            onChange={(value: string) => setSelectedHobby(value)}
-          />
+          <RadioBox>
+            <CommonRadio
+              values={HangulHobby!}
+              name="취미"
+              onChange={(value: string) => setSelectedHobby(value)}
+            />
+          </RadioBox>
         </Wrapper>
         <Wrapper>
           <CommonText type="normalInfo" noOfLines={0}>
             아이템을 두개 선택해주세요
           </CommonText>
-          <CommonButton type="custom" onClick={onOpen} />
+          {selectedItems.length <= 1 ? (
+            <CommonButton type="custom" onClick={onOpen} />
+          ) : (
+            <SelectedItems>
+              {selectedItems.map(({ id, src }) => (
+                <CommonImage key={id} src={src} size="sm" />
+              ))}
+            </SelectedItems>
+          )}
         </Wrapper>
         <TextareaWrapper>
           <CommonTextarea
@@ -97,7 +112,6 @@ const VoteCreate = () => {
       <CommonDrawer
         isOpen={isOpen}
         onClose={() => {
-          // x버튼 누르면 selectedItem 초기화
           setSelectedItems([]);
           onClose();
         }}

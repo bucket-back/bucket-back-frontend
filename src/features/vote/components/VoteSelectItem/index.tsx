@@ -11,7 +11,7 @@ import { Container, Grid, GridItem, ImageInput, ImageLabel, Wrapper } from './st
 
 interface VoteSelectItemProps {
   myItemsData: MyItems;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>, src: string) => void;
 }
 
 const VoteSelectItem = ({ myItemsData, onChange }: VoteSelectItemProps) => {
@@ -23,7 +23,11 @@ const VoteSelectItem = ({ myItemsData, onChange }: VoteSelectItemProps) => {
         <Grid>
           {myItemsData.summaries.map(({ itemInfo }) => (
             <GridItem key={itemInfo.id}>
-              <ImageInput type="checkbox" id={String(itemInfo.id)} onChange={(e) => onChange(e)} />
+              <ImageInput
+                type="checkbox"
+                id={String(itemInfo.id)}
+                onChange={(e) => onChange(e, itemInfo.image)}
+              />
 
               <ImageLabel htmlFor={String(itemInfo.id)}>
                 <CommonImage size="sm" src={itemInfo.image} />

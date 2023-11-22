@@ -21,3 +21,12 @@ export const TextareaWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `;
+
+export const RadioBox = styled.div`
+  overflow-x: auto;
+`;
+
+export const SelectedItems = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`;
