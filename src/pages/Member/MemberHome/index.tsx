@@ -24,7 +24,7 @@ import {
 } from './style';
 
 const MemberHome = () => {
-  const { memberId } = useParams();
+  const { nickname } = useParams();
 
   return (
     <>
@@ -35,7 +35,7 @@ const MemberHome = () => {
             <CommonAvatar size="5rem" />
             <MemberInfoBox>
               <CommonText type="strongInfo">LV. 10</CommonText>
-              <CommonText type="smallTitle">{memberId}</CommonText>
+              <CommonText type="smallTitle">{nickname}</CommonText>
               <CommonButton type="profile">프로필 수정</CommonButton>
             </MemberInfoBox>
           </MemberInfoPanel>

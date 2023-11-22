@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { CommonIconButton, CommonText, Header, Footer } from '@/shared/components';
+import { useAuthNavigate } from '@/shared/hooks';
 import { ItemSummary } from '@/shared/types';
 import { formatNumber } from '@/shared/utils';
 import {
@@ -14,8 +14,11 @@ import { ListItem } from '@/features/item/components';
 
 const ItemList = () => {
   const [isDelete, setIsDelete] = useState<boolean>(false);
+
   const [data, setData] = useState<ItemSummary[]>([]);
-  const navigate = useNavigate();
+
+  const authNavigate = useAuthNavigate();
+
   const handleClick = (deleteId: number) => {
     const filterData = data.filter(({ id }) => id !== deleteId);
     setData(filterData);
@@ -52,7 +55,7 @@ const ItemList = () => {
       </CommonContainer>
       <Footer>
         <AddContainer>
-          <CommonIconButton type="add" onClick={() => navigate('create')} />
+          <CommonIconButton type="add" onClick={() => authNavigate('create')} />
         </AddContainer>
       </Footer>
     </>

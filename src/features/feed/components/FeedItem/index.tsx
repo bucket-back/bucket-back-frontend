@@ -7,7 +7,9 @@ import {
   CommonMenu,
   CommonButton,
 } from '@/shared/components';
+import { useUserInfo } from '@/shared/hooks';
 import { FeedItemInfo, MemberInfo } from '@/shared/types';
+import { useFeedLike, useFeedUnLike } from '../../hooks';
 import {
   Container,
   ProfileWrapper,
@@ -55,6 +57,19 @@ const FeedItem = ({
   onUpdate,
   onDelete,
 }: FeedItemProps) => {
+  const userInfo = useUserInfo();
+
+  const feedLike = useFeedLike();
+  const feedUnLike = useFeedUnLike();
+
+  const handleClickLike = () => {
+    if (!isLike) {
+      feedLike.mutate(feedId);
+    } else {
+      feedUnLike.mutate(feedId);
+    }
+  };
+
   return (
     <Container>
       <ProfileWrapper>
@@ -64,7 +79,7 @@ const FeedItem = ({
           levelNumber={memberInfo.level}
           isAdopted={false}
         />
-        {isDetail && (
+        {isDetail && userInfo?.nickname === memberInfo.nickName && (
           <CommonMenu
             type="update"
             iconSize="0.35rem"
@@ -73,9 +88,9 @@ const FeedItem = ({
           />
         )}
       </ProfileWrapper>
-      <ContentsWrapper onClick={() => onClick && onClick(feedId)}>
+      <ContentsWrapper>
         {feedContent && (
-          <CommonText type="smallInfo" color="inherit" noOfLines={isDetail ? 10 : 3}>
+          <CommonText type="normalInfo" color="inherit" noOfLines={isDetail ? 10 : 3}>
             {feedContent}
           </CommonText>
         )}
@@ -85,7 +100,7 @@ const FeedItem = ({
             <CommonText type="normalInfo">{bucketBudget}원</CommonText>
           </BucketInfoBox>
         )}
-        <ImageBox>
+        <ImageBox onClick={() => onClick(feedId)}>
           {feedItems.map((item) => (
             <CommonImage key={item.id} size="sm" src={item.image} />
           ))}
@@ -94,7 +109,9 @@ const FeedItem = ({
           <DateText createdDate={createdAt} />
           <InteractPanel>
             {isDetail ? (
-              <CommonButton type="sm">{String(likeCount)}</CommonButton>
+              <CommonButton type="sm" isLike={isLike} onClick={handleClickLike}>
+                {String(likeCount)}
+              </CommonButton>
             ) : (
               <>
                 <LikeBox>
