@@ -4,7 +4,7 @@ import { GetBucketDetailRequest, GetBucketMyItemsRequest, GetBucketsRequest, buc
 const QUERY_KEY = 'bucket';
 
 const bucketQueryOption = {
-  list: ({ nickname, hobby, cursorId, size }: GetBucketsRequest) =>
+  list: ({ nickname, hobby, cursorId, size = 10 }: GetBucketsRequest) =>
     queryOptions({
       queryKey: [QUERY_KEY, nickname, hobby],
       queryFn: () => bucketApi.getBuckets({ nickname, hobby, cursorId, size }),

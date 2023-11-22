@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useQuery } from '@tanstack/react-query';
 import {
   CommonButton,
   CommonDrawer,
@@ -8,50 +9,71 @@ import {
   CommonTextarea,
   Header,
 } from '@/shared/components';
-import { useDrawer } from '@/shared/hooks';
-import { Container, ContentsWrapper, ContentsBox } from './style';
+import { useDrawer, useUserInfo } from '@/shared/hooks';
+import { Container, ContentsWrapper, ContentsBox, HobbyBox, Form, ButtonBox } from './style';
+import { bucketQueryOption } from '@/features/bucket/service';
 import { FeedSelectBucket } from '@/features/feed/components';
-
-const initalHobby = ['수영', '자전거', '농구'];
+import { useCreateFeed } from '@/features/feed/hooks';
+import { useHobby } from '@/features/hobby/hooks';
 
 interface Textarea {
   textarea: string;
 }
 
 const FeedCreate = () => {
-  const [selectedHobby, setSelectedHobby] = useState(initalHobby[0]);
+  const [selectedHobby, setSelectedHobby] = useState('');
   const [selectedBucket, setSelectedBucket] = useState(0);
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<Textarea>();
+    formState: { errors, isSubmitting, isValid },
+  } = useForm<Textarea>({ mode: 'onBlur' });
+  const userInfo = useUserInfo();
+
+  const createFeed = useCreateFeed();
+  const bucketList = useQuery(
+    bucketQueryOption.list({ hobby: selectedHobby, nickname: userInfo?.nickname || '' })
+  );
+
   const onSubmit: SubmitHandler<Textarea> = (data) => {
-    console.log(data, selectedHobby, selectedBucket);
+    createFeed.mutate({ bucketId: selectedBucket, content: data.textarea });
   };
   const { isOpen, onOpen, onClose } = useDrawer();
+
+  const hobby = useHobby();
+  const hobbyObj = hobby.data?.hobbies.reduce<Record<string, string>>(
+    (acc, cur) => ((acc[cur.value] = cur.name), acc),
+    {}
+  );
+
+  const hobbyValues = Object.keys(hobbyObj || {});
 
   return (
     <>
       <Header type="back" />
       <Container>
-        <ContentsWrapper>
-          <CommonText type="normalTitle">피드 생성하기</CommonText>
-          <ContentsBox>
-            <CommonText type="normalInfo">취미를 선택해주세요.</CommonText>
-            <CommonRadio
-              values={initalHobby}
-              name="취미"
-              onChange={(value: string) => setSelectedHobby(value)}
-            />
-          </ContentsBox>
-          <ContentsBox>
-            <CommonText type="normalInfo">버킷을 선택해주세요.</CommonText>
-            <CommonButton type="custom" onClick={onOpen} />
-          </ContentsBox>
-          <ContentsBox>
-            <CommonText type="normalInfo">피드 내용을 입력해주세요.</CommonText>
-            <form onSubmit={handleSubmit(onSubmit)}>
+        <CommonText type="normalTitle">피드 생성하기</CommonText>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <ContentsWrapper>
+            <ContentsBox>
+              <CommonText type="normalInfo">취미를 선택해주세요.</CommonText>
+              <HobbyBox>
+                {hobbyObj && (
+                  <CommonRadio
+                    values={hobbyValues}
+                    name="취미"
+                    onChange={(value: string) => setSelectedHobby(hobbyObj[value])}
+                  />
+                )}
+              </HobbyBox>
+            </ContentsBox>
+            <ContentsBox>
+              <CommonText type="normalInfo">버킷을 선택해주세요.</CommonText>
+              <CommonButton type="custom" onClick={onOpen} isDisabled={!selectedHobby} />
+            </ContentsBox>
+            <ContentsBox>
+              <CommonText type="normalInfo">피드 내용을 입력해주세요.</CommonText>
+
               <CommonTextarea
                 size="sm"
                 placeholder="내용을 입력해주세요."
@@ -60,13 +82,19 @@ const FeedCreate = () => {
                   required: '내용을 필수로 입력해주세요.',
                 })}
               />
-            </form>
-          </ContentsBox>
-        </ContentsWrapper>
+            </ContentsBox>
+          </ContentsWrapper>
+          <ButtonBox>
+            <CommonButton
+              type="mdFull"
+              isSubmit
+              isDisabled={!selectedHobby || !isValid || isSubmitting || !selectedBucket}
+            >
+              생성 완료
+            </CommonButton>
+          </ButtonBox>
+        </Form>
 
-        <CommonButton type="mdMiddle" onClick={() => {}}>
-          생성 완료
-        </CommonButton>
         <CommonDrawer
           isOpen={isOpen}
           onClose={onClose}
@@ -74,12 +102,15 @@ const FeedCreate = () => {
           isFull={true}
           footerButtonText="선택 완료"
         >
-          <FeedSelectBucket
-            onClick={(id) => {
-              console.log(id);
-              setSelectedBucket(id);
-            }}
-          />
+          {bucketList.data && (
+            <FeedSelectBucket
+              selectedBucket={selectedBucket}
+              bucketList={bucketList.data}
+              onClick={(id) => {
+                setSelectedBucket(id);
+              }}
+            />
+          )}
         </CommonDrawer>
       </Container>
     </>
