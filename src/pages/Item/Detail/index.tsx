@@ -56,10 +56,10 @@ const ItemDetail = () => {
     },
   });
 
-  const { mutate } = useTakeItem();
+  const { mutate: itemTakeMutate } = useTakeItem();
 
   const handleItem = () => {
-    mutate([String(data.itemInfo.id)]);
+    itemTakeMutate([String(data.itemInfo.id)]);
   };
 
   if (isPending || reviewPending) {
