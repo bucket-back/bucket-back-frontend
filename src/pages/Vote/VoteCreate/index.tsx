@@ -120,7 +120,7 @@ const VoteCreate = () => {
         }}
         isFull={true}
         footerButtonText="선택 완료"
-        isDisabled={Boolean(selectedItems.length <= 1)}
+        isDisabled={selectedItems.length <= 1}
       >
         <VoteSelectItem myItemsData={myItemsData} onChange={checkingItems} />
       </CommonDrawer>
