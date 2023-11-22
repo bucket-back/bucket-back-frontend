@@ -40,9 +40,9 @@ const bucketApi = {
     return response.data;
   },
 
-  postBucket: async ({ hobby, name, budget, itemIds }: PostBucketRequest) => {
+  postBucket: async ({ hobbyValue, name, budget, itemIds }: PostBucketRequest) => {
     const response = await axiosClient.post<PostBucketResponse>(BASE_URL, {
-      hobby,
+      hobbyValue,
       name,
       budget,
       itemIds,
@@ -51,11 +51,11 @@ const bucketApi = {
     return response.data;
   },
 
-  putBucket: async ({ bucketId, hobby, name, budget, itemIds }: PutBucketRequest) => {
+  putBucket: async ({ bucketId, hobbyValue, name, budget, itemIds }: PutBucketRequest) => {
     const url = `${BASE_URL}/${bucketId}`;
 
     return await axiosClient.put<null>(url, {
-      hobby,
+      hobbyValue,
       name,
       budget,
       itemIds,
