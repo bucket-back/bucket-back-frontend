@@ -60,6 +60,8 @@ const ItemDetail = () => {
 
   const { mutate: itemTakeMutate } = useTakeItem();
 
+  const isReviewed = reviewInfo.reviews.findIndex((value) => value.isReviewed);
+
   const handleItem = () => {
     itemTakeMutate([String(data.itemInfo.id)]);
   };
@@ -104,10 +106,13 @@ const ItemDetail = () => {
         <CommonButton
           type="mdFull"
           isDisabled={isLogin === false}
-          onClick={() => navigate(`/item/${itemId}/review/create`)}
+          onClick={() =>
+            isReviewed > -1
+              ? navigate(`/item/${reviewInfo.reviews[isReviewed].reviewId}/edit`)
+              : navigate(`/item/${itemId}/review/create`)
+          }
         >
-          {/* 내가 리뷰를 작성했는지 안했는지에 따라서 문구 변화 및 handler 기능 변화 */}
-          리뷰 쓰기
+          {isReviewed > -1 ? '리뷰 수정' : '리뷰 작성'}
         </CommonButton>
       </Container>
       <div>
