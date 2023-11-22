@@ -25,6 +25,7 @@ export const ContentsBox = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  cursor: pointer;
 `;
 
 export const NoVotesInProgress = styled.div`
