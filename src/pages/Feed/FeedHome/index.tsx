@@ -1,8 +1,8 @@
 import { useEffect, Fragment } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { CommonDivider, CommonTabs } from '@/shared/components';
-import { Container, NoResult } from './style';
+import { CommonDivider, CommonSelect, CommonTabs } from '@/shared/components';
+import { Container, NoResult, SelectWrapper } from './style';
 import { FeedItem } from '@/features/feed/components';
 import { feedQueryOption } from '@/features/feed/service';
 import { useHobby } from '@/features/hobby/hooks';
@@ -14,13 +14,14 @@ const FeedHome = () => {
 
   useEffect(() => {
     if (!searchParams.get('hobby') && hobbies.isSuccess) {
-      setSearchParams({ hobby: hobbies.data.hobbies[0].name });
+      setSearchParams({ hobby: hobbies.data.hobbies[0].name, sort: 'RECENT' });
     }
   }, [hobbies.data?.hobbies, hobbies.isSuccess, searchParams, setSearchParams]);
 
   const feeds = useQuery(
     feedQueryOption.list({
       hobbyName: searchParams.get('hobby') || hobbies.data?.hobbies[0].name || '',
+      sortCondition: searchParams.get('sort') || 'RECENT',
     })
   );
 
@@ -42,6 +43,19 @@ const FeedHome = () => {
           label: value,
           content: (
             <Container>
+              <SelectWrapper>
+                <CommonSelect
+                  selectedValue={searchParams.get('sort')?.toLowerCase()}
+                  onChange={(e) => {
+                    const sort = e.target.value;
+
+                    setSearchParams({
+                      hobby: searchParams.get('hobby') || '',
+                      sort: sort.toUpperCase(),
+                    });
+                  }}
+                />
+              </SelectWrapper>
               {feeds.isSuccess && feeds.data.feeds.length > 0 ? (
                 feeds.data.feeds.map(
                   ({

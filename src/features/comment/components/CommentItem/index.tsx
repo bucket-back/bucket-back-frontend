@@ -11,6 +11,8 @@ interface CommentItemProps {
   createdAt: string;
   isAdopted: boolean;
   memberInfo: MemberInfo;
+  isOwnFeed: boolean;
+  hasAdoptedComment: boolean;
 }
 
 const CommentItem = ({
@@ -20,6 +22,8 @@ const CommentItem = ({
   createdAt,
   isAdopted,
   memberInfo,
+  isOwnFeed,
+  hasAdoptedComment,
 }: CommentItemProps) => {
   const userInfo = useUserInfo();
   const deletComment = useDeleteComment();
@@ -51,7 +55,8 @@ const CommentItem = ({
         <DateText createdDate={createdAt} />
         <InteractPanel>
           <CommonButton type="xsText">인벤토리</CommonButton>
-          <CommonButton type="xsText">채택하기</CommonButton>
+          {!hasAdoptedComment ||
+            (!isOwnFeed && <CommonButton type="xsText">채택하기</CommonButton>)}
         </InteractPanel>
       </ContentsWrapper>
     </Container>

@@ -8,4 +8,5 @@ export interface Review {
   content: string;
   createdAt: string;
   updatedAt: string;
+  isReviewed: boolean;
 }

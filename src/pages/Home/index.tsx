@@ -27,7 +27,7 @@ const Home = () => {
 
   useEffect(() => {
     if (pathname === ROOT_PATH) {
-      navigate(`${TABS.FEED.VALUE}?hobby=basketball`);
+      navigate(`${TABS.FEED.VALUE}`);
     }
   }, [navigate, pathname]);
 

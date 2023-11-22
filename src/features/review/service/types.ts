@@ -2,13 +2,14 @@ import { Review } from '@/shared/types';
 
 export interface GetSearchReviewListRequest {
   itemId: number;
-  cursorId: string;
+  cursorId?: string;
   size: number;
 }
 
 export interface GetSearchReviewListResponse {
+  itemReviewTotalCount: number;
+  nextCursorId?: string;
   totalCount: number;
-  nextCursorId: null | string;
   reviews: Review[];
 }
 
@@ -16,6 +17,10 @@ export interface PostReviewItemRequest {
   itemId: number;
   content: string;
   rating: number;
+}
+
+export interface PostReviewItemResponse {
+  itemId: number;
 }
 
 export interface PutEditReviewItemRequest {

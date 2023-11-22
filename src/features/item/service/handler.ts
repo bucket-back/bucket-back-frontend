@@ -8,6 +8,7 @@ import {
   GetSearchItemResponse,
   GetSearchKeywordResponse,
   GetMyItemsRequest,
+  GetMyItemsResponse,
 } from './types';
 
 import { axiosClient } from '@/core/service/axios';
@@ -66,7 +67,7 @@ const itemApi = {
     const url = `${BASE_URL}/myitems?${queryString}`;
     const params = cursorId ? { cursorId, size } : { size };
 
-    const response = await axiosClient.get(url, { params });
+    const response = await axiosClient.get<GetMyItemsResponse>(url, { params });
 
     return response.data;
   },
