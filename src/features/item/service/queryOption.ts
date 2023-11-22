@@ -1,5 +1,5 @@
 import { queryOptions } from '@tanstack/react-query';
-import { GetSearchItemRequest, itemApi } from '.';
+import { GetMyItemsRequest, GetSearchItemRequest, itemApi } from '.';
 
 const itemQueryOption = {
   all: ['item'] as const,
@@ -12,6 +12,11 @@ const itemQueryOption = {
     queryOptions({
       queryKey: [...itemQueryOption.all, itemId] as const,
       queryFn: () => itemApi.getDetailItem(itemId),
+    }),
+  myItems: ({ hobbyName, cursorId, size }: GetMyItemsRequest) =>
+    queryOptions({
+      queryKey: [...itemQueryOption.all, hobbyName] as const,
+      queryFn: () => itemApi.getMyItems({ hobbyName, cursorId, size }),
     }),
 };
 
