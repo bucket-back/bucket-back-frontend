@@ -12,3 +12,10 @@ export const NoResult = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export const SelectWrapper = styled.div`
+  display: flex;
+  justify-content: end;
+  padding-top: 1rem;
+  padding-right: 1.5rem;
+`;
