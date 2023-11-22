@@ -33,3 +33,7 @@ export const Box = styled.div`
   flex-direction: column;
   gap: 0.5rem;
 `;
+
+export const HobbyBox = styled.div`
+  overflow-x: auto;
+`;

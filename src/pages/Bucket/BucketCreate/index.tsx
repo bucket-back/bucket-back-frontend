@@ -9,25 +9,35 @@ import {
   Header,
 } from '@/shared/components';
 import { useDrawer } from '@/shared/hooks';
-import { Box, ButtonWrapper, Container, Form, Wrapper } from './style';
-import BucketSelectItem from '@/features/bucket/components/BucketSelectItem';
-
-const initalHobby = ['수영', '자전거', '농구'];
+import { Box, ButtonWrapper, Container, Form, HobbyBox, Wrapper } from './style';
+import { BucketSelectItem } from '@/features/bucket/components';
+import { useCreateBucket } from '@/features/bucket/hooks';
+import { useHobby } from '@/features/hobby/hooks';
 
 interface ItemText {
   bucket: string;
 }
 
 const BucketCreate = () => {
-  const [selectedHobby, setSelectedHobby] = useState<string>('');
+  const [selectedHobby, setSelectedHobby] = useState<string | undefined>('');
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm<ItemText>({ mode: 'onBlur' });
   const { isOpen, onOpen, onClose } = useDrawer();
+  const createBucket = useCreateBucket();
 
-  const onSubmit: SubmitHandler<ItemText> = () => {};
+  const onSubmit: SubmitHandler<ItemText> = (data) => {
+    if (selectedHobby) {
+      // TODO 아이템 가져오기 만들기, 지금은 임시로 값 지정
+      createBucket.mutate({ hobbyValue: selectedHobby, name: data.bucket, itemIds: [2, 3] });
+    }
+  };
+
+  const hobby = useHobby();
+
+  const hobbyValues = hobby.data?.hobbies.map(({ value }) => value);
 
   return (
     <>
@@ -51,11 +61,13 @@ const BucketCreate = () => {
               <CommonText type="normalInfo" noOfLines={0}>
                 취미별로 버킷을 생성할 수 있어요. 취미를 선택해주세요!
               </CommonText>
-              <CommonRadio
-                values={initalHobby}
-                name="취미"
-                onChange={(value: string) => setSelectedHobby(value)}
-              />
+              <HobbyBox>
+                <CommonRadio
+                  values={hobbyValues || []}
+                  name="취미"
+                  onChange={(value: string) => setSelectedHobby(value)}
+                />
+              </HobbyBox>
             </Box>
             <Box>
               <CommonText type="normalInfo" noOfLines={0}>
@@ -67,7 +79,7 @@ const BucketCreate = () => {
           <ButtonWrapper>
             <CommonButton
               type="mdFull"
-              isDisabled={!selectedHobby.length || !isValid || isSubmitting}
+              isDisabled={!selectedHobby?.length || !isValid || isSubmitting}
               isSubmit={true}
             >
               생성 완료
