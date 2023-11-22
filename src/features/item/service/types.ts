@@ -37,3 +37,9 @@ export interface GetSearchItemResponse {
 export interface GetSearchKeywordResponse {
   itemNameGetResults: ItemNameGetResult[];
 }
+
+export interface GetMyItemsRequest {
+  hobbyName?: string;
+  cursorId?: string;
+  size?: number;
+}
