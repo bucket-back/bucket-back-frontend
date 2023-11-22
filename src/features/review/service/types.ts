@@ -7,8 +7,8 @@ export interface GetSearchReviewListRequest {
 }
 
 export interface GetSearchReviewListResponse {
-  reviewCount: number;
-  nextCursorId: string;
+  totalCount: number;
+  nextCursorId: null | string;
   reviews: Review[];
 }
 

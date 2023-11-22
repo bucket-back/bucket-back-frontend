@@ -49,7 +49,7 @@ const itemApi = {
 
   postTakeItem: async ({ itemIds }: PostTakeItemRequest) => {
     const url = `${BASE_URL}/myitems`;
-    const response = await axiosClient.post<PostTakeItemResponse>(url, itemIds);
+    const response = await axiosClient.post<PostTakeItemResponse>(url, { itemIds });
 
     return response.data;
   },
