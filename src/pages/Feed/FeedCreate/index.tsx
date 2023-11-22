@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useQuery } from '@tanstack/react-query';
 import {
   CommonButton,
   CommonDrawer,
@@ -8,8 +9,9 @@ import {
   CommonTextarea,
   Header,
 } from '@/shared/components';
-import { useDrawer } from '@/shared/hooks';
+import { useDrawer, useUserInfo } from '@/shared/hooks';
 import { Container, ContentsWrapper, ContentsBox, HobbyBox, Form, ButtonBox } from './style';
+import { bucketQueryOption } from '@/features/bucket/service';
 import { FeedSelectBucket } from '@/features/feed/components';
 import { useCreateFeed } from '@/features/feed/hooks';
 import { useHobby } from '@/features/hobby/hooks';
@@ -26,8 +28,12 @@ const FeedCreate = () => {
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm<Textarea>({ mode: 'onBlur' });
+  const userInfo = useUserInfo();
 
   const createFeed = useCreateFeed();
+  const bucketList = useQuery(
+    bucketQueryOption.list({ hobby: selectedHobby, nickname: userInfo?.nickname || '' })
+  );
 
   const onSubmit: SubmitHandler<Textarea> = (data) => {
     createFeed.mutate({ bucketId: selectedBucket, content: data.textarea });
@@ -35,7 +41,12 @@ const FeedCreate = () => {
   const { isOpen, onOpen, onClose } = useDrawer();
 
   const hobby = useHobby();
-  const hobbyValues = hobby.data?.hobbies.map(({ value }) => value);
+  const hobbyObj = hobby.data?.hobbies.reduce<Record<string, string>>(
+    (acc, cur) => ((acc[cur.value] = cur.name), acc),
+    {}
+  );
+
+  const hobbyValues = Object.keys(hobbyObj || {});
 
   return (
     <>
@@ -47,16 +58,18 @@ const FeedCreate = () => {
             <ContentsBox>
               <CommonText type="normalInfo">취미를 선택해주세요.</CommonText>
               <HobbyBox>
-                <CommonRadio
-                  values={hobbyValues || []}
-                  name="취미"
-                  onChange={(value: string) => setSelectedHobby(value)}
-                />
+                {hobbyObj && (
+                  <CommonRadio
+                    values={hobbyValues}
+                    name="취미"
+                    onChange={(value: string) => setSelectedHobby(hobbyObj[value])}
+                  />
+                )}
               </HobbyBox>
             </ContentsBox>
             <ContentsBox>
               <CommonText type="normalInfo">버킷을 선택해주세요.</CommonText>
-              <CommonButton type="custom" onClick={onOpen} />
+              <CommonButton type="custom" onClick={onOpen} isDisabled={!selectedHobby} />
             </ContentsBox>
             <ContentsBox>
               <CommonText type="normalInfo">피드 내용을 입력해주세요.</CommonText>
@@ -89,11 +102,14 @@ const FeedCreate = () => {
           isFull={true}
           footerButtonText="선택 완료"
         >
-          <FeedSelectBucket
-            onClick={(id) => {
-              setSelectedBucket(id);
-            }}
-          />
+          {bucketList.data && (
+            <FeedSelectBucket
+              bucketList={bucketList.data}
+              onClick={(id) => {
+                setSelectedBucket(id);
+              }}
+            />
+          )}
         </CommonDrawer>
       </Container>
     </>
