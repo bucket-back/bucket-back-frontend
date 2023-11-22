@@ -8,7 +8,7 @@ export interface MemberInfo {
 export interface MemberProfile {
   memberId: number;
   nickname: string;
-  levelPoint: number;
+  level: number;
   introduction: string;
 }
 

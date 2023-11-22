@@ -1,6 +1,6 @@
 const getLocalStoraged = (key: string) => {
   try {
-    const value = window.localStorage.getItem(key);
+    const value = localStorage.getItem(key);
 
     return value ? JSON.parse(value) : '';
   } catch (error) {
@@ -16,4 +16,12 @@ const setLocalStoraged = <T>(key: string, value: T) => {
   }
 };
 
-export default { getLocalStoraged, setLocalStoraged };
+const removeLocalStoraged = (key: string) => {
+  try {
+    localStorage.removeItem(key);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export default { getLocalStoraged, setLocalStoraged, removeLocalStoraged };

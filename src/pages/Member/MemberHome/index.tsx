@@ -1,8 +1,11 @@
-import { useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import {
   CommonAvatar,
   CommonButton,
   CommonDivider,
+  CommonDrawer,
   CommonIcon,
   CommonIconButton,
   CommonMenu,
@@ -11,6 +14,7 @@ import {
   Footer,
   Header,
 } from '@/shared/components';
+import { useAuthCheck, useDrawer } from '@/shared/hooks';
 import {
   Container,
   MemberInfoWrapper,
@@ -22,9 +26,19 @@ import {
   SubTitleBox,
   ImagePanel,
 } from './style';
+import { useLeave, useLogout } from '@/features/member/hooks';
+import { memberQueryOption } from '@/features/member/service';
 
 const MemberHome = () => {
   const { nickname } = useParams();
+  const isLogin = useAuthCheck();
+  const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDrawer();
+  const [selectedStatus, setSelectedStatus] = useState<'leave' | 'logout'>('logout');
+
+  const member = useQuery(memberQueryOption.detail(nickname!));
+  const logout = useLogout();
+  const leave = useLeave();
 
   return (
     <>
@@ -34,16 +48,33 @@ const MemberHome = () => {
           <MemberInfoPanel>
             <CommonAvatar size="5rem" />
             <MemberInfoBox>
-              <CommonText type="strongInfo">LV. 10</CommonText>
+              <CommonText type="strongInfo">LV. {member.data?.memberProfile.level}</CommonText>
               <CommonText type="smallTitle">{nickname}</CommonText>
-              <CommonButton type="profile">프로필 수정</CommonButton>
+              {isLogin && (
+                <CommonButton type="profile" onClick={() => navigate('/member/edit')}>
+                  프로필 수정
+                </CommonButton>
+              )}
             </MemberInfoBox>
           </MemberInfoPanel>
-          <CommonMenu type="logout" iconSize="0.3rem" onDelete={() => {}} />
+          {isLogin && (
+            <CommonMenu
+              type="logout"
+              iconSize="0.3rem"
+              onLogout={() => {
+                setSelectedStatus('logout');
+                onOpen();
+              }}
+              onDelete={() => {
+                setSelectedStatus('leave');
+                onOpen();
+              }}
+            />
+          )}
         </MemberInfoWrapper>
         <MemberIntroWrapper>
           <CommonText type="normalInfo" noOfLines={3}>
-            안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
+            {member.data?.memberProfile.introduction}
           </CommonText>
         </MemberIntroWrapper>
         <CommonDivider size="lg" />
@@ -104,6 +135,24 @@ const MemberHome = () => {
         <CommonDivider size="sm" />
       </Container>
       <Footer />
+
+      <CommonDrawer
+        isOpen={isOpen}
+        onClose={onClose}
+        onClickFooterButton={() => {
+          if (selectedStatus === 'logout') {
+            logout();
+          }
+
+          if (selectedStatus === 'leave') {
+            leave.mutate();
+          }
+        }}
+        isFull={false}
+        isCloseButton={false}
+      >
+        {selectedStatus === 'logout' ? '정말로 로그아웃하시겠습니까?' : '정말로 탈퇴하시겠습니까?'}
+      </CommonDrawer>
     </>
   );
 };

@@ -19,6 +19,7 @@ export const MemberInfoPanel = styled.div`
 export const MemberInfoBox = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   & button {
     margin-top: 0.4rem;
   }
