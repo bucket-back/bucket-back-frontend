@@ -1,6 +1,6 @@
 import { HStack, useRadioGroup } from '@chakra-ui/react';
-import styled from '@emotion/styled';
 import RadioCard from './RadioCard';
+import { HobbyBox } from './style';
 
 // 관심사(name)
 // value(배열형태로) -> 몇개 들어올지 알수 있다
@@ -43,7 +43,3 @@ const CommonRadio = ({ values, defaultValue, name, onChange }: CommonRadioProps)
 };
 
 export default CommonRadio;
-
-const HobbyBox = styled.div`
-  flex-shrink: 0;
-`;

@@ -22,12 +22,12 @@ const ItemCreate = () => {
 
   const [selectedHobby, setSelectedHobby] = useState<string>('');
 
-  const { mutate } = usePostItem();
+  const { mutate: itemMutate } = usePostItem();
 
   const { isSuccess, data } = useHobby();
 
   const onSubmit: SubmitHandler<ItemText> = ({ url }) => {
-    mutate({ hobbyValue: selectedHobby, itemUrl: url });
+    itemMutate({ hobbyValue: selectedHobby, itemUrl: url });
     reset();
   };
 
