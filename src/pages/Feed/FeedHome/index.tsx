@@ -21,7 +21,7 @@ const FeedHome = () => {
   const feeds = useQuery(
     feedQueryOption.list({
       hobbyName: searchParams.get('hobby') || hobbies.data?.hobbies[0].name || '',
-      // sortCondition: searchParams.get('sort') || 'recent',
+      sortCondition: searchParams.get('sort') || 'RECENT',
     })
   );
 
@@ -45,12 +45,13 @@ const FeedHome = () => {
             <Container>
               <SelectWrapper>
                 <CommonSelect
+                  selectedValue={searchParams.get('sort')?.toLowerCase()}
                   onChange={(e) => {
                     const sort = e.target.value;
 
                     setSearchParams({
                       hobby: searchParams.get('hobby') || '',
-                      sort,
+                      sort: sort.toUpperCase(),
                     });
                   }}
                 />
