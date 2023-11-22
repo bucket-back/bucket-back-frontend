@@ -62,7 +62,7 @@ const VoteCreate = () => {
       hobby: selectedHobby,
       content: data.textarea,
       item1Id: Number(selectedItems[0].id),
-      item2Id: Number(selectedItems[0].id),
+      item2Id: Number(selectedItems[1].id),
     });
   };
 

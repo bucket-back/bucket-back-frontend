@@ -16,7 +16,6 @@ export const ContentsWrapper = styled.div`
   gap: 0.7rem;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
-  padding-bottom: 1rem;
   overflow-x: scroll;
 `;
 
@@ -25,11 +24,12 @@ export const ContentsBox = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  cursor: pointer;
 `;
 
 export const NoVotesInProgress = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 3rem;
+  padding: 5rem;
 `;
