@@ -2,14 +2,14 @@ import { Comment } from '@/shared/types/comment';
 
 export interface GetCommentsRequest {
   feedId: number;
-  cursorId: string;
+  cursorId?: string;
   size: number;
 }
 
 export interface GetCommentsResponse {
   nextCursorId: string;
-  summaryCount: number;
-  summaries: Comment[];
+  totalCount: number;
+  comments: Comment[];
 }
 
 export interface PostCommentRequest {

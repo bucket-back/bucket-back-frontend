@@ -18,6 +18,7 @@ interface CommonDrawerProps {
   isFull: boolean;
   headerContent?: ReactNode;
   footerButtonText?: string;
+  isCloseButton?: boolean;
 }
 
 const CommonDrawer = ({
@@ -28,6 +29,7 @@ const CommonDrawer = ({
   onClickFooterButton,
   headerContent,
   footerButtonText,
+  isCloseButton = true,
 }: CommonDrawerProps) => {
   return (
     <>
@@ -41,7 +43,7 @@ const CommonDrawer = ({
           m="auto"
         />
         <DrawerContent w="100%" maxW="26.875rem !important" m="auto">
-          <DrawerCloseButton />
+          {isCloseButton && <DrawerCloseButton />}
           <DrawerHeader pt="1.75rem">{isFull && headerContent}</DrawerHeader>
 
           <DrawerBody>{children}</DrawerBody>

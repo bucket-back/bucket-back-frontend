@@ -1,5 +1,4 @@
-// import { useEffect, useState } from 'react';
-import { Fragment } from 'react';
+import { useEffect, Fragment } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CommonDivider, CommonTabs } from '@/shared/components';
 import { Container, NoResult } from './style';
@@ -12,12 +11,14 @@ const FeedHome = () => {
   const navigate = useNavigate();
   const hobbies = useHobby();
 
-  if (!searchParams.get('hobby') && hobbies.isSuccess) {
-    setSearchParams({ hobby: hobbies.data?.hobbies[0].name });
-  }
+  useEffect(() => {
+    if (!searchParams.get('hobby') && hobbies.isSuccess) {
+      setSearchParams({ hobby: hobbies.data.hobbies[0].name });
+    }
+  }, [hobbies.data?.hobbies, hobbies.isSuccess, searchParams, setSearchParams]);
 
   const feeds = useFeeds({
-    hobbyName: searchParams.get('hobby')?.toUpperCase() || '',
+    hobbyName: searchParams.get('hobby') || hobbies.data?.hobbies[0].name || '',
     size: 10,
   });
 
@@ -39,8 +40,8 @@ const FeedHome = () => {
           label: value,
           content: (
             <Container>
-              {feeds.isSuccess ? (
-                feeds.data?.feeds.map(
+              {feeds.isSuccess && feeds.data.feeds.length > 0 ? (
+                feeds.data.feeds.map(
                   ({
                     feedId,
                     memberInfo,
@@ -69,7 +70,7 @@ const FeedHome = () => {
                   )
                 )
               ) : (
-                <NoResult>검색 결과가 없습니다.</NoResult>
+                <NoResult>피드가 존재하지 않습니다.</NoResult>
               )}
             </Container>
           ),

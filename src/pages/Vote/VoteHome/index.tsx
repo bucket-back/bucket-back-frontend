@@ -1,54 +1,66 @@
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { CommonTabs } from '@/shared/components';
 import { Container } from './style';
+import { useHobby } from '@/features/hobby/hooks';
 import { VoteInProgress, Votes } from '@/features/vote/components';
-
-const hobby = ['cycle', 'swim', 'basketball'];
+import { GetVotesRequest, voteQueryOption } from '@/features/vote/service';
 
 const VoteHome = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const getHobby = searchParams.get('hobby');
+  const getStatus = searchParams.get('status');
+  const getSort = searchParams.get('sort');
+  const { data: hobbyData, isSuccess: hobbySuccess } = useHobby();
+  const { data: votesData } = useQuery({
+    ...voteQueryOption.list({
+      hobby: getHobby || '',
+      status: (getStatus as GetVotesRequest['status']) || 'completed',
+      sort: (getSort as GetVotesRequest['sort']) || 'recent',
+    }),
+    initialData: { nextCursorId: '', votes: [] },
+  });
+
+  const { data: votesInProgressData } = useQuery({
+    ...voteQueryOption.list({
+      hobby: getHobby || '',
+      status: 'inprogress',
+    }),
+    initialData: { nextCursorId: '', votes: [] },
+  });
+
+  useEffect(() => {
+    if (!searchParams.get('hobby') && hobbySuccess) {
+      setSearchParams({ hobby: hobbyData.hobbies[0].name });
+    }
+  }, [hobbyData?.hobbies, hobbySuccess, searchParams, setSearchParams]);
+
+  const currentTabIndex = hobbyData?.hobbies
+    .map(({ name }) => name)
+    .indexOf(getHobby || hobbyData.hobbies[0].name);
 
   return (
     <Container>
       <CommonTabs
-        currentTabIndex={hobby.indexOf(searchParams.get('hobby') || hobby[0])}
+        currentTabIndex={currentTabIndex}
         tabsType="soft-rounded"
         isFitted={false}
         onClick={(value) => {
           setSearchParams({ hobby: value });
         }}
-        tabsData={[
-          {
-            value: 'cycle',
-            label: '자전거',
+        tabsData={
+          hobbyData?.hobbies.map(({ name, value }) => ({
+            value: name,
+            label: value,
             content: (
               <>
-                <VoteInProgress />
-                <Votes />
+                <VoteInProgress votes={votesInProgressData.votes} />
+                <Votes votes={votesData.votes} />
               </>
             ),
-          },
-          {
-            value: 'swim',
-            label: '수영',
-            content: (
-              <>
-                <VoteInProgress />
-                <Votes />
-              </>
-            ),
-          },
-          {
-            value: 'basketball',
-            label: '농구',
-            content: (
-              <>
-                <VoteInProgress />
-                <Votes />
-              </>
-            ),
-          },
-        ]}
+          })) || []
+        }
       />
     </Container>
   );

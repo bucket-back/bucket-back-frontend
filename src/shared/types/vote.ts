@@ -1,6 +1,6 @@
 import { ItemInfo } from './item';
 
-export interface Votes {
+export interface VotesInfo {
   voteInfo: VoteInfo;
   item1Info: ItemInfo;
   item2Info: ItemInfo;
