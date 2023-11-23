@@ -5,6 +5,8 @@ import {
   PutEditReviewItemRequest,
   DeleteReviewItemRequest,
   PostReviewItemResponse,
+  GetReviewItemResponse,
+  GetReviewItemRequest,
 } from './types';
 
 import { axiosClient } from '@/core/service/axios';
@@ -19,6 +21,14 @@ const reviewApi = {
     const response = await axiosClient.get<GetSearchReviewListResponse>(url, {
       params,
     });
+
+    return response.data;
+  },
+
+  getReviewItem: async ({ itemId, reviewId }: GetReviewItemRequest) => {
+    const url = `${BASE_URL}/${itemId}/reviews/${reviewId}`;
+
+    const response = await axiosClient.get<GetReviewItemResponse>(url);
 
     return response.data;
   },

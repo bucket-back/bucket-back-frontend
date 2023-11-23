@@ -13,6 +13,17 @@ export interface GetSearchReviewListResponse {
   reviews: Review[];
 }
 
+export interface GetReviewItemRequest {
+  itemId: number;
+  reviewId: number;
+}
+
+export interface GetReviewItemResponse {
+  reviewId: string;
+  content: string;
+  rating: number;
+}
+
 export interface PostReviewItemRequest {
   itemId: number;
   content: string;

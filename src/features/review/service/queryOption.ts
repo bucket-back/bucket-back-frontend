@@ -1,5 +1,5 @@
 import { queryOptions } from '@tanstack/react-query';
-import { GetSearchReviewListRequest, reviewApi } from '.';
+import { GetSearchReviewListRequest, GetReviewItemRequest, reviewApi } from '.';
 
 const reviewQueryOption = {
   all: ['review'] as const,
@@ -8,6 +8,12 @@ const reviewQueryOption = {
       queryKey: [...reviewQueryOption.all, itemId] as const,
       queryFn: () => reviewApi.getSearchReviewList({ itemId, cursorId, size }),
     }),
+  detail: ({ itemId, reviewId }: GetReviewItemRequest) => {
+    queryOptions({
+      queryKey: [...reviewQueryOption.all, reviewId] as const,
+      queryFn: () => reviewApi.getReviewItem({ itemId, reviewId }),
+    });
+  },
 };
 
 export default reviewQueryOption;
