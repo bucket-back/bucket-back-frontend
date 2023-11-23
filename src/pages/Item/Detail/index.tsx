@@ -108,7 +108,7 @@ const ItemDetail = () => {
           isDisabled={isLogin === false}
           onClick={() =>
             isReviewed > -1
-              ? navigate(`/review/${reviewInfo.reviews[isReviewed].reviewId}/edit`)
+              ? navigate(`/${itemId}/review/${reviewInfo.reviews[isReviewed].reviewId}/edit`)
               : navigate(`/item/${itemId}/review/create`)
           }
         >
@@ -132,6 +132,7 @@ const ItemDetail = () => {
                 memberInfo={memberInfo}
                 rate={rate}
                 reviewId={reviewId}
+                editPath={`/${itemId}/review/${reviewInfo.reviews[isReviewed].reviewId}/edit`}
               />
               <CommonDivider size="sm" />
             </Fragment>
