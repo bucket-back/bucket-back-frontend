@@ -11,6 +11,7 @@ const useEditReview = () => {
     mutationFn: ({ itemId, reviewId, content, rating }: PutEditReviewItemRequest) =>
       reviewApi.putEditReviewItem({ itemId, reviewId, content, rating }),
     onSuccess: ({ itemId }: EditReviewItemResponse) => {
+      toast({ message: '리뷰가 등록되었습니다!', type: 'success' });
       navigate(`/item/${itemId}`);
     },
     onError: (error: AxiosResponse) => {
