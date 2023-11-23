@@ -28,6 +28,7 @@ export interface FeedInfo {
   hasAdoptedComment: boolean;
   likeCount: number;
   isLiked: boolean;
+  totalPrice: number;
 }
 
 export interface FeedItemInfo {

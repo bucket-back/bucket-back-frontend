@@ -25,6 +25,7 @@ import {
   ContentsPanel,
   SubTitleBox,
   ImagePanel,
+  Grid,
 } from './style';
 import { useLeave, useLogout } from '@/features/member/hooks';
 import { memberQueryOption } from '@/features/member/service';
@@ -86,16 +87,24 @@ const MemberHome = () => {
                 <CommonText type="smallTitle">인벤토리</CommonText>
               </SubTitleBox>
               <CommonText type="smallInfo">
-                취미별 아이템을 조합하여 나만의 인벤토리을 만들 수 있어요
+                취미별 아이템을 조합하여 나만의 인벤토리를 만들 수 있어요
               </CommonText>
             </div>
-            <CommonIconButton type="detail" fontSize="0.8rem" onClick={() => {}} />
+            <CommonIconButton
+              type="detail"
+              fontSize="0.8rem"
+              onClick={() => navigate(`/member/${nickname}/inventory`)}
+            />
           </ContentsPanel>
-          <ImagePanel>
-            <DividerImage type="base" images={['1', '2', '3']} />
-            <DividerImage type="base" images={['1', '2', '3']} />
-            <DividerImage type="base" images={['1', '2', '3']} />
-          </ImagePanel>
+          {member.isSuccess && member.data.inventoryProfiles.length > 0 && (
+            <ImagePanel>
+              <Grid>
+                {member.data.inventoryProfiles.map((inventory) => (
+                  <DividerImage key={inventory.id} type="base" images={inventory.images} />
+                ))}
+              </Grid>
+            </ImagePanel>
+          )}
         </ContentsWrapper>
         <CommonDivider size="sm" />
         <ContentsWrapper>
@@ -109,13 +118,21 @@ const MemberHome = () => {
                 취미별 아이템을 조합하여 나만의 버킷을 만들 수 있어요
               </CommonText>
             </div>
-            <CommonIconButton type="detail" fontSize="0.8rem" onClick={() => {}} />
+            <CommonIconButton
+              type="detail"
+              fontSize="0.8rem"
+              onClick={() => navigate(`/member/${nickname}/bucket`)}
+            />
           </ContentsPanel>
-          <ImagePanel>
-            <DividerImage type="base" images={['1', '2', '3']} />
-            <DividerImage type="base" images={['1', '2', '3']} />
-            <DividerImage type="base" images={['1', '2', '3']} />
-          </ImagePanel>
+          {member.isSuccess && member.data.bucketProfiles.length > 0 && (
+            <ImagePanel>
+              <Grid>
+                {member.data?.bucketProfiles.map((bucket) => (
+                  <DividerImage key={bucket.id} type="base" images={bucket.images} />
+                ))}
+              </Grid>
+            </ImagePanel>
+          )}
         </ContentsWrapper>
         <CommonDivider size="sm" />
         <ContentsWrapper>
@@ -129,7 +146,11 @@ const MemberHome = () => {
                 내가 올린 피드와 좋아요한 피드를 확인할 수 있어요
               </CommonText>
             </div>
-            <CommonIconButton type="detail" fontSize="0.8rem" onClick={() => {}} />
+            <CommonIconButton
+              type="detail"
+              fontSize="0.8rem"
+              onClick={() => navigate(`/member/${nickname}/feed`)}
+            />
           </ContentsPanel>
         </ContentsWrapper>
         <CommonDivider size="sm" />

@@ -27,8 +27,7 @@ export const MemberInfoBox = styled.div`
 
 export const MemberIntroWrapper = styled.div`
   display: flex;
-  justify-content: center;
-  padding: 1.5rem 3rem;
+  padding: 1.5rem 3.5rem;
 `;
 
 export const ContentsWrapper = styled.div`
@@ -52,4 +51,10 @@ export const ImagePanel = styled.div`
   display: flex;
   gap: 1rem;
   padding-top: 1rem;
+`;
+
+export const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
 `;
