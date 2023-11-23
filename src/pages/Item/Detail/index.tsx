@@ -21,10 +21,10 @@ import {
   Box,
   ReviewBox,
 } from './style';
-import ItemComment from '@/features/item/components/ItemComment/index';
+import { ItemComment } from '@/features/item/components';
 import { useTakeItem } from '@/features/item/hooks';
-import itemQueryOption from '@/features/item/service/queryOption';
-import reviewQueryOption from '@/features/review/service/queryOption';
+import { itemQueryOption } from '@/features/item/service';
+import { reviewQueryOption } from '@/features/review/service';
 
 const ItemDetail = () => {
   // 로그인 시 리뷰 클릭이 가능하도록 하기
