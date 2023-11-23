@@ -5,7 +5,7 @@ interface DividerImageProps {
   type: 'base' | 'live';
 }
 
-const BORDER_TYPE = '1px solid black';
+const BORDER_TYPE = '1px solid #E2E8F0';
 const GRID_REPEAT = 'repeat(2, 1fr)';
 
 const isFirstAndThird = (index: number) => index === 1 || index === 3;
@@ -50,6 +50,8 @@ const DividerImage = ({ images, type }: DividerImageProps) => {
         borderRadius="0.625rem"
         background="linear-gradient(90deg, #DCE1E8 0%, #EDF2F7 100%);"
         overflow="hidden"
+        borderWidth="1px"
+        borderColor="gray.200"
       >
         {images.map((image, index) => {
           return (

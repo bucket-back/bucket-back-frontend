@@ -9,6 +9,7 @@ import {
 } from '@/shared/components';
 import { useUserInfo } from '@/shared/hooks';
 import { FeedItemInfo, MemberInfo } from '@/shared/types';
+import { formatNumber } from '@/shared/utils';
 import { useFeedLike, useFeedUnLike } from '../../hooks';
 import {
   Container,
@@ -35,6 +36,7 @@ interface FeedItemProps {
   feedItems: FeedItemInfo[];
   bucketName?: string;
   bucketBudget?: number;
+  totalPrice?: number;
   isDetail: boolean;
   onClick: (id: number) => void;
   onUpdate?: (id: number) => void;
@@ -52,6 +54,7 @@ const FeedItem = ({
   feedItems,
   bucketName,
   bucketBudget,
+  totalPrice,
   isDetail = false,
   onClick,
   onUpdate,
@@ -97,7 +100,12 @@ const FeedItem = ({
         {isDetail && (
           <BucketInfoBox>
             <CommonText type="normalInfo">{bucketName}</CommonText>
-            <CommonText type="normalInfo">{bucketBudget}원</CommonText>
+            {totalPrice && (
+              <CommonText type="normalInfo">버킷 총액: {formatNumber(totalPrice)}원</CommonText>
+            )}
+            {bucketBudget && (
+              <CommonText type="normalInfo">예산: {formatNumber(bucketBudget)}원</CommonText>
+            )}
           </BucketInfoBox>
         )}
         <ImageBox onClick={() => onClick(feedId)}>

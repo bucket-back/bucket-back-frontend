@@ -59,7 +59,7 @@ const FeedDetail = () => {
             createdAt={feedDetail.data.feedInfo.createdAt}
             feedItems={feedDetail.data.feedItems}
             bucketName={feedDetail.data.feedInfo.bucketName}
-            bucketBudget={feedDetail.data.feedInfo.bucketBudget}
+            totalPrice={feedDetail.data.feedInfo.totalPrice}
             isDetail
             onClick={onOpen}
             onDelete={onDeleteOpen}
