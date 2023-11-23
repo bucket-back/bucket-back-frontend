@@ -53,12 +53,6 @@ export const ImagePanel = styled.div`
   padding-top: 1rem;
 `;
 
-export const NoResult = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-`;
-
 export const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);

@@ -25,7 +25,6 @@ import {
   ContentsPanel,
   SubTitleBox,
   ImagePanel,
-  NoResult,
   Grid,
 } from './style';
 import { useLeave, useLogout } from '@/features/member/hooks';
@@ -97,19 +96,15 @@ const MemberHome = () => {
               onClick={() => navigate(`/member/${nickname}/inventory`)}
             />
           </ContentsPanel>
-          <ImagePanel>
-            {member.isSuccess && member.data.inventoryProfiles.length > 0 ? (
+          {member.isSuccess && member.data.inventoryProfiles.length > 0 && (
+            <ImagePanel>
               <Grid>
                 {member.data.inventoryProfiles.map((inventory) => (
                   <DividerImage key={inventory.id} type="base" images={inventory.images} />
                 ))}
               </Grid>
-            ) : (
-              <NoResult>
-                <CommonText type="normalInfo">인벤토리가 존재하지 않습니다.</CommonText>
-              </NoResult>
-            )}
-          </ImagePanel>
+            </ImagePanel>
+          )}
         </ContentsWrapper>
         <CommonDivider size="sm" />
         <ContentsWrapper>
@@ -129,19 +124,15 @@ const MemberHome = () => {
               onClick={() => navigate(`/member/${nickname}/bucket`)}
             />
           </ContentsPanel>
-          <ImagePanel>
-            {member.isSuccess && member.data.bucketProfiles.length > 0 ? (
+          {member.isSuccess && member.data.bucketProfiles.length > 0 && (
+            <ImagePanel>
               <Grid>
                 {member.data?.bucketProfiles.map((bucket) => (
                   <DividerImage key={bucket.id} type="base" images={bucket.images} />
                 ))}
               </Grid>
-            ) : (
-              <NoResult>
-                <CommonText type="normalInfo">버킷이 존재하지 않습니다.</CommonText>
-              </NoResult>
-            )}
-          </ImagePanel>
+            </ImagePanel>
+          )}
         </ContentsWrapper>
         <CommonDivider size="sm" />
         <ContentsWrapper>
