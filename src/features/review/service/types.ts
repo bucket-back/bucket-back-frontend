@@ -21,7 +21,7 @@ export interface GetReviewItemRequest {
 export interface GetReviewItemResponse {
   reviewId: string;
   content: string;
-  rating: number;
+  rate: number;
 }
 
 export interface PostReviewItemRequest {
@@ -30,18 +30,18 @@ export interface PostReviewItemRequest {
   rating: number;
 }
 
-export interface PostReviewItemResponse {
+export interface EditReviewItemResponse {
   itemId: number;
 }
 
 export interface PutEditReviewItemRequest {
   itemId: number;
-  reviewId: string;
+  reviewId: number;
   content: string;
   rating: number;
 }
 
 export interface DeleteReviewItemRequest {
   itemId: number;
-  reviewId: string;
+  reviewId: number;
 }

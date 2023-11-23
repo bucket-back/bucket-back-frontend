@@ -4,7 +4,7 @@ import {
   PostReviewItemRequest,
   PutEditReviewItemRequest,
   DeleteReviewItemRequest,
-  PostReviewItemResponse,
+  EditReviewItemResponse,
   GetReviewItemResponse,
   GetReviewItemRequest,
 } from './types';
@@ -36,7 +36,7 @@ const reviewApi = {
   postReviewItem: async ({ itemId, content, rating }: PostReviewItemRequest) => {
     const url = `${BASE_URL}/${itemId}/reviews`;
 
-    const response = await axiosClient.post<PostReviewItemResponse>(url, { content, rating });
+    const response = await axiosClient.post<EditReviewItemResponse>(url, { content, rating });
 
     return response.data;
   },
@@ -44,7 +44,9 @@ const reviewApi = {
   putEditReviewItem: async ({ itemId, reviewId, content, rating }: PutEditReviewItemRequest) => {
     const url = `${BASE_URL}/${itemId}/reviews/${reviewId}`;
 
-    return await axiosClient.put<null>(url, { content, rating });
+    const response = await axiosClient.put<EditReviewItemResponse>(url, { content, rating });
+
+    return response.data;
   },
 
   deleteReviewItem: async ({ itemId, reviewId }: DeleteReviewItemRequest) => {
