@@ -18,6 +18,7 @@ import {
   Signup,
   MemberEdit,
   MemberPassword,
+  ItemReviewEdit,
 } from '@/pages';
 
 export const router = createBrowserRouter([
@@ -88,8 +89,8 @@ export const router = createBrowserRouter([
         element: <ItemReview />,
       },
       {
-        path: 'review/:reviewId/edit',
-        element: <div>review reviewId edit</div>,
+        path: ':itemId/review/:reviewId/edit',
+        element: <ItemReviewEdit />,
       },
       {
         path: 'member/edit',
