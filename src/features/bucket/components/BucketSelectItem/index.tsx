@@ -1,4 +1,3 @@
-import { Box, Grid, GridItem } from '@chakra-ui/react';
 import {
   CommonButton,
   CommonDivider,
@@ -6,37 +5,61 @@ import {
   CommonImage,
   CommonText,
 } from '@/shared/components';
-import { Body, Container } from './style';
+import { formatNumber } from '@/shared/utils';
+import { Body, Container, ItemBox, ItemsWrapper } from './style';
+import { GetMyItemsResponse } from '@/features/item/service';
 
-interface BucketSelectItemPorps {
-  onClick: (index: number) => void;
+interface SelectedItem {
+  id: number;
+  image: string;
 }
 
-const BucketSelectItem = ({ onClick }: BucketSelectItemPorps) => {
+interface BucketSelectItemPorps {
+  items: GetMyItemsResponse;
+  selectedItems: number[];
+  onClick: React.Dispatch<React.SetStateAction<SelectedItem[]>>;
+}
+
+const BucketSelectItem = ({ items, selectedItems, onClick }: BucketSelectItemPorps) => {
+  const handleClick = ({ id, image }: SelectedItem) => {
+    onClick((prev) => {
+      if (prev.map((item) => item.id).includes(id)) {
+        return prev.filter((item) => item.id !== id);
+      }
+
+      return [...prev, { id, image }];
+    });
+  };
+
   return (
     <>
       <Body>
         <CommonText type="normalTitle">아이템 선택</CommonText>
-        <CommonText type="subStrongInfo">총 00개의 아이템</CommonText>
-        <Grid templateRows="repeat(2, 1fr)" templateColumns="repeat(3, 1fr)" gap="0.5rem">
-          {Array.from({ length: 6 }, (_, index) => {
-            return (
-              <GridItem key={index} marginBottom="1rem">
-                <CommonImage size="sm" onClick={() => onClick(index)} />
-                <CommonText type="normalInfo">29,000</CommonText>
-                <CommonText type="smallInfo">아이템 이름입니다.</CommonText>
-              </GridItem>
-            );
-          })}
-        </Grid>
+        <CommonText type="subStrongInfo">총 {items.totalCount}개의 아이템</CommonText>
+        <ItemsWrapper>
+          {items.summaries.map(({ itemInfo }) => (
+            <ItemBox
+              key={itemInfo.id}
+              style={{ border: selectedItems.includes(itemInfo.id) ? '1px solid' : undefined }}
+            >
+              <CommonImage
+                size="sm"
+                src={itemInfo.image}
+                onClick={() => handleClick({ id: itemInfo.id, image: itemInfo.image })}
+              />
+              <CommonText type="normalInfo">{formatNumber(itemInfo.price)}원</CommonText>
+              <CommonText type="smallInfo">{itemInfo.name}</CommonText>
+            </ItemBox>
+          ))}
+        </ItemsWrapper>
         <CommonDivider size="sm" />
-        <Box>
+        <div>
           <CommonText type="smallInfo">원하시는 아이템이 없나요?</CommonText>
           <Container>
             <CommonButton type="text">아이템 추가하러가기</CommonButton>
             <CommonIcon type="chevronRight" />
           </Container>
-        </Box>
+        </div>
       </Body>
     </>
   );

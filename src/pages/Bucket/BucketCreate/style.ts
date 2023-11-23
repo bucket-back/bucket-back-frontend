@@ -33,3 +33,13 @@ export const Box = styled.div`
   flex-direction: column;
   gap: 0.5rem;
 `;
+
+export const HobbyBox = styled.div`
+  overflow-x: auto;
+`;
+
+export const SelectedItemsBox = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+`;

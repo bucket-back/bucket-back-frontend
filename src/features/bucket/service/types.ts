@@ -39,9 +39,9 @@ export interface GetBucketMyItemsResponse {
 }
 
 export interface PostBucketRequest {
-  hobby: string;
+  hobbyValue: string;
   name: string;
-  budget: number;
+  budget?: number;
   itemIds: number[];
 }
 
