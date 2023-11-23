@@ -1,11 +1,11 @@
 import {
+  GetInventoryDetailRequest,
+  GetInventoryItemsRequest,
+  GetInventoryItemsResponse,
+  GetInventoryResponse,
+  PostCreateInventoryRequest,
+  PostCreateInventoryResponse,
   PutEditInventoryRequest,
-  getInventoryDetailRequest,
-  getInventoryItemsRequest,
-  getInventoryItemsResponse,
-  getInventoryResponse,
-  postCreateInventoryRequest,
-  postCreateInventoryResponse,
 } from './types';
 import { axiosClient } from '@/core/service/axios';
 const BASE_URL = 'inventories';
@@ -21,19 +21,19 @@ const inventoryApi = {
 
     return await axiosClient.delete<null>(url);
   },
-  postCreateInventory: async ({ hobbyValue, itemIds }: postCreateInventoryRequest) => {
+  postCreateInventory: async ({ hobbyValue, itemIds }: PostCreateInventoryRequest) => {
     const params = { hobbyValue, itemIds };
-    const response = await axiosClient.post<postCreateInventoryResponse>(BASE_URL, { params });
+    const response = await axiosClient.post<PostCreateInventoryResponse>(BASE_URL, { params });
 
     return response.data;
   },
   getInventory: async (nickname: string) => {
     const url = `${nickname}/${BASE_URL}`;
-    const response = await axiosClient.get<getInventoryResponse>(url);
+    const response = await axiosClient.get<GetInventoryResponse>(url);
 
     return response.data;
   },
-  getInventoryDetail: async ({ nickname, inventoryId }: getInventoryDetailRequest) => {
+  getInventoryDetail: async ({ nickname, inventoryId }: GetInventoryDetailRequest) => {
     const url = `${nickname}/${BASE_URL}/${inventoryId}`;
     const response = await axiosClient.get(url);
 
@@ -44,13 +44,13 @@ const inventoryApi = {
     hobbyName,
     cursorId,
     size = 10,
-  }: getInventoryItemsRequest) => {
-    const inventoryIdQueryString = inventoryId ? `&hobbyName=${hobbyName}` : '';
-    const hobbyQueryString = inventoryId ? `?inventoryId=${inventoryId}` : '';
+  }: GetInventoryItemsRequest) => {
+    const hobbyQueryString = hobbyName ? `hobbyName=${hobbyName}` : '';
+    const inventoryIdQueryString = inventoryId ? `inventoryId=${inventoryId}` : '';
     const params = cursorId ? { cursorId, size } : { size };
-    const url = `${BASE_URL}/myitems${inventoryIdQueryString}${hobbyQueryString}`;
+    const url = `${BASE_URL}/myitems?${inventoryIdQueryString}${hobbyQueryString}`;
 
-    const response = await axiosClient.get<getInventoryItemsResponse>(url, { params });
+    const response = await axiosClient.get<GetInventoryItemsResponse>(url, { params });
 
     return response.data;
   },

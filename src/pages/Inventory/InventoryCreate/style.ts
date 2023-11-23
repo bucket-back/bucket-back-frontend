@@ -20,3 +20,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   gap: 2rem;
 `;
+
+export const RadioBox = styled.div`
+  overflow-x: auto;
+`;

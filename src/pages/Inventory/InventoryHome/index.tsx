@@ -1,7 +1,10 @@
 import { CommonIconButton, CommonText, DividerImage, Header } from '@/shared/components';
+import { useAuthNavigate } from '@/shared/hooks';
 import { AddButtonWrapper, Container, Grid, GridItem, TextBox } from './style';
 
 const InventoryHome = () => {
+  const authNavigate = useAuthNavigate();
+
   return (
     <>
       <Header type="back" />
@@ -23,7 +26,12 @@ const InventoryHome = () => {
         </Grid>
       </Container>
       <AddButtonWrapper>
-        <CommonIconButton type="add" onClick={() => {}} />
+        <CommonIconButton
+          type="create"
+          onClick={() => {
+            authNavigate('/inventory/create');
+          }}
+        />
       </AddButtonWrapper>
     </>
   );

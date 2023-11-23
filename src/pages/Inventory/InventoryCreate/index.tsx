@@ -1,10 +1,26 @@
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { CommonButton, CommonDrawer, CommonRadio, CommonText, Header } from '@/shared/components';
 import { useDrawer } from '@/shared/hooks';
-import { Box, Container, Wrapper } from './style';
+import { Box, Container, RadioBox, Wrapper } from './style';
+import { useHobby } from '@/features/hobby/hooks';
 import InventorySelectItem from '@/features/inventroy/components/InventorySelectItem';
+import { inventoryQueryOption } from '@/features/inventroy/service';
 
 const InventoryCreate = () => {
+  const [selectedHobby, setSelectedHobby] = useState<string>('');
+  const { data: hobbyData } = useHobby();
   const { isOpen, onOpen, onClose } = useDrawer();
+  const HangulHobby = hobbyData?.hobbies.map((hobby) => hobby.value);
+  const currnetHobby = hobbyData?.hobbies.find(({ value }) => value === selectedHobby);
+  const { data: myItemsData } = useQuery({
+    ...inventoryQueryOption.myItems({ hobbyName: currnetHobby?.name }),
+  });
+  console.log(myItemsData);
+
+  if (!HangulHobby) {
+    return;
+  }
 
   return (
     <>
@@ -23,7 +39,15 @@ const InventoryCreate = () => {
             <CommonText type="normalInfo" noOfLines={0}>
               취미를 선택해주세요.
             </CommonText>
-            <CommonRadio values={['농구', '수영']} name="취미" onChange={() => {}} />
+            <RadioBox>
+              <CommonRadio
+                values={HangulHobby!}
+                name="취미"
+                onChange={(value: string) => {
+                  setSelectedHobby(value);
+                }}
+              />
+            </RadioBox>
           </Box>
           <Box>
             <CommonText type="normalInfo" noOfLines={0}>
