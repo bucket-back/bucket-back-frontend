@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCustomToast } from '@/shared/hooks';
 import { itemQueryOption } from '@/features/item/service';
 import { reviewApi } from '@/features/review/service';
-import { PostReviewItemRequest, PostReviewItemResponse } from '@/features/review/service/types';
+import { PostReviewItemRequest, EditReviewItemResponse } from '@/features/review/service/types';
 
 const usePostReview = () => {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ const usePostReview = () => {
   return useMutation({
     mutationFn: ({ itemId, content, rating }: PostReviewItemRequest) =>
       reviewApi.postReviewItem({ itemId, content, rating }),
-    onSuccess: ({ itemId }: PostReviewItemResponse) => {
+    onSuccess: ({ itemId }: EditReviewItemResponse) => {
       queryClient.invalidateQueries({
         queryKey: [...itemQueryOption.detail(itemId).queryKey],
       });
