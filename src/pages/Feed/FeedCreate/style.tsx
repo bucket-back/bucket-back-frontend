@@ -21,7 +21,7 @@ export const ContentsWrapper = styled.div`
   gap: 2rem;
 `;
 
-export const ContentsBox = styled.div`
+export const ContentsPanel = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -31,7 +31,12 @@ export const HobbyBox = styled.div`
   overflow-x: auto;
 `;
 
-export const ButtonBox = styled.div`
+export const SelectedBucketBox = styled.div`
+  width: 6.125rem;
+  height: 5.625rem;
+`;
+
+export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
 `;
