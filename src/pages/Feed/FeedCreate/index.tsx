@@ -7,14 +7,28 @@ import {
   CommonRadio,
   CommonText,
   CommonTextarea,
+  DividerImage,
   Header,
 } from '@/shared/components';
 import { useDrawer, useUserInfo } from '@/shared/hooks';
-import { Container, ContentsWrapper, ContentsBox, HobbyBox, Form, ButtonBox } from './style';
+import {
+  Container,
+  ContentsWrapper,
+  ContentsPanel,
+  HobbyBox,
+  Form,
+  ButtonWrapper,
+  SelectedBucketBox,
+} from './style';
 import { bucketQueryOption } from '@/features/bucket/service';
 import { FeedSelectBucket } from '@/features/feed/components';
 import { useCreateFeed } from '@/features/feed/hooks';
 import { useHobby } from '@/features/hobby/hooks';
+
+interface SelectedBucket {
+  id: number;
+  images: string[];
+}
 
 interface Textarea {
   textarea: string;
@@ -22,7 +36,7 @@ interface Textarea {
 
 const FeedCreate = () => {
   const [selectedHobby, setSelectedHobby] = useState('');
-  const [selectedBucket, setSelectedBucket] = useState(0);
+  const [selectedBucket, setSelectedBucket] = useState<SelectedBucket | null>(null);
   const {
     register,
     handleSubmit,
@@ -36,7 +50,9 @@ const FeedCreate = () => {
   );
 
   const onSubmit: SubmitHandler<Textarea> = (data) => {
-    createFeed.mutate({ bucketId: selectedBucket, content: data.textarea });
+    if (selectedBucket) {
+      createFeed.mutate({ bucketId: selectedBucket.id, content: data.textarea });
+    }
   };
   const { isOpen, onOpen, onClose } = useDrawer();
 
@@ -55,7 +71,7 @@ const FeedCreate = () => {
         <CommonText type="normalTitle">피드 생성하기</CommonText>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <ContentsWrapper>
-            <ContentsBox>
+            <ContentsPanel>
               <CommonText type="normalInfo">취미를 선택해주세요.</CommonText>
               <HobbyBox>
                 {hobbyObj && (
@@ -66,12 +82,23 @@ const FeedCreate = () => {
                   />
                 )}
               </HobbyBox>
-            </ContentsBox>
-            <ContentsBox>
+            </ContentsPanel>
+            <ContentsPanel>
               <CommonText type="normalInfo">버킷을 선택해주세요.</CommonText>
-              <CommonButton type="custom" onClick={onOpen} isDisabled={!selectedHobby} />
-            </ContentsBox>
-            <ContentsBox>
+              {selectedBucket ? (
+                <SelectedBucketBox
+                  onClick={() => {
+                    onOpen();
+                    setSelectedBucket(null);
+                  }}
+                >
+                  <DividerImage images={selectedBucket.images} type="base" />
+                </SelectedBucketBox>
+              ) : (
+                <CommonButton type="custom" onClick={onOpen} isDisabled={!selectedHobby} />
+              )}
+            </ContentsPanel>
+            <ContentsPanel>
               <CommonText type="normalInfo">피드 내용을 입력해주세요.</CommonText>
 
               <CommonTextarea
@@ -82,9 +109,9 @@ const FeedCreate = () => {
                   required: '내용을 필수로 입력해주세요.',
                 })}
               />
-            </ContentsBox>
+            </ContentsPanel>
           </ContentsWrapper>
-          <ButtonBox>
+          <ButtonWrapper>
             <CommonButton
               type="mdFull"
               isSubmit
@@ -92,7 +119,7 @@ const FeedCreate = () => {
             >
               생성 완료
             </CommonButton>
-          </ButtonBox>
+          </ButtonWrapper>
         </Form>
 
         <CommonDrawer
@@ -100,15 +127,14 @@ const FeedCreate = () => {
           onClose={onClose}
           onClickFooterButton={onClose}
           isFull={true}
+          isDisabled={!selectedBucket}
           footerButtonText="선택 완료"
         >
           {bucketList.data && (
             <FeedSelectBucket
-              selectedBucket={selectedBucket}
+              selectedBucket={selectedBucket?.id || 0}
               bucketList={bucketList.data}
-              onClick={(id) => {
-                setSelectedBucket(id);
-              }}
+              onClick={setSelectedBucket}
             />
           )}
         </CommonDrawer>

@@ -9,14 +9,21 @@ export const Container = styled.main`
 
 export const ItemWrapper = styled.section`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  gap: 1rem 0;
 `;
 
 export const ItemBox = styled.div`
   display: flex;
+  width: 100%;
+  justify-content: space-between;
   align-items: center;
-  gap: 0 0.2rem;
+`;
+
+export const Box = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const ButtonWrapper = styled.div`
@@ -31,10 +38,6 @@ export const CommentsContainer = styled.section`
 
 export const CommentNumberWrapper = styled.div`
   padding: 1rem 1.75rem;
-`;
-
-export const Box = styled.div`
-  flex-shrink: 0;
 `;
 
 export const ReviewBox = styled.article`

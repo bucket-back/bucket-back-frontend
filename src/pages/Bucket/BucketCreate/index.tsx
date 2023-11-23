@@ -1,33 +1,61 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useQuery } from '@tanstack/react-query';
 import {
   CommonButton,
   CommonDrawer,
+  CommonImage,
   CommonInput,
   CommonRadio,
   CommonText,
   Header,
 } from '@/shared/components';
 import { useDrawer } from '@/shared/hooks';
-import { Box, ButtonWrapper, Container, Form, Wrapper } from './style';
-import BucketSelectItem from '@/features/bucket/components/BucketSelectItem';
+import { Box, ButtonWrapper, Container, Form, HobbyBox, SelectedItemsBox, Wrapper } from './style';
+import { BucketSelectItem } from '@/features/bucket/components';
+import { useCreateBucket } from '@/features/bucket/hooks';
+import { useHobby } from '@/features/hobby/hooks';
+import { itemQueryOption } from '@/features/item/service';
 
-const initalHobby = ['수영', '자전거', '농구'];
+interface SelectedItems {
+  id: number;
+  image: string;
+}
 
 interface ItemText {
   bucket: string;
 }
 
 const BucketCreate = () => {
-  const [selectedHobby, setSelectedHobby] = useState<string>('');
+  const [selectedHobby, setSelectedHobby] = useState<string | undefined>('');
+  const [selectedItems, setSelectedItems] = useState<SelectedItems[]>([]);
+  const createBucket = useCreateBucket();
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm<ItemText>({ mode: 'onBlur' });
-  const { isOpen, onOpen, onClose } = useDrawer();
+  const onSubmit: SubmitHandler<ItemText> = (data) => {
+    if (selectedHobby) {
+      createBucket.mutate({
+        hobbyValue: selectedHobby,
+        name: data.bucket,
+        itemIds: selectedItems.map((item) => item.id),
+      });
+    }
+  };
 
-  const onSubmit: SubmitHandler<ItemText> = () => {};
+  const hobby = useHobby();
+  const hobbyData = hobby.data?.hobbies.reduce<Record<string, string>>(
+    (acc, cur) => ((acc[cur.value] = cur.name), acc),
+    {}
+  );
+
+  const hobbyValues = Object.keys(hobbyData || {});
+
+  const items = useQuery(itemQueryOption.myItems({ hobbyName: hobbyData![selectedHobby!] }));
+
+  const { isOpen, onOpen, onClose } = useDrawer();
 
   return (
     <>
@@ -51,23 +79,43 @@ const BucketCreate = () => {
               <CommonText type="normalInfo" noOfLines={0}>
                 취미별로 버킷을 생성할 수 있어요. 취미를 선택해주세요!
               </CommonText>
-              <CommonRadio
-                values={initalHobby}
-                name="취미"
-                onChange={(value: string) => setSelectedHobby(value)}
-              />
+              <HobbyBox>
+                {hobbyData && (
+                  <CommonRadio
+                    values={hobbyValues || []}
+                    name="취미"
+                    onChange={(value: string) => setSelectedHobby(value)}
+                  />
+                )}
+              </HobbyBox>
             </Box>
             <Box>
               <CommonText type="normalInfo" noOfLines={0}>
                 아이템을 하나 이상 선택해주세요.
               </CommonText>
-              <CommonButton type="custom" onClick={onOpen} />
+              <SelectedItemsBox>
+                {selectedItems.length === 0 ? (
+                  <CommonButton type="custom" isDisabled={!selectedHobby} onClick={onOpen} />
+                ) : (
+                  selectedItems.map(({ id, image }) => (
+                    <CommonImage
+                      key={id}
+                      size="sm"
+                      src={image}
+                      onClick={() => {
+                        onOpen();
+                        setSelectedItems([]);
+                      }}
+                    />
+                  ))
+                )}
+              </SelectedItemsBox>
             </Box>
           </Wrapper>
           <ButtonWrapper>
             <CommonButton
               type="mdFull"
-              isDisabled={!selectedHobby.length || !isValid || isSubmitting}
+              isDisabled={!selectedHobby?.length || !isValid || isSubmitting}
               isSubmit={true}
             >
               생성 완료
@@ -78,17 +126,21 @@ const BucketCreate = () => {
         <CommonDrawer
           isOpen={isOpen}
           onClose={() => {
-            // x버튼 누르면 selectedItem 초기화
+            setSelectedItems([]);
             onClose();
           }}
           onClickFooterButton={() => {
-            // selectedItem을 두개 선택했을때만 선택 완료하고 닫기
             onClose();
           }}
+          isDisabled={selectedItems.length < 2}
           isFull={true}
           footerButtonText="선택 완료"
         >
-          <BucketSelectItem onClick={() => {}} />
+          <BucketSelectItem
+            items={items.data!}
+            onClick={setSelectedItems}
+            selectedItems={selectedItems.map(({ id }) => id)}
+          />
         </CommonDrawer>
       </Container>
     </>

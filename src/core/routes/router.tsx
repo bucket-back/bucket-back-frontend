@@ -19,6 +19,9 @@ import {
   MemberEdit,
   MemberPassword,
   ItemReviewEdit,
+  InventoryHome,
+  InventoryDetail,
+  InventoryCreate,
 } from '@/pages';
 
 export const router = createBrowserRouter([
@@ -106,15 +109,15 @@ export const router = createBrowserRouter([
       },
       {
         path: 'member/:nickname/inventory',
-        element: <div>member nickname inventory</div>,
+        element: <InventoryHome />,
       },
       {
         path: 'member/:nickname/inventory/:inventoryId',
-        element: <div>member nickname inventory inventoryId</div>,
+        element: <InventoryDetail />,
       },
       {
         path: 'inventory/create',
-        element: <div>inventory create</div>,
+        element: <InventoryCreate />,
       },
       {
         path: 'member/:nickname/bucket',

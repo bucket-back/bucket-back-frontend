@@ -14,10 +14,15 @@ import {
 } from './style';
 import { GetBucketsResponse } from '@/features/bucket/service';
 
+interface SelectedBucket {
+  id: number;
+  images: string[];
+}
+
 interface FeedSelectBucketProps {
   selectedBucket: number;
   bucketList: GetBucketsResponse;
-  onClick: (id: number) => void;
+  onClick: React.Dispatch<React.SetStateAction<SelectedBucket | null>>;
 }
 
 interface ItemImages {
@@ -42,7 +47,9 @@ const FeedSelectBucket = ({ selectedBucket, bucketList, onClick }: FeedSelectBuc
             <BucketBox
               style={{ border: selectedBucket === bucket.bucketId ? '1px solid' : undefined }}
               key={bucket.bucketId}
-              onClick={() => onClick(bucket.bucketId)}
+              onClick={() =>
+                onClick({ id: bucket.bucketId, images: reduceImgUrl(bucket.itemImages) })
+              }
             >
               <DividerImage images={reduceImgUrl(bucket.itemImages)} type="base" />
               <CommonText type="smallInfo">{bucket.name}</CommonText>
