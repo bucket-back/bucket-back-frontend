@@ -7,7 +7,7 @@ interface CommonSliderProps {
 
 const CommonSlider = ({ value, onChange }: CommonSliderProps) => {
   return (
-    <Slider value={value} min={0} max={5} step={0.5} onChange={(value) => onChange(value)}>
+    <Slider value={value} min={0} max={5} step={1} onChange={(value) => onChange(value)}>
       <SliderTrack>
         <SliderFilledTrack bg="blue.300" />
       </SliderTrack>

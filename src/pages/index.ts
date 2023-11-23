@@ -15,3 +15,4 @@ export { default as Login } from './Member/Login';
 export { default as Signup } from './Member/Signup';
 export { default as MemberEdit } from './Member/MemberEdit';
 export { default as MemberPassword } from './Member/MemberPassword';
+export { default as ItemReviewEdit } from './Item/ReviewEdit';
