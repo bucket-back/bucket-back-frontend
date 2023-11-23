@@ -86,15 +86,15 @@ const ItemDetail = () => {
             {data.itemInfo.name}
           </CommonText>
           <ItemBox>
-            <CommonIcon type="fillStar" color="blue.300" />
+            <CommonText type="normalInfo">{formatNumber(data.itemInfo.price)}</CommonText>
             <Box>
+              <CommonIcon type="fillStar" color="blue.300" />
               <CommonText type="smallInfo" noOfLines={0}>
                 {data.itemAvgRate === null ? 0 : data.itemAvgRate} / 5
               </CommonText>
             </Box>
           </ItemBox>
         </ItemWrapper>
-        <CommonText type="normalInfo">{formatNumber(data.itemInfo.price)}</CommonText>
         <ButtonWrapper>
           <CommonButton type="mdSmall" onClick={handleItem} isDisabled={data.isMemberItem}>
             아이템 담기
