@@ -36,7 +36,7 @@ interface FeedItemProps {
   feedItems: FeedItemInfo[];
   bucketName?: string;
   bucketBudget?: number;
-  totalPrice: number;
+  totalPrice?: number;
   isDetail: boolean;
   onClick: (id: number) => void;
   onUpdate?: (id: number) => void;
@@ -100,7 +100,9 @@ const FeedItem = ({
         {isDetail && (
           <BucketInfoBox>
             <CommonText type="normalInfo">{bucketName}</CommonText>
-            <CommonText type="normalInfo">버킷 총액: {formatNumber(totalPrice)}원</CommonText>
+            {totalPrice && (
+              <CommonText type="normalInfo">버킷 총액: {formatNumber(totalPrice)}원</CommonText>
+            )}
             {bucketBudget && (
               <CommonText type="normalInfo">예산: {formatNumber(bucketBudget)}원</CommonText>
             )}
