@@ -1,32 +1,53 @@
-import { CommonImage, CommonMenu, CommonText, Header } from '@/shared/components';
-import { Container, ContentWrapper, Grid, GridItem, TitleWrapper } from './style';
+import { CommonButton, CommonDrawer, CommonRadio, CommonText, Header } from '@/shared/components';
+import { useDrawer } from '@/shared/hooks';
+import { Box, Container, Wrapper } from './style';
+import InventorySelectItem from '@/features/inventroy/components/InventorySelectItem';
 
 const InventoryCreate = () => {
+  const { isOpen, onOpen, onClose } = useDrawer();
+
   return (
     <>
       <Header type="back" />
       <Container>
-        <TitleWrapper>
-          <CommonText type="normalTitle">자전거 인벤토리</CommonText>
-          <CommonMenu type="update" iconSize="0.3rem" onDelete={() => {}} />
-        </TitleWrapper>
-        <CommonText type="normalTitle">아이템 전체보기</CommonText>
-        <ContentWrapper>
-          <CommonText type="subStrongInfo">총 0개의 아이템</CommonText>
-        </ContentWrapper>
+        <Wrapper>
+          <Box>
+            <CommonText type="normalTitle" noOfLines={0}>
+              인벤토리 생성하기
+            </CommonText>
+          </Box>
+          <Box>
+            <CommonText type="normalInfo" noOfLines={0}>
+              취미별 인벤토리를 생성할 수 있습니다.
+            </CommonText>
+            <CommonText type="normalInfo" noOfLines={0}>
+              취미를 선택해주세요.
+            </CommonText>
+            <CommonRadio values={['농구', '수영']} name="취미" onChange={() => {}} />
+          </Box>
+          <Box>
+            <CommonText type="normalInfo" noOfLines={0}>
+              본인이 소유하고 있는 아이템을 선택해주세요.
+            </CommonText>
+            <CommonButton type="custom" onClick={() => onOpen()} />
+          </Box>
+        </Wrapper>
 
-        <Grid>
-          {Array.from({ length: 6 }, (_, index) => {
-            return (
-              <GridItem key={index}>
-                <CommonImage size="sm" />
-                <CommonText type="smallInfo">자전거</CommonText>
-                <CommonText type="smallInfo">29,800</CommonText>
-              </GridItem>
-            );
-          })}
-        </Grid>
+        <CommonButton type="mdFull">생성 완료</CommonButton>
       </Container>
+      <CommonDrawer
+        isOpen={isOpen}
+        onClose={() => {
+          onClose();
+        }}
+        onClickFooterButton={() => {
+          onClose();
+        }}
+        isFull={true}
+        footerButtonText="선택 완료"
+      >
+        <InventorySelectItem />
+      </CommonDrawer>
     </>
   );
 };
