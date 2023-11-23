@@ -21,10 +21,10 @@ import {
   Box,
   ReviewBox,
 } from './style';
-import ItemComment from '@/features/item/components/ItemComment/index';
+import { ItemComment } from '@/features/item/components';
 import { useTakeItem } from '@/features/item/hooks';
-import itemQueryOption from '@/features/item/service/queryOption';
-import reviewQueryOption from '@/features/review/service/queryOption';
+import { itemQueryOption } from '@/features/item/service';
+import { reviewQueryOption } from '@/features/review/service';
 
 const ItemDetail = () => {
   // 로그인 시 리뷰 클릭이 가능하도록 하기
@@ -86,15 +86,15 @@ const ItemDetail = () => {
             {data.itemInfo.name}
           </CommonText>
           <ItemBox>
-            <CommonIcon type="fillStar" color="blue.300" />
+            <CommonText type="normalInfo">{formatNumber(data.itemInfo.price)}</CommonText>
             <Box>
+              <CommonIcon type="fillStar" color="blue.300" />
               <CommonText type="smallInfo" noOfLines={0}>
                 {data.itemAvgRate === null ? 0 : data.itemAvgRate} / 5
               </CommonText>
             </Box>
           </ItemBox>
         </ItemWrapper>
-        <CommonText type="normalInfo">{formatNumber(data.itemInfo.price)}</CommonText>
         <ButtonWrapper>
           <CommonButton type="mdSmall" onClick={handleItem} isDisabled={data.isMemberItem}>
             아이템 담기
