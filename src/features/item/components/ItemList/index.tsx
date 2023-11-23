@@ -20,7 +20,7 @@ const ListItem = ({ id, image, price, name, isDelete, onClick }: ItemListProps) 
     if (isDelete) {
       return;
     }
-    navigate(`myitems/${id}`);
+    navigate(`/item/${id}`);
   };
 
   const handleDeleteClick = () => {
