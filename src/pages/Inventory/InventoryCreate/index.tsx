@@ -106,7 +106,11 @@ const InventoryCreate = () => {
           </Box>
         </Wrapper>
 
-        <CommonButton type="mdFull" onClick={onSubmit}>
+        <CommonButton
+          type="mdFull"
+          onClick={onSubmit}
+          isDisabled={!selectedHobby || !selectedItems.length}
+        >
           생성 완료
         </CommonButton>
       </Container>
