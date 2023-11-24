@@ -14,8 +14,9 @@ const BASE_URL = 'inventories';
 const inventoryApi = {
   putEditInventory: async ({ inventoryId, itemIds }: PutEditInventoryRequest) => {
     const url = `${BASE_URL}/${inventoryId}`;
+    const params = { itemIds };
 
-    return await axiosClient.delete<null>(url, { params: itemIds });
+    return await axiosClient.put<null>(url, params);
   },
   deleteInventory: async (inventoryId: number) => {
     const url = `${BASE_URL}/${inventoryId}`;
@@ -46,7 +47,7 @@ const inventoryApi = {
     cursorId,
     size = 10,
   }: GetInventoryItemsRequest) => {
-    const hobbyQueryString = hobbyName ? `hobbyName=${hobbyName}` : '';
+    const hobbyQueryString = hobbyName ? `&hobbyName=${hobbyName}` : '';
     const inventoryIdQueryString = inventoryId ? `inventoryId=${inventoryId}` : '';
     const params = cursorId ? { cursorId, size } : { size };
     const url = `${BASE_URL}/myitems?${inventoryIdQueryString}${hobbyQueryString}`;

@@ -15,11 +15,12 @@ const InventorySelectItem = ({ reviewedItems, onChange }: InventorySelectItemPro
         <CommonText type="normalTitle">인벤토리 아이템 선택</CommonText>
         <CommonText type="subStrongInfo">총{reviewedItems?.length}개의 아이템</CommonText>
         <Grid>
-          {reviewedItems?.map(({ itemInfo }) => (
+          {reviewedItems?.map(({ itemInfo, isSelected }) => (
             <GridItem key={itemInfo.id}>
               <ImageInput
                 type="checkbox"
                 id={String(itemInfo.id)}
+                defaultChecked={isSelected}
                 onChange={(e) => onChange(e, itemInfo.image)}
               />
               <ImageLabel htmlFor={String(itemInfo.id)}>
