@@ -40,7 +40,7 @@ interface FeedItemProps {
   isDetail: boolean;
   onClick: (id: number) => void;
   onUpdate?: (id: number) => void;
-  onDelete?: (id: number) => void;
+  onDelete?: () => void;
 }
 
 const FeedItem = ({
@@ -87,7 +87,7 @@ const FeedItem = ({
             type="update"
             iconSize="0.35rem"
             onUpdate={() => onUpdate && onUpdate(feedId)}
-            onDelete={() => onDelete && onDelete(feedId)}
+            onDelete={() => onDelete && onDelete()}
           />
         )}
       </ProfileWrapper>

@@ -46,14 +46,18 @@ const BucketCreate = () => {
   };
 
   const hobby = useHobby();
-  const hobbyData = hobby.data?.hobbies.reduce<Record<string, string>>(
-    (acc, cur) => ((acc[cur.value] = cur.name), acc),
-    {}
-  );
+  const hobbyData = hobby.isSuccess
+    ? hobby.data?.hobbies.reduce<Record<string, string>>(
+        (acc, cur) => ((acc[cur.value] = cur.name), acc),
+        {}
+      )
+    : {};
 
   const hobbyValues = Object.keys(hobbyData || {});
 
-  const items = useQuery(itemQueryOption.myItems({ hobbyName: hobbyData![selectedHobby!] }));
+  const items = useQuery(
+    itemQueryOption.myItems({ hobbyName: selectedHobby ? hobbyData[selectedHobby] : '' })
+  );
 
   const { isOpen, onOpen, onClose } = useDrawer();
 
