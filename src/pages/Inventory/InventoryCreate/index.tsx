@@ -26,10 +26,10 @@ const InventoryCreate = () => {
   const { data: hobbyData } = useHobby();
   const { isOpen, onOpen, onClose } = useDrawer();
   const HangulHobby = hobbyData?.hobbies.map((hobby) => hobby.value);
-  const currnetHobby = hobbyData?.hobbies.find(({ value }) => value === selectedHobby);
+  const currentHobby = hobbyData?.hobbies.find(({ value }) => value === selectedHobby);
   const { mutate: createInventoryMutate } = useCreateInventory();
   const { data: myItemsData } = useQuery({
-    ...inventoryQueryOption.myItems({ hobbyName: currnetHobby?.name }),
+    ...inventoryQueryOption.myItems({ hobbyName: currentHobby?.name }),
   });
 
   const checkingItems = (e: ChangeEvent<HTMLInputElement>, src: string) => {
