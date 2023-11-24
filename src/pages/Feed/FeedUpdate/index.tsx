@@ -1,3 +1,6 @@
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import {
   CommonButton,
   CommonText,
@@ -13,29 +16,56 @@ import {
   Form,
   SelectedBucketBox,
 } from './style';
+import { useUpdateFeed } from '@/features/feed/hooks';
+import { feedQueryOption } from '@/features/feed/service';
 import { HobbyRadio } from '@/features/hobby/components';
 
+interface FeedContent {
+  content: string;
+}
+
 const FeedUpdate = () => {
+  const { feedId } = useParams();
+  const feedDetail = useQuery(feedQueryOption.detail(Number(feedId)));
+  const updateFeed = useUpdateFeed(feedId!);
+
+  console.log(feedDetail);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FeedContent>({ mode: 'onBlur' });
+
+  const onSubmit: SubmitHandler<FeedContent> = ({ content }) => {
+    updateFeed.mutate({ feedId: Number(feedId), content });
+  };
+
   return (
     <>
       <Header type="back" />
       <Container>
         <CommonText type="normalTitle">피드 수정하기</CommonText>
-        <Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <ContentsWrapper>
             <ContentsPanel>
-              <CommonText type="normalInfo">취미를 선택해주세요.</CommonText>
+              <CommonText type="normalInfo">선택한 취미입니다.</CommonText>
               <HobbyRadio defaultValue="야구" isReadOnly />
             </ContentsPanel>
             <ContentsPanel>
-              <CommonText type="normalInfo">버킷을 선택해주세요.</CommonText>
+              <CommonText type="normalInfo">선택한 버킷입니다.</CommonText>
               <SelectedBucketBox>
                 <DividerImage images={['1', '2', '3']} type="base" />
               </SelectedBucketBox>
             </ContentsPanel>
             <ContentsPanel>
               <CommonText type="normalInfo">피드 내용을 입력해주세요.</CommonText>
-              <CommonTextarea size="sm" placeholder="내용을 입력해주세요." />
+              <CommonTextarea
+                size="sm"
+                placeholder="내용을 입력해주세요."
+                error={errors.content}
+                {...register('content', { required: '내용을 필수로 입력해주세요.' })}
+              />
             </ContentsPanel>
           </ContentsWrapper>
           <ButtonWrapper>
