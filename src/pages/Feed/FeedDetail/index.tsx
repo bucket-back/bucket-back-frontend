@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
   CommonButton,
@@ -33,6 +33,7 @@ const FeedDetail = () => {
   const isLogin = useAuthCheck();
   const userInfo = useUserInfo();
   const deleteFeed = useDeleteFeed();
+  const navigate = useNavigate();
 
   const feedDetail = useQuery(feedQueryOption.detail(feedIdNumber));
   const comment = useQuery(commentQueryQption.list({ feedId: feedIdNumber || 1, size: 10 }));
@@ -63,6 +64,7 @@ const FeedDetail = () => {
             isDetail
             onClick={onOpen}
             onDelete={onDeleteOpen}
+            onUpdate={() => navigate(`./edit`)}
           />
         )}
       </FeedDetailContainer>

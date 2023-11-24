@@ -21,3 +21,4 @@ export { default as InventoryDetail } from './Inventory/InventoryDetail';
 export { default as InventoryHome } from './Inventory/InventoryHome';
 export { default as SearchHome } from './Search/SearchHome';
 export { default as SearchMain } from './Search/SearchMain';
+export { default as FeedUpdate } from './Feed/FeedUpdate';

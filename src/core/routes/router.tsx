@@ -24,6 +24,7 @@ import {
   InventoryCreate,
   SearchMain,
   SearchHome,
+  FeedUpdate,
 } from '@/pages';
 
 export const router = createBrowserRouter([
@@ -59,7 +60,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'feed/:feedId/edit',
-        element: <div>feed feedId edit</div>,
+        element: <FeedUpdate />,
       },
       {
         path: 'vote/create',
