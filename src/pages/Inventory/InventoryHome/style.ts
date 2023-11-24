@@ -35,7 +35,7 @@ export const TextBox = styled.div`
 
 export const AddButtonWrapper = styled.div`
   position: absolute;
-  bottom: 90px;
+  bottom: 20px;
   right: 20px;
   z-index: 10;
 `;
