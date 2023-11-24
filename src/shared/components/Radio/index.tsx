@@ -14,9 +14,16 @@ interface CommonRadioProps {
   name: string;
   defaultValue?: string;
   onChange: (value: string) => void;
+  isReadOnly?: boolean;
 }
 
-const CommonRadio = ({ values, defaultValue, name, onChange }: CommonRadioProps) => {
+const CommonRadio = ({
+  values,
+  defaultValue,
+  name,
+  onChange,
+  isReadOnly = false,
+}: CommonRadioProps) => {
   const options = [...values];
 
   const { getRootProps, getRadioProps } = useRadioGroup({
@@ -34,7 +41,9 @@ const CommonRadio = ({ values, defaultValue, name, onChange }: CommonRadioProps)
 
         return (
           <HobbyBox key={value}>
-            <RadioCard {...radio}>{value}</RadioCard>
+            <RadioCard {...radio} isReadOnly={isReadOnly}>
+              {value}
+            </RadioCard>
           </HobbyBox>
         );
       })}
