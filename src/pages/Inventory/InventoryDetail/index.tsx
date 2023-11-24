@@ -35,6 +35,7 @@ const InventoryDetail = () => {
   const { mutate: updateInventoryMutate } = useUpdateInventory({
     nickname: String(nickname),
     inventoryId: Number(inventoryId),
+    hobbyName: String(currentHobby?.name),
   });
   const updatedItems =
     myItemsData?.reviewedItems
