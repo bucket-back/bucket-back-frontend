@@ -19,3 +19,5 @@ export { default as ItemReviewEdit } from './Item/ReviewEdit';
 export { default as InventoryCreate } from './Inventory/InventoryCreate';
 export { default as InventoryDetail } from './Inventory/InventoryDetail';
 export { default as InventoryHome } from './Inventory/InventoryHome';
+export { default as SearchHome } from './Search/SearchHome';
+export { default as SearchMain } from './Search/SearchMain';

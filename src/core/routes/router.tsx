@@ -22,6 +22,8 @@ import {
   InventoryHome,
   InventoryDetail,
   InventoryCreate,
+  SearchMain,
+  SearchHome,
 } from '@/pages';
 
 export const router = createBrowserRouter([
@@ -69,11 +71,11 @@ export const router = createBrowserRouter([
       },
       {
         path: 'search',
-        element: <div>search</div>,
-      },
-      {
-        path: 'search/result',
-        element: <div>search result</div>,
+        element: <SearchHome />,
+        children: [
+          { path: '', element: <SearchMain /> },
+          { path: 'result', element: <div>result</div> },
+        ],
       },
       {
         path: 'item',

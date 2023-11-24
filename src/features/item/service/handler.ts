@@ -4,9 +4,6 @@ import {
   PostTakeItemRequest,
   PostTakeItemResponse,
   GetDetailItemResponse,
-  GetSearchItemRequest,
-  GetSearchItemResponse,
-  GetSearchKeywordResponse,
   GetMyItemsRequest,
   GetMyItemsResponse,
 } from './types';
@@ -18,7 +15,6 @@ const BASE_URL = 'items';
 const itemApi = {
   postItem: async ({ hobbyValue, itemUrl }: PostItemRequest) => {
     const url = `${BASE_URL}/enroll`;
-
     const response = await axiosClient.post<PostItemResponse>(url, { hobbyValue, itemUrl });
 
     return response.data;
@@ -27,24 +23,6 @@ const itemApi = {
   getDetailItem: async (itemId: number) => {
     const url = `${BASE_URL}/${itemId}`;
     const response = await axiosClient.get<GetDetailItemResponse>(url);
-
-    return response.data;
-  },
-
-  getSearchItem: async ({ keyword, cursorId, size }: GetSearchItemRequest) => {
-    const queryString = keyword ? `keyword=${keyword}` : '';
-    const params = cursorId ? { cursorId, size } : { size };
-
-    const url = `${BASE_URL}/search?${queryString}`;
-    const response = await axiosClient.get<GetSearchItemResponse>(url, { params });
-
-    return response.data;
-  },
-
-  getSearchKeyword: async (keyword: string) => {
-    const queryString = keyword ? `keyword=${keyword}` : '';
-    const url = `${BASE_URL}/item-names?${queryString}`;
-    const response = await axiosClient.get<GetSearchKeywordResponse>(url);
 
     return response.data;
   },
