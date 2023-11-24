@@ -8,10 +8,11 @@ interface SearchProps {
 }
 
 interface SearchFormProps {
+  onStorage?: (keyword: string) => void;
   onInput?: (value: string) => void;
 }
 
-const SearchForm = ({ onInput }: SearchFormProps) => {
+const SearchForm = ({ onStorage, onInput }: SearchFormProps) => {
   const {
     register,
     formState: { errors },
@@ -28,7 +29,7 @@ const SearchForm = ({ onInput }: SearchFormProps) => {
 
   const onSubmit: SubmitHandler<SearchProps> = (data, event) => {
     event?.preventDefault();
-    console.log(data);
+    onStorage && onStorage(data.keyword as string);
     reset();
   };
 
