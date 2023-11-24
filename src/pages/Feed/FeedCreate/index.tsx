@@ -4,7 +4,6 @@ import { useQuery } from '@tanstack/react-query';
 import {
   CommonButton,
   CommonDrawer,
-  CommonRadio,
   CommonText,
   CommonTextarea,
   DividerImage,
@@ -15,7 +14,6 @@ import {
   Container,
   ContentsWrapper,
   ContentsPanel,
-  HobbyBox,
   Form,
   ButtonWrapper,
   SelectedBucketBox,
@@ -23,7 +21,7 @@ import {
 import { bucketQueryOption } from '@/features/bucket/service';
 import { FeedSelectBucket } from '@/features/feed/components';
 import { useCreateFeed } from '@/features/feed/hooks';
-import { useHobby } from '@/features/hobby/hooks';
+import { HobbyRadio } from '@/features/hobby/components';
 
 interface SelectedBucket {
   id: number;
@@ -56,14 +54,6 @@ const FeedCreate = () => {
   };
   const { isOpen, onOpen, onClose } = useDrawer();
 
-  const hobby = useHobby();
-  const hobbyObj = hobby.data?.hobbies.reduce<Record<string, string>>(
-    (acc, cur) => ((acc[cur.value] = cur.name), acc),
-    {}
-  );
-
-  const hobbyValues = Object.keys(hobbyObj || {});
-
   return (
     <>
       <Header type="back" />
@@ -73,15 +63,7 @@ const FeedCreate = () => {
           <ContentsWrapper>
             <ContentsPanel>
               <CommonText type="normalInfo">취미를 선택해주세요.</CommonText>
-              <HobbyBox>
-                {hobbyObj && (
-                  <CommonRadio
-                    values={hobbyValues}
-                    name="취미"
-                    onChange={(value: string) => setSelectedHobby(hobbyObj[value])}
-                  />
-                )}
-              </HobbyBox>
+              <HobbyRadio onChange={setSelectedHobby} />
             </ContentsPanel>
             <ContentsPanel>
               <CommonText type="normalInfo">버킷을 선택해주세요.</CommonText>
@@ -100,7 +82,6 @@ const FeedCreate = () => {
             </ContentsPanel>
             <ContentsPanel>
               <CommonText type="normalInfo">피드 내용을 입력해주세요.</CommonText>
-
               <CommonTextarea
                 size="sm"
                 placeholder="내용을 입력해주세요."
@@ -121,7 +102,6 @@ const FeedCreate = () => {
             </CommonButton>
           </ButtonWrapper>
         </Form>
-
         <CommonDrawer
           isOpen={isOpen}
           onClose={onClose}
