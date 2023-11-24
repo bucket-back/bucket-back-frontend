@@ -1,13 +1,7 @@
-import { Fragment } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-import {
-  CommonText,
-  CommonButton,
-  CommonIcon,
-  CommonDivider,
-  CommonTag,
-} from '@/shared/components';
-import { Container, WrapperTitle, WrapperContent, WordWrapper, KeywordBox } from './style';
+import { CommonText, CommonButton, CommonTag } from '@/shared/components';
+import { Container, WrapperTitle, WrapperContent, KeywordBox } from './style';
+import { SearchList } from '@/features/search/components';
 import { useSearchedKeywordStorage } from '@/features/search/hooks';
 
 // TODO:input에 검색어가 없을시
@@ -18,13 +12,15 @@ import { useSearchedKeywordStorage } from '@/features/search/hooks';
 // 5. 추가하기 기능
 
 const SearchMain = () => {
-  const isWord = useOutletContext<boolean>();
-
-  const [storageValue, setState] = useSearchedKeywordStorage('search');
+  const keyword = useOutletContext<string>();
 
   const navigate = useNavigate();
 
-  return !isWord ? (
+  const [storageValue, setState] = useSearchedKeywordStorage('search');
+
+  const isWord = !keyword || keyword.length <= 0;
+
+  return isWord ? (
     <Container>
       <WrapperTitle>
         <CommonText type="normalInfo">최근 검색어</CommonText>
@@ -56,13 +52,7 @@ const SearchMain = () => {
       </WrapperContent>
     </Container>
   ) : (
-    <Fragment>
-      <WordWrapper onClick={() => navigate('/item/23')}>
-        <CommonIcon type="search" />
-        <CommonText type="normalInfo">아레나 취미 수영복</CommonText>
-      </WordWrapper>
-      <CommonDivider size="sm" />
-    </Fragment>
+    <SearchList keyword={keyword} />
   );
 };
 
