@@ -1,5 +1,6 @@
 import {
   GetInventoryDetailRequest,
+  GetInventoryDetailResponse,
   GetInventoryItemsRequest,
   GetInventoryItemsResponse,
   GetInventoryResponse,
@@ -23,7 +24,6 @@ const inventoryApi = {
   },
   postCreateInventory: async ({ hobbyValue, itemIds }: PostCreateInventoryRequest) => {
     const params = { hobbyValue, itemIds };
-    console.log(params, BASE_URL);
     const response = await axiosClient.post<PostCreateInventoryResponse>(BASE_URL, params);
 
     return response.data;
@@ -36,7 +36,7 @@ const inventoryApi = {
   },
   getInventoryDetail: async ({ nickname, inventoryId }: GetInventoryDetailRequest) => {
     const url = `${nickname}/${BASE_URL}/${inventoryId}`;
-    const response = await axiosClient.get(url);
+    const response = await axiosClient.get<GetInventoryDetailResponse>(url);
 
     return response.data;
   },
