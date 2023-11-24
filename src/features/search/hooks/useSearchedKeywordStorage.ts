@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Storage } from '@/shared/utils';
 
-const useLocalStorage = (key: string): [string[] | [], (tempValue: string[] | []) => void] => {
+const useSearchedKeywordStorage = (
+  key: string
+): [string[] | [], (tempValue: string[] | []) => void] => {
   const [storageValue, setStorageValue] = useState<string[] | []>(Storage.getLocalStoraged(key));
 
   const setState = (tempValue: string[] | []) => {
@@ -12,4 +14,4 @@ const useLocalStorage = (key: string): [string[] | [], (tempValue: string[] | []
   return [storageValue, setState];
 };
 
-export default useLocalStorage;
+export default useSearchedKeywordStorage;

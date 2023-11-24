@@ -10,11 +10,10 @@ interface SearchProps {
 }
 
 interface SearchFormProps {
-  onStorage?: (keyword: string) => void;
   onInput?: (value: string) => void;
 }
 
-const SearchForm = ({ onStorage, onInput }: SearchFormProps) => {
+const SearchForm = ({ onInput }: SearchFormProps) => {
   const {
     register,
     formState: { errors },
@@ -40,10 +39,11 @@ const SearchForm = ({ onStorage, onInput }: SearchFormProps) => {
       return;
     }
     const findValue = value.findIndex((value: string) => value === keyword);
-    findValue === -1
-      ? Storage.setLocalStoraged(SEARCH_KEY, [...value, keyword])
-      : Storage.setLocalStoraged(SEARCH_KEY, [...value]);
-    onStorage && onStorage(data.keyword as string);
+    if (findValue === -1) {
+      Storage.setLocalStoraged(SEARCH_KEY, [...value, keyword]);
+    } else {
+      Storage.setLocalStoraged(SEARCH_KEY, [...value]);
+    }
     reset();
   };
 

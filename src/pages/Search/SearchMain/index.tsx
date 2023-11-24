@@ -8,7 +8,7 @@ import {
   CommonTag,
 } from '@/shared/components';
 import { Container, WrapperTitle, WrapperContent, WordWrapper, KeywordBox } from './style';
-import { useLocalStorage } from '@/features/search/hooks';
+import { useSearchedKeywordStorage } from '@/features/search/hooks';
 
 // TODO:input에 검색어가 없을시
 // 1. localstorage에 저장되어 있는 최근 검색어 보여주기 (O)
@@ -20,7 +20,7 @@ import { useLocalStorage } from '@/features/search/hooks';
 const SearchMain = () => {
   const isWord = useOutletContext<boolean>();
 
-  const [storageValue, setState] = useLocalStorage('search');
+  const [storageValue, setState] = useSearchedKeywordStorage('search');
 
   const navigate = useNavigate();
 
