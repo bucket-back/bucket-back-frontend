@@ -10,7 +10,7 @@ const memberQueryOption = {
     }),
   token: () =>
     queryOptions({
-      queryKey: [...memberQueryOption.all, 'toke'] as const,
+      queryKey: [...memberQueryOption.all, 'token'] as const,
       queryFn: () => memberApi.getCheckJWT(),
     }),
 };
