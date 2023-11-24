@@ -1,4 +1,4 @@
-import { ItemInfo, Item, ItemNameGetResult, MyItemSummary } from '@/shared/types';
+import { ItemInfo, MyItemSummary } from '@/shared/types';
 
 export interface PostItemRequest {
   hobbyValue: string;
@@ -21,21 +21,6 @@ export interface GetDetailItemResponse {
   itemUrl: string;
   itemAvgRate: number;
   isMemberItem: boolean;
-}
-
-export interface GetSearchItemRequest {
-  keyword: string;
-  cursorId: string;
-  size: number;
-}
-
-export interface GetSearchItemResponse {
-  nextCursorId: string;
-  items: Item[];
-}
-
-export interface GetSearchKeywordResponse {
-  itemNameGetResults: ItemNameGetResult[];
 }
 
 export interface GetMyItemsRequest {
