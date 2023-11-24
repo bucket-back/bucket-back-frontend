@@ -8,6 +8,7 @@ import {
   CommonTag,
 } from '@/shared/components';
 import { Container, WrapperTitle, WrapperContent, WordWrapper, KeywordBox } from './style';
+import { useLocalStorage } from '@/features/search/hooks';
 
 // TODO:input에 검색어가 없을시
 // 1. localstorage에 저장되어 있는 최근 검색어 보여주기 (O)
@@ -16,14 +17,10 @@ import { Container, WrapperTitle, WrapperContent, WordWrapper, KeywordBox } from
 // 4. 클릭시 이동 기능
 // 5. 추가하기 기능
 
-interface OutletProps {
-  isWord: boolean;
-  storageValue: string[] | [];
-  setState: (tempValue: [] | string[]) => void;
-}
-
 const SearchMain = () => {
-  const { isWord, storageValue, setState } = useOutletContext<OutletProps>();
+  const isWord = useOutletContext<boolean>();
+
+  const [storageValue, setState] = useLocalStorage('search');
 
   const navigate = useNavigate();
 
@@ -42,8 +39,8 @@ const SearchMain = () => {
       </WrapperTitle>
       <WrapperContent>
         {storageValue.length > 0 &&
-          storageValue.map((value: string) => (
-            <KeywordBox key={value}>
+          storageValue.map((value: string, index: number) => (
+            <KeywordBox key={index}>
               <CommonTag
                 type="search"
                 onClick={() => navigate('result')}

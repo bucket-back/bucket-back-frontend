@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { CommonInput, CommonIcon, CommonIconButton } from '@/shared/components';
+import { SEARCH_KEY } from '@/shared/constants';
+import { Storage } from '@/shared/utils';
 import { Form } from './style';
 
 interface SearchProps {
@@ -29,6 +31,18 @@ const SearchForm = ({ onStorage, onInput }: SearchFormProps) => {
 
   const onSubmit: SubmitHandler<SearchProps> = (data, event) => {
     event?.preventDefault();
+    const { keyword } = data;
+    const value = Storage.getLocalStoraged(SEARCH_KEY);
+    if (!Array.isArray(value)) {
+      Storage.setLocalStoraged(SEARCH_KEY, [keyword]);
+      reset();
+
+      return;
+    }
+    const findValue = value.findIndex((value: string) => value === keyword);
+    findValue === -1
+      ? Storage.setLocalStoraged(SEARCH_KEY, [...value, keyword])
+      : Storage.setLocalStoraged(SEARCH_KEY, [...value]);
     onStorage && onStorage(data.keyword as string);
     reset();
   };
