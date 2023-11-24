@@ -20,3 +20,25 @@ export const Wrapper = styled.div`
   flex-direction: column;
   gap: 2rem;
 `;
+
+export const RadioBox = styled.div`
+  overflow-x: auto;
+`;
+
+export const SelectedItems = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`;
+
+export const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+`;
+
+export const GridItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+`;

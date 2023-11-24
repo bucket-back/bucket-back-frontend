@@ -5,40 +5,40 @@ export interface PutEditInventoryRequest {
   itemIds: number[];
 }
 
-export interface postCreateInventoryRequest {
+export interface PostCreateInventoryRequest {
   hobbyValue: string;
   itemIds: number[];
 }
 
-export interface postCreateInventoryResponse {
+export interface PostCreateInventoryResponse {
   inventoryId: number;
 }
 
-export interface getInventoryResponse {
+export interface GetInventoryResponse {
   totalCount: number;
   inventoryInfos: inventoryInfo[];
 }
 
-export interface getInventoryDetailRequest {
+export interface GetInventoryDetailRequest {
   nickname: string;
   inventoryId: number;
 }
 
-export interface getInventoryDetailResponse {
+export interface GetInventoryDetailResponse {
   memberId: number;
   hobby: string;
   itemCount: number;
   inventoryItemInfos: inventoryItemInfo[];
 }
 
-export interface getInventoryItemsRequest {
-  inventoryId: number;
-  hobbyName: string;
+export interface GetInventoryItemsRequest {
+  inventoryId?: number;
+  hobbyName?: string;
   cursorId?: string;
   size?: number;
 }
 
-export interface getInventoryItemsResponse {
+export interface GetInventoryItemsResponse {
   nextCursorId: string;
   totalCount: number;
   reviewedItems: reviewedItem[];
