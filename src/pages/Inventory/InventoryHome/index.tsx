@@ -1,24 +1,38 @@
+import { useNavigate, useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { CommonIconButton, CommonText, DividerImage, Header } from '@/shared/components';
 import { useAuthNavigate } from '@/shared/hooks';
 import { AddButtonWrapper, Container, Grid, GridItem, TextBox } from './style';
+import { inventoryQueryOption } from '@/features/inventory/service';
 
 const InventoryHome = () => {
   const authNavigate = useAuthNavigate();
+  const navigate = useNavigate();
+  const { nickname } = useParams();
+  const { data: inventoryData } = useQuery({ ...inventoryQueryOption.list(nickname!) });
 
   return (
     <>
       <Header type="back" />
       <Container>
         <CommonText type="normalTitle">인벤토리</CommonText>
-        <CommonText type="subStrongInfo">총 00개의 인벤토리</CommonText>
+        <CommonText type="subStrongInfo">
+          총 {inventoryData?.inventoryInfos.length}개의 인벤토리
+        </CommonText>
         <Grid>
-          {Array.from({ length: 6 }, (_, index) => {
+          {inventoryData?.inventoryInfos.map((inventory, index) => {
             return (
-              <GridItem key={index}>
-                <DividerImage images={[]} type="base" />
+              <GridItem
+                key={index}
+                onClick={() => navigate(`/member/${nickname}/inventory/${inventory.inventoryId}`)}
+              >
+                <DividerImage
+                  images={inventory.itemImages.map(({ imgUrl }) => imgUrl)}
+                  type="base"
+                />
                 <TextBox>
-                  <CommonText type="smallInfo">자전거</CommonText>
-                  <CommonText type="smallInfo">29,800</CommonText>
+                  <CommonText type="smallInfo">{inventory.hobby}</CommonText>
+                  <CommonText type="smallInfo">{inventory.inventoryTotalPrice}</CommonText>
                 </TextBox>
               </GridItem>
             );
