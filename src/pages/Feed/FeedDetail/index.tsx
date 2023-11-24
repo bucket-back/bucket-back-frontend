@@ -22,14 +22,17 @@ import { CommentItem } from '@/features/comment/components';
 import useAddComment from '@/features/comment/hooks/useAddComment';
 import { PostCommentRequest, commentQueryQption } from '@/features/comment/service';
 import { FeedItemsDetail, FeedItem } from '@/features/feed/components';
+import { useDeleteFeed } from '@/features/feed/hooks';
 import { feedQueryOption } from '@/features/feed/service';
 
 const FeedDetail = () => {
   const { isOpen, onOpen, onClose } = useDrawer();
+  const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDrawer();
   const { feedId } = useParams();
   const feedIdNumber = Number(feedId);
   const isLogin = useAuthCheck();
   const userInfo = useUserInfo();
+  const deleteFeed = useDeleteFeed();
 
   const feedDetail = useQuery(feedQueryOption.detail(feedIdNumber));
   const comment = useQuery(commentQueryQption.list({ feedId: feedIdNumber || 1, size: 10 }));
@@ -59,6 +62,7 @@ const FeedDetail = () => {
             totalPrice={feedDetail.data.feedInfo.totalPrice}
             isDetail
             onClick={onOpen}
+            onDelete={onDeleteOpen}
           />
         )}
       </FeedDetailContainer>
@@ -108,6 +112,15 @@ const FeedDetail = () => {
 
       <CommonDrawer isOpen={isOpen} onClose={onClose} onClickFooterButton={onClose} isFull={true}>
         <FeedItemsDetail items={feedDetail.data?.feedItems} />
+      </CommonDrawer>
+      <CommonDrawer
+        isOpen={isDeleteOpen}
+        onClose={onDeleteClose}
+        onClickFooterButton={() => deleteFeed.mutate(feedIdNumber)}
+        isFull={false}
+        isCloseButton={false}
+      >
+        정말로 피드를 삭제하시겠습니까?
       </CommonDrawer>
     </>
   );
