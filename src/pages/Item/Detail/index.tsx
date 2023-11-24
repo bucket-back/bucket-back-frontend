@@ -73,9 +73,6 @@ const ItemDetail = () => {
   if (isError || reviewError) {
     return <>Error...</>;
   }
-  if (!reviewInfo) {
-    return;
-  }
 
   return (
     <>
@@ -123,7 +120,6 @@ const ItemDetail = () => {
         <CommentNumberWrapper>
           <CommonText type="normalInfo">총 {reviewInfo.totalCount}개의 댓글</CommonText>
         </CommentNumberWrapper>
-
         <CommonDivider size="sm" />
       </div>
       <CommentsContainer>
