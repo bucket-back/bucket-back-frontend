@@ -9,6 +9,7 @@ import {
 } from '@/shared/components';
 import { Review } from '@/shared/types';
 import { Container, ProfileWrapper, ContentsWrapper, InteractPanel } from './style';
+import { useDeleteReview } from '@/features/review/hooks';
 
 export interface ItemCommentProps {
   content: Review['content'];
@@ -17,10 +18,24 @@ export interface ItemCommentProps {
   rate: Review['rate'];
   reviewId: Review['reviewId'];
   editPath: string;
+  itemId: string;
 }
 
-const ItemComment = ({ content, createAt, memberInfo, rate, editPath }: ItemCommentProps) => {
+const ItemComment = ({
+  content,
+  createAt,
+  memberInfo,
+  itemId,
+  reviewId,
+  rate,
+  editPath,
+}: ItemCommentProps) => {
   const navigate = useNavigate();
+  const { mutate: reviewDeleteMutate } = useDeleteReview(itemId);
+
+  const handleDeleteClick = () => {
+    reviewDeleteMutate({ itemId: Number(itemId), reviewId });
+  };
 
   return (
     <Container>
@@ -29,8 +44,8 @@ const ItemComment = ({ content, createAt, memberInfo, rate, editPath }: ItemComm
         <CommonMenu
           type="update"
           iconSize="0.25rem"
-          onDelete={() => {}}
           onUpdate={() => navigate(editPath)}
+          onDelete={handleDeleteClick}
         />
       </ProfileWrapper>
       <ContentsWrapper>

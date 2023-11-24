@@ -131,6 +131,7 @@ const ItemDetail = () => {
                 createAt={createdAt}
                 memberInfo={memberInfo}
                 rate={rate}
+                itemId={itemId!}
                 reviewId={reviewId}
                 editPath={`/${itemId}/review/${reviewInfo.reviews[isReviewed].reviewId}/edit`}
               />
