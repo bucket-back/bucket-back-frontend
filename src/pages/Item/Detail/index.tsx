@@ -127,7 +127,7 @@ const ItemDetail = () => {
         <CommonDivider size="sm" />
       </div>
       <CommentsContainer>
-        {reviewInfo.reviews.length > 0 ? (
+        {reviewInfo.reviews.length !== 0 ? (
           reviewInfo.reviews.map(({ content, createdAt, memberInfo, rate, reviewId }) => (
             <Fragment key={reviewId}>
               <ItemComment
@@ -135,8 +135,9 @@ const ItemDetail = () => {
                 createAt={createdAt}
                 memberInfo={memberInfo}
                 rate={rate}
+                itemId={itemId!}
                 reviewId={reviewId}
-                editPath={``}
+                editPath={`/${itemId}/review/${reviewId}/edit`}
               />
               <CommonDivider size="sm" />
             </Fragment>
