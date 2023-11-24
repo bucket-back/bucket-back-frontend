@@ -24,5 +24,5 @@ export interface reviewedItem {
   cursorId: string;
   isSelected: boolean;
   createdAt: string;
-  itemInfo: ItemInfo[];
+  itemInfo: ItemInfo;
 }

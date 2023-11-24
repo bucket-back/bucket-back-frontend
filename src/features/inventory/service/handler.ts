@@ -23,7 +23,8 @@ const inventoryApi = {
   },
   postCreateInventory: async ({ hobbyValue, itemIds }: PostCreateInventoryRequest) => {
     const params = { hobbyValue, itemIds };
-    const response = await axiosClient.post<PostCreateInventoryResponse>(BASE_URL, { params });
+    console.log(params, BASE_URL);
+    const response = await axiosClient.post<PostCreateInventoryResponse>(BASE_URL, params);
 
     return response.data;
   },
