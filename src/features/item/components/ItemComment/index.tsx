@@ -31,7 +31,7 @@ const ItemComment = ({
   editPath,
 }: ItemCommentProps) => {
   const navigate = useNavigate();
-  const { mutate: reviewDeleteMutate } = useDeleteReview();
+  const { mutate: reviewDeleteMutate } = useDeleteReview(itemId);
 
   const handleDeleteClick = () => {
     reviewDeleteMutate({ itemId: Number(itemId), reviewId });
