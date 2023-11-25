@@ -8,6 +8,7 @@ import {
   DividerImage,
   Header,
 } from '@/shared/components';
+import { formatNumber } from '@/shared/utils';
 import {
   Container,
   ContentsBox,
@@ -77,7 +78,9 @@ const BucketHome = () => {
                           images={bucket.itemImages.map(({ imgUrl }) => imgUrl)}
                         />
                         <CommonText type="smallInfo">{bucket.name}</CommonText>
-                        <CommonText type="smallInfo">10000원</CommonText>
+                        <CommonText type="smallInfo">
+                          {formatNumber(bucket.totalPrice)}원
+                        </CommonText>
                       </ContentsBox>
                     ))}
                   </ContentsWrapper>
