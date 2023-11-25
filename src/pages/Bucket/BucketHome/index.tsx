@@ -14,6 +14,7 @@ import {
   AddButtonWrapper,
   Container,
   ContentsBox,
+  ContentsPanel,
   ContentsWrapper,
   NoResult,
   TitleWrapper,
@@ -62,28 +63,31 @@ const BucketHome = () => {
             hobby.data?.map(({ name, value }) => ({
               value: name,
               label: value,
-              content:
-                bucket.isSuccess && bucket.data.buckets.length > 0 ? (
-                  <ContentsWrapper>
-                    {bucket.data.buckets.map((bucket) => (
-                      <ContentsBox
-                        key={bucket.bucketId}
-                        onClick={() => navigate(`./${bucket.bucketId}`)}
-                      >
-                        <DividerImage
-                          type="base"
-                          images={bucket.itemImages.map(({ imgUrl }) => imgUrl)}
-                        />
-                        <CommonText type="smallInfo">{bucket.name}</CommonText>
-                        <CommonText type="smallInfo">
-                          {formatNumber(bucket.totalPrice)}원
-                        </CommonText>
-                      </ContentsBox>
-                    ))}
-                  </ContentsWrapper>
-                ) : (
-                  <NoResult>버킷이 없습니다.</NoResult>
-                ),
+              content: (
+                <ContentsWrapper>
+                  {bucket.isSuccess && bucket.data.buckets.length > 0 ? (
+                    <ContentsPanel>
+                      {bucket.data.buckets.map((bucket) => (
+                        <ContentsBox
+                          key={bucket.bucketId}
+                          onClick={() => navigate(`./${bucket.bucketId}`)}
+                        >
+                          <DividerImage
+                            type="base"
+                            images={bucket.itemImages.map(({ imgUrl }) => imgUrl)}
+                          />
+                          <CommonText type="smallInfo">{bucket.name}</CommonText>
+                          <CommonText type="smallInfo">
+                            {formatNumber(bucket.totalPrice)}원
+                          </CommonText>
+                        </ContentsBox>
+                      ))}
+                    </ContentsPanel>
+                  ) : (
+                    <NoResult>버킷이 없습니다.</NoResult>
+                  )}
+                </ContentsWrapper>
+              ),
             })) || []
           }
         />
