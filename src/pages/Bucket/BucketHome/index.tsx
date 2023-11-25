@@ -22,9 +22,12 @@ import { hobbyQueryOption } from '@/features/hobby/service';
 
 const BucketHome = () => {
   const { nickname } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const hobby = useQuery({ ...hobbyQueryOption.all(), select: (data) => data.hobbies });
+
+  const [searchParams, setSearchParams] = useSearchParams({
+    hobby: hobby.isSuccess ? hobby.data[0].name : 'basketball',
+  });
 
   const bucket = useQuery(
     bucketQueryOption.list({ nickname: nickname!, hobby: searchParams.get('hobby')! })
@@ -36,7 +39,7 @@ const BucketHome = () => {
 
   return (
     <>
-      <Header type="back" />
+      <Header type="back" path={`/member/${nickname}`} />
       <Container>
         <TitleWrapper>
           <TitlePanel>
