@@ -1,7 +1,7 @@
 import { CommonButton, CommonMenu, CommonText, DateText, Profile } from '@/shared/components';
 import { useUserInfo } from '@/shared/hooks';
 import { MemberInfo } from '@/shared/types';
-import { useDeleteComment } from '../../hooks';
+import { useAdoptComment, useDeleteComment } from '../../hooks';
 import { Container, ProfileWrapper, ContentsWrapper, InteractPanel } from './style';
 
 interface CommentItemProps {
@@ -27,6 +27,7 @@ const CommentItem = ({
 }: CommentItemProps) => {
   const userInfo = useUserInfo();
   const deletComment = useDeleteComment();
+  const adoptComment = useAdoptComment();
 
   return (
     <Container>
@@ -55,7 +56,11 @@ const CommentItem = ({
         <DateText createdDate={createdAt} />
         <InteractPanel>
           <CommonButton type="xsText">인벤토리</CommonButton>
-          {isOwnFeed && !hasAdoptedComment && <CommonButton type="xsText">채택하기</CommonButton>}
+          {isOwnFeed && !hasAdoptedComment && (
+            <CommonButton type="xsText" onClick={() => adoptComment.mutate({ feedId, commentId })}>
+              채택하기
+            </CommonButton>
+          )}
         </InteractPanel>
       </ContentsWrapper>
     </Container>
