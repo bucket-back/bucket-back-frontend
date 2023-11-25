@@ -22,6 +22,7 @@ const BucketHome = () => {
         </TitleWrapper>
         <CommonDivider size="sm" />
         <CommonTabs
+          paddingLeftRight={2}
           tabsType="soft-rounded"
           isFitted={false}
           tabsData={[

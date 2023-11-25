@@ -23,7 +23,7 @@ export const ContentsWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
-  padding: 1rem 1rem 0 1rem;
+  padding: 1rem 2rem 0 2rem;
 `;
 
 export const ContentsBox = styled.div`
