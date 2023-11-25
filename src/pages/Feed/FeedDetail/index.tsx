@@ -19,7 +19,7 @@ import {
   NoResult,
 } from './style';
 import { CommentItem } from '@/features/comment/components';
-import { useUpdateComment } from '@/features/comment/hooks';
+import { useDeleteComment, useUpdateComment } from '@/features/comment/hooks';
 import useAddComment from '@/features/comment/hooks/useAddComment';
 import { commentQueryQption } from '@/features/comment/service';
 import { FeedItemsDetail, FeedItem } from '@/features/feed/components';
@@ -32,6 +32,7 @@ interface CommentContent {
 
 const FeedDetail = () => {
   const { isOpen, onOpen, onClose } = useDrawer();
+  const [deleteStatus, setDeleteStatus] = useState<'feed' | 'comment'>('feed');
   const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDrawer();
   const { feedId } = useParams();
   const feedIdNumber = Number(feedId);
@@ -52,7 +53,9 @@ const FeedDetail = () => {
 
   const [isUpdating, setIsUpdating] = useState(false);
   const [updatingCommentId, setUpdatingCommentId] = useState(0);
+  const [selectedCommentId, setSelectedCommentId] = useState(0);
   const updateComment = useUpdateComment();
+  const deleteComment = useDeleteComment();
 
   const onUpdateComment: SubmitHandler<CommentContent> = (data) => {
     updateComment.mutate({
@@ -81,7 +84,10 @@ const FeedDetail = () => {
             totalPrice={feedDetail.data.feedInfo.totalPrice}
             isDetail
             onClick={onOpen}
-            onDelete={onDeleteOpen}
+            onDelete={() => {
+              setDeleteStatus('feed');
+              onDeleteOpen();
+            }}
             onUpdate={() => navigate(`./edit`)}
           />
         )}
@@ -106,6 +112,11 @@ const FeedDetail = () => {
                 isAdopted={data.isAdopted}
                 isOwnFeed={isOwnFeed}
                 hasAdoptedComment={Boolean(feedDetail.data?.feedInfo.hasAdoptedComment)}
+                onDelete={() => {
+                  setSelectedCommentId(data.commentId);
+                  setDeleteStatus('comment');
+                  onDeleteOpen();
+                }}
                 onUpdate={() => {
                   setIsUpdating(true);
                   setUpdatingCommentId(data.commentId);
@@ -157,11 +168,20 @@ const FeedDetail = () => {
       <CommonDrawer
         isOpen={isDeleteOpen}
         onClose={onDeleteClose}
-        onClickFooterButton={() => deleteFeed.mutate(feedIdNumber)}
+        onClickFooterButton={() => {
+          if (deleteStatus === 'feed') {
+            deleteFeed.mutate(feedIdNumber);
+          }
+
+          if (deleteStatus === 'comment') {
+            deleteComment.mutate({ feedId: feedIdNumber, commentId: selectedCommentId });
+            onDeleteClose();
+          }
+        }}
         isFull={false}
         isCloseButton={false}
       >
-        정말로 피드를 삭제하시겠습니까?
+        정말로 {deleteStatus === 'feed' ? '피드를' : '댓글을'} 삭제하시겠습니까?
       </CommonDrawer>
     </>
   );

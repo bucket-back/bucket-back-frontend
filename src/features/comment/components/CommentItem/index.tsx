@@ -1,7 +1,7 @@
 import { CommonButton, CommonMenu, CommonText, DateText, Profile } from '@/shared/components';
 import { useUserInfo } from '@/shared/hooks';
 import { MemberInfo } from '@/shared/types';
-import { useAdoptComment, useDeleteComment } from '../../hooks';
+import { useAdoptComment } from '../../hooks';
 import { Container, ProfileWrapper, ContentsWrapper, InteractPanel } from './style';
 
 interface CommentItemProps {
@@ -13,6 +13,7 @@ interface CommentItemProps {
   memberInfo: MemberInfo;
   isOwnFeed: boolean;
   hasAdoptedComment: boolean;
+  onDelete: () => void;
   onUpdate: () => void;
 }
 
@@ -25,10 +26,10 @@ const CommentItem = ({
   memberInfo,
   isOwnFeed,
   hasAdoptedComment,
+  onDelete,
   onUpdate,
 }: CommentItemProps) => {
   const userInfo = useUserInfo();
-  const deletComment = useDeleteComment();
   const adoptComment = useAdoptComment();
 
   return (
@@ -41,14 +42,7 @@ const CommentItem = ({
           isAdopted={isAdopted}
         />
         {userInfo?.nickname === memberInfo.nickName && (
-          <CommonMenu
-            type="update"
-            iconSize="0.25rem"
-            onDelete={() => {
-              deletComment.mutate({ feedId, commentId });
-            }}
-            onUpdate={onUpdate}
-          />
+          <CommonMenu type="update" iconSize="0.25rem" onDelete={onDelete} onUpdate={onUpdate} />
         )}
       </ProfileWrapper>
       <ContentsWrapper>
