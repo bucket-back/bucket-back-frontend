@@ -12,6 +12,7 @@ interface CommonTabsProps {
   tabsData: TabsData[];
   onClick?: (value: string) => void;
   currentTabIndex?: number;
+  paddingLeftRight?: number;
 }
 
 const selectedStyle = (tabsType: string) => {
@@ -26,6 +27,7 @@ const CommonTabs = ({
   tabsType = 'line',
   onClick,
   currentTabIndex = 0,
+  paddingLeftRight = 1,
 }: CommonTabsProps) => {
   const handleClick = (value: string) => {
     onClick && onClick(value);
@@ -34,7 +36,11 @@ const CommonTabs = ({
   return (
     <Tabs index={currentTabIndex} isFitted={isFitted} variant={tabsType} size="sm">
       <TabList
-        padding={tabsType === 'soft-rounded' ? '1rem 0 0 1rem' : undefined}
+        padding={
+          tabsType === 'soft-rounded'
+            ? `1rem ${paddingLeftRight}rem 0 ${paddingLeftRight}rem`
+            : undefined
+        }
         overflowY={tabsType === 'soft-rounded' ? 'hidden' : undefined}
         overflowX={tabsType === 'soft-rounded' ? 'auto' : undefined}
       >
