@@ -8,6 +8,11 @@ const memberQueryOption = {
       queryKey: [...memberQueryOption.all, nickname] as const,
       queryFn: () => memberApi.getMember(nickname),
     }),
+  token: () =>
+    queryOptions({
+      queryKey: [...memberQueryOption.all, 'token'] as const,
+      queryFn: () => memberApi.getCheckJWT(),
+    }),
 };
 
 export default memberQueryOption;
