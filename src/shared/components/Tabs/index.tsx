@@ -33,12 +33,17 @@ const CommonTabs = ({
 
   return (
     <Tabs index={currentTabIndex} isFitted={isFitted} variant={tabsType} size="sm">
-      <TabList padding={tabsType === 'soft-rounded' ? '1rem 0 0 1rem' : undefined}>
+      <TabList
+        padding={tabsType === 'soft-rounded' ? '1rem 0 0 1rem' : undefined}
+        overflowY={tabsType === 'soft-rounded' ? 'hidden' : undefined}
+        overflowX={tabsType === 'soft-rounded' ? 'auto' : undefined}
+      >
         {tabsData.map((tab, index) => (
           <Tab
             onClick={() => handleClick(tab.value ?? '')}
             color="blue.900"
             bg="none"
+            flexShrink={0}
             _selected={selectedStyle(tabsType)}
             _disabled={selectedStyle(tabsType)}
             isDisabled={currentTabIndex === index}
