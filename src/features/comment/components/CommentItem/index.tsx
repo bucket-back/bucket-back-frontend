@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { CommonButton, CommonMenu, CommonText, DateText, Profile } from '@/shared/components';
 import { useUserInfo } from '@/shared/hooks';
 import { MemberInfo } from '@/shared/types';
@@ -31,6 +32,7 @@ const CommentItem = ({
 }: CommentItemProps) => {
   const userInfo = useUserInfo();
   const adoptComment = useAdoptComment();
+  const navigate = useNavigate();
 
   return (
     <Container>
@@ -51,7 +53,12 @@ const CommentItem = ({
       <ContentsWrapper>
         <DateText createdDate={createdAt} />
         <InteractPanel>
-          <CommonButton type="xsText">인벤토리</CommonButton>
+          <CommonButton
+            type="xsText"
+            onClick={() => navigate(`/member/${memberInfo.nickName}/inventory`)}
+          >
+            인벤토리
+          </CommonButton>
           {isOwnFeed && !hasAdoptedComment && (
             <CommonButton type="xsText" onClick={() => adoptComment.mutate({ feedId, commentId })}>
               채택하기
