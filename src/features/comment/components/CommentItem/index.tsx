@@ -13,6 +13,7 @@ interface CommentItemProps {
   memberInfo: MemberInfo;
   isOwnFeed: boolean;
   hasAdoptedComment: boolean;
+  onUpdate: () => void;
 }
 
 const CommentItem = ({
@@ -24,6 +25,7 @@ const CommentItem = ({
   memberInfo,
   isOwnFeed,
   hasAdoptedComment,
+  onUpdate,
 }: CommentItemProps) => {
   const userInfo = useUserInfo();
   const deletComment = useDeleteComment();
@@ -45,7 +47,7 @@ const CommentItem = ({
             onDelete={() => {
               deletComment.mutate({ feedId, commentId });
             }}
-            onUpdate={() => {}}
+            onUpdate={onUpdate}
           />
         )}
       </ProfileWrapper>
