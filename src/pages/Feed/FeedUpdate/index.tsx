@@ -26,20 +26,37 @@ interface FeedContent {
 
 const FeedUpdate = () => {
   const { feedId } = useParams();
-  const feedDetail = useQuery(feedQueryOption.detail(Number(feedId)));
+  const feedDetail = useQuery({
+    ...feedQueryOption.detail(Number(feedId)),
+    select: (data) => {
+      const hobby = data.feedInfo.hobby;
+      const images = data.feedItems.map(({ image }) => image);
+      const content = data.feedInfo.content;
+
+      return { hobby, images, content };
+    },
+  });
   const updateFeed = useUpdateFeed(feedId!);
-
-  console.log(feedDetail);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FeedContent>({ mode: 'onBlur' });
+  } = useForm<FeedContent>({
+    mode: 'onBlur',
+    values: { content: feedDetail.data?.content || '' },
+  });
 
   const onSubmit: SubmitHandler<FeedContent> = ({ content }) => {
     updateFeed.mutate({ feedId: Number(feedId), content });
   };
+
+  if (feedDetail.isPending) {
+    return;
+  }
+
+  if (feedDetail.isError) {
+    return;
+  }
 
   return (
     <>
@@ -55,7 +72,7 @@ const FeedUpdate = () => {
             <ContentsPanel>
               <CommonText type="normalInfo">선택한 버킷입니다.</CommonText>
               <SelectedBucketBox>
-                <DividerImage images={['1', '2', '3']} type="base" />
+                <DividerImage images={feedDetail.data.images} type="base" />
               </SelectedBucketBox>
             </ContentsPanel>
             <ContentsPanel>
