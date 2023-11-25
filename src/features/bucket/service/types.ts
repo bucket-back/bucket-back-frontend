@@ -21,6 +21,7 @@ export interface GetBucketDetailResponse {
   hobby: string;
   name: string;
   budget: number;
+  totalPrice: number;
   memberId: number;
   bucketId: number;
   itemInfos: ItemInfo[];
