@@ -1,10 +1,8 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
-  height: 100%;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
 `;
 
 export const TitleWrapper = styled.div`
@@ -20,10 +18,12 @@ export const TitlePanel = styled.div`
 `;
 
 export const ContentsWrapper = styled.div`
+  height: calc(100vh - 215.91px);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
   padding: 1rem 2rem 0 2rem;
+  overflow-y: auto;
 `;
 
 export const ContentsBox = styled.div`
@@ -31,4 +31,12 @@ export const ContentsBox = styled.div`
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+`;
+
+export const NoResult = styled.div`
+  height: calc(100vh - 215.91px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
