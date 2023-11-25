@@ -2,17 +2,22 @@ import { useOutletContext } from 'react-router-dom';
 import { Container } from './style';
 import { LatelySearch, SearchList } from '@/features/search/components';
 
+export interface SearchListProps {
+  keyword: string;
+  onInput: (word: string) => void;
+}
+
 const SearchMain = () => {
-  const keyword = useOutletContext<string>();
+  const { keyword, onInput } = useOutletContext<SearchListProps>();
 
   const isWord = !keyword || keyword.length <= 0;
 
   return isWord ? (
     <Container>
-      <LatelySearch />
+      <LatelySearch onInput={onInput} />
     </Container>
   ) : (
-    <SearchList keyword={keyword} />
+    <SearchList keyword={keyword} onInput={onInput} />
   );
 };
 

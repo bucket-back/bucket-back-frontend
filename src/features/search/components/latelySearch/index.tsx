@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { CommonText, CommonButton, CommonTag } from '@/shared/components';
 import { SEARCH_KEY } from '@/shared/constants';
 import { WrapperTitle, WrapperContent, KeywordBox } from './style';
@@ -11,10 +10,16 @@ import { useSearchedKeywordStorage } from '@/features/search/hooks';
 // 4. 클릭시 이동 기능
 // 5. 추가하기 기능
 
-const LatelySearch = () => {
-  const navigate = useNavigate();
+interface LatelySearchProp {
+  onInput: (word: string) => void;
+}
 
+const LatelySearch = ({ onInput }: LatelySearchProp) => {
   const [storageValue, setState] = useSearchedKeywordStorage(SEARCH_KEY);
+
+  const handleClick = (value: string) => {
+    onInput(value);
+  };
 
   return (
     <>
@@ -35,7 +40,7 @@ const LatelySearch = () => {
             <KeywordBox key={index}>
               <CommonTag
                 type="search"
-                onClick={() => navigate('result')}
+                onClick={() => handleClick(value)}
                 onDelete={() => {
                   const filterData = storageValue.filter((keyword: string) => value !== keyword);
                   setState([...filterData]);

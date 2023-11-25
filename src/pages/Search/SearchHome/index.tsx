@@ -7,18 +7,18 @@ import { SearchForm } from '@/features/search/components';
 const SearchHome = () => {
   const [keyword, setKeyword] = useState<string>('');
 
+  const onInput = (word: string) => {
+    setKeyword(word);
+  };
+
   return (
     <>
       <Container>
         <Wrapper>
           <HeaderBox />
-          <SearchForm
-            onInput={(word) => {
-              setKeyword(word);
-            }}
-          />
+          <SearchForm keyword={keyword} onInput={onInput} />
           <SearchContainer>
-            <Outlet context={keyword} />
+            <Outlet context={{ keyword, onInput }} />
           </SearchContainer>
         </Wrapper>
       </Container>
