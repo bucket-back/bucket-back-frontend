@@ -43,7 +43,7 @@ const FeedDetail = () => {
 
   const feedDetail = useQuery(feedQueryOption.detail(feedIdNumber));
   const comment = useQuery(commentQueryQption.list({ feedId: feedIdNumber || 1, size: 10 }));
-  const { register, handleSubmit, reset } = useForm<CommentContent>();
+  const { register, handleSubmit, reset, setValue } = useForm<CommentContent>();
   const addComment = useAddComment();
   const onCreateComment: SubmitHandler<CommentContent> = (data) => {
     addComment.mutate({ feedId: feedIdNumber, content: data.content });
@@ -63,6 +63,7 @@ const FeedDetail = () => {
       commentId: updatingCommentId,
       content: data.content,
     });
+    setIsUpdating(false);
     reset();
   };
 
@@ -99,7 +100,7 @@ const FeedDetail = () => {
         </CommentNumberWrapper>
         <CommonDivider size="sm" />
       </div>
-      <CommentsContainer>
+      <CommentsContainer style={{ filter: isUpdating ? 'blur(2px)' : undefined }}>
         {comment.isSuccess && comment.data.totalCount > 0 ? (
           comment.data.comments.map((data) => (
             <Fragment key={data.commentId}>
@@ -118,6 +119,7 @@ const FeedDetail = () => {
                   onDeleteOpen();
                 }}
                 onUpdate={() => {
+                  setValue('content', data.content);
                   setIsUpdating(true);
                   setUpdatingCommentId(data.commentId);
                 }}
@@ -137,7 +139,7 @@ const FeedDetail = () => {
             width="100%"
             placeholder="댓글을 수정해주세요"
             rightIcon={
-              <CommonButton type="mdFull" isSubmit isDisabled={!isLogin}>
+              <CommonButton type="mdFull" isSubmit>
                 수정
               </CommonButton>
             }
