@@ -42,7 +42,16 @@ const BucketDetail = () => {
             </CommonText>
           </TitlePanel>
           {userInfo?.nickname === nickname && (
-            <CommonMenu type="update" iconSize="0.35rem" onDelete={onOpen} />
+            <CommonMenu
+              type="update"
+              iconSize="0.35rem"
+              onDelete={onOpen}
+              onUpdate={() => {
+                if (hobby.isSuccess && buckDetail.isSuccess) {
+                  navigate(`/bucket/${bucketId}/edit?hobby=${hobby.data[buckDetail.data?.hobby]}`);
+                }
+              }}
+            />
           )}
         </TitleWrapper>
         {buckDetail.isSuccess && (
