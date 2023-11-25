@@ -28,15 +28,16 @@ export interface GetBucketDetailResponse {
 }
 
 export interface GetBucketMyItemsRequest {
-  bucketId: number;
+  bucketId?: number;
+  hobbyName?: string;
   cursorId?: string;
-  size: number;
+  size?: number;
 }
 
 export interface GetBucketMyItemsResponse {
   nextCursorId: string;
-  summaryCount: number;
-  bucketMemberItems: BucketMemberItem[];
+  totalCount: number;
+  memberItems: BucketMemberItem[];
 }
 
 export interface PostBucketRequest {

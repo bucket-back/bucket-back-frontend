@@ -16,10 +16,10 @@ const bucketQueryOption = {
       queryFn: () => bucketApi.getBucketDetail({ nickname, bucketId }),
     }),
 
-  myItemList: ({ bucketId, cursorId, size }: GetBucketMyItemsRequest) =>
+  myItemList: ({ bucketId, hobbyName, cursorId, size = 10 }: GetBucketMyItemsRequest) =>
     queryOptions({
       queryKey: [...bucketQueryOption.all, bucketId] as const,
-      queryFn: () => bucketApi.getBucketMyItems({ bucketId, cursorId, size }),
+      queryFn: () => bucketApi.getBucketMyItems({ bucketId, hobbyName, cursorId, size }),
     }),
 };
 
