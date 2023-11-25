@@ -46,7 +46,7 @@ const feedApi = {
   putFeed: async ({ feedId, content }: PutFeedRequest) => {
     const url = `${BASE_URL}/${feedId}`;
 
-    return await axiosClient.post<null>(url, { content });
+    return await axiosClient.put<null>(url, { content });
   },
 
   deleteFeed: async (feedId: number) => {
