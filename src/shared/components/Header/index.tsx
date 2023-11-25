@@ -4,9 +4,10 @@ import { CommonIconButton } from '@/shared/components';
 
 interface HeaderProps {
   type: 'logo' | 'back';
+  path?: string;
 }
 
-const Header = ({ type }: HeaderProps) => {
+const Header = ({ type, path }: HeaderProps) => {
   const navigate = useNavigate();
 
   const headerType = {
@@ -15,7 +16,7 @@ const Header = ({ type }: HeaderProps) => {
         버킷백
       </Text>
     ),
-    back: <CommonIconButton type="back" onClick={() => navigate(-1)} />,
+    back: <CommonIconButton type="back" onClick={() => (path ? navigate(path) : navigate(-1))} />,
   };
 
   return (
