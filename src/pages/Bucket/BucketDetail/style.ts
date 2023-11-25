@@ -20,6 +20,7 @@ export const TitlePanel = styled.div`
 `;
 
 export const ContentsWrapper = styled.div`
+  height: calc(100vh - 202.81px);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
