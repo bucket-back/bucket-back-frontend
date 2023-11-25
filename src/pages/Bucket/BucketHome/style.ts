@@ -7,14 +7,9 @@ export const Container = styled.div`
 
 export const TitleWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
-  padding: 0 2rem 1rem 2.44rem;
-`;
-
-export const TitlePanel = styled.div`
-  display: flex;
   flex-direction: column;
   gap: 1rem;
+  padding: 0 2rem 1rem 2.44rem;
 `;
 
 export const ContentsWrapper = styled.div`
@@ -39,4 +34,11 @@ export const NoResult = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+export const AddButtonWrapper = styled.div`
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10;
 `;

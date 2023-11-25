@@ -2,19 +2,20 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
   CommonDivider,
-  CommonMenu,
+  CommonIconButton,
   CommonTabs,
   CommonText,
   DividerImage,
   Header,
 } from '@/shared/components';
+import { useUserInfo } from '@/shared/hooks';
 import { formatNumber } from '@/shared/utils';
 import {
+  AddButtonWrapper,
   Container,
   ContentsBox,
   ContentsWrapper,
   NoResult,
-  TitlePanel,
   TitleWrapper,
 } from './style';
 import { bucketQueryOption } from '@/features/bucket/service';
@@ -23,6 +24,7 @@ import { hobbyQueryOption } from '@/features/hobby/service';
 const BucketHome = () => {
   const { nickname } = useParams();
   const navigate = useNavigate();
+  const userInfo = useUserInfo();
   const hobby = useQuery({ ...hobbyQueryOption.all(), select: (data) => data.hobbies });
 
   const [searchParams, setSearchParams] = useSearchParams({
@@ -42,18 +44,10 @@ const BucketHome = () => {
       <Header type="back" path={`/member/${nickname}`} />
       <Container>
         <TitleWrapper>
-          <TitlePanel>
-            <CommonText type="normalTitle">버킷</CommonText>
-            <CommonText type="subStrongInfo">
-              총 {bucket.data?.buckets.length || 0}개의 버킷
-            </CommonText>
-          </TitlePanel>
-          <CommonMenu
-            type="create"
-            iconSize="0.35rem"
-            onCreate={() => navigate('/bucket/create')}
-            onDelete={() => {}}
-          />
+          <CommonText type="normalTitle">버킷</CommonText>
+          <CommonText type="subStrongInfo">
+            총 {bucket.data?.buckets.length || 0}개의 버킷
+          </CommonText>
         </TitleWrapper>
         <CommonDivider size="sm" />
         <CommonTabs
@@ -94,6 +88,16 @@ const BucketHome = () => {
           }
         />
       </Container>
+      {userInfo?.nickname === nickname && (
+        <AddButtonWrapper>
+          <CommonIconButton
+            type="create"
+            onClick={() => {
+              navigate('/bucket/create');
+            }}
+          />
+        </AddButtonWrapper>
+      )}
     </>
   );
 };
