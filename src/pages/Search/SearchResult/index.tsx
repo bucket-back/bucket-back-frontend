@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { CommonTabs } from '@/shared/components';
-import { Container, Wrapper } from './style';
-import { SearchItemList } from '@/features/search/components';
+import { SearchWrapper } from './style';
+import { SearchItemList, SearchVoteList } from '@/features/search/components';
 
 const TABS = {
   ITEM: {
@@ -19,31 +19,33 @@ const SearchResult = () => {
 
   return (
     <>
-      <Container>
-        <CommonTabs
-          padding="1rem 0"
-          currentTabIndex={currentIndex}
-          tabsType="line"
-          isFitted
-          onClick={(value) => (value.includes('item') ? setCurrentIndex(0) : setCurrentIndex(1))}
-          tabsData={[
-            {
-              label: TABS.ITEM.LABEL,
-              value: TABS.ITEM.VALUE,
-              content: (
-                <Wrapper>
-                  <SearchItemList />
-                </Wrapper>
-              ),
-            },
-            {
-              label: TABS.VOTE.LABEL,
-              value: TABS.VOTE.VALUE,
-              content: <>vote</>,
-            },
-          ]}
-        />
-      </Container>
+      <CommonTabs
+        padding="1rem 0"
+        currentTabIndex={currentIndex}
+        tabsType="line"
+        isFitted
+        onClick={(value) => (value.includes('item') ? setCurrentIndex(0) : setCurrentIndex(1))}
+        tabsData={[
+          {
+            label: TABS.ITEM.LABEL,
+            value: TABS.ITEM.VALUE,
+            content: (
+              <SearchWrapper>
+                <SearchItemList />
+              </SearchWrapper>
+            ),
+          },
+          {
+            label: TABS.VOTE.LABEL,
+            value: TABS.VOTE.VALUE,
+            content: (
+              <SearchWrapper>
+                <SearchVoteList />
+              </SearchWrapper>
+            ),
+          },
+        ]}
+      />
     </>
   );
 };
