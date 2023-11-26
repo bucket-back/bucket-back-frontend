@@ -1,7 +1,7 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { CommonImage, CommonMenu, CommonText, Header } from '@/shared/components';
-import { useAuthCheck, useDrawer } from '@/shared/hooks';
+import { useDrawer } from '@/shared/hooks';
 import { formatNumber } from '@/shared/utils';
 import { Container, ContentWrapper, Grid, GridItem, TitleWrapper } from './style';
 import UpdateInventoryDetail from '@/features/inventory/components/ UpdateInventoryDetail';
@@ -13,7 +13,7 @@ const InventoryDetail = () => {
   const numberInventoryId = Number(inventoryId);
   const { isOpen, onOpen, onClose } = useDrawer();
   const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDrawer();
-  const isLogin = useAuthCheck();
+  const navigate = useNavigate();
   const { data: inventoryDetailData } = useQuery({
     ...inventoryQueryOption.detail({
       nickname: nickname,
@@ -27,9 +27,7 @@ const InventoryDetail = () => {
       <Container>
         <TitleWrapper>
           <CommonText type="normalTitle">{inventoryDetailData?.hobby} 인벤토리</CommonText>
-          {isLogin && (
-            <CommonMenu type="update" iconSize="0.3rem" onDelete={onDeleteOpen} onUpdate={onOpen} />
-          )}
+          <CommonMenu type="update" iconSize="0.3rem" onDelete={onDeleteOpen} onUpdate={onOpen} />
         </TitleWrapper>
         <CommonText type="normalTitle">아이템 전체보기</CommonText>
         <ContentWrapper>
@@ -39,8 +37,8 @@ const InventoryDetail = () => {
         </ContentWrapper>
 
         <Grid>
-          {inventoryDetailData?.inventoryItemInfos.map(({ image, name, price }, index) => (
-            <GridItem key={index}>
+          {inventoryDetailData?.inventoryItemInfos.map(({ image, name, price, id }, index) => (
+            <GridItem key={index} onClick={() => navigate(`/item/${id}`)}>
               <CommonImage size="sm" src={image} />
               <CommonText type="smallInfo">{name}</CommonText>
               <CommonText type="smallInfo">{formatNumber(price)}</CommonText>
