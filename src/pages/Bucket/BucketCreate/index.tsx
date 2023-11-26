@@ -136,7 +136,7 @@ const BucketCreate = () => {
           onClickFooterButton={() => {
             onClose();
           }}
-          isDisabled={selectedItems.length < 2}
+          isDisabled={selectedItems.length < 1}
           isFull={true}
           footerButtonText="선택 완료"
         >
