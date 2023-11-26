@@ -87,7 +87,11 @@ const memberApi = {
   putMemberImage: async ({ image }: PutMemberImageRequest) => {
     const url = `${BASE_URL}/profile/image`;
 
-    return await axiosClient.put<null>(url, { image });
+    return await axiosClient.put<null>(
+      url,
+      { image: image[0] },
+      { headers: { 'Content-Type': 'multipart/form-data' } }
+    );
   },
 
   deleteMember: async () => {
