@@ -54,7 +54,7 @@ const FeedDetail = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [updatingCommentId, setUpdatingCommentId] = useState(0);
   const [selectedCommentId, setSelectedCommentId] = useState(0);
-  const updateComment = useUpdateComment();
+  const updateComment = useUpdateComment(feedIdNumber);
   const deleteComment = useDeleteComment();
 
   const onUpdateComment: SubmitHandler<CommentContent> = (data) => {
