@@ -25,6 +25,7 @@ import {
   SearchMain,
   SearchHome,
   FeedUpdate,
+  SearchResult,
 } from '@/pages';
 
 export const router = createBrowserRouter([
@@ -75,7 +76,10 @@ export const router = createBrowserRouter([
         element: <SearchHome />,
         children: [
           { path: '', element: <SearchMain /> },
-          { path: 'result', element: <div>result</div> },
+          {
+            path: 'result',
+            element: <SearchResult />,
+          },
         ],
       },
       {
