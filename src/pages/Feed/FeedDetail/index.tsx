@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -19,14 +19,20 @@ import {
   NoResult,
 } from './style';
 import { CommentItem } from '@/features/comment/components';
+import { useDeleteComment, useUpdateComment } from '@/features/comment/hooks';
 import useAddComment from '@/features/comment/hooks/useAddComment';
-import { PostCommentRequest, commentQueryQption } from '@/features/comment/service';
+import { commentQueryQption } from '@/features/comment/service';
 import { FeedItemsDetail, FeedItem } from '@/features/feed/components';
 import { useDeleteFeed } from '@/features/feed/hooks';
 import { feedQueryOption } from '@/features/feed/service';
 
+interface CommentContent {
+  content: string;
+}
+
 const FeedDetail = () => {
   const { isOpen, onOpen, onClose } = useDrawer();
+  const [deleteStatus, setDeleteStatus] = useState<'feed' | 'comment'>('feed');
   const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDrawer();
   const { feedId } = useParams();
   const feedIdNumber = Number(feedId);
@@ -37,13 +43,29 @@ const FeedDetail = () => {
 
   const feedDetail = useQuery(feedQueryOption.detail(feedIdNumber));
   const comment = useQuery(commentQueryQption.list({ feedId: feedIdNumber || 1, size: 10 }));
-  const { register, handleSubmit, reset } = useForm<PostCommentRequest>();
-  const { mutate } = useAddComment();
-  const onSubmit: SubmitHandler<PostCommentRequest> = (data) => {
-    mutate({ feedId: feedIdNumber, content: data.content });
+  const { register, handleSubmit, reset, setValue } = useForm<CommentContent>();
+  const addComment = useAddComment();
+  const onCreateComment: SubmitHandler<CommentContent> = (data) => {
+    addComment.mutate({ feedId: feedIdNumber, content: data.content });
     reset();
   };
   const isOwnFeed = feedDetail.data?.memberInfo.nickName === userInfo?.nickname;
+
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [updatingCommentId, setUpdatingCommentId] = useState(0);
+  const [selectedCommentId, setSelectedCommentId] = useState(0);
+  const updateComment = useUpdateComment(feedIdNumber);
+  const deleteComment = useDeleteComment();
+
+  const onUpdateComment: SubmitHandler<CommentContent> = (data) => {
+    updateComment.mutate({
+      feedId: feedIdNumber,
+      commentId: updatingCommentId,
+      content: data.content,
+    });
+    setIsUpdating(false);
+    reset();
+  };
 
   return (
     <>
@@ -63,7 +85,10 @@ const FeedDetail = () => {
             totalPrice={feedDetail.data.feedInfo.totalPrice}
             isDetail
             onClick={onOpen}
-            onDelete={onDeleteOpen}
+            onDelete={() => {
+              setDeleteStatus('feed');
+              onDeleteOpen();
+            }}
             onUpdate={() => navigate(`./edit`)}
           />
         )}
@@ -75,7 +100,7 @@ const FeedDetail = () => {
         </CommentNumberWrapper>
         <CommonDivider size="sm" />
       </div>
-      <CommentsContainer>
+      <CommentsContainer style={{ filter: isUpdating ? 'blur(2px)' : undefined }}>
         {comment.isSuccess && comment.data.totalCount > 0 ? (
           comment.data.comments.map((data) => (
             <Fragment key={data.commentId}>
@@ -88,6 +113,16 @@ const FeedDetail = () => {
                 isAdopted={data.isAdopted}
                 isOwnFeed={isOwnFeed}
                 hasAdoptedComment={Boolean(feedDetail.data?.feedInfo.hasAdoptedComment)}
+                onDelete={() => {
+                  setSelectedCommentId(data.commentId);
+                  setDeleteStatus('comment');
+                  onDeleteOpen();
+                }}
+                onUpdate={() => {
+                  setValue('content', data.content);
+                  setIsUpdating(true);
+                  setUpdatingCommentId(data.commentId);
+                }}
               />
               <CommonDivider size="sm" />
             </Fragment>
@@ -96,21 +131,38 @@ const FeedDetail = () => {
           <NoResult>댓글이 없습니다.</NoResult>
         )}
       </CommentsContainer>
-      <CommentInputContainer onSubmit={handleSubmit(onSubmit)}>
-        <CommonInput
-          size="md"
-          type="text"
-          width="100%"
-          placeholder={isLogin ? '댓글을 입력해주세요' : '로그인후 이용가능합니다'}
-          isDisabled={!isLogin}
-          rightIcon={
-            <CommonButton type="mdFull" isSubmit isDisabled={!isLogin}>
-              등록
-            </CommonButton>
-          }
-          {...register('content', { required: true, minLength: 1 })}
-        />
-      </CommentInputContainer>
+      {isUpdating ? (
+        <CommentInputContainer onSubmit={handleSubmit(onUpdateComment)}>
+          <CommonInput
+            size="md"
+            type="text"
+            width="100%"
+            placeholder="댓글을 수정해주세요"
+            rightIcon={
+              <CommonButton type="mdFull" isSubmit>
+                수정
+              </CommonButton>
+            }
+            {...register('content', { required: true, minLength: 1 })}
+          />
+        </CommentInputContainer>
+      ) : (
+        <CommentInputContainer onSubmit={handleSubmit(onCreateComment)}>
+          <CommonInput
+            size="md"
+            type="text"
+            width="100%"
+            placeholder={isLogin ? '댓글을 입력해주세요' : '로그인후 이용가능합니다'}
+            isDisabled={!isLogin}
+            rightIcon={
+              <CommonButton type="mdFull" isSubmit isDisabled={!isLogin}>
+                등록
+              </CommonButton>
+            }
+            {...register('content', { required: true, minLength: 1 })}
+          />
+        </CommentInputContainer>
+      )}
 
       <CommonDrawer isOpen={isOpen} onClose={onClose} onClickFooterButton={onClose} isFull={true}>
         <FeedItemsDetail items={feedDetail.data?.feedItems} />
@@ -118,11 +170,20 @@ const FeedDetail = () => {
       <CommonDrawer
         isOpen={isDeleteOpen}
         onClose={onDeleteClose}
-        onClickFooterButton={() => deleteFeed.mutate(feedIdNumber)}
+        onClickFooterButton={() => {
+          if (deleteStatus === 'feed') {
+            deleteFeed.mutate(feedIdNumber);
+          }
+
+          if (deleteStatus === 'comment') {
+            deleteComment.mutate({ feedId: feedIdNumber, commentId: selectedCommentId });
+            onDeleteClose();
+          }
+        }}
         isFull={false}
         isCloseButton={false}
       >
-        정말로 피드를 삭제하시겠습니까?
+        정말로 {deleteStatus === 'feed' ? '피드를' : '댓글을'} 삭제하시겠습니까?
       </CommonDrawer>
     </>
   );
