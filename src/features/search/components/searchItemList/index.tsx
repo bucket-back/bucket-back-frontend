@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { Grid, GridItem } from '@chakra-ui/react';
-import styled from '@emotion/styled';
 import {
   CommonButton,
   CommonDivider,
@@ -8,7 +7,7 @@ import {
   CommonImage,
   CommonText,
 } from '@/shared/components';
-import { Wrapper } from './style';
+import { Wrapper, Box, TextBox } from './style';
 
 const SearchItemList = () => {
   const navigate = useNavigate();
@@ -16,7 +15,9 @@ const SearchItemList = () => {
   return (
     <>
       <Box>
-        <CommonText type="subStrongInfo">총 0개의 아이템</CommonText>
+        <TextBox>
+          <CommonText type="subStrongInfo">총 0개의 아이템</CommonText>
+        </TextBox>
         <Grid padding="0 1rem" templateColumns="repeat(3,1fr)" gap="0.25rem">
           <GridItem>
             <CommonImage size="sm" />
@@ -118,7 +119,3 @@ const SearchItemList = () => {
 };
 
 export default SearchItemList;
-
-const Box = styled.div`
-  overflow-y: scroll;
-`;

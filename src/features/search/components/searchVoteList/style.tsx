@@ -24,3 +24,11 @@ export const VsBox = styled.div`
 export const VoteImageWrapper = styled.div`
   max-width: 50%;
 `;
+
+export const Box = styled.div`
+  overflow-y: scroll;
+`;
+
+export const TextBox = styled.div`
+  padding: 0.5rem 0;
+`;
