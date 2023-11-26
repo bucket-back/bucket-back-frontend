@@ -10,7 +10,7 @@ import {
 } from '@/shared/components';
 import { useValidateForm } from '@/shared/hooks';
 import useUpdateImage from '../../hooks/useUpdateImage';
-import { AvatarBox, ButtonWrapper, Form, InputBox, InputWrapper } from './style';
+import { AvatarBox, ButtonWrapper, FileInput, Form, InputBox, InputWrapper } from './style';
 import { useCheckNickname, useUpateMemberInfo } from '@/features/member/hooks';
 
 interface MemberEditFormProps {
@@ -66,9 +66,11 @@ const MemberEditForm = ({ nickname, image, introduction }: MemberEditFormProps) 
       <InputWrapper>
         <div>
           <CommonText type="strongInfo">프로필 사진</CommonText>
-          <input type="file" {...register('image')} />
+
           <AvatarBox>
-            <CommonAvatar src={imagePreview || image || ''} isOwner />
+            <CommonAvatar src={imagePreview || image || ''} isOwner>
+              <FileInput type="file" {...register('image')} />
+            </CommonAvatar>
           </AvatarBox>
         </div>
         <div>
