@@ -47,7 +47,7 @@ const MemberHome = () => {
       <Container>
         <MemberInfoWrapper>
           <MemberInfoPanel>
-            <CommonAvatar size="5rem" />
+            <CommonAvatar size="5rem" src={member.data?.memberProfile.profileImage} />
             <MemberInfoBox>
               <CommonText type="strongInfo">LV. {member.data?.memberProfile.level}</CommonText>
               <CommonText type="smallTitle">{nickname}</CommonText>
