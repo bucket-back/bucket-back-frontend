@@ -44,7 +44,7 @@ const InventoryCreate = () => {
               취미를 선택해주세요.
             </CommonText>
             <RadioBox>
-              <HobbySelector onChange={setSelectedHobby} />
+              <HobbySelector onChange={setSelectedHobby} setSelectedItems={setSelectedItems} />
             </RadioBox>
           </Box>
           <Box>
