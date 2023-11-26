@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { Box, Avatar, AvatarProps, Circle } from '@chakra-ui/react';
 import { CommonIcon } from '@/shared/components';
 
@@ -6,6 +7,7 @@ interface CommonAvatarProps {
   size: string;
   src: AvatarProps['src'];
   onClick: () => void;
+  children?: ReactNode;
 }
 
 const CommonAvatar = ({
@@ -13,6 +15,7 @@ const CommonAvatar = ({
   size,
   src = 'https://bit.ly/broken-link',
   onClick,
+  children,
 }: Partial<CommonAvatarProps>) => {
   const handleClick = () => {
     onClick && onClick();
@@ -22,7 +25,7 @@ const CommonAvatar = ({
     <>
       {isOwner ? (
         <Box position="relative" width="8em">
-          <Avatar src={src} size="8rem" />
+          <Avatar src={src} width="8rem" height="8rem" />
           <Circle
             size="8"
             bg="gray.100"
@@ -31,7 +34,10 @@ const CommonAvatar = ({
             right="0.45rem"
             onClick={handleClick}
           >
-            <CommonIcon type="pen" />
+            <label style={{ height: '1rem', cursor: 'pointer' }}>
+              <CommonIcon type="pen" />
+              {children}
+            </label>
           </Circle>
         </Box>
       ) : (
