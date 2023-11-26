@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CommonTabs } from '@/shared/components';
-import { Container } from './style';
+import { Container, Wrapper } from './style';
+import { SearchItemList } from '@/features/search/components';
 
 const TABS = {
   ITEM: {
@@ -29,7 +30,11 @@ const SearchResult = () => {
             {
               label: TABS.ITEM.LABEL,
               value: TABS.ITEM.VALUE,
-              content: <>item</>,
+              content: (
+                <Wrapper>
+                  <SearchItemList />
+                </Wrapper>
+              ),
             },
             {
               label: TABS.VOTE.LABEL,
