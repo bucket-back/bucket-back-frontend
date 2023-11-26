@@ -1,17 +1,12 @@
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import {
-  CommonButton,
-  CommonDrawer,
-  CommonImage,
-  CommonInput,
-  CommonText,
-  Header,
-} from '@/shared/components';
+import { CommonButton, CommonDrawer, CommonInput, CommonText, Header } from '@/shared/components';
 import { useDrawer, useUserInfo } from '@/shared/hooks';
-import { Container, ContentsPanel, ContentsWrapper, Form, SelectedItemsBox } from './style';
-import { BucketUpateItem } from '@/features/bucket/components';
+import { Container, ContentsPanel, ContentsWrapper, Form } from './style';
+import { BucketSelectedItems, BucketUpdateItem } from '@/features/bucket/components';
+import { useUpdateBucket } from '@/features/bucket/hooks';
 import { bucketQueryOption } from '@/features/bucket/service';
 import { HobbyRadio } from '@/features/hobby/components';
 import { itemQueryOption } from '@/features/item/service';
@@ -21,54 +16,86 @@ interface SelectedItem {
   image: string;
 }
 
-// TODO 제대로 작동을 안함
+interface BucketInfo {
+  name: string;
+}
 
 const BucketUpdate = () => {
-  const { isOpen, onOpen, onClose } = useDrawer();
   const userInfo = useUserInfo();
-  const { bucketId, hobby } = useParams();
+  const { bucketId } = useParams();
+  const [searchParams] = useSearchParams();
+  const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
+  const selectedItemIds = selectedItems.map(({ id }) => id);
+  const updateBucket = useUpdateBucket();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setValue,
+  } = useForm<BucketInfo>({ mode: 'onBlur' });
 
-  const bucket = useQuery(
-    bucketQueryOption.detail({ nickname: userInfo?.nickname || '', bucketId: Number(bucketId) })
-  );
+  const bucket = useQuery({
+    ...bucketQueryOption.detail({ nickname: userInfo?.nickname || '', bucketId: Number(bucketId) }),
+    select: (data) => {
+      const items = data.itemInfos.reduce<SelectedItem[]>((acc, cur) => {
+        return [...acc, { id: cur.id, image: cur.image }];
+      }, []);
 
-  const items = useQuery(itemQueryOption.myItems({ hobbyName: hobby || 'basketball' }));
+      return { hobby: data.hobby, items, id: data.bucketId, name: data.name };
+    },
+  });
 
-  const initialItems = bucket.data?.itemInfos.reduce<SelectedItem[]>((acc, cur) => {
-    return [...acc, { id: cur.id, image: cur.image }];
-  }, []);
+  const onSubmit: SubmitHandler<BucketInfo> = (data) => {
+    if (bucket.isSuccess && selectedItems.length > 0) {
+      updateBucket.mutate({
+        bucketId: bucket.data.id,
+        hobbyValue: bucket.data.hobby,
+        name: data.name,
+        itemIds: selectedItemIds,
+      });
+    }
+  };
 
-  const [selectedItems, setSelectedItems] = useState<SelectedItem[]>(initialItems || []);
+  useEffect(() => {
+    if (bucket.isSuccess) {
+      setSelectedItems(bucket.data.items);
+      setValue('name', bucket.data.name);
+    }
+  }, [bucket.data, bucket.isSuccess, setValue]);
+
+  const items = useQuery(itemQueryOption.myItems({ hobbyName: searchParams.get('hobby')! }));
+
+  const { isOpen, onOpen, onClose } = useDrawer();
 
   return (
     <>
       <Header type="back" />
       <Container>
         <CommonText type="normalTitle">버킷 수정하기</CommonText>
-        <Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <ContentsWrapper>
             <ContentsPanel>
               <CommonText type="normalInfo">버킷 이름</CommonText>
-              <CommonInput placeholder="버킷 이름을 입력해주세요" type="text" width="full" />
+              <CommonInput
+                placeholder="버킷 이름을 입력해주세요"
+                type="text"
+                width="full"
+                error={errors.name}
+                {...register('name', { required: '버킷 이름은 필수입니다.' })}
+              />
             </ContentsPanel>
             <ContentsPanel>
               <CommonText type="normalInfo">선택한 취미입니다.</CommonText>
               {bucket.isSuccess && <HobbyRadio defaultValue={bucket.data.hobby} isReadOnly />}
             </ContentsPanel>
             <ContentsPanel>
-              <CommonText type="normalInfo">선택한 아이템입니다.</CommonText>
-              <SelectedItemsBox>
-                {selectedItems && selectedItems.length > 0 ? (
-                  selectedItems.map((item) => (
-                    <CommonImage key={item.id} size="sm" src={item.image} onClick={onOpen} />
-                  ))
-                ) : (
-                  <CommonButton type="custom" onClick={onOpen} />
-                )}
-              </SelectedItemsBox>
+              <CommonText type="normalInfo">아이템을 하나 이상 선택해주세요.</CommonText>
+              <div onClick={onOpen}>
+                <BucketSelectedItems items={selectedItems} />
+              </div>
             </ContentsPanel>
           </ContentsWrapper>
-          <CommonButton type="mdFull" isSubmit>
+          <CommonButton type="mdFull" isDisabled={!selectedItems.length || isSubmitting} isSubmit>
             수정 완료
           </CommonButton>
         </Form>
@@ -80,10 +107,10 @@ const BucketUpdate = () => {
           footerButtonText="선택 완료"
         >
           {items.isSuccess && (
-            <BucketUpateItem
+            <BucketUpdateItem
               items={items.data}
               onClick={setSelectedItems}
-              selectedItems={selectedItems.map(({ id }) => id)}
+              selectedItems={selectedItemIds}
             />
           )}
         </CommonDrawer>
