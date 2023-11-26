@@ -27,6 +27,7 @@ import {
   FeedUpdate,
   BucketHome,
   BucketDetail,
+  BucketUpdate,
 } from '@/pages';
 
 export const router = createBrowserRouter([
@@ -135,6 +136,10 @@ export const router = createBrowserRouter([
       {
         path: 'bucket/create',
         element: <BucketCreate />,
+      },
+      {
+        path: 'bucket/:bucketId/edit',
+        element: <BucketUpdate />,
       },
       {
         path: 'member/:nickname/feed',

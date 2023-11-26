@@ -24,3 +24,4 @@ export { default as SearchMain } from './Search/SearchMain';
 export { default as FeedUpdate } from './Feed/FeedUpdate';
 export { default as BucketHome } from './Bucket/BucketHome';
 export { default as BucketDetail } from './Bucket/BucketDetail';
+export { default as BucketUpdate } from './Bucket/BucketUpdate';

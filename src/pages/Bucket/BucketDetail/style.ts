@@ -4,7 +4,7 @@ export const Container = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  overflow-y: hidden;
 `;
 
 export const TitleWrapper = styled.div`
@@ -24,6 +24,7 @@ export const ContentsWrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
   padding: 0 2.44rem 1rem 2.44rem;
+  overflow-y: auto;
 `;
 
 export const ContentsBox = styled.div`
