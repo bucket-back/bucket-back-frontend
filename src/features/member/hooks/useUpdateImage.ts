@@ -1,14 +1,13 @@
-import { useMutation } from '@tanstack/react-query';
-import { useCustomToast } from '@/shared/hooks';
-import { memberApi } from '../service';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { memberApi, memberQueryOption } from '../service';
 
 const useUpdateImage = () => {
-  const openToast = useCustomToast();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: memberApi.putMemberImage,
     onSuccess: () => {
-      openToast({ message: '프로필 이미지가 변경되었습니다.', type: 'success' });
+      queryClient.invalidateQueries({ queryKey: memberQueryOption.all });
     },
   });
 };
