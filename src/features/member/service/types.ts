@@ -38,3 +38,7 @@ export interface GetCheckJWTResponse {
   memberId: number;
   nickname: string;
 }
+
+export interface PutMemberImageRequest {
+  image: string;
+}
