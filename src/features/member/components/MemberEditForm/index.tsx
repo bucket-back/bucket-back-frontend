@@ -29,7 +29,7 @@ const MemberEditForm = ({ nickname, image, introduction }: MemberEditFormProps) 
   } = useForm<MemberEditFormProps>({
     mode: 'onBlur',
     defaultValues: {
-      image,
+      image: '',
       nickname,
       introduction,
     },
@@ -68,7 +68,7 @@ const MemberEditForm = ({ nickname, image, introduction }: MemberEditFormProps) 
           <CommonText type="strongInfo">프로필 사진</CommonText>
           <input type="file" {...register('image')} />
           <AvatarBox>
-            <CommonAvatar src={imagePreview || image} isOwner />
+            <CommonAvatar src={imagePreview || image || ''} isOwner />
           </AvatarBox>
         </div>
         <div>
