@@ -1,4 +1,4 @@
-import { Item, ItemNameGetResult } from '@/shared/types';
+import { Item, ItemNameGetResult, VotesInfo } from '@/shared/types';
 
 export interface GetSearchItemRequest {
   keyword: string;
@@ -13,4 +13,10 @@ export interface GetSearchItemResponse {
 
 export interface GetSearchKeywordResponse {
   itemNameGetResults: ItemNameGetResult[];
+}
+
+export interface GetSearchVoteResponse {
+  nextCursorId: string;
+  totalCount: number;
+  votes: VotesInfo[];
 }
