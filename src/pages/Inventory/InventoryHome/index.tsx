@@ -2,6 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { CommonIconButton, CommonText, DividerImage, Header } from '@/shared/components';
 import { useAuthNavigate } from '@/shared/hooks';
+import { formatNumber } from '@/shared/utils';
 import { AddButtonWrapper, Container, Grid, GridItem, TextBox } from './style';
 import { inventoryQueryOption } from '@/features/inventory/service';
 
@@ -32,7 +33,9 @@ const InventoryHome = () => {
                 />
                 <TextBox>
                   <CommonText type="smallInfo">{inventory.hobby}</CommonText>
-                  <CommonText type="smallInfo">{inventory.inventoryTotalPrice}</CommonText>
+                  <CommonText type="smallInfo">
+                    {formatNumber(inventory.inventoryTotalPrice)}
+                  </CommonText>
                 </TextBox>
               </GridItem>
             );
