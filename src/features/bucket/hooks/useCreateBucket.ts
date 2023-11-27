@@ -3,12 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { useCustomToast } from '@/shared/hooks';
 import { bucketApi } from '../service';
-
-interface ErrorData {
-  code: string;
-  error: string;
-  message: string;
-}
+import { ErrorData } from '@/shared/types/error';
 
 const useCreateBucket = () => {
   const openToast = useCustomToast();
