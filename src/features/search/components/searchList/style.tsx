@@ -6,3 +6,11 @@ export const WordWrapper = styled.a`
   align-items: center;
   gap: 0 0.7rem;
 `;
+
+export const NoResult = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
