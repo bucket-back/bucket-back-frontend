@@ -12,6 +12,7 @@ interface CommonTabsProps {
   tabsData: TabsData[];
   onClick?: (value: string) => void;
   currentTabIndex?: number;
+  padding?: string;
   paddingLeftRight?: number;
 }
 
@@ -27,6 +28,7 @@ const CommonTabs = ({
   tabsType = 'line',
   onClick,
   currentTabIndex = 0,
+  padding,
   paddingLeftRight = 1,
 }: CommonTabsProps) => {
   const handleClick = (value: string) => {
@@ -46,6 +48,7 @@ const CommonTabs = ({
       >
         {tabsData.map((tab, index) => (
           <Tab
+            padding={padding}
             onClick={() => handleClick(tab.value ?? '')}
             color="blue.900"
             bg="none"

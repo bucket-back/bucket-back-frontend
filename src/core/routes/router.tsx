@@ -25,6 +25,7 @@ import {
   SearchMain,
   SearchHome,
   FeedUpdate,
+  SearchResult,
   BucketHome,
   BucketDetail,
   BucketUpdate,
@@ -78,7 +79,10 @@ export const router = createBrowserRouter([
         element: <SearchHome />,
         children: [
           { path: '', element: <SearchMain /> },
-          { path: 'result', element: <div>result</div> },
+          {
+            path: 'result',
+            element: <SearchResult />,
+          },
         ],
       },
       {

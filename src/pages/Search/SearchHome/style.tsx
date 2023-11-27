@@ -4,6 +4,7 @@ export const HeaderBox = styled.div``;
 
 export const Container = styled.div`
   height: 100%;
+  overflow: hidden;
 `;
 
 export const Wrapper = styled.main`
