@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { CommonTabs, CommonText, Header } from '@/shared/components';
 import { Container, Title } from './style';
 import { FeedList } from '@/features/feed/components';
@@ -19,10 +19,11 @@ const TABS = {
 const FeedMember = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const isLikedFeedTab = searchParams.get('tab') === TABS.LIKED_FEED.VALUE;
+  const { nickname } = useParams();
 
   return (
     <>
-      <Header type="back" />
+      <Header type="back" path={`/member/${nickname}`} />
       <Title>
         <CommonText type="normalTitle">피드</CommonText>
       </Title>
