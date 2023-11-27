@@ -14,7 +14,7 @@ import {
   Footer,
   Header,
 } from '@/shared/components';
-import { useAuthCheck, useDrawer } from '@/shared/hooks';
+import { useDrawer, useUserInfo } from '@/shared/hooks';
 import {
   Container,
   MemberInfoWrapper,
@@ -32,7 +32,9 @@ import { memberQueryOption } from '@/features/member/service';
 
 const MemberHome = () => {
   const { nickname } = useParams();
-  const isLogin = useAuthCheck();
+  const userInfo = useUserInfo();
+  const isSelf = userInfo?.nickname === nickname;
+
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDrawer();
   const [selectedStatus, setSelectedStatus] = useState<'leave' | 'logout'>('logout');
@@ -51,14 +53,14 @@ const MemberHome = () => {
             <MemberInfoBox>
               <CommonText type="strongInfo">LV. {member.data?.memberProfile.level}</CommonText>
               <CommonText type="smallTitle">{nickname}</CommonText>
-              {isLogin && (
+              {isSelf && (
                 <CommonButton type="profile" onClick={() => navigate('/member/edit')}>
                   프로필 수정
                 </CommonButton>
               )}
             </MemberInfoBox>
           </MemberInfoPanel>
-          {isLogin && (
+          {isSelf && (
             <CommonMenu
               type="logout"
               iconSize="0.3rem"
@@ -97,7 +99,7 @@ const MemberHome = () => {
             />
           </ContentsPanel>
           {member.isSuccess && member.data.inventoryProfiles.length > 0 && (
-            <ImagePanel>
+            <ImagePanel onClick={() => navigate(`/member/${nickname}/inventory`)}>
               <Grid>
                 {member.data.inventoryProfiles.map((inventory) => (
                   <DividerImage key={inventory.id} type="base" images={inventory.images} />
@@ -125,7 +127,7 @@ const MemberHome = () => {
             />
           </ContentsPanel>
           {member.isSuccess && member.data.bucketProfiles.length > 0 && (
-            <ImagePanel>
+            <ImagePanel onClick={() => navigate(`/member/${nickname}/inventory`)}>
               <Grid>
                 {member.data?.bucketProfiles.map((bucket) => (
                   <DividerImage key={bucket.id} type="base" images={bucket.images} />
