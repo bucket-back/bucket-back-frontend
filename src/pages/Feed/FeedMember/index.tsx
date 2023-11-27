@@ -38,12 +38,12 @@ const FeedMember = () => {
             {
               label: TABS.MY_FEED.LABEL,
               value: TABS.MY_FEED.VALUE,
-              content: <FeedList tabValue={TABS.MY_FEED.VALUE} />,
+              content: <FeedList isLikedFeedTab={isLikedFeedTab} />,
             },
             {
               label: TABS.LIKED_FEED.LABEL,
               value: TABS.LIKED_FEED.VALUE,
-              content: <FeedList tabValue={TABS.LIKED_FEED.VALUE} />,
+              content: <FeedList isLikedFeedTab={isLikedFeedTab} />,
             },
           ]}
         />

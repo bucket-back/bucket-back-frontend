@@ -7,20 +7,21 @@ import { feedQueryOption } from '../../service';
 import { Container, NoResult } from './style';
 import { hobbyQueryOption } from '@/features/hobby/service';
 
+const HOBBY = 'hobby';
+
 interface FeedListProps {
-  tabValue: 'myFeed' | 'likedFeed';
+  isLikedFeedTab: boolean;
 }
 
-const FeedList = ({ tabValue }: FeedListProps) => {
+const FeedList = ({ isLikedFeedTab }: FeedListProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { nickname } = useParams();
   const navigate = useNavigate();
   const hobby = useQuery({ ...hobbyQueryOption.all(), select: (data) => data.hobbies });
-  const isLikedFeedTab = tabValue === 'likedFeed';
 
   const feeds = useQuery(
     feedQueryOption.list({
-      hobbyName: searchParams.get('hobby') || hobby.data?.[0].name || '',
+      hobbyName: searchParams.get(HOBBY) || hobby.data?.[0].name || '',
       nickname,
       myPageOwnerLikeFeeds: isLikedFeedTab,
     })
@@ -28,7 +29,7 @@ const FeedList = ({ tabValue }: FeedListProps) => {
 
   const currentTabIndex = hobby.data
     ?.map(({ name }) => name)
-    .indexOf(searchParams.get('hobby') || hobby.data[0].name);
+    .indexOf(searchParams.get(HOBBY) || hobby.data[0].name);
 
   return (
     <CommonTabs
@@ -36,7 +37,12 @@ const FeedList = ({ tabValue }: FeedListProps) => {
       tabsType="soft-rounded"
       isFitted={false}
       onClick={(value) => {
-        setSearchParams({ tab: tabValue, hobby: value });
+        if (searchParams.has(HOBBY)) {
+          searchParams.set(HOBBY, value);
+        } else {
+          searchParams.append(HOBBY, value);
+        }
+        setSearchParams(searchParams);
       }}
       tabsData={
         hobby.data?.map(({ name, value }) => ({
