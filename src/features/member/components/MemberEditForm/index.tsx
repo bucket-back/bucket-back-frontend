@@ -38,7 +38,7 @@ const MemberEditForm = ({ nickname, image, introduction }: MemberEditFormProps) 
   const checkNickname = useCheckNickname();
   const [currentNickname, currentImage] = watch(['nickname', 'image']);
   const updateMemberInfo = useUpateMemberInfo(currentNickname);
-  const updateImage = useUpdateImage();
+  const updateImage = useUpdateImage(currentNickname);
 
   const handleCheckNickname = () => {
     if (errors.nickname) {
@@ -49,7 +49,10 @@ const MemberEditForm = ({ nickname, image, introduction }: MemberEditFormProps) 
   };
   const onSubmit: SubmitHandler<MemberEditFormProps> = ({ nickname, image, introduction }) => {
     updateMemberInfo.mutate({ nickname, introduction });
-    updateImage.mutate({ image });
+
+    if (image) {
+      updateImage.mutate({ image });
+    }
   };
 
   const [imagePreview, setImagePreview] = useState('');
