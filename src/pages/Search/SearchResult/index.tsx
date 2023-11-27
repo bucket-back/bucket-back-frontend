@@ -18,7 +18,6 @@ const TABS = {
 
 const SearchResult = () => {
   const { keyword } = useOutletContext<SearchListProps>();
-
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   return (

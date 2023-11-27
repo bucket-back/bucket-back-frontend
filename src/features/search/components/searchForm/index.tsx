@@ -22,7 +22,9 @@ const SearchForm = ({ keyword: currentKeyword, onInput }: SearchFormProps) => {
     handleSubmit,
     watch,
     reset,
-  } = useForm<SearchProps>({ values: { keyword: currentKeyword } });
+  } = useForm<SearchProps>({
+    values: { keyword: currentKeyword },
+  });
 
   const navigate = useNavigate();
 

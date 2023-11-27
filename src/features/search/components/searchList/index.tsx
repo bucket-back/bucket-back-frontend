@@ -34,7 +34,7 @@ const SearchList = ({ keyword, onInput }: SearchListProps) => {
     } else {
       Storage.setLocalStoraged(SEARCH_KEY, [...value]);
     }
-    navigate(`result`);
+    navigate(`result?keyword=${encodeURIComponent(itemName)}`);
   };
 
   if (isPending) {
