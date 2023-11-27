@@ -12,7 +12,7 @@ const feedQueryOption = {
     size = 10,
   }: GetFeedsRequest) =>
     queryOptions({
-      queryKey: [...feedQueryOption.all, hobbyName, sortCondition] as const,
+      queryKey: [...feedQueryOption.all, hobbyName, sortCondition, myPageOwnerLikeFeeds] as const,
       queryFn: () =>
         feedApi.getFeeds({
           hobbyName,
