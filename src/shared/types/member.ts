@@ -8,6 +8,7 @@ export interface MemberInfo {
 export interface MemberProfile {
   memberId: number;
   nickname: string;
+  profileImage: string;
   level: number;
   introduction: string;
 }

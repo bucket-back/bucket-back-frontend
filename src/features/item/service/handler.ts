@@ -6,6 +6,7 @@ import {
   GetDetailItemResponse,
   GetMyItemsRequest,
   GetMyItemsResponse,
+  DeleteItemRequest,
 } from './types';
 
 import { axiosClient } from '@/core/service/axios';
@@ -34,10 +35,11 @@ const itemApi = {
     return response.data;
   },
 
-  deleteMyItem: async (itemId: number) => {
-    const url = `${BASE_URL}/myitems/${itemId}`;
+  deleteMyItem: async ({ itemIds }: DeleteItemRequest) => {
+    const url = `${BASE_URL}/myitems`;
+    const params = { itemIds };
 
-    return await axiosClient.delete<null>(url);
+    return await axiosClient.delete<null>(url, { params });
   },
 
   getMyItems: async ({ hobbyName, cursorId, size = 10 }: GetMyItemsRequest) => {

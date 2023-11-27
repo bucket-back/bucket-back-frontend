@@ -22,8 +22,8 @@ interface SelectedItems {
   image: string;
 }
 
-interface ItemText {
-  bucket: string;
+interface BucketInfo {
+  name: string;
 }
 
 const BucketCreate = () => {
@@ -34,12 +34,12 @@ const BucketCreate = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
-  } = useForm<ItemText>({ mode: 'onBlur' });
-  const onSubmit: SubmitHandler<ItemText> = (data) => {
+  } = useForm<BucketInfo>({ mode: 'onBlur' });
+  const onSubmit: SubmitHandler<BucketInfo> = (data) => {
     if (selectedHobby) {
       createBucket.mutate({
         hobbyValue: selectedHobby,
-        name: data.bucket,
+        name: data.name,
         itemIds: selectedItems.map((item) => item.id),
       });
     }
@@ -75,8 +75,8 @@ const BucketCreate = () => {
                 placeholder="버킷 이름을 입력해주세요."
                 type="text"
                 width="full"
-                error={errors.bucket}
-                {...register('bucket', { required: '버킷 이름은 필수입니다.' })}
+                error={errors.name}
+                {...register('name', { required: '버킷 이름은 필수입니다.' })}
               />
             </Box>
             <Box>
@@ -136,7 +136,7 @@ const BucketCreate = () => {
           onClickFooterButton={() => {
             onClose();
           }}
-          isDisabled={selectedItems.length < 2}
+          isDisabled={selectedItems.length < 1}
           isFull={true}
           footerButtonText="선택 완료"
         >

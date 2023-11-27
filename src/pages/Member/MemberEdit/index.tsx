@@ -25,7 +25,11 @@ const MemberEdit = () => {
       <Header type="back" />
       <Container>
         <CommonText type="normalTitle">프로필 수정</CommonText>
-        <MemberEditForm nickname={member.data.nickname} introduction={member.data.introduction} />
+        <MemberEditForm
+          image={member.data.profileImage}
+          nickname={member.data.nickname}
+          introduction={member.data.introduction}
+        />
       </Container>
     </>
   );

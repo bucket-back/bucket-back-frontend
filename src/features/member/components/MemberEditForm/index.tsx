@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -8,33 +9,36 @@ import {
   CommonTextarea,
 } from '@/shared/components';
 import { useValidateForm } from '@/shared/hooks';
-import { AvatarBox, ButtonWrapper, Form, InputBox, InputWrapper } from './style';
+import useUpdateImage from '../../hooks/useUpdateImage';
+import { AvatarBox, ButtonWrapper, FileInput, Form, InputBox, InputWrapper } from './style';
 import { useCheckNickname, useUpateMemberInfo } from '@/features/member/hooks';
-import { PutMemberRequest } from '@/features/member/service';
 
 interface MemberEditFormProps {
   nickname: string;
+  image: string;
   introduction: string;
 }
 
-const MemberEditForm = ({ nickname, introduction }: MemberEditFormProps) => {
+const MemberEditForm = ({ nickname, image, introduction }: MemberEditFormProps) => {
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<PutMemberRequest>({
+  } = useForm<MemberEditFormProps>({
     mode: 'onBlur',
     defaultValues: {
+      image: '',
       nickname,
       introduction,
     },
   });
   const registerOptions = useValidateForm();
   const checkNickname = useCheckNickname();
-  const [currentNickname] = watch(['nickname']);
+  const [currentNickname, currentImage] = watch(['nickname', 'image']);
   const updateMemberInfo = useUpateMemberInfo(currentNickname);
+  const updateImage = useUpdateImage();
 
   const handleCheckNickname = () => {
     if (errors.nickname) {
@@ -43,17 +47,30 @@ const MemberEditForm = ({ nickname, introduction }: MemberEditFormProps) => {
 
     checkNickname.mutate(currentNickname);
   };
-  const onSubmit: SubmitHandler<PutMemberRequest> = ({ nickname, introduction }) => {
+  const onSubmit: SubmitHandler<MemberEditFormProps> = ({ nickname, image, introduction }) => {
     updateMemberInfo.mutate({ nickname, introduction });
+    updateImage.mutate({ image });
   };
+
+  const [imagePreview, setImagePreview] = useState('');
+
+  useEffect(() => {
+    if (typeof currentImage !== 'string') {
+      const file = currentImage[0];
+      setImagePreview(URL.createObjectURL(file));
+    }
+  }, [currentImage]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <InputWrapper>
         <div>
           <CommonText type="strongInfo">프로필 사진</CommonText>
+
           <AvatarBox>
-            <CommonAvatar isOwner />
+            <CommonAvatar src={imagePreview || image || ''} isOwner>
+              <FileInput type="file" {...register('image')} />
+            </CommonAvatar>
           </AvatarBox>
         </div>
         <div>

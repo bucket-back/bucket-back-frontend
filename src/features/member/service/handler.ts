@@ -5,6 +5,7 @@ import {
   PostLoginRequest,
   PostLoginResponse,
   PostSignupRequest,
+  PutMemberImageRequest,
   PutMemberRequest,
 } from './types';
 import { axiosClient } from '@/core/service/axios';
@@ -81,6 +82,16 @@ const memberApi = {
     const url = `${BASE_URL}/password`;
 
     return await axiosClient.put<null>(url, { password });
+  },
+
+  putMemberImage: async ({ image }: PutMemberImageRequest) => {
+    const url = `${BASE_URL}/profile/image`;
+
+    return await axiosClient.put<null>(
+      url,
+      { image: image[0] },
+      { headers: { 'Content-Type': 'multipart/form-data' } }
+    );
   },
 
   deleteMember: async () => {

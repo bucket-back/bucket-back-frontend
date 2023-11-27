@@ -10,6 +10,7 @@ export interface Bucket {
   bucketId: number;
   name: string;
   budget: number | null;
+  totalPrice: number;
   createdAt: string;
   itemImages: ItemImage[];
 }
