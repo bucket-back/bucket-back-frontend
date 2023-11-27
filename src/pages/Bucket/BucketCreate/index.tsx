@@ -119,7 +119,9 @@ const BucketCreate = () => {
           <ButtonWrapper>
             <CommonButton
               type="mdFull"
-              isDisabled={!selectedHobby?.length || !isValid || isSubmitting}
+              isDisabled={
+                !selectedHobby?.length || !selectedItems.length || !isValid || isSubmitting
+              }
               isSubmit={true}
             >
               생성 완료
