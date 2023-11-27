@@ -11,11 +11,21 @@ import { axiosClient } from '@/core/service/axios';
 const BASE_URL = 'feeds';
 
 const feedApi = {
-  getFeeds: async ({ hobbyName, nickname, sortCondition, cursorId, size }: GetFeedsRequest) => {
+  getFeeds: async ({
+    hobbyName,
+    nickname,
+    myPageOwnerLikeFeeds,
+    sortCondition,
+    cursorId,
+    size,
+  }: GetFeedsRequest) => {
     const nicknameQueryString = nickname ? `&nickname=${nickname}` : '';
+    const myPageOwnerLikeFeedsQueryString = myPageOwnerLikeFeeds
+      ? `&myPageOwnerLikeFeeds=${myPageOwnerLikeFeeds}`
+      : '';
     const sortConditionQueryString = sortCondition ? `&sortCondition=${sortCondition}` : '';
 
-    const url = `${BASE_URL}?hobbyName=${hobbyName}${nicknameQueryString}${sortConditionQueryString}`;
+    const url = `${BASE_URL}?hobbyName=${hobbyName}${nicknameQueryString}${myPageOwnerLikeFeedsQueryString}${sortConditionQueryString}`;
     const params = cursorId ? { cursorId, size } : { size };
 
     const response = await axiosClient.get<GetFeedsResponse>(url, { params });
