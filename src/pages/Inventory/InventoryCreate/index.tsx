@@ -1,57 +1,30 @@
-import { ChangeEvent, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import {
-  CommonButton,
-  CommonDrawer,
-  CommonImage,
-  CommonRadio,
-  CommonText,
-  Header,
-} from '@/shared/components';
+import { useState } from 'react';
+import { CommonButton, CommonDrawer, CommonImage, CommonText, Header } from '@/shared/components';
 import { useDrawer } from '@/shared/hooks';
 import { Box, Container, Grid, GridItem, RadioBox, Wrapper } from './style';
-import { useHobby } from '@/features/hobby/hooks';
+import HobbySelector from '@/features/hobby/components/HobbySelector';
 import InventorySelectItem from '@/features/inventory/components/InventorySelectItem';
 import { useCreateInventory } from '@/features/inventory/hook';
-import { inventoryQueryOption } from '@/features/inventory/service';
+import { SelectedItem } from '@/features/inventory/service';
 
-interface SelectedItem {
-  id: string;
-  src: string;
+interface Hobby {
+  english: string;
+  hangul: string;
 }
 
 const InventoryCreate = () => {
-  const [selectedHobby, setSelectedHobby] = useState<string>('');
+  const [selectedHobby, setSelectedHobby] = useState<Hobby>({ english: '', hangul: '' });
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
-  const { data: hobbyData } = useHobby();
   const { isOpen, onOpen, onClose } = useDrawer();
-  const HangulHobby = hobbyData?.hobbies.map((hobby) => hobby.value);
-  const currentHobby = hobbyData?.hobbies.find(({ value }) => value === selectedHobby);
   const { mutate: createInventoryMutate } = useCreateInventory();
-  const { data: myItemsData } = useQuery({
-    ...inventoryQueryOption.myItems({ hobbyName: currentHobby?.name }),
-  });
-
-  const checkingItems = (e: ChangeEvent<HTMLInputElement>, src: string) => {
-    const checked = e.target.checked;
-    if (checked) {
-      setSelectedItems(() => [...selectedItems, { id: e.target.id, src: src }]);
-    } else if (!checked) {
-      setSelectedItems(selectedItems.filter(({ id }) => id !== e.target.id));
-    }
-  };
 
   const onSubmit = () => {
-    const itemIds = selectedItems.map((item) => Number(item.id));
+    const itemIds = selectedItems.map((item) => item.id);
     createInventoryMutate({
-      hobbyValue: selectedHobby,
+      hobbyValue: selectedHobby.hangul,
       itemIds,
     });
   };
-
-  if (!HangulHobby) {
-    return;
-  }
 
   return (
     <>
@@ -71,14 +44,7 @@ const InventoryCreate = () => {
               취미를 선택해주세요.
             </CommonText>
             <RadioBox>
-              <CommonRadio
-                values={HangulHobby!}
-                name="취미"
-                onChange={(value: string) => {
-                  setSelectedItems([]);
-                  setSelectedHobby(value);
-                }}
-              />
+              <HobbySelector onChange={setSelectedHobby} setSelectedItems={setSelectedItems} />
             </RadioBox>
           </Box>
           <Box>
@@ -120,14 +86,16 @@ const InventoryCreate = () => {
           setSelectedItems([]);
           onClose();
         }}
-        onClickFooterButton={() => {
-          onClose();
-        }}
+        onClickFooterButton={onClose}
         isFull={true}
         footerButtonText="선택 완료"
         isDisabled={selectedItems.length < 1}
       >
-        <InventorySelectItem reviewedItems={myItemsData?.reviewedItems} onChange={checkingItems} />
+        <InventorySelectItem
+          selectedHobby={selectedHobby.english}
+          onChange={setSelectedItems}
+          selectedItems={selectedItems}
+        />
       </CommonDrawer>
     </>
   );

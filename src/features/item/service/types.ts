@@ -34,3 +34,7 @@ export interface GetMyItemsResponse {
   summaries: MyItemSummary[];
   totalCount: number;
 }
+
+export interface DeleteItemRequest {
+  itemIds: string;
+}

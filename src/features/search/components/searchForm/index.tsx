@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { CommonInput, CommonIcon, CommonIconButton } from '@/shared/components';
 import { SEARCH_KEY } from '@/shared/constants';
 import { Storage } from '@/shared/utils';
@@ -10,23 +11,28 @@ interface SearchProps {
 }
 
 interface SearchFormProps {
+  keyword: string;
   onInput?: (value: string) => void;
 }
 
-const SearchForm = ({ onInput }: SearchFormProps) => {
+const SearchForm = ({ keyword: currentKeyword, onInput }: SearchFormProps) => {
   const {
     register,
     formState: { errors },
     handleSubmit,
     watch,
     reset,
-  } = useForm<SearchProps>();
+  } = useForm<SearchProps>({ values: { keyword: currentKeyword } });
+
+  const navigate = useNavigate();
 
   const formRef = useRef<HTMLFormElement | null>(null);
 
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
   const [keyword] = watch(['keyword']);
+
+  const isCancelIcon = keyword && keyword.length >= 1;
 
   const onSubmit: SubmitHandler<SearchProps> = (data, event) => {
     event?.preventDefault();
@@ -47,7 +53,10 @@ const SearchForm = ({ onInput }: SearchFormProps) => {
     reset();
   };
 
-  const isCancelIcon = keyword && keyword.length >= 1;
+  const handleClick = () => {
+    onInput && onInput('');
+    navigate('/search');
+  };
 
   useEffect(() => {
     const handleDocumentClick = (event: MouseEvent) => {
@@ -64,7 +73,9 @@ const SearchForm = ({ onInput }: SearchFormProps) => {
   }, [isFocus]);
 
   useEffect(() => {
-    onInput && onInput(keyword);
+    if (currentKeyword !== keyword) {
+      onInput && onInput(keyword);
+    }
   }, [keyword]);
 
   return (
@@ -76,7 +87,9 @@ const SearchForm = ({ onInput }: SearchFormProps) => {
         type="text"
         leftIcon={<CommonIcon type="search" />}
         rightIcon={
-          isCancelIcon ? <CommonIconButton type="cancel" onClick={() => reset()} /> : undefined
+          isCancelIcon ? (
+            <CommonIconButton type="cancel" onClick={() => handleClick()} />
+          ) : undefined
         }
         width="full"
         bg="white"

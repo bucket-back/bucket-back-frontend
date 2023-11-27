@@ -11,6 +11,7 @@ import {
   AddContainer,
 } from './style';
 import { ListItem } from '@/features/item/components';
+import { useDeleteItem } from '@/features/item/hooks';
 import { GetMyItemsResponse, itemQueryOption } from '@/features/item/service';
 
 const ItemList = () => {
@@ -20,13 +21,27 @@ const ItemList = () => {
     ...itemQueryOption.myItems({ cursorId: '', size: 10 }),
   });
 
+  const {
+    mutate: itemMutate,
+    isError: itemDeleteError,
+    isPending: itemDeletePending,
+  } = useDeleteItem({ cursorId: '', size: 10 });
+
   const [itemData, setItemData] = useState<GetMyItemsResponse['summaries']>([]);
+
+  const [deleteData, setDeleteData] = useState<number[]>([]);
 
   const authNavigate = useAuthNavigate();
 
   const handleClick = (deleteId: number) => {
     const filterData = itemData.filter(({ itemInfo: { id } }) => id !== deleteId);
     setItemData(filterData);
+    setDeleteData((prev) => [...prev, deleteId]);
+  };
+
+  const handleDeleteClick = () => {
+    itemMutate({ itemIds: deleteData.join(',') });
+    setIsDelete((prev) => !prev);
   };
 
   useEffect(() => {
@@ -35,11 +50,11 @@ const ItemList = () => {
     }
   }, [data]);
 
-  if (isPending) {
+  if (isPending || itemDeletePending) {
     return <>Loading..</>;
   }
 
-  if (isError) {
+  if (isError || itemDeleteError) {
     return <>Error...</>;
   }
 
@@ -50,13 +65,17 @@ const ItemList = () => {
         <TitleContainer>
           <CommonText type="smallTitle">내 아이템 전체보기</CommonText>
           {isDelete ? (
-            <CommonIconButton type="cancel" onClick={() => setIsDelete((prev) => !prev)} />
+            <CommonIconButton type="cancel" onClick={handleDeleteClick} />
           ) : (
             <CommonIconButton type="delete" onClick={() => setIsDelete((prev) => !prev)} />
           )}
         </TitleContainer>
         <ItemTextContaienr>
-          <CommonText type="smallInfo">총 {formatNumber(data.totalCount)}개의 아이템</CommonText>
+          <CommonText type="smallInfo">
+            {isDelete
+              ? `총 삭제할 ${formatNumber(data.totalCount)}개의 아이템`
+              : `총 ${formatNumber(data.totalCount)}개의 아이템`}
+          </CommonText>
         </ItemTextContaienr>
         <ItemListContainer>
           {itemData.map(({ itemInfo: { id, image, name, price } }) => (
