@@ -31,8 +31,11 @@ const bucketApi = {
     return response.data;
   },
 
-  getBucketMyItems: async ({ bucketId, cursorId, size }: GetBucketMyItemsRequest) => {
-    const url = `${BASE_URL}/${bucketId}/myitems`;
+  getBucketMyItems: async ({ bucketId, hobbyName, cursorId, size }: GetBucketMyItemsRequest) => {
+    const bucketIdQueryString = bucketId ? `&bucketId=${bucketId}` : '';
+    const hobbyNameQueryString = hobbyName ? `&hobbyName=${hobbyName}` : '';
+
+    const url = `${BASE_URL}/myitems?${bucketIdQueryString}${hobbyNameQueryString}`;
     const params = cursorId ? { cursorId, size } : { size };
 
     const response = await axiosClient.get<GetBucketMyItemsResponse>(url, { params });

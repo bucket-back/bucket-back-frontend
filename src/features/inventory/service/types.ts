@@ -43,3 +43,8 @@ export interface GetInventoryItemsResponse {
   totalCount: number;
   reviewedItems: reviewedItem[];
 }
+
+export interface SelectedItem {
+  id: number;
+  src: string;
+}

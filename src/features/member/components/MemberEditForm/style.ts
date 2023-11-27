@@ -33,3 +33,7 @@ export const ButtonWrapper = styled.div`
   width: 100%;
   gap: 1rem;
 `;
+
+export const FileInput = styled.input`
+  display: none;
+`;

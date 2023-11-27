@@ -5,18 +5,20 @@ import { Container, Wrapper, HeaderBox, SearchContainer } from './style';
 import { SearchForm } from '@/features/search/components';
 
 const SearchHome = () => {
-  const [isWord, setIsWord] = useState<boolean>(false);
+  const [keyword, setKeyword] = useState<string>('');
+
+  const onInput = (word: string) => {
+    setKeyword(word);
+  };
 
   return (
     <>
       <Container>
         <Wrapper>
           <HeaderBox />
-          <SearchForm
-            onInput={(word) => (word && word.length >= 1 ? setIsWord(true) : setIsWord(false))}
-          />
+          <SearchForm keyword={keyword} onInput={onInput} />
           <SearchContainer>
-            <Outlet context={isWord} />
+            <Outlet context={{ keyword, onInput }} />
           </SearchContainer>
         </Wrapper>
       </Container>

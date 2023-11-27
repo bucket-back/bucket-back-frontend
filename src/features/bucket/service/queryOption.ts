@@ -1,25 +1,25 @@
 import { queryOptions } from '@tanstack/react-query';
 import { GetBucketDetailRequest, GetBucketMyItemsRequest, GetBucketsRequest, bucketApi } from '.';
 
-const QUERY_KEY = 'bucket';
-
 const bucketQueryOption = {
+  all: ['bucket'] as const,
+
   list: ({ nickname, hobby, cursorId, size = 10 }: GetBucketsRequest) =>
     queryOptions({
-      queryKey: [QUERY_KEY, nickname, hobby],
+      queryKey: [...bucketQueryOption.all, nickname, hobby] as const,
       queryFn: () => bucketApi.getBuckets({ nickname, hobby, cursorId, size }),
     }),
 
   detail: ({ nickname, bucketId }: GetBucketDetailRequest) =>
     queryOptions({
-      queryKey: [QUERY_KEY, nickname, bucketId],
+      queryKey: [...bucketQueryOption.all, nickname, bucketId] as const,
       queryFn: () => bucketApi.getBucketDetail({ nickname, bucketId }),
     }),
 
-  myItemList: ({ bucketId, cursorId, size }: GetBucketMyItemsRequest) =>
+  myItemList: ({ bucketId, hobbyName, cursorId, size = 10 }: GetBucketMyItemsRequest) =>
     queryOptions({
-      queryKey: [QUERY_KEY, bucketId],
-      queryFn: () => bucketApi.getBucketMyItems({ bucketId, cursorId, size }),
+      queryKey: [...bucketQueryOption.all, bucketId] as const,
+      queryFn: () => bucketApi.getBucketMyItems({ bucketId, hobbyName, cursorId, size }),
     }),
 };
 
