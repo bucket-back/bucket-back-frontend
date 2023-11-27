@@ -9,7 +9,7 @@ import {
   CommonText,
 } from '@/shared/components';
 import { formatNumber } from '@/shared/utils';
-import { Wrapper, Box, TextBox } from './style';
+import { Wrapper, Box, TextBox, NoResult } from './style';
 import { searchQueryOption } from '@/features/search/service';
 
 const SearchItemList = () => {
@@ -53,7 +53,7 @@ const SearchItemList = () => {
       </Box>
     </>
   ) : (
-    <>검색결과가 없습니다.</>
+    <NoResult>검색결과가 없습니다.</NoResult>
   );
 };
 

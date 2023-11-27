@@ -10,6 +10,7 @@ import {
   VsBox,
   Box,
   TextBox,
+  NoResult,
 } from './style';
 import { searchQueryOption } from '@/features/search/service';
 const SearchVoteList = () => {
@@ -74,7 +75,7 @@ const SearchVoteList = () => {
       </Box>
     </>
   ) : (
-    <>검색결과가 없습니다...</>
+    <NoResult>검색결과가 없습니다...</NoResult>
   );
 };
 
