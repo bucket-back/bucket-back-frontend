@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Grid, GridItem } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
 import {
   CommonButton,
   CommonDivider,
@@ -7,103 +8,44 @@ import {
   CommonImage,
   CommonText,
 } from '@/shared/components';
-import { Wrapper, Box, TextBox } from './style';
+import { formatNumber } from '@/shared/utils';
+import { Wrapper, Box, TextBox, NoResult } from './style';
+import { searchQueryOption } from '@/features/search/service';
+import { SearchListProps } from '@/pages/Search/SearchMain';
 
-const SearchItemList = () => {
+export interface SearchListItemProp {
+  keyword: SearchListProps['keyword'];
+}
+
+const SearchItemList = ({ keyword }: SearchListItemProp) => {
+  const { data, isPending, isError } = useQuery({
+    ...searchQueryOption.itemList({ keyword, size: 10 }),
+  });
+
   const navigate = useNavigate();
 
-  return (
+  if (isPending) {
+    return <>Loading...</>;
+  }
+
+  if (isError) {
+    return <>Error...</>;
+  }
+
+  return data.totalCount >= 1 ? (
     <>
       <Box>
         <TextBox>
-          <CommonText type="subStrongInfo">총 0개의 아이템</CommonText>
+          <CommonText type="subStrongInfo">총 {data.totalCount}개의 아이템</CommonText>
         </TextBox>
         <Grid padding="0 1rem" templateColumns="repeat(3,1fr)" gap="0.25rem">
-          <GridItem>
-            <CommonImage size="sm" />
-            <CommonText type="normalInfo">{23000}</CommonText>
-            <CommonText type="smallInfo">아이템입니다...</CommonText>
-          </GridItem>
-          <GridItem>
-            <CommonImage size="sm" />
-            <CommonText type="normalInfo">{23000}</CommonText>
-            <CommonText type="smallInfo">아이템입니다...</CommonText>
-          </GridItem>
-          <GridItem>
-            <CommonImage size="sm" />
-            <CommonText type="normalInfo">{23000}</CommonText>
-            <CommonText type="smallInfo">아이템입니다...</CommonText>
-          </GridItem>
-          <GridItem>
-            <CommonImage size="sm" />
-            <CommonText type="normalInfo">{23000}</CommonText>
-            <CommonText type="smallInfo">아이템입니다...</CommonText>
-          </GridItem>
-          <GridItem>
-            <CommonImage size="sm" />
-            <CommonText type="normalInfo">{23000}</CommonText>
-            <CommonText type="smallInfo">아이템입니다...</CommonText>
-          </GridItem>
-          <GridItem>
-            <CommonImage size="sm" />
-            <CommonText type="normalInfo">{23000}</CommonText>
-            <CommonText type="smallInfo">아이템입니다...</CommonText>
-          </GridItem>
-          <GridItem>
-            <CommonImage size="sm" />
-            <CommonText type="normalInfo">{23000}</CommonText>
-            <CommonText type="smallInfo">아이템입니다...</CommonText>
-          </GridItem>
-          <GridItem>
-            <CommonImage size="sm" />
-            <CommonText type="normalInfo">{23000}</CommonText>
-            <CommonText type="smallInfo">아이템입니다...</CommonText>
-          </GridItem>
-          <GridItem>
-            <CommonImage size="sm" />
-            <CommonText type="normalInfo">{23000}</CommonText>
-            <CommonText type="smallInfo">아이템입니다...</CommonText>
-          </GridItem>
-          <GridItem>
-            <CommonImage size="sm" />
-            <CommonText type="normalInfo">{23000}</CommonText>
-            <CommonText type="smallInfo">아이템입니다...</CommonText>
-          </GridItem>
-          <GridItem>
-            <CommonImage size="sm" />
-            <CommonText type="normalInfo">{23000}</CommonText>
-            <CommonText type="smallInfo">아이템입니다...</CommonText>
-          </GridItem>
-          <GridItem>
-            <CommonImage size="sm" />
-            <CommonText type="normalInfo">{23000}</CommonText>
-            <CommonText type="smallInfo">아이템입니다...</CommonText>
-          </GridItem>
-          <GridItem>
-            <CommonImage size="sm" />
-            <CommonText type="normalInfo">{23000}</CommonText>
-            <CommonText type="smallInfo">아이템입니다...</CommonText>
-          </GridItem>
-          <GridItem>
-            <CommonImage size="sm" />
-            <CommonText type="normalInfo">{23000}</CommonText>
-            <CommonText type="smallInfo">아이템입니다...</CommonText>
-          </GridItem>
-          <GridItem>
-            <CommonImage size="sm" />
-            <CommonText type="normalInfo">{23000}</CommonText>
-            <CommonText type="smallInfo">아이템입니다...</CommonText>
-          </GridItem>
-          <GridItem>
-            <CommonImage size="sm" />
-            <CommonText type="normalInfo">{23000}</CommonText>
-            <CommonText type="smallInfo">아이템입니다...</CommonText>
-          </GridItem>
-          <GridItem>
-            <CommonImage size="sm" />
-            <CommonText type="normalInfo">{23000}</CommonText>
-            <CommonText type="smallInfo">아이템입니다...</CommonText>
-          </GridItem>
+          {data.items.map(({ itemSummary }) => (
+            <GridItem key={itemSummary.id} onClick={() => navigate(`/item/${itemSummary.id}`)}>
+              <CommonImage size="sm" src={itemSummary.image} />
+              <CommonText type="normalInfo">{formatNumber(itemSummary.price)}원</CommonText>
+              <CommonText type="smallInfo">{itemSummary.name}</CommonText>
+            </GridItem>
+          ))}
         </Grid>
         <CommonDivider size="sm" />
         <div>
@@ -115,6 +57,8 @@ const SearchItemList = () => {
         </div>
       </Box>
     </>
+  ) : (
+    <NoResult>검색결과가 없습니다.</NoResult>
   );
 };
 

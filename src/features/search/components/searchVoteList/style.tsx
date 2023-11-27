@@ -32,3 +32,11 @@ export const Box = styled.div`
 export const TextBox = styled.div`
   padding: 0.5rem 0;
 `;
+
+export const NoResult = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;

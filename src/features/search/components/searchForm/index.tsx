@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CommonInput, CommonIcon, CommonIconButton } from '@/shared/components';
 import { SEARCH_KEY } from '@/shared/constants';
 import { Storage } from '@/shared/utils';
@@ -22,7 +22,9 @@ const SearchForm = ({ keyword: currentKeyword, onInput }: SearchFormProps) => {
     handleSubmit,
     watch,
     reset,
-  } = useForm<SearchProps>({ values: { keyword: currentKeyword } });
+  } = useForm<SearchProps>({
+    values: { keyword: currentKeyword },
+  });
 
   const navigate = useNavigate();
 
@@ -31,6 +33,8 @@ const SearchForm = ({ keyword: currentKeyword, onInput }: SearchFormProps) => {
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
   const [keyword] = watch(['keyword']);
+
+  const { pathname } = useLocation();
 
   const isCancelIcon = keyword && keyword.length >= 1;
 
@@ -74,6 +78,9 @@ const SearchForm = ({ keyword: currentKeyword, onInput }: SearchFormProps) => {
 
   useEffect(() => {
     if (currentKeyword !== keyword) {
+      if (pathname.includes('/result')) {
+        navigate('/search');
+      }
       onInput && onInput(keyword);
     }
   }, [keyword]);
