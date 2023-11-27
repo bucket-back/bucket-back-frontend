@@ -24,6 +24,7 @@ interface SelectedItems {
 
 interface BucketInfo {
   name: string;
+  budget: number;
 }
 
 const BucketCreate = () => {
@@ -41,6 +42,7 @@ const BucketCreate = () => {
         hobbyValue: selectedHobby,
         name: data.name,
         itemIds: selectedItems.map((item) => item.id),
+        budget: data.budget,
       });
     }
   };
@@ -71,6 +73,9 @@ const BucketCreate = () => {
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Wrapper>
             <Box>
+              <CommonText type="normalInfo" noOfLines={0}>
+                버킷 이름
+              </CommonText>
               <CommonInput
                 placeholder="버킷 이름을 입력해주세요."
                 type="text"
@@ -92,6 +97,18 @@ const BucketCreate = () => {
                   />
                 )}
               </HobbyBox>
+            </Box>
+            <Box>
+              <CommonText type="normalInfo" noOfLines={0}>
+                아이템의 가격보다 높은 예산을 입력해주세요. (선택)
+              </CommonText>
+              <CommonInput
+                placeholder="예산을 입력해주세요."
+                type="text"
+                width="full"
+                error={errors.budget}
+                {...register('budget')}
+              />
             </Box>
             <Box>
               <CommonText type="normalInfo" noOfLines={0}>
