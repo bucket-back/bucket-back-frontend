@@ -127,7 +127,7 @@ const MemberHome = () => {
             />
           </ContentsPanel>
           {member.isSuccess && member.data.bucketProfiles.length > 0 && (
-            <ImagePanel onClick={() => navigate(`/member/${nickname}/inventory`)}>
+            <ImagePanel onClick={() => navigate(`/member/${nickname}/bucket`)}>
               <Grid>
                 {member.data?.bucketProfiles.map((bucket) => (
                   <DividerImage key={bucket.id} type="base" images={bucket.images} />
