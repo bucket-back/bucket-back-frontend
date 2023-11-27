@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { CommonTabs } from '@/shared/components';
 import { SearchWrapper } from './style';
 import { SearchItemList, SearchVoteList } from '@/features/search/components';
+import { SearchListProps } from '@/pages/Search/SearchMain';
 
 const TABS = {
   ITEM: {
@@ -15,6 +17,8 @@ const TABS = {
 };
 
 const SearchResult = () => {
+  const { keyword } = useOutletContext<SearchListProps>();
+
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   return (
@@ -31,7 +35,7 @@ const SearchResult = () => {
             value: TABS.ITEM.VALUE,
             content: (
               <SearchWrapper>
-                <SearchItemList />
+                <SearchItemList keyword={keyword} />
               </SearchWrapper>
             ),
           },
@@ -40,7 +44,7 @@ const SearchResult = () => {
             value: TABS.VOTE.VALUE,
             content: (
               <SearchWrapper>
-                <SearchVoteList />
+                <SearchVoteList keyword={keyword} />
               </SearchWrapper>
             ),
           },
