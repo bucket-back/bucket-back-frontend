@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
-  height: calc(100vh - 14.167rem);
+  height: calc(100vh - 11.744rem);
   overflow-y: auto;
 `;
 
@@ -11,11 +11,4 @@ export const NoResult = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-
-export const SelectWrapper = styled.div`
-  display: flex;
-  justify-content: end;
-  padding-top: 1rem;
-  padding-right: 1.5rem;
 `;
