@@ -12,7 +12,7 @@ const RadioCard = (props: RadioProps) => {
       <input {...input} />
       <Box
         {...checkbox}
-        cursor="pointer"
+        cursor={props.isReadOnly ? 'not-allowed' : 'pointer'}
         borderWidth="0.024rem"
         borderRadius="0.375rem"
         borderColor="blue.300"
