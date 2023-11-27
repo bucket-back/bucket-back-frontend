@@ -1,9 +1,11 @@
 import { useSearchParams } from 'react-router-dom';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { CommonSelect, CommonTabs } from '@/shared/components';
 import { useAuthCheck } from '@/shared/hooks';
-import { VotesInfo } from '@/shared/types';
+import { GetVotesRequest, voteQueryOption } from '../../service';
 import VoteItem from '../VoteItem';
 import { Container, ContentsWrapper, NoResult, SelectWrapper } from './style';
+import useIntersect from '@/shared/hooks/useIntersect';
 
 const VOTE_STATE = [
   {
@@ -21,12 +23,29 @@ const VOTE_STATE = [
 ];
 
 interface VotesProps {
-  votes: VotesInfo[];
+  getStatus: string;
+  getHobby: string;
+  getSort: string;
 }
 
-const Votes = ({ votes }: VotesProps) => {
+const Votes = ({ getStatus, getHobby, getSort }: VotesProps) => {
+  const {
+    data: votesData,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    ...voteQueryOption.list({
+      hobby: getHobby || '',
+      status: (getStatus as GetVotesRequest['status']) || 'completed',
+      sort: (getSort as GetVotesRequest['sort']) || 'recent',
+    }),
+  });
+
   const [searchParams, setSearchParams] = useSearchParams();
   const isLogin = useAuthCheck();
+
+  const votes = votesData?.pages.flatMap(({ votes }) => votes) || [];
+
   const currentTabIndex = VOTE_STATE.map(({ VALUE }) => VALUE).indexOf(
     searchParams.get('status') || VOTE_STATE[0].VALUE
   );
@@ -40,6 +59,15 @@ const Votes = ({ votes }: VotesProps) => {
           setSearchParams({ hobby: searchParams.get('hobby') || '', status: value });
         }}
         tabsData={VOTE_STATE.map(({ VALUE, LABEL }) => {
+          // eslint-disable-next-line react-hooks/rules-of-hooks
+          const ref = useIntersect(async (entry, observer) => {
+            observer.unobserve(entry.target);
+
+            if (hasNextPage) {
+              fetchNextPage();
+            }
+          });
+
           return {
             value: VALUE,
             label: LABEL,
@@ -63,16 +91,19 @@ const Votes = ({ votes }: VotesProps) => {
                 {isLoginInVotes(VALUE) ? (
                   <NoResult>로그인이 필요한 서비스입니다.</NoResult>
                 ) : votes.length > 0 ? (
-                  votes.map(({ cursorId, item1Info, item2Info, voteInfo }) => {
-                    return (
-                      <VoteItem
-                        key={cursorId}
-                        item1Info={item1Info}
-                        item2Info={item2Info}
-                        voteInfo={voteInfo}
-                      />
-                    );
-                  })
+                  <>
+                    {votes.map(({ cursorId, item1Info, item2Info, voteInfo }) => {
+                      return (
+                        <VoteItem
+                          key={cursorId}
+                          item1Info={item1Info}
+                          item2Info={item2Info}
+                          voteInfo={voteInfo}
+                        />
+                      );
+                    })}
+                    <div id={VALUE} ref={ref} />
+                  </>
                 ) : (
                   <NoResult>{`${LABEL}가 존재하지 않습니다.`}</NoResult>
                 )}
