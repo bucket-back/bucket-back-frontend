@@ -75,6 +75,7 @@ const SearchForm = ({ keyword: currentKeyword, onInput }: SearchFormProps) => {
   useEffect(() => {
     if (currentKeyword !== keyword) {
       onInput && onInput(keyword);
+      navigate('/search');
     }
   }, [keyword]);
 

@@ -11,10 +11,15 @@ import {
 import { formatNumber } from '@/shared/utils';
 import { Wrapper, Box, TextBox, NoResult } from './style';
 import { searchQueryOption } from '@/features/search/service';
+import { SearchListProps } from '@/pages/Search/SearchMain';
 
-const SearchItemList = () => {
+export interface SearchListItemProp {
+  keyword: SearchListProps['keyword'];
+}
+
+const SearchItemList = ({ keyword }: SearchListItemProp) => {
   const { data, isPending, isError } = useQuery({
-    ...searchQueryOption.itemList({ keyword: '농구', size: 10 }),
+    ...searchQueryOption.itemList({ keyword, size: 10 }),
   });
 
   const navigate = useNavigate();

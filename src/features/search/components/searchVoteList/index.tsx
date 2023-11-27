@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { CommonButton, CommonCard, CommonIcon, CommonImage, CommonText } from '@/shared/components';
 import { formatNumber } from '@/shared/utils';
+import { SearchListItemProp } from '../searchItemList';
 import {
   Wrapper,
   ContentsContainer,
@@ -13,9 +14,10 @@ import {
   NoResult,
 } from './style';
 import { searchQueryOption } from '@/features/search/service';
-const SearchVoteList = () => {
+
+const SearchVoteList = ({ keyword }: SearchListItemProp) => {
   const { data, isPending, isError } = useQuery({
-    ...searchQueryOption.voteList({ keyword: '농구', size: 10 }),
+    ...searchQueryOption.voteList({ keyword, size: 10 }),
   });
 
   const navigate = useNavigate();
