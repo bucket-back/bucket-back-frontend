@@ -13,7 +13,11 @@ const searchQueryOption = {
       queryKey: [...searchQueryOption.all, keyword, 'list'] as const,
       queryFn: () => searchApi.getSearchKeyword(keyword),
     }),
-  // 투표추가
+  voteList: ({ keyword, cursorId, size }: GetSearchItemRequest) =>
+    queryOptions({
+      queryKey: [...searchQueryOption.all, keyword, 'vote'] as const,
+      queryFn: () => searchApi.getVoteKeyword({ keyword, cursorId, size }),
+    }),
 };
 
 export default searchQueryOption;
