@@ -1,33 +1,28 @@
-import { useEffect, Fragment } from 'react';
+import { Fragment } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { CommonDivider, CommonSelect, CommonTabs } from '@/shared/components';
+import { useIntersectionObserver } from '@/shared/hooks';
 import { Container, NoResult, SelectWrapper } from './style';
 import { FeedItem } from '@/features/feed/components';
 import { feedQueryOption } from '@/features/feed/service';
-import { useHobby } from '@/features/hobby/hooks';
+import { hobbyQueryOption } from '@/features/hobby/service';
 
 const FeedHome = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const hobbies = useHobby();
+  const hobbies = useQuery({ ...hobbyQueryOption.all(), select: ({ hobbies }) => hobbies });
 
-  useEffect(() => {
-    if (!searchParams.get('hobby') && hobbies.isSuccess) {
-      setSearchParams({ hobby: hobbies.data.hobbies[0].name, sort: 'RECENT' });
-    }
-  }, [hobbies.data?.hobbies, hobbies.isSuccess, searchParams, setSearchParams]);
+  if (hobbies.isPending) {
+    return;
+  }
 
-  const feeds = useQuery(
-    feedQueryOption.list({
-      hobbyName: searchParams.get('hobby') || hobbies.data?.hobbies[0].name || '',
-      sortCondition: searchParams.get('sort') || 'RECENT',
-    })
-  );
+  if (hobbies.isError) {
+    return;
+  }
 
-  const currentTabIndex = hobbies.data?.hobbies
+  const currentTabIndex = hobbies.data
     .map(({ name }) => name)
-    .indexOf(searchParams.get('hobby') || hobbies.data.hobbies[0].name);
+    .indexOf(searchParams.get('hobby') || hobbies.data[0].name);
 
   return (
     <CommonTabs
@@ -37,63 +32,93 @@ const FeedHome = () => {
       onClick={(value) => {
         setSearchParams({ hobby: value });
       }}
-      tabsData={
-        hobbies.data?.hobbies.map(({ name, value }) => ({
-          value: name,
-          label: value,
-          content: (
-            <Container>
-              <SelectWrapper>
-                <CommonSelect
-                  selectedValue={searchParams.get('sort')?.toLowerCase()}
-                  onChange={(e) => {
-                    const sort = e.target.value;
+      tabsData={hobbies.data.map(({ name, value }) => ({
+        value: name,
+        label: value,
+        content: (
+          <Container>
+            <SelectWrapper>
+              <CommonSelect
+                selectedValue={searchParams.get('sort') || 'recent'}
+                onChange={(e) => {
+                  const sort = e.target.value;
 
-                    setSearchParams({
-                      hobby: searchParams.get('hobby') || '',
-                      sort: sort.toUpperCase(),
-                    });
-                  }}
-                />
-              </SelectWrapper>
-              {feeds.isSuccess && feeds.data.feeds.length > 0 ? (
-                feeds.data.feeds.map(
-                  ({
-                    feedId,
-                    memberInfo,
-                    content,
-                    isLike,
-                    likeCount,
-                    commentCount,
-                    createdAt,
-                    feedItems,
-                  }) => (
-                    <Fragment key={feedId}>
-                      <FeedItem
-                        memberInfo={memberInfo}
-                        feedId={feedId}
-                        feedContent={content}
-                        isLike={isLike}
-                        likeCount={likeCount}
-                        commentCount={commentCount}
-                        createdAt={createdAt}
-                        feedItems={feedItems}
-                        isDetail={false}
-                        onClick={() => navigate(`./${feedId}`)}
-                      />
-                      <CommonDivider size="sm" />
-                    </Fragment>
-                  )
-                )
-              ) : (
-                <NoResult>피드가 존재하지 않습니다.</NoResult>
-              )}
-            </Container>
-          ),
-        })) || []
-      }
+                  setSearchParams({
+                    hobby: searchParams.get('hobby') || '',
+                    sort: sort.toUpperCase(),
+                  });
+                }}
+              />
+            </SelectWrapper>
+            <HobbyFeedList
+              hobbyName={searchParams.get('hobby') || hobbies.data[0].name}
+              sortCondition={searchParams.get('sort') || 'recent'}
+            />
+          </Container>
+        ),
+      }))}
     />
   );
 };
 
 export default FeedHome;
+
+interface FeedListProps {
+  hobbyName: string;
+  sortCondition: string;
+}
+
+const HobbyFeedList = ({ hobbyName, sortCondition }: FeedListProps) => {
+  const navigate = useNavigate();
+  const feeds = useInfiniteQuery(feedQueryOption.list({ hobbyName, sortCondition }));
+
+  const observedRef = useIntersectionObserver({ onObserve: feeds.fetchNextPage });
+
+  if (feeds.isPending) {
+    return;
+  }
+
+  if (feeds.isError) {
+    return;
+  }
+
+  if (feeds.data.pages[0].feeds.length === 0) {
+    return <NoResult>피드가 존재하지 않습니다.</NoResult>;
+  }
+
+  return (
+    <>
+      {feeds.data.pages.map((page) =>
+        page.feeds.map(
+          ({
+            feedId,
+            memberInfo,
+            content,
+            isLike,
+            likeCount,
+            commentCount,
+            createdAt,
+            feedItems,
+          }) => (
+            <Fragment key={feedId}>
+              <FeedItem
+                memberInfo={memberInfo}
+                feedId={feedId}
+                feedContent={content}
+                isLike={isLike}
+                likeCount={likeCount}
+                commentCount={commentCount}
+                createdAt={createdAt}
+                feedItems={feedItems}
+                isDetail={false}
+                onClick={() => navigate(`./${feedId}`)}
+              />
+              <CommonDivider size="sm" />
+            </Fragment>
+          )
+        )
+      )}
+      {feeds.hasNextPage ? <div ref={observedRef} /> : <>더이상 피드가 존재하지 않습니다.</>}
+    </>
+  );
+};

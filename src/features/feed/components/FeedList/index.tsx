@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { CommonDivider, CommonTabs } from '@/shared/components';
 import { FeedItem } from '..';
 import { feedQueryOption } from '../../service';
@@ -19,10 +19,10 @@ const FeedList = ({ isLikedFeedTab }: FeedListProps) => {
   const navigate = useNavigate();
   const hobby = useQuery({ ...hobbyQueryOption.all(), select: (data) => data.hobbies });
 
-  const feeds = useQuery(
+  const feeds = useInfiniteQuery(
     feedQueryOption.list({
       hobbyName: searchParams.get(HOBBY) || hobby.data?.[0].name || '',
-      nickname,
+      nickname: isLikedFeedTab ? nickname : '',
       myPageOwnerLikeFeeds: isLikedFeedTab,
     })
   );
