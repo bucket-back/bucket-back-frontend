@@ -1,7 +1,7 @@
 import { useParams, useSearchParams } from 'react-router-dom';
 import { CommonTabs, CommonText, Header } from '@/shared/components';
 import { Container, Title } from './style';
-import { FeedList } from '@/features/feed/components';
+import { FeedMemberContents } from '@/features/feed/components';
 
 const TABS = {
   MY_FEED: {
@@ -39,12 +39,12 @@ const FeedMember = () => {
             {
               label: TABS.MY_FEED.LABEL,
               value: TABS.MY_FEED.VALUE,
-              content: <FeedList isLikedFeedTab={isLikedFeedTab} />,
+              content: <FeedMemberContents isLikedFeedTab={isLikedFeedTab} />,
             },
             {
               label: TABS.LIKED_FEED.LABEL,
               value: TABS.LIKED_FEED.VALUE,
-              content: <FeedList isLikedFeedTab={isLikedFeedTab} />,
+              content: <FeedMemberContents isLikedFeedTab={isLikedFeedTab} />,
             },
           ]}
         />
