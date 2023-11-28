@@ -1,12 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import {
-  CommonButton,
-  CommonIcon,
-  CommonMenu,
-  CommonText,
-  DateText,
-  Profile,
-} from '@/shared/components';
+import { CommonButton, CommonMenu, CommonText, DateText, Profile } from '@/shared/components';
 import { Review } from '@/shared/types';
 import { Container, ProfileWrapper, ContentsWrapper, InteractPanel } from './style';
 import { useDeleteReview } from '@/features/review/hooks';
@@ -15,10 +8,10 @@ export interface ItemCommentProps {
   content: Review['content'];
   createAt: Review['createdAt'];
   memberInfo: Review['memberInfo'];
-  rate: Review['rate'];
   reviewId: Review['reviewId'];
   editPath: string;
   itemId: string;
+  isReviewed: boolean;
 }
 
 const ItemComment = ({
@@ -27,8 +20,8 @@ const ItemComment = ({
   memberInfo,
   itemId,
   reviewId,
-  rate,
   editPath,
+  isReviewed,
 }: ItemCommentProps) => {
   const navigate = useNavigate();
   const { mutate: reviewDeleteMutate } = useDeleteReview(itemId);
@@ -41,12 +34,14 @@ const ItemComment = ({
     <Container>
       <ProfileWrapper>
         <Profile nickname={memberInfo.nickName} levelNumber={2} src={memberInfo.profileImage} />
-        <CommonMenu
-          type="update"
-          iconSize="0.25rem"
-          onUpdate={() => navigate(editPath)}
-          onDelete={handleDeleteClick}
-        />
+        {isReviewed && (
+          <CommonMenu
+            type="update"
+            iconSize="0.25rem"
+            onUpdate={() => navigate(editPath)}
+            onDelete={handleDeleteClick}
+          />
+        )}
       </ProfileWrapper>
       <ContentsWrapper>
         <CommonText type="smallInfo">{content}</CommonText>
@@ -54,11 +49,14 @@ const ItemComment = ({
       <ContentsWrapper>
         <DateText createdDate={createAt} />
         <InteractPanel>
-          <CommonIcon type="heart" size="0.75rem" />
-          <CommonText type="smallInfo">{rate}</CommonText>
-          <CommonButton type="xsText">좋아요</CommonButton>
-          <CommonButton type="xsText">인벤토리</CommonButton>
-          <CommonButton type="xsText">채택하기</CommonButton>
+          <CommonButton
+            type="xsText"
+            onClick={() =>
+              navigate(`/member/${memberInfo.nickName}/inventory/${memberInfo.memberId}`)
+            }
+          >
+            인벤토리
+          </CommonButton>
         </InteractPanel>
       </ContentsWrapper>
     </Container>
