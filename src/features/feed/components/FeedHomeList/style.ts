@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const NoResult = styled.div`
-  height: 100%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -9,7 +9,7 @@ export const NoResult = styled.div`
 `;
 
 export const ObservedBox = styled.div`
-  height: 10px;
+  height: 1rem;
 `;
 
 export const NoMoreResult = styled.div`
