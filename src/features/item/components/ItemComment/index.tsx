@@ -1,12 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import {
-  CommonButton,
-  CommonIcon,
-  CommonMenu,
-  CommonText,
-  DateText,
-  Profile,
-} from '@/shared/components';
+import { CommonButton, CommonMenu, CommonText, DateText, Profile } from '@/shared/components';
 import { Review } from '@/shared/types';
 import { Container, ProfileWrapper, ContentsWrapper, InteractPanel } from './style';
 import { useDeleteReview } from '@/features/review/hooks';
@@ -56,7 +49,6 @@ const ItemComment = ({
       <ContentsWrapper>
         <DateText createdDate={createAt} />
         <InteractPanel>
-          <CommonIcon type="heart" size="0.75rem" />
           <CommonButton
             type="xsText"
             onClick={() =>
