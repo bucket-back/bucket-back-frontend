@@ -5,3 +5,4 @@ export { default as useValidateForm } from './useValidateForm';
 export { default as useDrawer } from './useDrawer';
 export { default as useUserInfo } from './useUserInfo';
 export { default as useAuthNavigate } from './useAuthNavigate';
+export { default as useObserver } from './useObserver';

@@ -1,4 +1,4 @@
-import { queryOptions } from '@tanstack/react-query';
+import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
 import { GetMyItemsRequest, itemApi } from '.';
 
 const itemQueryOption = {
@@ -12,6 +12,15 @@ const itemQueryOption = {
     queryOptions({
       queryKey: [...itemQueryOption.all, hobbyName] as const,
       queryFn: () => itemApi.getMyItems({ hobbyName, cursorId, size }),
+    }),
+  infinityList: ({ hobbyName, size }: GetMyItemsRequest) =>
+    infiniteQueryOptions({
+      queryKey: [...itemQueryOption.all, hobbyName] as const,
+      queryFn: ({ pageParam: cursorId }) => itemApi.getMyItems({ hobbyName, cursorId, size }),
+      initialPageParam: '',
+      getNextPageParam: (data) => {
+        return data.nextCursorId;
+      },
     }),
 };
 

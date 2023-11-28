@@ -30,7 +30,7 @@ export interface GetMyItemsRequest {
 }
 
 export interface GetMyItemsResponse {
-  cursorId: string;
+  nextCursorId: string;
   summaries: MyItemSummary[];
   totalCount: number;
 }
