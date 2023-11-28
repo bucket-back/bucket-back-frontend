@@ -6,17 +6,17 @@ const feedQueryOption = {
   list: ({
     hobbyName,
     nickname,
-    myPageOwnerLikeFeeds,
+    onlyNicknameLikeFeeds,
     sortCondition = 'RECENT',
     size = 5,
   }: GetFeedsRequest) =>
     infiniteQueryOptions({
-      queryKey: [...feedQueryOption.all, hobbyName, sortCondition, myPageOwnerLikeFeeds] as const,
+      queryKey: [...feedQueryOption.all, hobbyName, sortCondition, onlyNicknameLikeFeeds] as const,
       queryFn: ({ pageParam: cursorId }) =>
         feedApi.getFeeds({
           hobbyName,
           nickname,
-          myPageOwnerLikeFeeds,
+          onlyNicknameLikeFeeds,
           sortCondition,
           cursorId,
           size,
