@@ -1,25 +1,13 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useInfiniteQuery } from '@tanstack/react-query';
 import { CommonTabs } from '@/shared/components';
 import { Container } from './style';
 import { useHobby } from '@/features/hobby/hooks';
 import { VoteInProgress, Votes } from '@/features/vote/components';
-import { voteQueryOption } from '@/features/vote/service';
-
 const VoteHome = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const getHobby = searchParams.get('hobby');
-  const getStatus = searchParams.get('status');
-  const getSort = searchParams.get('sort');
   const { data: hobbyData, isSuccess: hobbySuccess } = useHobby();
-
-  const { data: votesInProgressData } = useInfiniteQuery({
-    ...voteQueryOption.list({
-      hobby: getHobby || '',
-      status: 'inprogress',
-    }),
-  });
 
   useEffect(() => {
     if (!searchParams.get('hobby') && hobbySuccess) {
@@ -46,8 +34,8 @@ const VoteHome = () => {
             label: value,
             content: (
               <>
-                <VoteInProgress votes={votesInProgressData?.pages[0].votes || []} />
-                <Votes getStatus={getStatus!} getHobby={getHobby!} getSort={getSort!} />
+                <VoteInProgress />
+                <Votes />
               </>
             ),
           })) || []
