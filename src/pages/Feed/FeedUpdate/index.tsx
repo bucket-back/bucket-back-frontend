@@ -67,8 +67,7 @@ const FeedUpdate = () => {
           <ContentsWrapper>
             <ContentsPanel>
               <CommonText type="normalInfo">선택한 취미입니다.</CommonText>
-              {/* TODO hobby 한글로 */}
-              <HobbyRadio defaultValue="야구" isReadOnly />
+              <HobbyRadio defaultValue={feedDetail.data.hobby} isReadOnly />
             </ContentsPanel>
             <ContentsPanel>
               <CommonText type="normalInfo">선택한 버킷입니다.</CommonText>

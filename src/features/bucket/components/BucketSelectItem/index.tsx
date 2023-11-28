@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import {
   CommonButton,
   CommonDivider,
@@ -21,6 +22,8 @@ interface BucketSelectItemPorps {
 }
 
 const BucketSelectItem = ({ items, selectedItems, onClick }: BucketSelectItemPorps) => {
+  const navigate = useNavigate();
+
   const handleClick = ({ id, image }: SelectedItem) => {
     onClick((prev) => {
       if (prev.map((item) => item.id).includes(id)) {
@@ -52,14 +55,20 @@ const BucketSelectItem = ({ items, selectedItems, onClick }: BucketSelectItemPor
             </ItemBox>
           ))}
         </ItemsWrapper>
-        <CommonDivider size="sm" />
-        <div>
-          <CommonText type="smallInfo">원하시는 아이템이 없나요?</CommonText>
-          <Container>
-            <CommonButton type="text">아이템 추가하러가기</CommonButton>
-            <CommonIcon type="chevronRight" />
-          </Container>
-        </div>
+        {items.totalCount === 0 && (
+          <>
+            <CommonDivider size="sm" />
+            <div>
+              <CommonText type="smallInfo">원하시는 아이템이 없나요?</CommonText>
+              <Container>
+                <CommonButton type="text" onClick={() => navigate('/item')}>
+                  아이템 추가하러가기
+                </CommonButton>
+                <CommonIcon type="chevronRight" />
+              </Container>
+            </div>
+          </>
+        )}
       </Body>
     </>
   );

@@ -99,12 +99,12 @@ const FeedItem = ({
         )}
         {isDetail && (
           <BucketInfoBox>
-            <CommonText type="normalInfo">{bucketName}</CommonText>
+            <CommonText type="smallInfo">버킷명: {bucketName}</CommonText>
             {totalPrice && (
-              <CommonText type="normalInfo">버킷 총액: {formatNumber(totalPrice)}원</CommonText>
+              <CommonText type="smallInfo">버킷 총액: {formatNumber(totalPrice)}원</CommonText>
             )}
             {bucketBudget && (
-              <CommonText type="normalInfo">예산: {formatNumber(bucketBudget)}원</CommonText>
+              <CommonText type="smallInfo">예산: {formatNumber(bucketBudget)}원</CommonText>
             )}
           </BucketInfoBox>
         )}
