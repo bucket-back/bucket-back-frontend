@@ -18,6 +18,7 @@ interface SelectedItem {
 
 interface BucketInfo {
   name: string;
+  budget: number;
 }
 
 const BucketUpdate = () => {
@@ -41,7 +42,7 @@ const BucketUpdate = () => {
         return [...acc, { id: cur.id, image: cur.image }];
       }, []);
 
-      return { hobby: data.hobby, items, id: data.bucketId, name: data.name };
+      return { hobby: data.hobby, items, id: data.bucketId, name: data.name, budget: data.budget };
     },
   });
 
@@ -52,6 +53,7 @@ const BucketUpdate = () => {
         hobbyValue: bucket.data.hobby,
         name: data.name,
         itemIds: selectedItemIds,
+        budget: data.budget,
       });
     }
   };
@@ -60,6 +62,7 @@ const BucketUpdate = () => {
     if (bucket.isSuccess) {
       setSelectedItems(bucket.data.items);
       setValue('name', bucket.data.name);
+      setValue('budget', bucket.data.budget);
     }
   }, [bucket.data, bucket.isSuccess, setValue]);
 
@@ -87,6 +90,18 @@ const BucketUpdate = () => {
             <ContentsPanel>
               <CommonText type="normalInfo">선택한 취미입니다.</CommonText>
               {bucket.isSuccess && <HobbyRadio defaultValue={bucket.data.hobby} isReadOnly />}
+            </ContentsPanel>
+            <ContentsPanel>
+              <CommonText type="normalInfo">
+                아이템의 가격보다 높은 예산을 입력해주세요. (선택)
+              </CommonText>
+              <CommonInput
+                placeholder="버킷 이름을 입력해주세요"
+                type="text"
+                width="full"
+                error={errors.budget}
+                {...register('budget')}
+              />
             </ContentsPanel>
             <ContentsPanel>
               <CommonText type="normalInfo">아이템을 하나 이상 선택해주세요.</CommonText>

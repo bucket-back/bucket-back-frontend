@@ -26,3 +26,4 @@ export { default as SearchResult } from './Search/SearchResult';
 export { default as BucketHome } from './Bucket/BucketHome';
 export { default as BucketDetail } from './Bucket/BucketDetail';
 export { default as BucketUpdate } from './Bucket/BucketUpdate';
+export { default as FeedMember } from './Feed/FeedMember';

@@ -8,6 +8,7 @@ export interface GetFeedsResponse {
 export interface GetFeedsRequest {
   hobbyName: string;
   nickname?: string;
+  myPageOwnerLikeFeeds?: boolean;
   sortCondition?: string;
   cursorId?: string;
   size?: number;

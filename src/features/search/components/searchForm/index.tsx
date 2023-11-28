@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { CommonInput, CommonIcon, CommonIconButton } from '@/shared/components';
 import { SEARCH_KEY } from '@/shared/constants';
 import { Storage } from '@/shared/utils';
+import { useDebounce } from '../../hooks';
 import { Form } from './style';
 
 interface SearchProps {
@@ -32,7 +33,7 @@ const SearchForm = ({ keyword: currentKeyword, onInput }: SearchFormProps) => {
 
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
-  const [keyword] = watch(['keyword']);
+  const keyword = useDebounce(watch(['keyword']), 300);
 
   const { pathname } = useLocation();
 
@@ -41,6 +42,7 @@ const SearchForm = ({ keyword: currentKeyword, onInput }: SearchFormProps) => {
   const onSubmit: SubmitHandler<SearchProps> = (data, event) => {
     event?.preventDefault();
     const { keyword } = data;
+    // TODO:유틸함수로 관리해보기
     const value = Storage.getLocalStoraged(SEARCH_KEY);
     if (!Array.isArray(value)) {
       Storage.setLocalStoraged(SEARCH_KEY, [keyword]);
@@ -62,13 +64,13 @@ const SearchForm = ({ keyword: currentKeyword, onInput }: SearchFormProps) => {
     navigate('/search');
   };
 
-  useEffect(() => {
-    const handleDocumentClick = (event: MouseEvent) => {
-      if (formRef.current?.contains(event.target as Node) === false && isFocus) {
-        setIsFocus(false);
-      }
-    };
+  const handleDocumentClick = (event: MouseEvent) => {
+    if (formRef.current?.contains(event.target as Node) === false && isFocus) {
+      setIsFocus(false);
+    }
+  };
 
+  useEffect(() => {
     document.addEventListener('click', handleDocumentClick);
 
     return () => {
