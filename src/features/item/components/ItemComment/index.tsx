@@ -18,6 +18,7 @@ export interface ItemCommentProps {
   reviewId: Review['reviewId'];
   editPath: string;
   itemId: string;
+  isReviewed: boolean;
 }
 
 const ItemComment = ({
@@ -27,6 +28,7 @@ const ItemComment = ({
   itemId,
   reviewId,
   editPath,
+  isReviewed,
 }: ItemCommentProps) => {
   const navigate = useNavigate();
   const { mutate: reviewDeleteMutate } = useDeleteReview(itemId);
@@ -39,12 +41,14 @@ const ItemComment = ({
     <Container>
       <ProfileWrapper>
         <Profile nickname={memberInfo.nickName} levelNumber={2} src={memberInfo.profileImage} />
-        <CommonMenu
-          type="update"
-          iconSize="0.25rem"
-          onUpdate={() => navigate(editPath)}
-          onDelete={handleDeleteClick}
-        />
+        {isReviewed && (
+          <CommonMenu
+            type="update"
+            iconSize="0.25rem"
+            onUpdate={() => navigate(editPath)}
+            onDelete={handleDeleteClick}
+          />
+        )}
       </ProfileWrapper>
       <ContentsWrapper>
         <CommonText type="smallInfo">{content}</CommonText>
