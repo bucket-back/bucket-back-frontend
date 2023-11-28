@@ -43,8 +43,6 @@ const MemberHome = () => {
   const logout = useLogout();
   const leave = useLeave();
 
-  console.log(member.data?.memberProfile.profileImage);
-
   return (
     <>
       <Header type="logo" />
