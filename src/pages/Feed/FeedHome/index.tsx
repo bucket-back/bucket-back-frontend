@@ -1,11 +1,8 @@
-import { Fragment } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { CommonDivider, CommonSelect, CommonTabs } from '@/shared/components';
-import { useIntersectionObserver } from '@/shared/hooks';
-import { Container, NoResult, SelectWrapper } from './style';
-import { FeedItem } from '@/features/feed/components';
-import { feedQueryOption } from '@/features/feed/service';
+import { useSearchParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { CommonSelect, CommonTabs } from '@/shared/components';
+import { Container, SelectWrapper } from './style';
+import { FeedHomeList } from '@/features/feed/components';
 import { hobbyQueryOption } from '@/features/hobby/service';
 
 const FeedHome = () => {
@@ -50,7 +47,7 @@ const FeedHome = () => {
                 }}
               />
             </SelectWrapper>
-            <HobbyFeedList
+            <FeedHomeList
               hobbyName={searchParams.get('hobby') || hobbies.data[0].name}
               sortCondition={searchParams.get('sort') || 'recent'}
             />
@@ -62,63 +59,3 @@ const FeedHome = () => {
 };
 
 export default FeedHome;
-
-interface FeedListProps {
-  hobbyName: string;
-  sortCondition: string;
-}
-
-const HobbyFeedList = ({ hobbyName, sortCondition }: FeedListProps) => {
-  const navigate = useNavigate();
-  const feeds = useInfiniteQuery(feedQueryOption.list({ hobbyName, sortCondition }));
-
-  const observedRef = useIntersectionObserver({ onObserve: feeds.fetchNextPage });
-
-  if (feeds.isPending) {
-    return;
-  }
-
-  if (feeds.isError) {
-    return;
-  }
-
-  if (feeds.data.pages[0].feeds.length === 0) {
-    return <NoResult>피드가 존재하지 않습니다.</NoResult>;
-  }
-
-  return (
-    <>
-      {feeds.data.pages.map((page) =>
-        page.feeds.map(
-          ({
-            feedId,
-            memberInfo,
-            content,
-            isLike,
-            likeCount,
-            commentCount,
-            createdAt,
-            feedItems,
-          }) => (
-            <Fragment key={feedId}>
-              <FeedItem
-                memberInfo={memberInfo}
-                feedId={feedId}
-                feedContent={content}
-                isLike={isLike}
-                likeCount={likeCount}
-                commentCount={commentCount}
-                createdAt={createdAt}
-                feedItems={feedItems}
-                isDetail={false}
-                onClick={() => navigate(`./${feedId}`)}
-              />
-              <CommonDivider size="sm" />
-            </Fragment>
-          )
-        )
-      )}
-      {feeds.hasNextPage ? <div ref={observedRef} /> : <>더이상 피드가 존재하지 않습니다.</>}
-    </>
-  );
-};
