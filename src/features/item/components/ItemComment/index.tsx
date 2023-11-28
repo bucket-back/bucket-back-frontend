@@ -15,7 +15,6 @@ export interface ItemCommentProps {
   content: Review['content'];
   createAt: Review['createdAt'];
   memberInfo: Review['memberInfo'];
-  rate: Review['rate'];
   reviewId: Review['reviewId'];
   editPath: string;
   itemId: string;
@@ -27,7 +26,6 @@ const ItemComment = ({
   memberInfo,
   itemId,
   reviewId,
-  rate,
   editPath,
 }: ItemCommentProps) => {
   const navigate = useNavigate();
@@ -55,10 +53,14 @@ const ItemComment = ({
         <DateText createdDate={createAt} />
         <InteractPanel>
           <CommonIcon type="heart" size="0.75rem" />
-          <CommonText type="smallInfo">{rate}</CommonText>
-          <CommonButton type="xsText">좋아요</CommonButton>
-          <CommonButton type="xsText">인벤토리</CommonButton>
-          <CommonButton type="xsText">채택하기</CommonButton>
+          <CommonButton
+            type="xsText"
+            onClick={() =>
+              navigate(`/member/${memberInfo.nickName}/inventory/${memberInfo.memberId}`)
+            }
+          >
+            인벤토리
+          </CommonButton>
         </InteractPanel>
       </ContentsWrapper>
     </Container>
