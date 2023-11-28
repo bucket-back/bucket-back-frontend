@@ -33,7 +33,7 @@ const SearchForm = ({ keyword: currentKeyword, onInput }: SearchFormProps) => {
 
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
-  const keyword = useDebounce(watch(['keyword']), 1000);
+  const keyword = useDebounce(watch(['keyword']), 300);
 
   const { pathname } = useLocation();
 
