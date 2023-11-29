@@ -11,6 +11,8 @@ import {
   BucketListWrapper,
   BucketBox,
   AddBucketButtonBox,
+  ImageInput,
+  ImageLabel,
 } from './style';
 import { GetBucketsResponse } from '@/features/bucket/service';
 
@@ -44,14 +46,22 @@ const FeedSelectBucket = ({ selectedBucket, bucketList, onClick }: FeedSelectBuc
       {bucketList.buckets.length > 0 ? (
         <BucketListWrapper>
           {bucketList.buckets.map((bucket) => (
-            <BucketBox
-              style={{ border: selectedBucket === bucket.bucketId ? '1px solid' : undefined }}
-              key={bucket.bucketId}
-              onClick={() =>
-                onClick({ id: bucket.bucketId, images: reduceImgUrl(bucket.itemImages) })
-              }
-            >
-              <DividerImage images={reduceImgUrl(bucket.itemImages)} type="base" />
+            <BucketBox key={bucket.bucketId}>
+              <ImageInput
+                type="checkbox"
+                id={String(bucket.bucketId)}
+                onChange={() => {
+                  if (selectedBucket === bucket.bucketId) {
+                    onClick(null);
+                  } else {
+                    onClick({ id: bucket.bucketId, images: reduceImgUrl(bucket.itemImages) });
+                  }
+                }}
+                checked={selectedBucket === bucket.bucketId}
+              />
+              <ImageLabel htmlFor={String(bucket.bucketId)}>
+                <DividerImage images={reduceImgUrl(bucket.itemImages)} type="base" />
+              </ImageLabel>
               <CommonText type="smallInfo">{bucket.name}</CommonText>
             </BucketBox>
           ))}

@@ -34,6 +34,7 @@ export const ContentsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem 1rem 1rem 1.5rem;
+  cursor: pointer;
 `;
 
 export const ContentsPanel = styled.div`
@@ -57,4 +58,17 @@ export const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
+`;
+
+export const IconBox = styled.div`
+  padding-right: 0.75rem;
+`;
+
+export const AddBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1rem;
+  gap: 0.5rem;
 `;
