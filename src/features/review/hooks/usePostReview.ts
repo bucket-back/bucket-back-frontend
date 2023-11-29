@@ -18,7 +18,7 @@ const usePostReview = () => {
         queryKey: [...itemQueryOption.detail(itemId).queryKey],
       });
       toast({ message: '리뷰가 등록되었습니다', type: 'success' });
-      navigate(`/item/${itemId}`);
+      navigate(`/item/${itemId}`, { replace: true });
     },
   });
 };

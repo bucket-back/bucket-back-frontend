@@ -15,7 +15,7 @@ const useEditReview = () => {
     onSuccess: ({ itemId }: EditReviewItemResponse) => {
       queryClient.invalidateQueries({ queryKey: [...itemQueryOption.detail(itemId).queryKey] });
       toast({ message: '리뷰가 수정되었습니다!', type: 'success' });
-      navigate(`/item/${itemId}`);
+      navigate(`/item/${itemId}`, { replace: true });
     },
     onError: (error: AxiosResponse) => {
       if (error.data.code === 'REVIEW_003') {
