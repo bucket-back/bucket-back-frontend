@@ -2,10 +2,8 @@ import { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { CommonDivider, CommonIcon, CommonText } from '@/shared/components';
-import { SEARCH_KEY } from '@/shared/constants';
-import { Storage } from '@/shared/utils';
 import { WordWrapper, NoResult } from './style';
-import { searchQueryOption } from '@/features/search/service';
+import { searchQueryOption, searchLocalStorage } from '@/features/search/service';
 import { SearchListProps } from '@/pages/Search/SearchMain';
 
 // TODO:
@@ -22,18 +20,7 @@ const SearchList = ({ keyword, onInput }: SearchListProps) => {
 
   const handleClick = (itemName: string) => {
     onInput(itemName);
-    const value = Storage.getLocalStoraged(SEARCH_KEY);
-    if (!Array.isArray(value)) {
-      Storage.setLocalStoraged(SEARCH_KEY, [itemName]);
-
-      return;
-    }
-    const findValue = value.findIndex((value: string) => value === itemName);
-    if (findValue === -1) {
-      Storage.setLocalStoraged(SEARCH_KEY, [...value, itemName]);
-    } else {
-      Storage.setLocalStoraged(SEARCH_KEY, [...value]);
-    }
+    searchLocalStorage(itemName);
     navigate(`result?keyword=${encodeURIComponent(itemName)}`);
   };
 
