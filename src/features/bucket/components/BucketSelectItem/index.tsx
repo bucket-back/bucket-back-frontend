@@ -37,7 +37,7 @@ const BucketSelectItem = ({ items, onClick }: BucketSelectItemPorps) => {
     <>
       <Body>
         <CommonText type="normalTitle">아이템 선택</CommonText>
-        <CommonText type="subStrongInfo">총 {items.totalCount}개의 아이템</CommonText>
+        <CommonText type="subStrongInfo">총 {items.totalMemberItemCount}개의 아이템</CommonText>
         <ItemsWrapper>
           {items.summaries.map(({ itemInfo }) => (
             <ItemBox key={itemInfo.id}>
@@ -60,7 +60,7 @@ const BucketSelectItem = ({ items, onClick }: BucketSelectItemPorps) => {
             <div>
               <CommonText type="smallInfo">원하시는 아이템이 없나요?</CommonText>
               <Container>
-                <CommonButton type="text" onClick={() => navigate('/item')}>
+                <CommonButton type="text" onClick={() => navigate('/search')}>
                   아이템 추가하러가기
                 </CommonButton>
                 <CommonIcon type="chevronRight" />
