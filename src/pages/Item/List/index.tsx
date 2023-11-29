@@ -32,8 +32,6 @@ const ItemList = () => {
     ...itemQueryOption.infinityList({ size: 3 }),
   });
 
-  console.log(hasNextPage);
-
   const ref = useIntersectionObserver({ onObserve: fetchNextPage });
 
   const handleChange = (deleteId: number) => {
@@ -64,6 +62,10 @@ const ItemList = () => {
     return <>Error...</>;
   }
 
+  const totalCount = data.pages
+    .map(({ totalCount }) => totalCount)
+    .reduce((prev, next) => prev + next, 0);
+
   return (
     <>
       <Header type="logo" />
@@ -83,13 +85,13 @@ const ItemList = () => {
           <CommonText type="smallInfo">
             {isDelete
               ? `총 삭제할 ${formatNumber(deleteData.length)}개의 아이템`
-              : `총 ${formatNumber(data.pages[0].totalCount)}개의 아이템`}
+              : `총 ${formatNumber(totalCount)}개의 아이템`}
           </CommonText>
         </ItemTextContaienr>
         <Grid>
-          {data.pages.map(({ summaries }) =>
-            summaries.map(({ itemInfo: { id, image, name, price } }) => (
-              <>
+          <>
+            {data.pages.map(({ summaries }) =>
+              summaries.map(({ itemInfo: { id, image, name, price } }) => (
                 <ListItem
                   key={id}
                   id={id}
@@ -100,10 +102,10 @@ const ItemList = () => {
                   isDeleteMode={deleteData.includes(id)}
                   handleChange={handleChange}
                 />
-                <div ref={ref} />
-              </>
-            ))
-          )}
+              ))
+            )}
+            {hasNextPage && <div ref={ref} />}
+          </>
         </Grid>
       </CommonContainer>
       <Footer>
