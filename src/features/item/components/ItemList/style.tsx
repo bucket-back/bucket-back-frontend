@@ -8,7 +8,7 @@ export interface BlurProp {
 
 export const PositionWrapper = styled.div<BlurProp>`
   filter: ${(props) =>
-    props.isDelete ? (props.isDeleteMode ? undefined : 'blur(3px);') : undefined}
+    props.isDelete ? (props.isDeleteMode ? undefined : 'blur(1px);') : undefined}
   margin-top: 10px;
 `;
 
