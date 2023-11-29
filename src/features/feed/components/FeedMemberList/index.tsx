@@ -5,7 +5,7 @@ import { CommonDivider } from '@/shared/components';
 import { useIntersectionObserver } from '@/shared/hooks';
 import { FeedItem } from '..';
 import { feedQueryOption } from '../../service';
-import { NoMoreResult, NoResult, ObservedBox } from './style';
+import { NoResult, ObservedBox } from './style';
 
 interface FeedMemberListProps {
   hobbyName: string;
@@ -66,11 +66,7 @@ const FeedMemberList = ({ hobbyName, nickname, onlyNicknameLikeFeeds }: FeedMemb
           )
         )
       )}
-      {feeds.hasNextPage ? (
-        <ObservedBox ref={observedRef} />
-      ) : (
-        <NoMoreResult>더이상 피드가 존재하지 않습니다.</NoMoreResult>
-      )}
+      {feeds.hasNextPage && <ObservedBox ref={observedRef} />}
     </>
   );
 };

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { CommonDivider } from '@/shared/components';
 import { useIntersectionObserver } from '@/shared/hooks';
-import { NoMoreResult, NoResult, ObservedBox } from './style';
+import { NoResult, ObservedBox } from './style';
 import { FeedItem } from '@/features/feed/components';
 import { feedQueryOption } from '@/features/feed/service';
 
@@ -63,11 +63,7 @@ const FeedHomeList = ({ hobbyName, sortCondition }: FeedHomeListProps) => {
           )
         )
       )}
-      {feeds.hasNextPage ? (
-        <ObservedBox ref={observedRef} />
-      ) : (
-        <NoMoreResult>더이상 피드가 존재하지 않습니다.</NoMoreResult>
-      )}
+      {feeds.hasNextPage && <ObservedBox ref={observedRef} />}
     </>
   );
 };

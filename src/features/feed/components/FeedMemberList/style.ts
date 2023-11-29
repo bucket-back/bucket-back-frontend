@@ -11,9 +11,3 @@ export const NoResult = styled.div`
 export const ObservedBox = styled.div`
   height: 1rem;
 `;
-
-export const NoMoreResult = styled.div`
-  display: flex;
-  justify-content: center;
-  padding: 1rem 0;
-`;
