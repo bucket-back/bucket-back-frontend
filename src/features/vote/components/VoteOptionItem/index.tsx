@@ -1,6 +1,7 @@
 import { MouseEvent } from 'react';
 import { CommonImage, CommonText } from '@/shared/components';
 import { ItemInfo } from '@/shared/types';
+import { formatNumber } from '@/shared/utils';
 import { Button, ItemWrapper, TextWrapper } from './style';
 
 interface VoteOptionItemProps {
@@ -23,7 +24,7 @@ const VoteOptionItem = ({ onClick, itemInfo, votes }: VoteOptionItemProps) => {
         </Button>
       </ItemWrapper>
       <TextWrapper>
-        <CommonText type="smallTitle">{itemInfo?.price}</CommonText>
+        <CommonText type="smallTitle">{formatNumber(itemInfo?.price || 0)}</CommonText>
         <CommonText type="smallInfo">{itemInfo?.name}</CommonText>
       </TextWrapper>
     </div>

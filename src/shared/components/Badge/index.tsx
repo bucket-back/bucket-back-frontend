@@ -32,9 +32,10 @@ interface CommonBadgeProps {
   type: 'level' | 'adopt' | 'vote';
   levelNumber?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
   count?: number;
+  isVoting?: boolean;
 }
 
-const CommonBadge = ({ type, levelNumber, count }: CommonBadgeProps) => {
+const CommonBadge = ({ type, levelNumber, count, isVoting }: CommonBadgeProps) => {
   const badge = {
     level: levelNumber && (
       <Badge
@@ -55,7 +56,7 @@ const CommonBadge = ({ type, levelNumber, count }: CommonBadgeProps) => {
     ),
     vote: (
       <Badge width="fit-content" color="blue.900" bgColor="blue.100">
-        {count}명 참여
+        {count}명 참여{isVoting ? '중' : '완료'}
       </Badge>
     ),
   };
