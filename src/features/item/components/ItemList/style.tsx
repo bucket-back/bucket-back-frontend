@@ -8,8 +8,7 @@ export interface BlurProp {
 
 export const PositionWrapper = styled.div<BlurProp>`
   filter: ${(props) =>
-    props.isDelete ? (props.isDeleteMode ? undefined : 'blur(1px);') : undefined}
-  margin-top: 10px;
+    props.isDelete ? (props.isDeleteMode ? 'blur(1px);' : undefined) : undefined};
 `;
 
 export const ItemListWrapper = styled.li`
