@@ -1,6 +1,6 @@
-const ellipsisName = (name: string) => {
-  if (name.length > 25) {
-    return `${name.slice(0, 26)}...`;
+const ellipsisName = (name: string, limit: number) => {
+  if (name.length > limit) {
+    return `${name.slice(0, limit + 1)}...`;
   }
 
   return name;
