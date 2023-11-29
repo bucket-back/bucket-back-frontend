@@ -117,7 +117,12 @@ const FeedItem = ({
           <DateText createdDate={createdAt} />
           <InteractPanel>
             {isDetail ? (
-              <CommonButton type="sm" isLike={isLike} onClick={handleClickLike}>
+              <CommonButton
+                type="sm"
+                isLike={isLike}
+                onClick={handleClickLike}
+                isDisabled={feedLike.isPending || feedUnLike.isPending}
+              >
                 {String(likeCount)}
               </CommonButton>
             ) : (
