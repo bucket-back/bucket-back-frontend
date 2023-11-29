@@ -56,6 +56,8 @@ const SearchForm = ({ keyword: currentKeyword, onInput }: SearchFormProps) => {
     } else {
       Storage.setLocalStoraged(SEARCH_KEY, [...value]);
     }
+    onInput && onInput(keyword);
+    navigate(`/search/result?keyword=${encodeURIComponent(keyword)}`);
     reset();
   };
 
