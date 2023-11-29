@@ -40,7 +40,9 @@ const ItemList = () => {
   };
 
   const handleDeleteClick = () => {
-    itemMutate({ itemIds: deleteData.join(',') });
+    if (deleteData.length !== 0) {
+      itemMutate({ itemIds: deleteData.join(',') });
+    }
     setIsDelete((prev) => !prev);
   };
 
@@ -65,9 +67,9 @@ const ItemList = () => {
         <TitleContainer>
           <CommonText type="smallTitle">내 아이템 전체보기</CommonText>
           {isDelete ? (
-            <CommonIconButton type="cancel" onClick={handleDeleteClick} />
+            <CommonIconButton type="delete" onClick={handleDeleteClick} />
           ) : (
-            <CommonIconButton type="delete" onClick={() => setIsDelete((prev) => !prev)} />
+            <CommonIconButton type="cancel" onClick={() => setIsDelete((prev) => !prev)} />
           )}
         </TitleContainer>
         <ItemTextContaienr>
