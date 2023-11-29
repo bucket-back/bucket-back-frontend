@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { CommonIconButton, CommonText, Header, Footer } from '@/shared/components';
 import { useAuthNavigate } from '@/shared/hooks';
@@ -7,18 +7,19 @@ import {
   CommonContainer,
   TitleContainer,
   ItemTextContaienr,
-  ItemListContainer,
   AddContainer,
+  Grid,
+  ButtonBox,
 } from './style';
 import { ListItem } from '@/features/item/components';
 import { useDeleteItem } from '@/features/item/hooks';
-import { GetMyItemsResponse, itemQueryOption } from '@/features/item/service';
+import { itemQueryOption } from '@/features/item/service';
 
 const ItemList = () => {
   const [isDelete, setIsDelete] = useState<boolean>(false);
 
   const { data, isPending, isError } = useQuery({
-    ...itemQueryOption.myItems({ cursorId: '', size: 10 }),
+    ...itemQueryOption.myItems({ cursorId: '', size: 20 }),
   });
 
   const {
@@ -27,28 +28,25 @@ const ItemList = () => {
     isPending: itemDeletePending,
   } = useDeleteItem({ cursorId: '', size: 10 });
 
-  const [itemData, setItemData] = useState<GetMyItemsResponse['summaries']>([]);
-
   const [deleteData, setDeleteData] = useState<number[]>([]);
 
   const authNavigate = useAuthNavigate();
 
-  const handleClick = (deleteId: number) => {
-    const filterData = itemData.filter(({ itemInfo: { id } }) => id !== deleteId);
-    setItemData(filterData);
-    setDeleteData((prev) => [...prev, deleteId]);
+  const handleChange = (deleteId: number) => {
+    if (!deleteData.includes(deleteId)) {
+      setDeleteData((prev) => [...prev, deleteId]);
+    } else {
+      setDeleteData((prev) => [...prev.filter((id) => id !== deleteId)]);
+    }
   };
 
   const handleDeleteClick = () => {
-    itemMutate({ itemIds: deleteData.join(',') });
+    if (deleteData.length !== 0) {
+      itemMutate({ itemIds: deleteData.join(',') });
+    }
+    setDeleteData([]);
     setIsDelete((prev) => !prev);
   };
-
-  useEffect(() => {
-    if (data) {
-      setItemData([...data.summaries]);
-    }
-  }, [data]);
 
   if (isPending || itemDeletePending) {
     return <>Loading..</>;
@@ -63,9 +61,18 @@ const ItemList = () => {
       <Header type="logo" />
       <CommonContainer>
         <TitleContainer>
-          <CommonText type="smallTitle">내 아이템 전체보기</CommonText>
+          <CommonText type="smallTitle">내 아이템{isDelete ? ' 삭제하기' : ' 전체보기'}</CommonText>
           {isDelete ? (
-            <CommonIconButton type="cancel" onClick={handleDeleteClick} />
+            <ButtonBox>
+              <CommonIconButton
+                type="cancel"
+                onClick={() => {
+                  setDeleteData([]);
+                  setIsDelete((prev) => !prev);
+                }}
+              />
+              <CommonIconButton type="delete" onClick={handleDeleteClick} />
+            </ButtonBox>
           ) : (
             <CommonIconButton type="delete" onClick={() => setIsDelete((prev) => !prev)} />
           )}
@@ -73,12 +80,12 @@ const ItemList = () => {
         <ItemTextContaienr>
           <CommonText type="smallInfo">
             {isDelete
-              ? `총 삭제할 ${formatNumber(data.totalCount)}개의 아이템`
+              ? `총 삭제할 ${formatNumber(deleteData.length)}개의 아이템`
               : `총 ${formatNumber(data.totalCount)}개의 아이템`}
           </CommonText>
         </ItemTextContaienr>
-        <ItemListContainer>
-          {itemData.map(({ itemInfo: { id, image, name, price } }) => (
+        <Grid>
+          {data.summaries.map(({ itemInfo: { id, image, name, price } }) => (
             <ListItem
               key={id}
               id={id}
@@ -86,10 +93,11 @@ const ItemList = () => {
               price={price}
               name={name}
               isDelete={isDelete}
-              onClick={isDelete ? handleClick : undefined}
+              isDeleteMode={deleteData.includes(id)}
+              handleChange={handleChange}
             />
           ))}
-        </ItemListContainer>
+        </Grid>
       </CommonContainer>
       <Footer>
         <AddContainer>

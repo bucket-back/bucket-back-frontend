@@ -21,6 +21,7 @@ interface CommonInputProps {
   size?: 'sm' | 'md' | 'lg';
   width?: string;
   isDisabled?: boolean;
+  onInput?: () => void;
 }
 
 const CommonInput = forwardRef(
@@ -35,6 +36,7 @@ const CommonInput = forwardRef(
       size = 'md',
       width = '18.4375rem',
       isDisabled = false,
+      onInput,
       ...props
     }: CommonInputProps,
     ref
@@ -50,6 +52,7 @@ const CommonInput = forwardRef(
             {...props}
             type={type}
             isDisabled={isDisabled}
+            onFocus={onInput ? onInput : undefined}
           />
           {rightIcon && <InputRightElement>{rightIcon}</InputRightElement>}
         </InputGroup>

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { CommonIconButton, CommonImage, CommonText } from '@/shared/components';
-import { formatNumber } from '@/shared/utils';
-import { PositionWrapper, ButtonWrapper, ItemListWrapper } from './style';
+import { CommonImage, CommonText } from '@/shared/components';
+import { ellipsisName, formatNumber } from '@/shared/utils';
+import { PositionWrapper, ItemListWrapper, ImageInput, ImageLabel } from './style';
 import { ItemSummary } from '@/shared/types/item';
 
 interface ItemListProps {
@@ -10,10 +10,19 @@ interface ItemListProps {
   price: ItemSummary['price'];
   name: ItemSummary['name'];
   isDelete: boolean;
-  onClick?: (id: number) => void;
+  isDeleteMode: boolean;
+  handleChange: (id: number) => void;
 }
 
-const ListItem = ({ id, image, price, name, isDelete, onClick }: ItemListProps) => {
+const ListItem = ({
+  id,
+  image,
+  price,
+  name,
+  isDelete,
+  isDeleteMode,
+  handleChange,
+}: ItemListProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -23,22 +32,26 @@ const ListItem = ({ id, image, price, name, isDelete, onClick }: ItemListProps) 
     navigate(`/item/${id}`);
   };
 
-  const handleDeleteClick = () => {
-    onClick && onClick(id);
-  };
-
-  return (
+  return isDelete ? (
+    <PositionWrapper isDelete={isDelete} isDeleteMode={isDeleteMode}>
+      <ItemListWrapper>
+        <ImageInput type="checkbox" id={String(id)} onChange={() => handleChange(id)} />
+        <ImageLabel htmlFor={String(id)}>
+          <CommonImage size="sm" src={image} />
+        </ImageLabel>
+        <CommonText type="normalInfo">{formatNumber(price)}</CommonText>
+        <CommonText type="smallInfo" noOfLines={0}>
+          {ellipsisName(name, 20)}
+        </CommonText>
+      </ItemListWrapper>
+    </PositionWrapper>
+  ) : (
     <PositionWrapper>
-      {isDelete && (
-        <ButtonWrapper>
-          <CommonIconButton type="cancel" onClick={handleDeleteClick} />
-        </ButtonWrapper>
-      )}
       <ItemListWrapper onClick={handleClick}>
         <CommonImage size="sm" alt={name} src={image} />
         <CommonText type="normalInfo">{formatNumber(price)}</CommonText>
         <CommonText type="smallInfo" noOfLines={0}>
-          {name}
+          {ellipsisName(name, 20)}
         </CommonText>
       </ItemListWrapper>
     </PositionWrapper>
