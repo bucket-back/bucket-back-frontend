@@ -3,11 +3,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
   CommonAvatar,
+  CommonBadge,
   CommonButton,
   CommonDivider,
   CommonDrawer,
   CommonIcon,
-  CommonIconButton,
   CommonMenu,
   CommonText,
   DividerImage,
@@ -26,9 +26,13 @@ import {
   SubTitleBox,
   ImagePanel,
   Grid,
+  IconBox,
+  AddBox,
 } from './style';
 import { useLeave, useLogout } from '@/features/member/hooks';
 import { memberQueryOption } from '@/features/member/service';
+
+type Level = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
 const MemberHome = () => {
   const { nickname } = useParams();
@@ -51,7 +55,7 @@ const MemberHome = () => {
           <MemberInfoPanel>
             <CommonAvatar size="5rem" src={member.data?.memberProfile.profileImage} />
             <MemberInfoBox>
-              <CommonText type="strongInfo">LV. {member.data?.memberProfile.level}</CommonText>
+              <CommonBadge type="level" levelNumber={member.data?.memberProfile.level as Level} />
               <CommonText type="smallTitle">{nickname}</CommonText>
               {isSelf && (
                 <CommonButton type="profile" onClick={() => navigate('/member/edit')}>
@@ -81,7 +85,7 @@ const MemberHome = () => {
           </CommonText>
         </MemberIntroWrapper>
         <CommonDivider size="lg" />
-        <ContentsWrapper>
+        <ContentsWrapper onClick={() => navigate(`/member/${nickname}/inventory`)}>
           <ContentsPanel>
             <div>
               <SubTitleBox>
@@ -92,24 +96,31 @@ const MemberHome = () => {
                 취미별 아이템을 조합하여 나만의 인벤토리를 만들 수 있어요
               </CommonText>
             </div>
-            <CommonIconButton
-              type="detail"
-              fontSize="0.8rem"
-              onClick={() => navigate(`/member/${nickname}/inventory`)}
-            />
+            <IconBox>
+              <CommonIcon type="chevronRight" size="0.8rem" />
+            </IconBox>
           </ContentsPanel>
-          {member.isSuccess && member.data.inventoryProfiles.length > 0 && (
-            <ImagePanel onClick={() => navigate(`/member/${nickname}/inventory`)}>
+          {member.isSuccess && member.data.inventoryProfiles.length > 0 ? (
+            <ImagePanel>
               <Grid>
                 {member.data.inventoryProfiles.map((inventory) => (
                   <DividerImage key={inventory.id} type="base" images={inventory.images} />
                 ))}
               </Grid>
             </ImagePanel>
+          ) : (
+            isSelf && (
+              <AddBox>
+                <CommonText type="smallInfo">보유하신 인벤토리가 없네요.</CommonText>
+                <CommonButton type="text" onClick={() => navigate('/inventory/create')}>
+                  인벤토리 추가하러가기
+                </CommonButton>
+              </AddBox>
+            )
           )}
         </ContentsWrapper>
         <CommonDivider size="sm" />
-        <ContentsWrapper>
+        <ContentsWrapper onClick={() => navigate(`/member/${nickname}/bucket`)}>
           <ContentsPanel>
             <div>
               <SubTitleBox>
@@ -120,24 +131,31 @@ const MemberHome = () => {
                 취미별 아이템을 조합하여 나만의 버킷을 만들 수 있어요
               </CommonText>
             </div>
-            <CommonIconButton
-              type="detail"
-              fontSize="0.8rem"
-              onClick={() => navigate(`/member/${nickname}/bucket`)}
-            />
+            <IconBox>
+              <CommonIcon type="chevronRight" size="0.8rem" />
+            </IconBox>
           </ContentsPanel>
-          {member.isSuccess && member.data.bucketProfiles.length > 0 && (
-            <ImagePanel onClick={() => navigate(`/member/${nickname}/bucket`)}>
+          {member.isSuccess && member.data.bucketProfiles.length > 0 ? (
+            <ImagePanel>
               <Grid>
                 {member.data?.bucketProfiles.map((bucket) => (
                   <DividerImage key={bucket.id} type="base" images={bucket.images} />
                 ))}
               </Grid>
             </ImagePanel>
+          ) : (
+            isSelf && (
+              <AddBox>
+                <CommonText type="smallInfo">보유하신 버킷이 없어요.</CommonText>
+                <CommonButton type="text" onClick={() => navigate('/bucket/create')}>
+                  버킷 추가하러가기
+                </CommonButton>
+              </AddBox>
+            )
           )}
         </ContentsWrapper>
         <CommonDivider size="sm" />
-        <ContentsWrapper>
+        <ContentsWrapper onClick={() => navigate(`/member/${nickname}/feed`)}>
           <ContentsPanel>
             <div>
               <SubTitleBox>
@@ -148,11 +166,9 @@ const MemberHome = () => {
                 내가 올린 피드와 좋아요한 피드를 확인할 수 있어요
               </CommonText>
             </div>
-            <CommonIconButton
-              type="detail"
-              fontSize="0.8rem"
-              onClick={() => navigate(`/member/${nickname}/feed`)}
-            />
+            <IconBox>
+              <CommonIcon type="chevronRight" size="0.8rem" />
+            </IconBox>
           </ContentsPanel>
         </ContentsWrapper>
         <CommonDivider size="sm" />
