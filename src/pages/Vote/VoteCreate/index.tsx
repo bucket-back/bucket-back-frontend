@@ -25,8 +25,9 @@ interface Hobby {
 
 const VoteCreate = () => {
   const [selectedHobby, setSelectedHobby] = useState<Hobby>({ english: '', hangul: '' });
+  const [prevSelectedHobby, setPrevSelectedHobby] = useState<string>('');
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
-  const { mutate: CreateVoteMuate } = useCreateVote();
+  const { mutate: CreateVoteMutate } = useCreateVote();
   const {
     register,
     handleSubmit,
@@ -36,14 +37,20 @@ const VoteCreate = () => {
   const openToast = useCustomToast();
 
   const onSubmit: SubmitHandler<Textarea> = (data) => {
-    CreateVoteMuate({
-      hobby: selectedHobby.hangul,
-      content: data.textarea,
-      item1Id: Number(selectedItems[0].id),
-      item2Id: Number(selectedItems[1].id),
-    });
+    if (selectedHobby.english === prevSelectedHobby) {
+      CreateVoteMutate({
+        hobby: selectedHobby.hangul,
+        content: data.textarea,
+        item1Id: Number(selectedItems[0].id),
+        item2Id: Number(selectedItems[1].id),
+      });
+    } else {
+      openToast({
+        type: 'error',
+        message: `${selectedHobby.hangul}취미에 맞는 아이템을 선택해주세요.`,
+      });
+    }
   };
-  console.log(!selectedItems.length);
 
   return (
     <>
@@ -59,19 +66,19 @@ const VoteCreate = () => {
             취미를 선택해주세요.
           </CommonText>
           <RadioBox>
-            <HobbySelector onChange={setSelectedHobby} setSelectedItems={setSelectedItems} />
+            <HobbySelector onChange={setSelectedHobby} />
           </RadioBox>
         </Wrapper>
         <Wrapper>
           <CommonText type="normalInfo" noOfLines={0}>
-            아이템을 두개 선택해주세요
+            아이템을 두개 선택해주세요.
           </CommonText>
           {selectedItems.length <= 1 ? (
             <CommonButton
               type="custom"
               onClick={() => {
                 !selectedHobby.english
-                  ? openToast({ type: 'error', message: '취미를 선택해주세요' })
+                  ? openToast({ type: 'info', message: '취미를 선택해주세요.' })
                   : onOpen();
               }}
             />
@@ -93,12 +100,16 @@ const VoteCreate = () => {
         </Wrapper>
         <TextareaWrapper>
           <CommonTextarea
-            placeholder="투표 내용을 입력해주세요"
+            placeholder="투표 내용을 입력해주세요."
             size="sm"
             label="투표 내용"
             error={errors.textarea}
             {...register('textarea', {
-              required: '내용을 필수를 입력해주세요',
+              required: '내용을 필수로 입력해주세요.',
+              maxLength: {
+                value: 1000,
+                message: '최대 1000자 이하로 입력해주세요.',
+              },
             })}
           />
           <CommonButton
@@ -117,6 +128,7 @@ const VoteCreate = () => {
           onClose();
         }}
         onClickFooterButton={() => {
+          setPrevSelectedHobby(selectedHobby.english);
           onClose();
         }}
         isFull={true}

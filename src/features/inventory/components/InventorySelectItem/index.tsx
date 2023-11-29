@@ -1,4 +1,5 @@
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { CommonButton, CommonIcon, CommonImage, CommonText } from '@/shared/components';
 import { formatNumber } from '@/shared/utils';
@@ -18,6 +19,7 @@ const InventorySelectItem = ({
   selectedHobby,
   inventoryId,
 }: InventorySelectItemProps) => {
+  const navigate = useNavigate();
   const { data: myItemsData } = useQuery({
     ...inventoryQueryOption.myItems({ hobbyName: selectedHobby, inventoryId: Number(inventoryId) }),
   });
@@ -71,7 +73,9 @@ const InventorySelectItem = ({
         <div>
           <CommonText type="smallInfo">원하시는 아이템이 없나요?</CommonText>
           <Wrapper>
-            <CommonButton type="text">아이템 추가하러가기</CommonButton>
+            <CommonButton type="text" onClick={() => navigate('/item/create')}>
+              아이템 추가하러가기
+            </CommonButton>
             <CommonIcon type="chevronRight" />
           </Wrapper>
         </div>

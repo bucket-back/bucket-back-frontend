@@ -27,8 +27,10 @@ const VoteItem = ({ item1Info, item2Info, voteInfo }: VoteItemProps) => {
         <ContentsWrapper>
           <VoteImageWrapper>
             <CommonImage size="base" src={item1Info.image} />
-            <CommonText type="smallInfo">{formatNumber(item1Info.price)}</CommonText>
-            <CommonText type="smallInfo">{item1Info.name}</CommonText>
+            <div>
+              <CommonText type="smallInfo">{formatNumber(item1Info.price)}</CommonText>
+              <CommonText type="smallInfo">{item1Info.name}</CommonText>
+            </div>
           </VoteImageWrapper>
           <VsBox>
             <CommonText type="smallInfo" noOfLines={0}>
@@ -37,8 +39,10 @@ const VoteItem = ({ item1Info, item2Info, voteInfo }: VoteItemProps) => {
           </VsBox>
           <VoteImageWrapper>
             <CommonImage size="base" src={item2Info.image} />
-            <CommonText type="smallInfo">{formatNumber(item2Info.price)}</CommonText>
-            <CommonText type="smallInfo">{item2Info.name}</CommonText>
+            <div>
+              <CommonText type="smallInfo">{formatNumber(item2Info.price)}</CommonText>
+              <CommonText type="smallInfo">{item2Info.name}</CommonText>
+            </div>
           </VoteImageWrapper>
         </ContentsWrapper>
       </ContentsContainer>

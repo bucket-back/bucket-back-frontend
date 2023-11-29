@@ -13,6 +13,7 @@ const VoteInProgress = () => {
     ...voteQueryOption.list({
       hobby: getHobby || '',
       status: 'inprogress',
+      size: 5,
     }),
     select: (data) => data?.pages.flatMap(({ votes }) => votes),
   });

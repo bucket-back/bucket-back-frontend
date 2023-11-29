@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { CommonImage, CommonMenu, CommonText, Header } from '@/shared/components';
 import { useDrawer } from '@/shared/hooks';
 import { formatNumber } from '@/shared/utils';
+import { Storage } from '@/shared/utils';
 import { Container, ContentWrapper, Grid, GridItem, TitleWrapper } from './style';
 import UpdateInventoryDetail from '@/features/inventory/components/ UpdateInventoryDetail';
 import DeleteInventoryDetail from '@/features/inventory/components/DeleteInventoryDetail';
@@ -14,6 +15,7 @@ const InventoryDetail = () => {
   const { isOpen, onOpen, onClose } = useDrawer();
   const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDrawer();
   const navigate = useNavigate();
+  const isOwner = nickname === Storage.getLocalStoraged('userInfo').nickname;
   const { data: inventoryDetailData } = useQuery({
     ...inventoryQueryOption.detail({
       nickname: nickname,
@@ -27,7 +29,9 @@ const InventoryDetail = () => {
       <Container>
         <TitleWrapper>
           <CommonText type="normalTitle">{inventoryDetailData?.hobby} 인벤토리</CommonText>
-          <CommonMenu type="update" iconSize="0.3rem" onDelete={onDeleteOpen} onUpdate={onOpen} />
+          {isOwner && (
+            <CommonMenu type="update" iconSize="0.3rem" onDelete={onDeleteOpen} onUpdate={onOpen} />
+          )}
         </TitleWrapper>
         <CommonText type="normalTitle">아이템 전체보기</CommonText>
         <ContentWrapper>
