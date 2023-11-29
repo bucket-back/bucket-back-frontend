@@ -44,9 +44,7 @@ const reduceImgUrl = (itemImages: ItemImages[]) => {
 const FeedSelectBucket = ({ hobby, nickname, selectedBucket, onClick }: FeedSelectBucketProps) => {
   const navigate = useNavigate();
 
-  const bucketList = useInfiniteQuery(
-    bucketQueryOption.infiniteList({ hobby, nickname, size: 18 })
-  );
+  const bucketList = useInfiniteQuery(bucketQueryOption.list({ hobby, nickname, size: 18 }));
 
   const observedRef = useIntersectionObserver({ onObserve: bucketList.fetchNextPage });
 

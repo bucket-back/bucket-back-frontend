@@ -4,15 +4,9 @@ import { GetBucketDetailRequest, GetBucketMyItemsRequest, GetBucketsRequest, buc
 const bucketQueryOption = {
   all: ['bucket'] as const,
 
-  list: ({ nickname, hobby, cursorId, size = 10 }: GetBucketsRequest) =>
-    queryOptions({
-      queryKey: [...bucketQueryOption.all, nickname, hobby] as const,
-      queryFn: () => bucketApi.getBuckets({ nickname, hobby, cursorId, size }),
-    }),
-
-  infiniteList: ({ nickname, hobby, size = 10 }: GetBucketsRequest) =>
+  list: ({ nickname, hobby, size = 10 }: GetBucketsRequest) =>
     infiniteQueryOptions({
-      queryKey: [...bucketQueryOption.all, nickname, hobby, 'infinite'] as const,
+      queryKey: [...bucketQueryOption.all, nickname, hobby] as const,
       queryFn: ({ pageParam: cursorId }) =>
         bucketApi.getBuckets({ nickname, hobby, cursorId, size }),
       initialPageParam: '',

@@ -14,7 +14,7 @@ interface BucketListProps {
 const BucketList = ({ nickname, hobby }: BucketListProps) => {
   const navigate = useNavigate();
 
-  const bucket = useInfiniteQuery(bucketQueryOption.infiniteList({ nickname, hobby, size: 18 }));
+  const bucket = useInfiniteQuery(bucketQueryOption.list({ nickname, hobby, size: 18 }));
 
   const observedRef = useIntersectionObserver({ onObserve: bucket.fetchNextPage });
 
