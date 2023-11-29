@@ -15,31 +15,7 @@ export const TitleWrapper = styled.div`
 `;
 
 export const ContentsWrapper = styled.div`
-  height: calc(100vh - 215.91px);
-`;
-
-export const ContentsPanel = styled.div`
-  max-height: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
-  padding: 1rem 2rem 1rem 2rem;
-  overflow-y: auto;
-`;
-
-export const ContentsBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-`;
-
-export const NoResult = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  height: calc(100vh - 10.807rem);
 `;
 
 export const AddButtonWrapper = styled.div`

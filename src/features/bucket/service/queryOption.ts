@@ -1,4 +1,4 @@
-import { queryOptions } from '@tanstack/react-query';
+import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
 import { GetBucketDetailRequest, GetBucketMyItemsRequest, GetBucketsRequest, bucketApi } from '.';
 
 const bucketQueryOption = {
@@ -8,6 +8,15 @@ const bucketQueryOption = {
     queryOptions({
       queryKey: [...bucketQueryOption.all, nickname, hobby] as const,
       queryFn: () => bucketApi.getBuckets({ nickname, hobby, cursorId, size }),
+    }),
+
+  infiniteList: ({ nickname, hobby, size = 10 }: GetBucketsRequest) =>
+    infiniteQueryOptions({
+      queryKey: [...bucketQueryOption.all, nickname, hobby, 'infinite'] as const,
+      queryFn: ({ pageParam: cursorId }) =>
+        bucketApi.getBuckets({ nickname, hobby, cursorId, size }),
+      initialPageParam: '',
+      getNextPageParam: ({ nextCursorId }) => nextCursorId,
     }),
 
   detail: ({ nickname, bucketId }: GetBucketDetailRequest) =>
