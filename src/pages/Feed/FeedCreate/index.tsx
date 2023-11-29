@@ -63,7 +63,7 @@ const FeedCreate = () => {
           <ContentsWrapper>
             <ContentsPanel>
               <CommonText type="normalInfo">취미를 선택해주세요.</CommonText>
-              <HobbyRadio onChange={setSelectedHobby} />
+              <HobbyRadio onChange={setSelectedHobby} onClick={() => setSelectedBucket(null)} />
             </ContentsPanel>
             <ContentsPanel>
               <CommonText type="normalInfo">버킷을 선택해주세요.</CommonText>
@@ -88,6 +88,10 @@ const FeedCreate = () => {
                 error={errors.textarea}
                 {...register('textarea', {
                   required: '내용을 필수로 입력해주세요.',
+                  maxLength: {
+                    value: 1000,
+                    message: '1000글자 이하로 입력해주세요.',
+                  },
                 })}
               />
             </ContentsPanel>
@@ -104,7 +108,10 @@ const FeedCreate = () => {
         </Form>
         <CommonDrawer
           isOpen={isOpen}
-          onClose={onClose}
+          onClose={() => {
+            setSelectedBucket(null);
+            onClose();
+          }}
           onClickFooterButton={onClose}
           isFull={true}
           isDisabled={!selectedBucket}
