@@ -34,10 +34,6 @@ export const Box = styled.div`
   gap: 0.5rem;
 `;
 
-export const HobbyBox = styled.div`
-  overflow-x: auto;
-`;
-
 export const SelectedItemsBox = styled.div`
   display: flex;
   flex-wrap: wrap;

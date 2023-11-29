@@ -85,15 +85,6 @@ const BucketCreate = () => {
               <CommonText type="normalInfo" noOfLines={0}>
                 취미별로 버킷을 생성할 수 있어요. 취미를 선택해주세요!
               </CommonText>
-              {/* <HobbyBox>
-                {hobbyData && (
-                  <CommonRadio
-                    values={hobbyValues || []}
-                    name="취미"
-                    onChange={(value: string) => setSelectedHobby(value)}
-                  />
-                )}
-              </HobbyBox> */}
               <HobbySelector onChange={setSelectedHobby} setSelectedItems={setSelectedItems} />
             </Box>
             <Box>
