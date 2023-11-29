@@ -1,4 +1,6 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import {
   CommonButton,
   CommonDivider,
@@ -6,15 +8,37 @@ import {
   CommonImage,
   CommonText,
 } from '@/shared/components';
+import { formatNumber } from '@/shared/utils';
 import { Container, Grid, GridItem, ImageInput, ImageLabel, Wrapper } from './style';
-import { GetMyItemsResponse } from '@/features/item/service';
+import { SelectedItem } from '@/features/inventory/service';
+import { itemQueryOption } from '@/features/item/service';
 
 interface VoteSelectItemProps {
-  myItemsData?: GetMyItemsResponse;
-  onChange: (e: ChangeEvent<HTMLInputElement>, src: string) => void;
+  selectedItems: SelectedItem[];
+  onChange: Dispatch<SetStateAction<SelectedItem[]>>;
+  selectedHobby: string;
 }
 
-const VoteSelectItem = ({ myItemsData, onChange }: VoteSelectItemProps) => {
+const VoteSelectItem = ({ selectedItems, onChange, selectedHobby }: VoteSelectItemProps) => {
+  const navigate = useNavigate();
+  const { data: myItemsData } = useQuery({
+    ...itemQueryOption.myItems({
+      hobbyName: selectedHobby,
+    }),
+  });
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>, src: string) => {
+    const checked = e.target.checked;
+    if (checked && selectedItems.length <= 1) {
+      onChange(() => [...selectedItems, { id: Number(e.target.id), src: src }]);
+    } else if (!checked) {
+      onChange(selectedItems.filter(({ id }) => id !== Number(e.target.id)));
+    }
+    if (selectedItems.length > 1) {
+      e.target.checked = false;
+    }
+  };
+
   return (
     <>
       <Container>
@@ -26,13 +50,13 @@ const VoteSelectItem = ({ myItemsData, onChange }: VoteSelectItemProps) => {
               <ImageInput
                 type="checkbox"
                 id={String(itemInfo.id)}
-                onChange={(e) => onChange(e, itemInfo.image)}
+                onChange={(e) => handleChange(e, itemInfo.image)}
               />
 
               <ImageLabel htmlFor={String(itemInfo.id)}>
                 <CommonImage size="sm" src={itemInfo.image} />
               </ImageLabel>
-              <CommonText type="normalInfo">{itemInfo.price}</CommonText>
+              <CommonText type="normalInfo">{formatNumber(itemInfo.price)}</CommonText>
               <CommonText type="smallInfo">{itemInfo.name}</CommonText>
             </GridItem>
           ))}
@@ -41,7 +65,9 @@ const VoteSelectItem = ({ myItemsData, onChange }: VoteSelectItemProps) => {
         <div>
           <CommonText type="smallInfo">원하시는 아이템이 없나요?</CommonText>
           <Wrapper>
-            <CommonButton type="text">아이템 추가하러가기</CommonButton>
+            <CommonButton type="text" onClick={() => navigate('/item/create')}>
+              아이템 추가하러가기
+            </CommonButton>
             <CommonIcon type="chevronRight" />
           </Wrapper>
         </div>

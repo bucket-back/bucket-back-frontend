@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1.25rem 1.75rem;
+  padding: 1.25rem 1rem 1.25rem 1.75rem;
 `;
 
 export const ProfileWrapper = styled.div`

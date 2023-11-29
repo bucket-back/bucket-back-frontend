@@ -53,7 +53,9 @@ const MemberHome = () => {
       <Container>
         <MemberInfoWrapper>
           <MemberInfoPanel>
-            <CommonAvatar size="5rem" src={member.data?.memberProfile.profileImage} />
+            {member.isSuccess && (
+              <CommonAvatar size="5rem" src={member.data.memberProfile.profileImage} />
+            )}
             <MemberInfoBox>
               <CommonBadge type="level" levelNumber={member.data?.memberProfile.level as Level} />
               <CommonText type="smallTitle">{nickname}</CommonText>
