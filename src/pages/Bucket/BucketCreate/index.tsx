@@ -87,18 +87,7 @@ const BucketCreate = () => {
               </CommonText>
               <HobbySelector onChange={setSelectedHobby} setSelectedItems={setSelectedItems} />
             </Box>
-            <Box>
-              <CommonText type="normalInfo" noOfLines={0}>
-                아이템의 가격보다 높은 예산을 입력해주세요. (선택)
-              </CommonText>
-              <CommonInput
-                placeholder="예산을 입력해주세요."
-                type="text"
-                width="full"
-                error={errors.budget}
-                {...register('budget', { minLength: 1 })}
-              />
-            </Box>
+
             <Box>
               <CommonText type="normalInfo" noOfLines={0}>
                 아이템을 하나 이상 선택해주세요.
@@ -124,6 +113,18 @@ const BucketCreate = () => {
                   ))
                 )}
               </SelectedItemsBox>
+            </Box>
+            <Box>
+              <CommonText type="normalInfo" noOfLines={0}>
+                아이템의 가격보다 높은 예산을 입력해주세요. (선택)
+              </CommonText>
+              <CommonInput
+                placeholder="예산을 입력해주세요."
+                type="text"
+                width="full"
+                error={errors.budget}
+                {...register('budget', { minLength: 1 })}
+              />
             </Box>
           </Wrapper>
           <ButtonWrapper>

@@ -95,6 +95,12 @@ const BucketUpdate = () => {
               {bucket.isSuccess && <HobbyRadio defaultValue={bucket.data.hobby} isReadOnly />}
             </ContentsPanel>
             <ContentsPanel>
+              <CommonText type="normalInfo">아이템을 하나 이상 선택해주세요.</CommonText>
+              <div onClick={onOpen}>
+                <BucketSelectedItems items={selectedItems} />
+              </div>
+            </ContentsPanel>
+            <ContentsPanel>
               <CommonText type="normalInfo">
                 아이템의 가격보다 높은 예산을 입력해주세요. (선택)
               </CommonText>
@@ -105,12 +111,6 @@ const BucketUpdate = () => {
                 error={errors.budget}
                 {...register('budget', { minLength: 1 })}
               />
-            </ContentsPanel>
-            <ContentsPanel>
-              <CommonText type="normalInfo">아이템을 하나 이상 선택해주세요.</CommonText>
-              <div onClick={onOpen}>
-                <BucketSelectedItems items={selectedItems} />
-              </div>
             </ContentsPanel>
           </ContentsWrapper>
           <CommonButton type="mdFull" isDisabled={!selectedItems.length || isSubmitting} isSubmit>
