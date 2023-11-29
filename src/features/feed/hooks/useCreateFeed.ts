@@ -11,7 +11,7 @@ const useCreateFeed = () => {
     mutationFn: feedApi.postFeed,
     onSuccess: ({ feedId }) => {
       openToast({ message: '피드가 생성되었습니다.', type: 'success' });
-      navigate(`/feed/${feedId}`);
+      navigate(`/feed/${feedId}`, { replace: true });
     },
   });
 };

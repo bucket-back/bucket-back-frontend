@@ -14,7 +14,7 @@ const useCreateBucket = () => {
     mutationFn: bucketApi.postBucket,
     onSuccess: ({ bucketId }) => {
       openToast({ message: '버킷을 생성했습니다.', type: 'success' });
-      navigate(`/member/${userInfo?.nickname}/bucket/${bucketId}`);
+      navigate(`/member/${userInfo?.nickname}/bucket/${bucketId}`, { replace: true });
     },
     onError: ({ data }: AxiosResponse<ErrorData>) => {
       openToast({ message: data.message, type: 'error' });

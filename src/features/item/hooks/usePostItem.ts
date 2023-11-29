@@ -14,7 +14,7 @@ const usePostItem = () => {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: [...itemQueryOption.all] });
       openToast({ message: '아이템 등록이 완료되었습니다', type: 'success' });
-      navigator(`/item/${data.itemId}`);
+      navigator(`/item/${data.itemId}`, { replace: true });
     },
     onError: (error: AxiosResponse) => {
       openToast({ message: `${error.data.message}`, type: 'error' });
