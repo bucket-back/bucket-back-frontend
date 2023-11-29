@@ -4,6 +4,7 @@ import { COMMON } from '@/shared/styles/Common';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
 `;
 
 export const TitleWrapper = styled.div`
@@ -14,10 +15,12 @@ export const TitleWrapper = styled.div`
 `;
 
 export const BucketListWrapper = styled.div`
+  height: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
-  padding: 2rem 0;
+  padding: 0.5rem 0;
+  overflow-y: auto;
 `;
 
 export const BucketBox = styled.div`
