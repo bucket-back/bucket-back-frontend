@@ -1,4 +1,4 @@
-import { queryOptions } from '@tanstack/react-query';
+import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
 import { GetFeedsRequest, feedApi } from '.';
 
 const feedQueryOption = {
@@ -6,22 +6,25 @@ const feedQueryOption = {
   list: ({
     hobbyName,
     nickname,
-    myPageOwnerLikeFeeds,
+    onlyNicknameLikeFeeds,
     sortCondition = 'RECENT',
-    cursorId,
-    size = 10,
+    size = 5,
   }: GetFeedsRequest) =>
-    queryOptions({
-      queryKey: [...feedQueryOption.all, hobbyName, sortCondition, myPageOwnerLikeFeeds] as const,
-      queryFn: () =>
+    infiniteQueryOptions({
+      queryKey: [...feedQueryOption.all, hobbyName, sortCondition, onlyNicknameLikeFeeds] as const,
+      queryFn: ({ pageParam: cursorId }) =>
         feedApi.getFeeds({
           hobbyName,
           nickname,
-          myPageOwnerLikeFeeds,
+          onlyNicknameLikeFeeds,
           sortCondition,
           cursorId,
           size,
         }),
+      initialPageParam: '',
+      getNextPageParam: ({ nextCursorId }) => {
+        return nextCursorId;
+      },
     }),
 
   detail: (feedId: number) =>
