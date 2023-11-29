@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { CommonButton, CommonImage } from '@/shared/components';
+import { CommonButton, CommonImage, CommonText } from '@/shared/components';
 import { FeedItemInfo } from '@/shared/types';
-import { ellipsisName } from '@/shared/utils';
-import { ButtonBox, Container, ContentsWrapper } from './style';
+import { ellipsisName, formatNumber } from '@/shared/utils';
+import { ButtonBox, Container, ContentsWrapper, ImageBox, PriceBox } from './style';
 
 interface FeedItemsDetailProps {
-  items?: FeedItemInfo[];
+  items: FeedItemInfo[];
 }
 
 const FeedItemsDetail = ({ items }: FeedItemsDetailProps) => {
@@ -18,7 +18,7 @@ const FeedItemsDetail = ({ items }: FeedItemsDetailProps) => {
   return (
     <Container>
       {items &&
-        items.map(({ id, name, image }) => (
+        items.map(({ id, name, image, price }) => (
           <ContentsWrapper key={id}>
             <ButtonBox>
               <CommonImage size="xs" src={image} />
@@ -26,7 +26,12 @@ const FeedItemsDetail = ({ items }: FeedItemsDetailProps) => {
                 {ellipsisName(name, 25)}
               </CommonButton>
             </ButtonBox>
-            <CommonImage size="lg" src={image} onClick={() => handleClick(id)} />
+            <PriceBox>
+              <CommonText type="normalInfo">{formatNumber(price)}</CommonText>
+            </PriceBox>
+            <ImageBox>
+              <CommonImage size="lg" src={image} onClick={() => handleClick(id)} />
+            </ImageBox>
           </ContentsWrapper>
         ))}
     </Container>
