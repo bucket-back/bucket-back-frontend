@@ -70,7 +70,13 @@ const DividerImage = ({ images, type }: DividerImageProps) => {
                   : undefined
               }
             >
-              <Image src={image} width="100%" height="100%" objectFit="cover" />
+              <Image
+                src={image}
+                width="100%"
+                height="100%"
+                objectFit="cover"
+                fallbackSrc="https://placehold.co/300?text=Bucket+Back&font=roboto"
+              />
             </GridItem>
           );
         })}
