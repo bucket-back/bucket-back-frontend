@@ -23,7 +23,7 @@ const FeedItemsDetail = ({ items }: FeedItemsDetailProps) => {
             <ButtonBox>
               <CommonImage size="xs" src={image} />
               <CommonButton type="xs" onClick={() => handleClick(id)}>
-                {ellipsisName(name)}
+                {ellipsisName(name, 25)}
               </CommonButton>
             </ButtonBox>
             <CommonImage size="lg" src={image} onClick={() => handleClick(id)} />
