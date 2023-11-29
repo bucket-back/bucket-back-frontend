@@ -1,14 +1,19 @@
 import { useState } from 'react';
-import styled from '@emotion/styled';
 import { useQuery } from '@tanstack/react-query';
-import { CommonIconButton, CommonText, Header, Footer, CommonImage } from '@/shared/components';
+import { CommonIconButton, CommonText, Header, Footer } from '@/shared/components';
 import { useAuthNavigate } from '@/shared/hooks';
-import { ellipsisName, formatNumber } from '@/shared/utils';
-import { CommonContainer, TitleContainer, ItemTextContaienr, AddContainer } from './style';
+import { formatNumber } from '@/shared/utils';
+import {
+  CommonContainer,
+  TitleContainer,
+  ItemTextContaienr,
+  AddContainer,
+  Grid,
+  ButtonBox,
+} from './style';
 import { ListItem } from '@/features/item/components';
 import { useDeleteItem } from '@/features/item/hooks';
 import { itemQueryOption } from '@/features/item/service';
-import { COMMON } from '@/shared/styles/Common';
 
 const ItemList = () => {
   const [isDelete, setIsDelete] = useState<boolean>(false);
@@ -59,7 +64,13 @@ const ItemList = () => {
           <CommonText type="smallTitle">내 아이템{isDelete ? ' 삭제하기' : ' 전체보기'}</CommonText>
           {isDelete ? (
             <ButtonBox>
-              <CommonIconButton type="cancel" onClick={() => setIsDelete((prev) => !prev)} />
+              <CommonIconButton
+                type="cancel"
+                onClick={() => {
+                  setDeleteData([]);
+                  setIsDelete((prev) => !prev);
+                }}
+              />
               <CommonIconButton type="delete" onClick={handleDeleteClick} />
             </ButtonBox>
           ) : (
@@ -74,29 +85,18 @@ const ItemList = () => {
           </CommonText>
         </ItemTextContaienr>
         <Grid>
-          {data.summaries.map(({ itemInfo: { id, image, name, price } }) =>
-            isDelete ? (
-              <GridItem key={id}>
-                <ImageInput type="checkbox" id={String(id)} onChange={() => handleChange(id)} />
-                <ImageLabel htmlFor={String(id)}>
-                  <CommonImage size="sm" src={image} />
-                </ImageLabel>
-                <CommonText type="normalInfo">{formatNumber(price)}</CommonText>
-                <CommonText type="smallInfo" noOfLines={0}>
-                  {ellipsisName(name, 20)}
-                </CommonText>
-              </GridItem>
-            ) : (
-              <ListItem
-                key={id}
-                id={id}
-                image={image}
-                price={price}
-                name={name}
-                isDelete={isDelete}
-              />
-            )
-          )}
+          {data.summaries.map(({ itemInfo: { id, image, name, price } }) => (
+            <ListItem
+              key={id}
+              id={id}
+              image={image}
+              price={price}
+              name={name}
+              isDelete={isDelete}
+              isDeleteMode={deleteData.includes(id)}
+              handleChange={handleChange}
+            />
+          ))}
         </Grid>
       </CommonContainer>
       <Footer>
@@ -109,48 +109,3 @@ const ItemList = () => {
 };
 
 export default ItemList;
-
-const ButtonBox = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-export const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, minmax(6rem, 1fr));
-  gap: 0.5rem;
-`;
-
-export const GridItem = styled.div`
-  margin-bottom: 1rem;
-  gap: 0.5rem;
-`;
-
-export const ImageInput = styled.input`
-  display: none;
-`;
-
-export const ImageLabel = styled.label`
-  position: relative;
-  &::before {
-    content: '✓';
-    position: absolute;
-    top: 40%;
-    left: 40%;
-    transform: translate(-50%, -50%);
-    width: 25px;
-    height: 25px;
-    background-color: ${COMMON.COLORS.MAIN_COLOR};
-    color: white;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 28px;
-    transition-duration: 0.4s;
-    transform: scale(0);
-    z-index: 999;
-  }
-
-  input:checked + &::before {
-    transform: scale(1);
-  }
-`;
