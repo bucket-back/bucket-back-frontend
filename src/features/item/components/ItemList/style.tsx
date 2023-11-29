@@ -1,8 +1,14 @@
 import styled from '@emotion/styled';
+import { COMMON } from '@/shared/styles/Common';
 
-export const PositionWrapper = styled.div`
-  position: relative;
-  margin-top: 10px;
+export interface BlurProp {
+  isDelete?: boolean;
+  isDeleteMode?: boolean;
+}
+
+export const PositionWrapper = styled.div<BlurProp>`
+  filter: ${(props) =>
+    props.isDelete ? (props.isDeleteMode ? 'blur(1px);' : undefined) : undefined};
 `;
 
 export const ItemListWrapper = styled.li`
@@ -13,8 +19,31 @@ export const ItemListWrapper = styled.li`
   cursor: pointer;
 `;
 
-export const ButtonWrapper = styled.div`
-  position: absolute;
-  top: -25px;
-  right: 0px;
+export const ImageInput = styled.input`
+  display: none;
+`;
+
+export const ImageLabel = styled.label`
+  position: relative;
+  &::before {
+    content: '✓';
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    width: 25px;
+    height: 25px;
+    background-color: ${COMMON.COLORS.MAIN_COLOR};
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    transition-duration: 0.4s;
+    transform: scale(0);
+    z-index: 999;
+  }
+
+  input:checked + &::before {
+    transform: scale(1);
+  }
 `;

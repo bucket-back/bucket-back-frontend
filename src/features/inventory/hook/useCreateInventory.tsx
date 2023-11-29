@@ -14,7 +14,7 @@ const useCreateInventory = () => {
     mutationFn: inventoryApi.postCreateInventory,
     onSuccess: (data) => {
       const { inventoryId } = data;
-      navigate(`/member/${nickname}/inventory/${inventoryId}`);
+      navigate(`/member/${nickname}/inventory/${inventoryId}`, { replace: true });
     },
     onError: (error: AxiosResponse) => {
       openToast({ type: 'error', message: error.data.message });

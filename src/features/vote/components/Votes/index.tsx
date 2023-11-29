@@ -1,8 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
 import { CommonSelect, CommonTabs } from '@/shared/components';
 import { useAuthCheck } from '@/shared/hooks';
-import { VotesInfo } from '@/shared/types';
-import VoteItem from '../VoteItem';
+import VoteList from '../VoteList';
 import { Container, ContentsWrapper, NoResult, SelectWrapper } from './style';
 
 const VOTE_STATE = [
@@ -20,13 +19,10 @@ const VOTE_STATE = [
   },
 ];
 
-interface VotesProps {
-  votes: VotesInfo[];
-}
-
-const Votes = ({ votes }: VotesProps) => {
+const Votes = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const isLogin = useAuthCheck();
+
   const currentTabIndex = VOTE_STATE.map(({ VALUE }) => VALUE).indexOf(
     searchParams.get('status') || VOTE_STATE[0].VALUE
   );
@@ -62,19 +58,8 @@ const Votes = ({ votes }: VotesProps) => {
                 </SelectWrapper>
                 {isLoginInVotes(VALUE) ? (
                   <NoResult>로그인이 필요한 서비스입니다.</NoResult>
-                ) : votes.length > 0 ? (
-                  votes.map(({ cursorId, item1Info, item2Info, voteInfo }) => {
-                    return (
-                      <VoteItem
-                        key={cursorId}
-                        item1Info={item1Info}
-                        item2Info={item2Info}
-                        voteInfo={voteInfo}
-                      />
-                    );
-                  })
                 ) : (
-                  <NoResult>{`${LABEL}가 존재하지 않습니다.`}</NoResult>
+                  <VoteList label={LABEL} />
                 )}
               </ContentsWrapper>
             ),

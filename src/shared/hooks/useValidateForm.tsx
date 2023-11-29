@@ -8,8 +8,8 @@ const useValidateForm = () => {
           message: '6글자 이상으로 입력해주세요.',
         },
         maxLength: {
-          value: 10,
-          message: '10글자 이하로 입력해주세요.',
+          value: 15,
+          message: '15글자 이하로 입력해주세요.',
         },
         pattern: {
           value: /[a-zA-Z]+/,

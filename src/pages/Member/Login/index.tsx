@@ -43,7 +43,7 @@ const Login = () => {
                 <CommonIcon type={showPassword ? 'eye' : 'eyeSlash'} size="1.25rem" />
               </IconWrapper>
             }
-            {...register('password', ...registerOptions.password)}
+            {...register('password', { required: '비밀번호를 입력해주세요.' })}
           />
         </InputWrapper>
         <ButtonWrapper>

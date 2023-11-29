@@ -7,9 +7,10 @@ interface HobbyRadioProps {
   defaultValue?: string;
   onChange?: React.Dispatch<React.SetStateAction<string>>;
   isReadOnly?: boolean;
+  onClick?: () => void;
 }
 
-const HobbyRadio = ({ defaultValue, onChange, isReadOnly }: HobbyRadioProps) => {
+const HobbyRadio = ({ defaultValue, onChange, isReadOnly, onClick }: HobbyRadioProps) => {
   const { data, isPending, isError } = useQuery({
     ...hobbyQueryOption.all(),
     select: (data) =>
@@ -31,6 +32,7 @@ const HobbyRadio = ({ defaultValue, onChange, isReadOnly }: HobbyRadioProps) => 
 
   const handleChange = (value: string) => {
     onChange && onChange(value);
+    onClick && onClick();
   };
 
   return (

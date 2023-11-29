@@ -14,18 +14,18 @@ const feedApi = {
   getFeeds: async ({
     hobbyName,
     nickname,
-    myPageOwnerLikeFeeds,
+    onlyNicknameLikeFeeds,
     sortCondition,
     cursorId,
     size,
   }: GetFeedsRequest) => {
     const nicknameQueryString = nickname ? `&nickname=${nickname}` : '';
-    const myPageOwnerLikeFeedsQueryString = myPageOwnerLikeFeeds
-      ? `&myPageOwnerLikeFeeds=${myPageOwnerLikeFeeds}`
+    const onlyNicknameLikeFeedsQueryString = onlyNicknameLikeFeeds
+      ? `&onlyNicknameLikeFeeds=${onlyNicknameLikeFeeds}`
       : '';
     const sortConditionQueryString = sortCondition ? `&sortCondition=${sortCondition}` : '';
 
-    const url = `${BASE_URL}?hobbyName=${hobbyName}${nicknameQueryString}${myPageOwnerLikeFeedsQueryString}${sortConditionQueryString}`;
+    const url = `${BASE_URL}?hobbyName=${hobbyName}${nicknameQueryString}${onlyNicknameLikeFeedsQueryString}${sortConditionQueryString}`;
     const params = cursorId ? { cursorId, size } : { size };
 
     const response = await axiosClient.get<GetFeedsResponse>(url, { params });

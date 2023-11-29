@@ -27,6 +27,9 @@ export const VoteImageWrapper = styled.div`
 
 export const Box = styled.div`
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem 0;
 `;
 
 export const TextBox = styled.div`

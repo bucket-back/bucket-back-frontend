@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -16,9 +16,8 @@ import {
   CommentNumberWrapper,
   CommentsContainer,
   CommentInputContainer,
-  NoResult,
 } from './style';
-import { CommentItem } from '@/features/comment/components';
+import { CommentList } from '@/features/comment/components';
 import { useDeleteComment, useUpdateComment } from '@/features/comment/hooks';
 import useAddComment from '@/features/comment/hooks/useAddComment';
 import { commentQueryQption } from '@/features/comment/service';
@@ -42,14 +41,14 @@ const FeedDetail = () => {
   const navigate = useNavigate();
 
   const feedDetail = useQuery(feedQueryOption.detail(feedIdNumber));
-  const comment = useQuery(commentQueryQption.list({ feedId: feedIdNumber || 1, size: 10 }));
+  const comment = useQuery(commentQueryQption.list({ feedId: feedIdNumber }));
+
   const { register, handleSubmit, reset, setValue } = useForm<CommentContent>();
   const addComment = useAddComment();
   const onCreateComment: SubmitHandler<CommentContent> = (data) => {
     addComment.mutate({ feedId: feedIdNumber, content: data.content });
     reset();
   };
-  const isOwnFeed = feedDetail.data?.memberInfo.nickName === userInfo?.nickname;
 
   const [isUpdating, setIsUpdating] = useState(false);
   const [updatingCommentId, setUpdatingCommentId] = useState(0);
@@ -67,32 +66,40 @@ const FeedDetail = () => {
     reset();
   };
 
+  if (feedDetail.isPending) {
+    return;
+  }
+
+  if (feedDetail.isError) {
+    return;
+  }
+
+  const isOwnFeed = feedDetail.data.memberInfo.nickName === userInfo?.nickname;
+
   return (
     <>
       <Header type="back" />
       <FeedDetailContainer>
-        {feedDetail.isSuccess && (
-          <FeedItem
-            memberInfo={feedDetail.data.memberInfo}
-            feedId={feedDetail.data.feedInfo.id}
-            feedContent={feedDetail.data.feedInfo.content}
-            isLike={feedDetail.data.feedInfo.isLiked}
-            likeCount={feedDetail.data.feedInfo.likeCount}
-            commentCount={comment.data?.totalCount || 0}
-            createdAt={feedDetail.data.feedInfo.createdAt}
-            feedItems={feedDetail.data.feedItems}
-            bucketName={feedDetail.data.feedInfo.bucketName}
-            totalPrice={feedDetail.data.feedInfo.totalPrice}
-            bucketBudget={feedDetail.data.feedInfo.bucketBudget}
-            isDetail
-            onClick={onOpen}
-            onDelete={() => {
-              setDeleteStatus('feed');
-              onDeleteOpen();
-            }}
-            onUpdate={() => navigate(`./edit`)}
-          />
-        )}
+        <FeedItem
+          memberInfo={feedDetail.data.memberInfo}
+          feedId={feedDetail.data.feedInfo.id}
+          feedContent={feedDetail.data.feedInfo.content}
+          isLike={feedDetail.data.feedInfo.isLiked}
+          likeCount={feedDetail.data.feedInfo.likeCount}
+          commentCount={comment.data?.totalCount || 0}
+          createdAt={feedDetail.data.feedInfo.createdAt}
+          feedItems={feedDetail.data.feedItems}
+          bucketName={feedDetail.data.feedInfo.bucketName}
+          totalPrice={feedDetail.data.feedInfo.totalPrice}
+          bucketBudget={feedDetail.data.feedInfo.bucketBudget}
+          isDetail
+          onClick={onOpen}
+          onDelete={() => {
+            setDeleteStatus('feed');
+            onDeleteOpen();
+          }}
+          onUpdate={() => navigate(`./edit`)}
+        />
       </FeedDetailContainer>
       <div>
         <CommonDivider size="lg" />
@@ -102,35 +109,17 @@ const FeedDetail = () => {
         <CommonDivider size="sm" />
       </div>
       <CommentsContainer style={{ filter: isUpdating ? 'blur(2px)' : undefined }}>
-        {comment.isSuccess && comment.data.totalCount > 0 ? (
-          comment.data.comments.map((data) => (
-            <Fragment key={data.commentId}>
-              <CommentItem
-                feedId={feedIdNumber}
-                commentId={data.commentId}
-                memberInfo={data.memberInfo}
-                content={data.content}
-                createdAt={data.createdAt}
-                isAdopted={data.isAdopted}
-                isOwnFeed={isOwnFeed}
-                hasAdoptedComment={Boolean(feedDetail.data?.feedInfo.hasAdoptedComment)}
-                onDelete={() => {
-                  setSelectedCommentId(data.commentId);
-                  setDeleteStatus('comment');
-                  onDeleteOpen();
-                }}
-                onUpdate={() => {
-                  setValue('content', data.content);
-                  setIsUpdating(true);
-                  setUpdatingCommentId(data.commentId);
-                }}
-              />
-              <CommonDivider size="sm" />
-            </Fragment>
-          ))
-        ) : (
-          <NoResult>댓글이 없습니다.</NoResult>
-        )}
+        <CommentList
+          feedId={feedIdNumber}
+          isOwnFeed={isOwnFeed}
+          hasAdoptedComment={Boolean(feedDetail.data.feedInfo.hasAdoptedComment)}
+          setSelectedCommentId={setSelectedCommentId}
+          setDeleteStatus={setDeleteStatus}
+          onDeleteOpen={onDeleteOpen}
+          setValue={setValue}
+          setIsUpdating={setIsUpdating}
+          setUpdatingCommentId={setUpdatingCommentId}
+        />
       </CommentsContainer>
       {isUpdating ? (
         <CommentInputContainer onSubmit={handleSubmit(onUpdateComment)}>
@@ -144,7 +133,7 @@ const FeedDetail = () => {
                 수정
               </CommonButton>
             }
-            {...register('content', { required: true, minLength: 1 })}
+            {...register('content', { required: true, minLength: 1, maxLength: 1000 })}
           />
         </CommentInputContainer>
       ) : (
@@ -160,13 +149,13 @@ const FeedDetail = () => {
                 등록
               </CommonButton>
             }
-            {...register('content', { required: true, minLength: 1 })}
+            {...register('content', { required: true, minLength: 1, maxLength: 1000 })}
           />
         </CommentInputContainer>
       )}
 
       <CommonDrawer isOpen={isOpen} onClose={onClose} onClickFooterButton={onClose} isFull={true}>
-        <FeedItemsDetail items={feedDetail.data?.feedItems} />
+        <FeedItemsDetail items={feedDetail.data.feedItems} />
       </CommonDrawer>
       <CommonDrawer
         isOpen={isDeleteOpen}

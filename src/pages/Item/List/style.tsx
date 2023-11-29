@@ -35,3 +35,14 @@ export const AddContainer = styled.div`
   right: 20px;
   z-index: 10;
 `;
+
+export const ButtonBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(6rem, 1fr));
+  gap: 0.5rem;
+`;

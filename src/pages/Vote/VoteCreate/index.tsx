@@ -1,69 +1,55 @@
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useQuery } from '@tanstack/react-query';
 import {
   CommonButton,
   CommonDrawer,
   CommonImage,
-  CommonRadio,
   CommonText,
   CommonTextarea,
   Header,
 } from '@/shared/components';
-import { useDrawer } from '@/shared/hooks';
+import { useCustomToast, useDrawer } from '@/shared/hooks';
 import { FormContainer, Wrapper, TextareaWrapper, RadioBox, SelectedItems } from './style';
-import { useHobby } from '@/features/hobby/hooks';
-import { itemQueryOption } from '@/features/item/service';
+import HobbySelector from '@/features/hobby/components/HobbySelector';
+import { SelectedItem } from '@/features/inventory/service';
 import { VoteSelectItem } from '@/features/vote/components';
 import { useCreateVote } from '@/features/vote/hooks';
 
 interface Textarea {
   textarea: string;
 }
-interface SelectedItem {
-  id: string;
-  src: string;
+interface Hobby {
+  english: string;
+  hangul: string;
 }
 
 const VoteCreate = () => {
-  const { data: hobbyData } = useHobby();
-  const [selectedHobby, setSelectedHobby] = useState<string>('');
-  const currnetHobby = hobbyData?.hobbies.find(({ value }) => value === selectedHobby);
-  const HangulHobby = hobbyData?.hobbies.map((hobby) => hobby.value);
+  const [selectedHobby, setSelectedHobby] = useState<Hobby>({ english: '', hangul: '' });
+  const [prevSelectedHobby, setPrevSelectedHobby] = useState<string>('');
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
-  const { data: myItemsData } = useQuery({
-    ...itemQueryOption.myItems({
-      hobbyName: currnetHobby?.name,
-    }),
-  });
-  const { mutate: CreateVoteMuate } = useCreateVote();
+  const { mutate: CreateVoteMutate } = useCreateVote();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Textarea>();
   const { isOpen, onOpen, onClose } = useDrawer();
-  const checkingItems = (e: ChangeEvent<HTMLInputElement>, src: string) => {
-    const checked = e.target.checked;
-    if (checked && selectedItems.length <= 1) {
-      setSelectedItems(() => [...selectedItems, { id: e.target.id, src: src }]);
-    } else if (!checked) {
-      setSelectedItems(selectedItems.filter(({ id }) => id !== e.target.id));
-    }
-    if (selectedItems.length > 1) {
-      e.target.checked = false;
-    }
-  };
-  if (!HangulHobby) {
-    return;
-  }
+  const openToast = useCustomToast();
+
   const onSubmit: SubmitHandler<Textarea> = (data) => {
-    CreateVoteMuate({
-      hobby: selectedHobby,
-      content: data.textarea,
-      item1Id: Number(selectedItems[0].id),
-      item2Id: Number(selectedItems[1].id),
-    });
+    if (selectedHobby.english === prevSelectedHobby) {
+      CreateVoteMutate({
+        hobby: selectedHobby.hangul,
+        content: data.textarea,
+        item1Id: Number(selectedItems[0].id),
+        item2Id: Number(selectedItems[1].id),
+      });
+    } else {
+      openToast({
+        type: 'error',
+        message: `${selectedHobby.hangul}취미에 맞는 아이템을 선택해주세요.`,
+      });
+    }
   };
 
   return (
@@ -80,22 +66,22 @@ const VoteCreate = () => {
             취미를 선택해주세요.
           </CommonText>
           <RadioBox>
-            <CommonRadio
-              values={HangulHobby!}
-              name="취미"
-              onChange={(value: string) => {
-                setSelectedHobby(value);
-                setSelectedItems([]);
-              }}
-            />
+            <HobbySelector onChange={setSelectedHobby} />
           </RadioBox>
         </Wrapper>
         <Wrapper>
           <CommonText type="normalInfo" noOfLines={0}>
-            아이템을 두개 선택해주세요
+            아이템을 두개 선택해주세요.
           </CommonText>
           {selectedItems.length <= 1 ? (
-            <CommonButton type="custom" onClick={onOpen} />
+            <CommonButton
+              type="custom"
+              onClick={() => {
+                !selectedHobby.english
+                  ? openToast({ type: 'info', message: '취미를 선택해주세요.' })
+                  : onOpen();
+              }}
+            />
           ) : (
             <SelectedItems>
               {selectedItems.map(({ id, src }) => (
@@ -114,15 +100,23 @@ const VoteCreate = () => {
         </Wrapper>
         <TextareaWrapper>
           <CommonTextarea
-            placeholder="투표 내용을 입력해주세요"
+            placeholder="투표 내용을 입력해주세요."
             size="sm"
             label="투표 내용"
             error={errors.textarea}
             {...register('textarea', {
-              required: '내용을 필수를 입력해주세요',
+              required: '내용을 필수로 입력해주세요.',
+              maxLength: {
+                value: 1000,
+                message: '최대 1000자 이하로 입력해주세요.',
+              },
             })}
           />
-          <CommonButton type="mdFull" isSubmit={true}>
+          <CommonButton
+            type="mdFull"
+            isSubmit={true}
+            isDisabled={!selectedItems.length || !selectedHobby.english}
+          >
             생성 완료
           </CommonButton>
         </TextareaWrapper>
@@ -134,13 +128,18 @@ const VoteCreate = () => {
           onClose();
         }}
         onClickFooterButton={() => {
+          setPrevSelectedHobby(selectedHobby.english);
           onClose();
         }}
         isFull={true}
         footerButtonText="선택 완료"
         isDisabled={selectedItems.length <= 1}
       >
-        <VoteSelectItem myItemsData={myItemsData} onChange={checkingItems} />
+        <VoteSelectItem
+          onChange={setSelectedItems}
+          selectedItems={selectedItems}
+          selectedHobby={selectedHobby.english}
+        />
       </CommonDrawer>
     </>
   );

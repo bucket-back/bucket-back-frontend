@@ -1,23 +1,33 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { CommonText, DividerImage } from '@/shared/components';
-import { VotesInfo } from '@/shared/types';
+import { useIntersectionObserver } from '@/shared/hooks';
+import { voteQueryOption } from '../../service';
 import { Container, TitleWrapper, ContentsWrapper, ContentsBox, NoVotesInProgress } from './style';
 
-interface VoteInProgressProps {
-  votes: VotesInfo[];
-}
-const VoteInProgress = ({ votes }: VoteInProgressProps) => {
+const VoteInProgress = () => {
+  const [searchParams] = useSearchParams();
+  const getHobby = searchParams.get('hobby');
   const navigate = useNavigate();
+  const { data: votesInProgressData, fetchNextPage } = useInfiniteQuery({
+    ...voteQueryOption.list({
+      hobby: getHobby || '',
+      status: 'inprogress',
+      size: 5,
+    }),
+    select: (data) => data?.pages.flatMap(({ votes }) => votes),
+  });
+  const ref = useIntersectionObserver({ onObserve: fetchNextPage });
 
   return (
     <Container>
-      {votes.length ? (
+      {votesInProgressData?.length !== 0 ? (
         <>
           <TitleWrapper>
             <CommonText type="normalInfo">진행중인 투표</CommonText>
           </TitleWrapper>
           <ContentsWrapper>
-            {votes.map(({ cursorId, item1Info, item2Info, voteInfo }) => {
+            {votesInProgressData?.map(({ cursorId, item1Info, item2Info, voteInfo }) => {
               return (
                 <ContentsBox
                   key={cursorId}
@@ -30,6 +40,7 @@ const VoteInProgress = ({ votes }: VoteInProgressProps) => {
                 </ContentsBox>
               );
             })}
+            <div ref={ref} />
           </ContentsWrapper>
         </>
       ) : (

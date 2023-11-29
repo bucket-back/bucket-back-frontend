@@ -2,10 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CommonInput, CommonIcon, CommonIconButton } from '@/shared/components';
-import { SEARCH_KEY } from '@/shared/constants';
-import { Storage } from '@/shared/utils';
 import { useDebounce } from '../../hooks';
 import { Form } from './style';
+import { searchLocalStorage } from '@/features/search/service';
 
 interface SearchProps {
   keyword: string;
@@ -22,7 +21,6 @@ const SearchForm = ({ keyword: currentKeyword, onInput }: SearchFormProps) => {
     formState: { errors },
     handleSubmit,
     watch,
-    reset,
   } = useForm<SearchProps>({
     values: { keyword: currentKeyword },
   });
@@ -42,21 +40,9 @@ const SearchForm = ({ keyword: currentKeyword, onInput }: SearchFormProps) => {
   const onSubmit: SubmitHandler<SearchProps> = (data, event) => {
     event?.preventDefault();
     const { keyword } = data;
-    // TODO:유틸함수로 관리해보기
-    const value = Storage.getLocalStoraged(SEARCH_KEY);
-    if (!Array.isArray(value)) {
-      Storage.setLocalStoraged(SEARCH_KEY, [keyword]);
-      reset();
-
-      return;
-    }
-    const findValue = value.findIndex((value: string) => value === keyword);
-    if (findValue === -1) {
-      Storage.setLocalStoraged(SEARCH_KEY, [...value, keyword]);
-    } else {
-      Storage.setLocalStoraged(SEARCH_KEY, [...value]);
-    }
-    reset();
+    searchLocalStorage(keyword);
+    onInput && onInput(keyword);
+    navigate(`/search/result?keyword=${encodeURIComponent(keyword)}`);
   };
 
   const handleClick = () => {

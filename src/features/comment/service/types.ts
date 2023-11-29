@@ -3,7 +3,7 @@ import { Comment } from '@/shared/types/comment';
 export interface GetCommentsRequest {
   feedId: number;
   cursorId?: string;
-  size: number;
+  size?: number;
 }
 
 export interface GetCommentsResponse {

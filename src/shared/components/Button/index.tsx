@@ -36,7 +36,8 @@ const CommonButton = ({
   src,
   isLike,
 }: CommonButtonProps) => {
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
     onClick && onClick();
   };
 
