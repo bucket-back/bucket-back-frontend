@@ -1,5 +1,6 @@
 import { CommonText, CommonButton, CommonTag } from '@/shared/components';
 import { SEARCH_KEY } from '@/shared/constants';
+import { ellipsisName } from '@/shared/utils';
 import { WrapperTitle, WrapperContent, KeywordBox } from './style';
 import { useSearchedKeywordStorage } from '@/features/search/hooks';
 
@@ -46,7 +47,7 @@ const LatelySearch = ({ onInput }: LatelySearchProp) => {
                   setState([...filterData]);
                 }}
               >
-                {value}
+                {ellipsisName(value, 9)}
               </CommonTag>
             </KeywordBox>
           ))}
