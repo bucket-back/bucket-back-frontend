@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import styled from '@emotion/styled';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { CommonIconButton, CommonText, Header, Footer } from '@/shared/components';
-import { useAuthNavigate } from '@/shared/hooks';
+import { useAuthNavigate, useIntersectionObserver } from '@/shared/hooks';
 import { formatNumber } from '@/shared/utils';
 import {
   CommonContainer,
@@ -17,10 +18,6 @@ import { GetMyItemsResponse, itemQueryOption } from '@/features/item/service';
 const ItemList = () => {
   const [isDelete, setIsDelete] = useState<boolean>(false);
 
-  const { data, isPending, isError } = useQuery({
-    ...itemQueryOption.myItems({ cursorId: '', size: 10 }),
-  });
-
   const {
     mutate: itemMutate,
     isError: itemDeleteError,
@@ -33,6 +30,18 @@ const ItemList = () => {
 
   const authNavigate = useAuthNavigate();
 
+  const {
+    data: testData,
+    hasNextPage,
+    fetchNextPage,
+    isPending,
+    isError,
+  } = useInfiniteQuery({
+    ...itemQueryOption.infinityList({ size: 3 }),
+  });
+
+  const ref = useIntersectionObserver({ onObserve: fetchNextPage });
+
   const handleClick = (deleteId: number) => {
     const filterData = itemData.filter(({ itemInfo: { id } }) => id !== deleteId);
     setItemData(filterData);
@@ -40,15 +49,18 @@ const ItemList = () => {
   };
 
   const handleDeleteClick = () => {
-    itemMutate({ itemIds: deleteData.join(',') });
+    if (deleteData.length !== 0) {
+      itemMutate({ itemIds: deleteData.join(',') });
+    }
     setIsDelete((prev) => !prev);
   };
 
   useEffect(() => {
-    if (data) {
-      setItemData([...data.summaries]);
+    if (testData?.pages[0].summaries) {
+      // eslint-disable-next-line no-unsafe-optional-chaining
+      setItemData([...testData?.pages[0].summaries]);
     }
-  }, [data]);
+  }, [testData?.pages[0]]);
 
   if (isPending || itemDeletePending) {
     return <>Loading..</>;
@@ -73,22 +85,25 @@ const ItemList = () => {
         <ItemTextContaienr>
           <CommonText type="smallInfo">
             {isDelete
-              ? `총 삭제할 ${formatNumber(data.totalCount)}개의 아이템`
-              : `총 ${formatNumber(data.totalCount)}개의 아이템`}
+              ? `총 삭제할 ${formatNumber(deleteData.length)}개의 아이템`
+              : `총 ${formatNumber(testData?.pages[0].totalCount)}개의 아이템`}
           </CommonText>
         </ItemTextContaienr>
         <ItemListContainer>
-          {itemData.map(({ itemInfo: { id, image, name, price } }) => (
-            <ListItem
-              key={id}
-              id={id}
-              image={image}
-              price={price}
-              name={name}
-              isDelete={isDelete}
-              onClick={isDelete ? handleClick : undefined}
-            />
-          ))}
+          <>
+            {testData.pages[0].summaries.map(({ itemInfo: { id, image, name, price } }) => (
+              <ListItem
+                key={id}
+                id={id}
+                image={image}
+                price={price}
+                name={name}
+                isDelete={isDelete}
+                onClick={isDelete ? handleClick : undefined}
+              />
+            ))}
+            {hasNextPage && <Obverser ref={ref} />}
+          </>
         </ItemListContainer>
       </CommonContainer>
       <Footer>
@@ -101,3 +116,7 @@ const ItemList = () => {
 };
 
 export default ItemList;
+
+const Obverser = styled.div`
+  height: 1rem;
+`;

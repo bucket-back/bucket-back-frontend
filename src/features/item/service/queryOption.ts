@@ -13,13 +13,13 @@ const itemQueryOption = {
       queryKey: [...itemQueryOption.all, hobbyName] as const,
       queryFn: () => itemApi.getMyItems({ hobbyName, cursorId, size }),
     }),
-  infinityList: ({ hobbyName, size }: GetMyItemsRequest) =>
+  infinityList: ({ size }: GetMyItemsRequest) =>
     infiniteQueryOptions({
-      queryKey: [...itemQueryOption.all, hobbyName] as const,
-      queryFn: ({ pageParam: cursorId }) => itemApi.getMyItems({ hobbyName, cursorId, size }),
+      queryKey: [...itemQueryOption.all] as const,
+      queryFn: ({ pageParam: cursorId }) => itemApi.getMyItems({ cursorId, size }),
       initialPageParam: '',
-      getNextPageParam: (data) => {
-        return data.nextCursorId;
+      getNextPageParam: ({ nextCursorId }) => {
+        return nextCursorId;
       },
     }),
 };
