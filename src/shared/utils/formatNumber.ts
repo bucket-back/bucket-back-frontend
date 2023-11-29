@@ -4,7 +4,7 @@ const formatNumber = (price: number) => {
     const lastCount = temp.slice(-3);
     const firstCount = temp.slice(0, temp.length - 3);
 
-    return `${firstCount},${lastCount}`;
+    return `${firstCount},${lastCount} 원`;
   }
 
   return String(price);

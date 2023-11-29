@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { CommonIconButton, CommonImage, CommonText } from '@/shared/components';
-import { formatNumber } from '@/shared/utils';
-import { PositionWrapper, ButtonWrapper, ItemListWrapper } from './style';
+import { CommonImage, CommonText } from '@/shared/components';
+import { ellipsisName, formatNumber } from '@/shared/utils';
+import { PositionWrapper, ItemListWrapper } from './style';
 import { ItemSummary } from '@/shared/types/item';
 
 interface ItemListProps {
@@ -13,7 +13,7 @@ interface ItemListProps {
   onClick?: (id: number) => void;
 }
 
-const ListItem = ({ id, image, price, name, isDelete, onClick }: ItemListProps) => {
+const ListItem = ({ id, image, price, name, isDelete }: ItemListProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -23,22 +23,13 @@ const ListItem = ({ id, image, price, name, isDelete, onClick }: ItemListProps) 
     navigate(`/item/${id}`);
   };
 
-  const handleDeleteClick = () => {
-    onClick && onClick(id);
-  };
-
   return (
     <PositionWrapper>
-      {isDelete && (
-        <ButtonWrapper>
-          <CommonIconButton type="cancel" onClick={handleDeleteClick} />
-        </ButtonWrapper>
-      )}
       <ItemListWrapper onClick={handleClick}>
         <CommonImage size="sm" alt={name} src={image} />
         <CommonText type="normalInfo">{formatNumber(price)}</CommonText>
         <CommonText type="smallInfo" noOfLines={0}>
-          {name}
+          {ellipsisName(name, 20)}
         </CommonText>
       </ItemListWrapper>
     </PositionWrapper>
