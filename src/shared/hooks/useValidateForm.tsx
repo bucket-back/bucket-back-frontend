@@ -50,6 +50,15 @@ const useValidateForm = () => {
         },
       },
     ],
+    budget: [
+      {
+        minLength: 1,
+        pattern: {
+          value: /^[0-9]*$/g,
+          message: '숫자만 입력해주세요.',
+        },
+      },
+    ],
   };
 
   return registerOptions;

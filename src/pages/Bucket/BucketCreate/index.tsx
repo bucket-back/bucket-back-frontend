@@ -9,7 +9,7 @@ import {
   CommonText,
   Header,
 } from '@/shared/components';
-import { useDrawer } from '@/shared/hooks';
+import { useDrawer, useValidateForm } from '@/shared/hooks';
 import { Box, ButtonWrapper, Container, Form, SelectedItemsBox, Wrapper } from './style';
 import { BucketSelectItem } from '@/features/bucket/components';
 import { useCreateBucket } from '@/features/bucket/hooks';
@@ -35,6 +35,7 @@ const BucketCreate = () => {
   const [selectedHobby, setSelectedHobby] = useState<Hobby>({ english: '', hangul: '' });
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
   const createBucket = useCreateBucket();
+  const registerOptions = useValidateForm();
   const {
     register,
     handleSubmit,
@@ -123,7 +124,7 @@ const BucketCreate = () => {
                 type="text"
                 width="full"
                 error={errors.budget}
-                {...register('budget', { minLength: 1 })}
+                {...register('budget', ...registerOptions.budget)}
               />
             </Box>
           </Wrapper>

@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { CommonButton, CommonDrawer, CommonInput, CommonText, Header } from '@/shared/components';
-import { useDrawer, useUserInfo } from '@/shared/hooks';
+import { useDrawer, useUserInfo, useValidateForm } from '@/shared/hooks';
 import { Container, ContentsPanel, ContentsWrapper, Form } from './style';
 import { BucketSelectedItems, BucketUpdateItem } from '@/features/bucket/components';
 import { useUpdateBucket } from '@/features/bucket/hooks';
@@ -45,7 +45,7 @@ const BucketUpdate = () => {
       return { hobby: data.hobby, items, id: data.bucketId, name: data.name, budget: data.budget };
     },
   });
-
+  const registerOptions = useValidateForm();
   const onSubmit: SubmitHandler<BucketInfo> = (data) => {
     if (bucket.isSuccess && selectedItems.length > 0) {
       updateBucket.mutate({
@@ -109,7 +109,7 @@ const BucketUpdate = () => {
                 type="text"
                 width="full"
                 error={errors.budget}
-                {...register('budget', { minLength: 1 })}
+                {...register('budget', ...registerOptions.budget)}
               />
             </ContentsPanel>
           </ContentsWrapper>
