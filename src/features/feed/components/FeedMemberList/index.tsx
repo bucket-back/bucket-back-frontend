@@ -59,7 +59,7 @@ const FeedMemberList = ({ hobbyName, nickname, onlyNicknameLikeFeeds }: FeedMemb
                 createdAt={createdAt}
                 feedItems={feedItems}
                 isDetail={false}
-                onClick={() => navigate(`./${feedId}`)}
+                onClick={() => navigate(`/feed/${feedId}`)}
               />
               <CommonDivider size="sm" />
             </Fragment>
