@@ -2,8 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import { CommonRadio } from '@/shared/components';
 import { hobbyQueryOption } from '../../service';
 import { Container } from './style';
-import { SelectedItem } from '@/features/inventory/service';
-
 interface Hobby {
   english: string;
   hangul: string;
@@ -12,16 +10,10 @@ interface Hobby {
 interface HobbyRadioProps {
   defaultValue?: string;
   onChange?: React.Dispatch<React.SetStateAction<Hobby>>;
-  setSelectedItems?: React.Dispatch<React.SetStateAction<SelectedItem[]>>;
   isReadOnly?: boolean;
 }
 
-const HobbySelector = ({
-  defaultValue,
-  onChange,
-  isReadOnly,
-  setSelectedItems,
-}: HobbyRadioProps) => {
+const HobbySelector = ({ defaultValue, onChange, isReadOnly }: HobbyRadioProps) => {
   const { data, isPending, isError } = useQuery({
     ...hobbyQueryOption.all(),
     select: (data) =>
@@ -47,7 +39,6 @@ const HobbySelector = ({
         english: data[value],
         hangul: value,
       });
-    setSelectedItems && setSelectedItems([]);
   };
 
   return (

@@ -45,7 +45,10 @@ const VoteCreate = () => {
         item2Id: Number(selectedItems[1].id),
       });
     } else {
-      openToast({ type: 'error', message: '취미에 맞는 아이템을 선택해주세요.' });
+      openToast({
+        type: 'error',
+        message: `${selectedHobby.hangul}취미에 맞는 아이템을 선택해주세요.`,
+      });
     }
   };
 

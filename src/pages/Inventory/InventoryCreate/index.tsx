@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { CommonButton, CommonDrawer, CommonImage, CommonText, Header } from '@/shared/components';
-import { useDrawer } from '@/shared/hooks';
+import { useCustomToast, useDrawer } from '@/shared/hooks';
 import { Box, Container, Grid, GridItem, RadioBox, Wrapper } from './style';
 import HobbySelector from '@/features/hobby/components/HobbySelector';
 import InventorySelectItem from '@/features/inventory/components/InventorySelectItem';
@@ -14,16 +14,25 @@ interface Hobby {
 
 const InventoryCreate = () => {
   const [selectedHobby, setSelectedHobby] = useState<Hobby>({ english: '', hangul: '' });
+  const [prevSelectedHobby, setPrevSelectedHobby] = useState<string>('');
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
   const { isOpen, onOpen, onClose } = useDrawer();
   const { mutate: createInventoryMutate } = useCreateInventory();
+  const openToast = useCustomToast();
 
   const onSubmit = () => {
     const itemIds = selectedItems.map((item) => item.id);
-    createInventoryMutate({
-      hobbyValue: selectedHobby.hangul,
-      itemIds,
-    });
+    if (selectedHobby.english === prevSelectedHobby) {
+      createInventoryMutate({
+        hobbyValue: selectedHobby.hangul,
+        itemIds,
+      });
+    } else {
+      openToast({
+        type: 'error',
+        message: `${selectedHobby.hangul}취미에 맞는 아이템을 선택해주세요.`,
+      });
+    }
   };
 
   return (
@@ -44,15 +53,22 @@ const InventoryCreate = () => {
               취미를 선택해주세요.
             </CommonText>
             <RadioBox>
-              <HobbySelector onChange={setSelectedHobby} setSelectedItems={setSelectedItems} />
+              <HobbySelector onChange={setSelectedHobby} />
             </RadioBox>
           </Box>
           <Box>
             <CommonText type="normalInfo" noOfLines={0}>
-              본인이 소유하고 있는 아이템을 선택해주세요.
+              리뷰한 아이템을 선택해주세요.
             </CommonText>
             {selectedItems.length < 1 ? (
-              <CommonButton type="custom" onClick={onOpen} />
+              <CommonButton
+                type="custom"
+                onClick={() => {
+                  !selectedHobby.english
+                    ? openToast({ type: 'info', message: '취미를 선택해주세요.' })
+                    : onOpen();
+                }}
+              />
             ) : (
               <Grid>
                 {selectedItems.map(({ id, src }) => (
@@ -86,7 +102,10 @@ const InventoryCreate = () => {
           setSelectedItems([]);
           onClose();
         }}
-        onClickFooterButton={onClose}
+        onClickFooterButton={() => {
+          setPrevSelectedHobby(selectedHobby.english);
+          onClose();
+        }}
         isFull={true}
         footerButtonText="선택 완료"
         isDisabled={selectedItems.length < 1}
