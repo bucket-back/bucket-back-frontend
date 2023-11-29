@@ -16,17 +16,17 @@ import { useDeleteItem } from '@/features/item/hooks';
 import { itemQueryOption } from '@/features/item/service';
 
 const ItemList = () => {
-  const {
-    mutate: itemMutate,
-    isError: itemDeleteError,
-    isPending: itemDeletePending,
-  } = useDeleteItem({ cursorId: '', size: 10 });
-
   const [deleteData, setDeleteData] = useState<number[]>([]);
 
   const [isDelete, setIsDelete] = useState<boolean>(false);
 
   const authNavigate = useAuthNavigate();
+
+  const {
+    mutate: itemMutate,
+    isError: itemDeleteError,
+    isPending: itemDeletePending,
+  } = useDeleteItem({ cursorId: '', size: 10 });
 
   const { data, hasNextPage, fetchNextPage, isPending, isError } = useInfiniteQuery({
     ...itemQueryOption.infinityList({ size: 3 }),
