@@ -114,7 +114,7 @@ const MemberHome = () => {
             isSelf && (
               <AddBox>
                 <CommonText type="smallInfo">보유하신 인벤토리가 없네요.</CommonText>
-                <CommonButton type="text" onClick={() => navigate('/inventory/create')}>
+                <CommonButton type="profile" onClick={() => navigate('/inventory/create')}>
                   인벤토리 추가하러가기
                 </CommonButton>
               </AddBox>
@@ -149,7 +149,7 @@ const MemberHome = () => {
             isSelf && (
               <AddBox>
                 <CommonText type="smallInfo">보유하신 버킷이 없어요.</CommonText>
-                <CommonButton type="text" onClick={() => navigate('/bucket/create')}>
+                <CommonButton type="profile" onClick={() => navigate('/bucket/create')}>
                   버킷 추가하러가기
                 </CommonButton>
               </AddBox>

@@ -65,5 +65,10 @@ export const IconBox = styled.div`
 `;
 
 export const AddBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding-top: 1rem;
+  gap: 0.5rem;
 `;
