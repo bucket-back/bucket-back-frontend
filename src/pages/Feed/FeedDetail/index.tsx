@@ -44,7 +44,7 @@ const FeedDetail = () => {
   const comment = useQuery(commentQueryQption.list({ feedId: feedIdNumber }));
 
   const { register, handleSubmit, reset, setValue } = useForm<CommentContent>();
-  const addComment = useAddComment();
+  const addComment = useAddComment(feedIdNumber);
   const onCreateComment: SubmitHandler<CommentContent> = (data) => {
     addComment.mutate({ feedId: feedIdNumber, content: data.content });
     reset();
