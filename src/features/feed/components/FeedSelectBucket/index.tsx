@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import {
   CommonButton,
   CommonDivider,
@@ -7,12 +8,13 @@ import {
 } from '@/shared/components';
 import {
   Container,
-  ContentsWrapper,
   BucketListWrapper,
   BucketBox,
   AddBucketButtonBox,
   ImageInput,
   ImageLabel,
+  AddBucketWrapper,
+  TitleWrapper,
 } from './style';
 import { GetBucketsResponse } from '@/features/bucket/service';
 
@@ -37,12 +39,14 @@ const reduceImgUrl = (itemImages: ItemImages[]) => {
 };
 
 const FeedSelectBucket = ({ selectedBucket, bucketList, onClick }: FeedSelectBucketProps) => {
+  const navigate = useNavigate();
+
   return (
     <Container>
-      <ContentsWrapper>
+      <TitleWrapper style={{ paddingBottom: '1rem' }}>
         <CommonText type="normalTitle">버킷 선택하기</CommonText>
         <CommonText type="subStrongInfo">총 {bucketList.buckets.length}개의 버킷</CommonText>
-      </ContentsWrapper>
+      </TitleWrapper>
       {bucketList.buckets.length > 0 ? (
         <BucketListWrapper>
           {bucketList.buckets.map((bucket) => (
@@ -69,13 +73,13 @@ const FeedSelectBucket = ({ selectedBucket, bucketList, onClick }: FeedSelectBuc
       ) : (
         <>
           <CommonDivider size="sm" />
-          <ContentsWrapper>
+          <AddBucketWrapper style={{ paddingTop: '1rem' }}>
             <CommonText type="smallInfo">취미에 맞는 버킷이 없습니다!</CommonText>
-            <AddBucketButtonBox>
+            <AddBucketButtonBox onClick={() => navigate('/bucket/create')}>
               <CommonButton type="text">버킷 추가하러 가기</CommonButton>
               <CommonIcon type="chevronRight" />
             </AddBucketButtonBox>
-          </ContentsWrapper>
+          </AddBucketWrapper>
         </>
       )}
     </Container>
