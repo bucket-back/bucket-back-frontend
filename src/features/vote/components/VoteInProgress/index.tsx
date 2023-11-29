@@ -39,7 +39,7 @@ const VoteInProgress = () => {
                 </ContentsBox>
               );
             })}
-            <div ref={ref}>무한스크롤</div>
+            <div ref={ref} />
           </ContentsWrapper>
         </>
       ) : (
