@@ -37,7 +37,6 @@ const ItemList = () => {
 
   const handleDeleteClick = () => {
     if (deleteData.length !== 0) {
-      console.log(deleteData);
       itemMutate({ itemIds: deleteData.join(',') });
     }
     setDeleteData([]);
