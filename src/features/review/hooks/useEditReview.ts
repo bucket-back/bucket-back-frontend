@@ -14,7 +14,7 @@ const useEditReview = () => {
       reviewApi.putEditReviewItem({ itemId, reviewId, content, rating }),
     onSuccess: ({ itemId }: EditReviewItemResponse) => {
       queryClient.invalidateQueries({ queryKey: [...itemQueryOption.detail(itemId).queryKey] });
-      toast({ message: '리뷰가 등록되었습니다!', type: 'success' });
+      toast({ message: '리뷰가 수정되었습니다!', type: 'success' });
       navigate(`/item/${itemId}`);
     },
     onError: (error: AxiosResponse) => {
