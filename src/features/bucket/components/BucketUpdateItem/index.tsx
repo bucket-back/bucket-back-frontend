@@ -28,7 +28,7 @@ const BucketUpdateItem = ({ items, selectedItems, onClick }: BucketUpdateItemPro
   return (
     <Container>
       <CommonText type="normalTitle">아이템 선택</CommonText>
-      <CommonText type="subStrongInfo">총 {items.totalCount}개의 아이템</CommonText>
+      <CommonText type="subStrongInfo">총 {items.totalMemberItemCount}개의 아이템</CommonText>
       <ItemsWrapper>
         {items.summaries.map(({ itemInfo }) => (
           <ItemBox key={itemInfo.id}>

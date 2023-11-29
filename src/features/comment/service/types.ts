@@ -9,6 +9,7 @@ export interface GetCommentsRequest {
 export interface GetCommentsResponse {
   nextCursorId: string;
   totalCount: number;
+  totalCommentCount: number;
   comments: Comment[];
 }
 

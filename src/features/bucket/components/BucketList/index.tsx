@@ -4,7 +4,7 @@ import { CommonText, DividerImage } from '@/shared/components';
 import { useIntersectionObserver } from '@/shared/hooks';
 import { formatNumber } from '@/shared/utils';
 import { bucketQueryOption } from '../../service';
-import { BucketWrapper, Container, NoResult } from './style';
+import { BucketBox, BucketWrapper, Container, NoResult, TotalCountWrapper } from './style';
 
 interface BucketListProps {
   nickname: string;
@@ -32,16 +32,23 @@ const BucketList = ({ nickname, hobby }: BucketListProps) => {
 
   return (
     <Container>
-      {bucket.data.pages.map((page) =>
-        page.buckets.map((bucket) => (
-          <BucketWrapper key={bucket.bucketId} onClick={() => navigate(`./${bucket.bucketId}`)}>
-            <DividerImage type="base" images={bucket.itemImages.map(({ imgUrl }) => imgUrl)} />
-            <CommonText type="smallInfo">{bucket.name}</CommonText>
-            <CommonText type="smallInfo">{formatNumber(bucket.totalPrice)}</CommonText>
-          </BucketWrapper>
-        ))
-      )}
-      {bucket.hasNextPage && <div ref={observedRef} />}
+      <TotalCountWrapper>
+        <CommonText type="smallInfo">
+          총 {bucket.data.pages[0].totalBucketCount}개의 버킷
+        </CommonText>
+      </TotalCountWrapper>
+      <BucketWrapper>
+        {bucket.data.pages.map((page) =>
+          page.buckets.map((bucket) => (
+            <BucketBox key={bucket.bucketId} onClick={() => navigate(`./${bucket.bucketId}`)}>
+              <DividerImage type="base" images={bucket.itemImages.map(({ imgUrl }) => imgUrl)} />
+              <CommonText type="smallInfo">{bucket.name}</CommonText>
+              <CommonText type="smallInfo">{formatNumber(bucket.totalPrice)}</CommonText>
+            </BucketBox>
+          ))
+        )}
+        {bucket.hasNextPage && <div ref={observedRef} />}
+      </BucketWrapper>
     </Container>
   );
 };

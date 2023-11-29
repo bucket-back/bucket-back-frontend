@@ -33,6 +33,7 @@ export interface GetMyItemsResponse {
   cursorId: string;
   summaries: MyItemSummary[];
   totalCount: number;
+  totalMemberItemCount: number;
 }
 
 export interface DeleteItemRequest {

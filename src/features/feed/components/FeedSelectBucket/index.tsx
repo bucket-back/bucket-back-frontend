@@ -61,7 +61,7 @@ const FeedSelectBucket = ({ hobby, nickname, selectedBucket, onClick }: FeedSele
       <TitleWrapper>
         <CommonText type="normalTitle">버킷 선택하기</CommonText>
         <CommonText type="subStrongInfo">
-          총 {bucketList.data.pages[0].buckets.length}개의 버킷
+          총 {bucketList.data.pages[0].totalBucketCount}개의 버킷
         </CommonText>
       </TitleWrapper>
       {bucketList.data.pages[0].buckets.length === 0 && (

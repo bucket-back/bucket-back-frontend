@@ -9,6 +9,7 @@ export interface GetBucketsRequest {
 
 export interface GetBucketsResponse {
   nextCursorId: string;
+  totalBucketCount: number;
   buckets: Bucket[];
 }
 

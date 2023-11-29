@@ -104,7 +104,9 @@ const FeedDetail = () => {
       <div>
         <CommonDivider size="lg" />
         <CommentNumberWrapper>
-          <CommonText type="normalInfo">총 {comment.data?.totalCount || 0}개의 댓글</CommonText>
+          <CommonText type="normalInfo">
+            총 {comment.data?.totalCommentCount || 0}개의 댓글
+          </CommonText>
         </CommentNumberWrapper>
         <CommonDivider size="sm" />
       </div>

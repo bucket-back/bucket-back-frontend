@@ -1,7 +1,17 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
-  max-height: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const TotalCountWrapper = styled.div`
+  padding: 1rem 1rem 0 2rem;
+`;
+
+export const BucketWrapper = styled.div`
+  height: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
@@ -9,7 +19,7 @@ export const Container = styled.div`
   overflow-y: auto;
 `;
 
-export const BucketWrapper = styled.div`
+export const BucketBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
