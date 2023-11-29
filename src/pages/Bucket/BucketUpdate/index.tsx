@@ -84,7 +84,10 @@ const BucketUpdate = () => {
                 type="text"
                 width="full"
                 error={errors.name}
-                {...register('name', { required: '버킷 이름은 필수입니다.' })}
+                {...register('name', {
+                  required: '버킷 이름은 필수입니다.',
+                  maxLength: { value: 25, message: '최대 25자까지 허용됩니다.' },
+                })}
               />
             </ContentsPanel>
             <ContentsPanel>
@@ -92,22 +95,22 @@ const BucketUpdate = () => {
               {bucket.isSuccess && <HobbyRadio defaultValue={bucket.data.hobby} isReadOnly />}
             </ContentsPanel>
             <ContentsPanel>
-              <CommonText type="normalInfo">
-                아이템의 가격보다 높은 예산을 입력해주세요. (선택)
-              </CommonText>
-              <CommonInput
-                placeholder="버킷 이름을 입력해주세요"
-                type="text"
-                width="full"
-                error={errors.budget}
-                {...register('budget')}
-              />
-            </ContentsPanel>
-            <ContentsPanel>
               <CommonText type="normalInfo">아이템을 하나 이상 선택해주세요.</CommonText>
               <div onClick={onOpen}>
                 <BucketSelectedItems items={selectedItems} />
               </div>
+            </ContentsPanel>
+            <ContentsPanel>
+              <CommonText type="normalInfo">
+                아이템의 가격보다 높은 예산을 입력해주세요. (선택)
+              </CommonText>
+              <CommonInput
+                placeholder="예산을 입력해주세요."
+                type="text"
+                width="full"
+                error={errors.budget}
+                {...register('budget', { minLength: 1 })}
+              />
             </ContentsPanel>
           </ContentsWrapper>
           <CommonButton type="mdFull" isDisabled={!selectedItems.length || isSubmitting} isSubmit>
@@ -116,10 +119,16 @@ const BucketUpdate = () => {
         </Form>
         <CommonDrawer
           isOpen={isOpen}
-          onClose={onClose}
+          onClose={() => {
+            if (bucket.isSuccess) {
+              setSelectedItems(bucket.data.items);
+              onClose();
+            }
+          }}
           onClickFooterButton={onClose}
           isFull
           footerButtonText="선택 완료"
+          isDisabled={!selectedItems.length}
         >
           {items.isSuccess && (
             <BucketUpdateItem

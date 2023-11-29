@@ -1,6 +1,6 @@
 import { CommonImage, CommonText } from '@/shared/components';
 import { formatNumber } from '@/shared/utils';
-import { Container, ItemsWrapper } from './style';
+import { Container, ImageInput, ImageLabel, ItemBox, ItemsWrapper } from './style';
 import { GetMyItemsResponse } from '@/features/item/service';
 
 interface SelectedItem {
@@ -31,18 +31,19 @@ const BucketUpdateItem = ({ items, selectedItems, onClick }: BucketUpdateItemPro
       <CommonText type="subStrongInfo">총 {items.totalCount}개의 아이템</CommonText>
       <ItemsWrapper>
         {items.summaries.map(({ itemInfo }) => (
-          <div
-            key={itemInfo.id}
-            style={{ border: selectedItems.includes(itemInfo.id) ? '1px solid' : undefined }}
-          >
-            <CommonImage
-              size="sm"
-              src={itemInfo.image}
-              onClick={() => handleClick({ id: itemInfo.id, image: itemInfo.image })}
+          <ItemBox key={itemInfo.id}>
+            <ImageInput
+              type="checkbox"
+              id={String(itemInfo.id)}
+              onChange={() => handleClick({ id: itemInfo.id, image: itemInfo.image })}
+              checked={selectedItems.includes(itemInfo.id)}
             />
+            <ImageLabel htmlFor={String(itemInfo.id)}>
+              <CommonImage size="sm" src={itemInfo.image} />
+            </ImageLabel>
             <CommonText type="normalInfo">{formatNumber(itemInfo.price)}원</CommonText>
             <CommonText type="smallInfo">{itemInfo.name}</CommonText>
-          </div>
+          </ItemBox>
         ))}
       </ItemsWrapper>
     </Container>
