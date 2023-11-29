@@ -6,20 +6,24 @@ import {
   CommonDrawer,
   CommonImage,
   CommonInput,
-  CommonRadio,
   CommonText,
   Header,
 } from '@/shared/components';
 import { useDrawer } from '@/shared/hooks';
-import { Box, ButtonWrapper, Container, Form, HobbyBox, SelectedItemsBox, Wrapper } from './style';
+import { Box, ButtonWrapper, Container, Form, SelectedItemsBox, Wrapper } from './style';
 import { BucketSelectItem } from '@/features/bucket/components';
 import { useCreateBucket } from '@/features/bucket/hooks';
-import { useHobby } from '@/features/hobby/hooks';
+import { HobbySelector } from '@/features/hobby/components';
 import { itemQueryOption } from '@/features/item/service';
 
-interface SelectedItems {
+interface Hobby {
+  english: string;
+  hangul: string;
+}
+
+interface SelectedItem {
   id: number;
-  image: string;
+  src: string;
 }
 
 interface BucketInfo {
@@ -28,8 +32,8 @@ interface BucketInfo {
 }
 
 const BucketCreate = () => {
-  const [selectedHobby, setSelectedHobby] = useState<string | undefined>('');
-  const [selectedItems, setSelectedItems] = useState<SelectedItems[]>([]);
+  const [selectedHobby, setSelectedHobby] = useState<Hobby>({ english: '', hangul: '' });
+  const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
   const createBucket = useCreateBucket();
   const {
     register,
@@ -39,7 +43,7 @@ const BucketCreate = () => {
   const onSubmit: SubmitHandler<BucketInfo> = (data) => {
     if (selectedHobby) {
       createBucket.mutate({
-        hobbyValue: selectedHobby,
+        hobbyValue: selectedHobby.hangul,
         name: data.name,
         itemIds: selectedItems.map((item) => item.id),
         budget: data.budget,
@@ -47,18 +51,8 @@ const BucketCreate = () => {
     }
   };
 
-  const hobby = useHobby();
-  const hobbyData = hobby.isSuccess
-    ? hobby.data?.hobbies.reduce<Record<string, string>>(
-        (acc, cur) => ((acc[cur.value] = cur.name), acc),
-        {}
-      )
-    : {};
-
-  const hobbyValues = Object.keys(hobbyData || {});
-
   const items = useQuery(
-    itemQueryOption.myItems({ hobbyName: selectedHobby ? hobbyData[selectedHobby] : '' })
+    itemQueryOption.myItems({ hobbyName: selectedHobby ? selectedHobby.english : '' })
   );
 
   const { isOpen, onOpen, onClose } = useDrawer();
@@ -81,14 +75,17 @@ const BucketCreate = () => {
                 type="text"
                 width="full"
                 error={errors.name}
-                {...register('name', { required: '버킷 이름은 필수입니다.' })}
+                {...register('name', {
+                  required: '버킷 이름은 필수입니다.',
+                  maxLength: { value: 25, message: '최대 25자까지 허용됩니다.' },
+                })}
               />
             </Box>
             <Box>
               <CommonText type="normalInfo" noOfLines={0}>
                 취미별로 버킷을 생성할 수 있어요. 취미를 선택해주세요!
               </CommonText>
-              <HobbyBox>
+              {/* <HobbyBox>
                 {hobbyData && (
                   <CommonRadio
                     values={hobbyValues || []}
@@ -96,7 +93,8 @@ const BucketCreate = () => {
                     onChange={(value: string) => setSelectedHobby(value)}
                   />
                 )}
-              </HobbyBox>
+              </HobbyBox> */}
+              <HobbySelector onChange={setSelectedHobby} setSelectedItems={setSelectedItems} />
             </Box>
             <Box>
               <CommonText type="normalInfo" noOfLines={0}>
@@ -107,7 +105,7 @@ const BucketCreate = () => {
                 type="text"
                 width="full"
                 error={errors.budget}
-                {...register('budget')}
+                {...register('budget', { minLength: 1 })}
               />
             </Box>
             <Box>
@@ -116,13 +114,17 @@ const BucketCreate = () => {
               </CommonText>
               <SelectedItemsBox>
                 {selectedItems.length === 0 ? (
-                  <CommonButton type="custom" isDisabled={!selectedHobby} onClick={onOpen} />
+                  <CommonButton
+                    type="custom"
+                    isDisabled={!selectedHobby.english}
+                    onClick={onOpen}
+                  />
                 ) : (
-                  selectedItems.map(({ id, image }) => (
+                  selectedItems.map(({ id, src }) => (
                     <CommonImage
                       key={id}
                       size="sm"
-                      src={image}
+                      src={src}
                       onClick={() => {
                         onOpen();
                         setSelectedItems([]);
@@ -137,7 +139,7 @@ const BucketCreate = () => {
             <CommonButton
               type="mdFull"
               isDisabled={
-                !selectedHobby?.length || !selectedItems.length || !isValid || isSubmitting
+                !selectedHobby.english.length || !selectedItems.length || !isValid || isSubmitting
               }
               isSubmit={true}
             >
@@ -159,11 +161,7 @@ const BucketCreate = () => {
           isFull={true}
           footerButtonText="선택 완료"
         >
-          <BucketSelectItem
-            items={items.data!}
-            onClick={setSelectedItems}
-            selectedItems={selectedItems.map(({ id }) => id)}
-          />
+          <BucketSelectItem items={items.data!} onClick={setSelectedItems} />
         </CommonDrawer>
       </Container>
     </>
