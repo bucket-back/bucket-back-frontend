@@ -31,7 +31,7 @@ const MemberEditForm = ({ nickname, image, introduction }: MemberEditFormProps) 
     defaultValues: {
       image: '',
       nickname,
-      introduction,
+      introduction: introduction || '',
     },
   });
   const registerOptions = useValidateForm();
