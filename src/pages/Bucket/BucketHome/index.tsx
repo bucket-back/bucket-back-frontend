@@ -78,7 +78,7 @@ const BucketHome = () => {
                           />
                           <CommonText type="smallInfo">{bucket.name}</CommonText>
                           <CommonText type="smallInfo">
-                            {formatNumber(bucket.totalPrice)}원
+                            {formatNumber(bucket.totalPrice)}
                           </CommonText>
                         </ContentsBox>
                       ))}

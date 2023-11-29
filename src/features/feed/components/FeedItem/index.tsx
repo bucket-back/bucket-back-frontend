@@ -91,7 +91,7 @@ const FeedItem = ({
           />
         )}
       </ProfileWrapper>
-      <ContentsWrapper>
+      <ContentsWrapper onClick={() => onClick(feedId)}>
         {feedContent && (
           <CommonText type="normalInfo" color="inherit" noOfLines={isDetail ? 10 : 3}>
             {feedContent}
@@ -101,14 +101,14 @@ const FeedItem = ({
           <BucketInfoBox>
             <CommonText type="smallInfo">버킷명: {bucketName}</CommonText>
             {totalPrice && (
-              <CommonText type="smallInfo">버킷 총액: {formatNumber(totalPrice)}원</CommonText>
+              <CommonText type="smallInfo">버킷 총액: {formatNumber(totalPrice)}</CommonText>
             )}
             {bucketBudget && (
-              <CommonText type="smallInfo">예산: {formatNumber(bucketBudget)}원</CommonText>
+              <CommonText type="smallInfo">예산: {formatNumber(bucketBudget)}</CommonText>
             )}
           </BucketInfoBox>
         )}
-        <ImageBox onClick={() => onClick(feedId)}>
+        <ImageBox>
           {feedItems.map((item) => (
             <CommonImage key={item.id} size="sm" src={item.image} />
           ))}

@@ -41,7 +41,7 @@ const BucketUpdateItem = ({ items, selectedItems, onClick }: BucketUpdateItemPro
             <ImageLabel htmlFor={String(itemInfo.id)}>
               <CommonImage size="sm" src={itemInfo.image} />
             </ImageLabel>
-            <CommonText type="normalInfo">{formatNumber(itemInfo.price)}원</CommonText>
+            <CommonText type="normalInfo">{formatNumber(itemInfo.price)}</CommonText>
             <CommonText type="smallInfo">{itemInfo.name}</CommonText>
           </ItemBox>
         ))}

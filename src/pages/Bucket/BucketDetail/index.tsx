@@ -60,7 +60,7 @@ const BucketDetail = () => {
               <ContentsBox key={id} onClick={() => navigate(`/item/${id}`)}>
                 <CommonImage size="sm" src={image} />
                 <CommonText type="smallInfo">{name}</CommonText>
-                <CommonText type="smallInfo">{formatNumber(price)}원</CommonText>
+                <CommonText type="smallInfo">{formatNumber(price)}</CommonText>
               </ContentsBox>
             ))}
           </ContentsWrapper>
