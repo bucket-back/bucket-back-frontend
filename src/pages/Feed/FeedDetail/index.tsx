@@ -133,7 +133,7 @@ const FeedDetail = () => {
                 수정
               </CommonButton>
             }
-            {...register('content', { required: true, minLength: 1 })}
+            {...register('content', { required: true, minLength: 1, maxLength: 1000 })}
           />
         </CommentInputContainer>
       ) : (
@@ -149,7 +149,7 @@ const FeedDetail = () => {
                 등록
               </CommonButton>
             }
-            {...register('content', { required: true, minLength: 1 })}
+            {...register('content', { required: true, minLength: 1, maxLength: 1000 })}
           />
         </CommentInputContainer>
       )}
