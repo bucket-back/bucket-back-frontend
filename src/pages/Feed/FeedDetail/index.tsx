@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
   CommonButton,
@@ -37,14 +37,18 @@ const FeedDetail = () => {
   const feedIdNumber = Number(feedId);
   const isLogin = useAuthCheck();
   const userInfo = useUserInfo();
-  const deleteFeed = useDeleteFeed();
   const navigate = useNavigate();
+  const { state: path } = useLocation();
+  const deleteFeed = useDeleteFeed(path);
 
   const feedDetail = useQuery(feedQueryOption.detail(feedIdNumber));
+
   const comment = useQuery(commentQueryQption.list({ feedId: feedIdNumber }));
+  const addComment = useAddComment(feedIdNumber);
+  const updateComment = useUpdateComment(feedIdNumber);
+  const deleteComment = useDeleteComment();
 
   const { register, handleSubmit, reset, setValue } = useForm<CommentContent>();
-  const addComment = useAddComment(feedIdNumber);
   const onCreateComment: SubmitHandler<CommentContent> = (data) => {
     addComment.mutate({ feedId: feedIdNumber, content: data.content });
     reset();
@@ -53,8 +57,6 @@ const FeedDetail = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [updatingCommentId, setUpdatingCommentId] = useState(0);
   const [selectedCommentId, setSelectedCommentId] = useState(0);
-  const updateComment = useUpdateComment(feedIdNumber);
-  const deleteComment = useDeleteComment();
 
   const onUpdateComment: SubmitHandler<CommentContent> = (data) => {
     updateComment.mutate({

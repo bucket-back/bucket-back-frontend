@@ -11,7 +11,7 @@ const useUpdateFeed = (feedId: string) => {
     mutationFn: feedApi.putFeed,
     onSuccess: () => {
       openToast({ message: '피드가 수정되었습니다.', type: 'success' });
-      navigate(`/feed/${feedId}`);
+      navigate(`/feed/${feedId}`, { replace: true });
     },
     onError: () => {
       openToast({ message: '피드 수정에 실패했습니다.', type: 'error' });

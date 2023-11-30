@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { CommonDivider } from '@/shared/components';
 import { useIntersectionObserver } from '@/shared/hooks';
@@ -15,6 +15,7 @@ interface FeedMemberListProps {
 
 const FeedMemberList = ({ hobbyName, nickname, onlyNicknameLikeFeeds }: FeedMemberListProps) => {
   const navigate = useNavigate();
+  const { pathname, search } = useLocation();
 
   const feeds = useInfiniteQuery(
     feedQueryOption.list({ hobbyName, nickname, onlyNicknameLikeFeeds })
@@ -59,7 +60,9 @@ const FeedMemberList = ({ hobbyName, nickname, onlyNicknameLikeFeeds }: FeedMemb
                 createdAt={createdAt}
                 feedItems={feedItems}
                 isDetail={false}
-                onClick={() => navigate(`/feed/${feedId}`)}
+                onClick={() =>
+                  navigate(`/feed/${feedId}`, { state: { from: `${pathname}${search}` } })
+                }
               />
               <CommonDivider size="sm" />
             </Fragment>
