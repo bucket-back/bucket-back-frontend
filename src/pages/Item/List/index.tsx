@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { CommonIconButton, CommonText, Header, Footer } from '@/shared/components';
-import { useAuthNavigate } from '@/shared/hooks';
+import { useAuthNavigate, useIntersectionObserver } from '@/shared/hooks';
 import { formatNumber } from '@/shared/utils';
 import {
   CommonContainer,
@@ -16,21 +16,29 @@ import { useDeleteItem } from '@/features/item/hooks';
 import { itemQueryOption } from '@/features/item/service';
 
 const ItemList = () => {
+  const [deleteData, setDeleteData] = useState<number[]>([]);
+
   const [isDelete, setIsDelete] = useState<boolean>(false);
 
-  const { data, isPending, isError } = useQuery({
-    ...itemQueryOption.myItems({ cursorId: '', size: 20 }),
-  });
+  const authNavigate = useAuthNavigate();
 
   const {
     mutate: itemMutate,
     isError: itemDeleteError,
     isPending: itemDeletePending,
-  } = useDeleteItem({ cursorId: '', size: 10 });
+  } = useDeleteItem({ cursorId: '', size: 3 });
 
-  const [deleteData, setDeleteData] = useState<number[]>([]);
+  const { data, hasNextPage, fetchNextPage, isPending, isError } = useInfiniteQuery({
+    ...itemQueryOption.infinityList({ size: 13 }),
+    select: (data) => {
+      return {
+        summaries: data.pages.flatMap(({ summaries }) => summaries),
+        totalCount: data.pages.flatMap(({ totalCount }) => totalCount),
+      };
+    },
+  });
 
-  const authNavigate = useAuthNavigate();
+  const ref = useIntersectionObserver({ onObserve: fetchNextPage });
 
   const handleChange = (deleteId: number) => {
     if (!deleteData.includes(deleteId)) {
@@ -40,12 +48,16 @@ const ItemList = () => {
     }
   };
 
+  const handleClick = () => {
+    setDeleteData([]);
+    setIsDelete((prev) => !prev);
+  };
+
   const handleDeleteClick = () => {
     if (deleteData.length !== 0) {
       itemMutate({ itemIds: deleteData.join(',') });
     }
-    setDeleteData([]);
-    setIsDelete((prev) => !prev);
+    handleClick();
   };
 
   if (isPending || itemDeletePending) {
@@ -56,6 +68,8 @@ const ItemList = () => {
     return <>Error...</>;
   }
 
+  const totalCount = data.totalCount.reduce((prev, next) => prev + next, 0);
+
   return (
     <>
       <Header type="logo" />
@@ -64,13 +78,7 @@ const ItemList = () => {
           <CommonText type="smallTitle">내 아이템{isDelete ? ' 삭제하기' : ' 전체보기'}</CommonText>
           {isDelete ? (
             <ButtonBox>
-              <CommonIconButton
-                type="cancel"
-                onClick={() => {
-                  setDeleteData([]);
-                  setIsDelete((prev) => !prev);
-                }}
-              />
+              <CommonIconButton type="cancel" onClick={handleClick} />
               <CommonIconButton type="delete" onClick={handleDeleteClick} />
             </ButtonBox>
           ) : (
@@ -81,22 +89,25 @@ const ItemList = () => {
           <CommonText type="smallInfo">
             {isDelete
               ? `총 삭제할 ${formatNumber(deleteData.length)}개의 아이템`
-              : `총 ${formatNumber(data.totalCount)}개의 아이템`}
+              : `총 ${formatNumber(totalCount)}개의 아이템`}
           </CommonText>
         </ItemTextContaienr>
         <Grid>
-          {data.summaries.map(({ itemInfo: { id, image, name, price } }) => (
-            <ListItem
-              key={id}
-              id={id}
-              image={image}
-              price={price}
-              name={name}
-              isDelete={isDelete}
-              isDeleteMode={deleteData.includes(id)}
-              handleChange={handleChange}
-            />
-          ))}
+          <>
+            {data.summaries.map(({ itemInfo: { id, image, name, price } }) => (
+              <ListItem
+                key={id}
+                id={id}
+                image={image}
+                price={price}
+                name={name}
+                isDelete={isDelete}
+                isDeleteMode={deleteData.includes(id)}
+                handleChange={handleChange}
+              />
+            ))}
+            {hasNextPage && <div ref={ref} />}
+          </>
         </Grid>
       </CommonContainer>
       <Footer>
