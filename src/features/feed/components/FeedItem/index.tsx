@@ -118,7 +118,7 @@ const FeedItem = ({
             isDetail && onClick(feedId);
           }}
         >
-          {feedItems.map((item) => (
+          {feedItems.slice(0, 6).map((item) => (
             <ImageBorder key={item.id}>
               <CommonImage size="sm" src={item.image} />
             </ImageBorder>
