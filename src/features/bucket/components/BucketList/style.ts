@@ -11,7 +11,7 @@ export const TotalCountWrapper = styled.div`
 `;
 
 export const BucketWrapper = styled.div`
-  height: 100%;
+  max-height: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
