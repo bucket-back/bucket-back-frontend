@@ -11,9 +11,9 @@ interface CommonTextProps {
 }
 
 const TEXT_TYPE = {
-  strongTitle: { fontSize: '3rem', weight: 700 },
-  normalTitle: { fontSize: '1.5rem', weight: 700 },
-  smallTitle: { fontSize: '1.25rem', weight: 700 },
+  strongTitle: { fontSize: '3rem' },
+  normalTitle: { fontSize: '1.5rem' },
+  smallTitle: { fontSize: '1.25rem' },
   strongInfo: { fontSize: '1rem', weight: 700 },
   subStrongInfo: { fontSize: '1.125rem', weight: 400 },
   normalInfo: { fontSize: '0.875rem', weight: 500 },
