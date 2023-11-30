@@ -22,7 +22,7 @@ const itemQueryOption = {
 
     return infiniteQueryOptions({
       queryKey: [...itemQueryOption.all, currentHobbyName, 'infinite'] as const,
-      queryFn: ({ pageParam: cursorId }) => itemApi.getMyItems({ cursorId, size }),
+      queryFn: ({ pageParam: cursorId }) => itemApi.getMyItems({ hobbyName, cursorId, size }),
       initialPageParam: '',
       getNextPageParam: ({ nextCursorId }) => {
         return nextCursorId;
