@@ -77,6 +77,8 @@ const ItemDetail = () => {
     return <>Error...</>;
   }
 
+  console.log(reviewInfo.reviews);
+
   return (
     <>
       <Header type="back" />
