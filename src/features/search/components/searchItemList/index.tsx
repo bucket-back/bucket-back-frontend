@@ -21,6 +21,12 @@ export interface SearchListItemProp {
 const SearchItemList = ({ keyword }: SearchListItemProp) => {
   const { data, isPending, isError, hasNextPage, fetchNextPage } = useInfiniteQuery({
     ...searchQueryOption.infiniteKeywordItemList({ keyword: encodeURIComponent(keyword), size: 3 }),
+    select: (data) => {
+      return {
+        totalCount: data.pages.flatMap(({ totalCount }) => totalCount),
+        items: data.pages.flatMap(({ items }) => items),
+      };
+    },
   });
 
   const ref = useIntersectionObserver({ onObserve: fetchNextPage });
@@ -35,13 +41,11 @@ const SearchItemList = ({ keyword }: SearchListItemProp) => {
     return <>Error...</>;
   }
 
-  if (!data.pages[0].totalCount) {
+  if (data.totalCount[0] === 0) {
     return <NoResult>검색결과가 없습니다.</NoResult>;
   }
 
-  const totalCount = data.pages
-    .map(({ totalCount }) => totalCount)
-    .reduce((prev, next) => prev + next, 0);
+  const totalCount = data.totalCount.reduce((prev, next) => prev + next, 0);
 
   return (
     <>
@@ -50,15 +54,13 @@ const SearchItemList = ({ keyword }: SearchListItemProp) => {
           <CommonText type="subStrongInfo">총 {totalCount}개의 아이템</CommonText>
         </TextBox>
         <Grid padding="0 1rem" templateColumns="repeat(3,1fr)" gap="0.25rem">
-          {data.pages.map(({ items }) =>
-            items.map(({ itemSummary }) => (
-              <GridItem key={itemSummary.id} onClick={() => navigate(`/item/${itemSummary.id}`)}>
-                <CommonImage size="sm" src={itemSummary.image} />
-                <CommonText type="normalInfo">{formatNumber(itemSummary.price)}원</CommonText>
-                <CommonText type="smallInfo">{itemSummary.name}</CommonText>
-              </GridItem>
-            ))
-          )}
+          {data.items.map(({ itemSummary }) => (
+            <GridItem key={itemSummary.id} onClick={() => navigate(`/item/${itemSummary.id}`)}>
+              <CommonImage size="sm" src={itemSummary.image} />
+              <CommonText type="normalInfo">{formatNumber(itemSummary.price)}원</CommonText>
+              <CommonText type="smallInfo">{itemSummary.name}</CommonText>
+            </GridItem>
+          ))}
           {hasNextPage && <div ref={ref} />}
         </Grid>
         <CommonDivider size="sm" />
