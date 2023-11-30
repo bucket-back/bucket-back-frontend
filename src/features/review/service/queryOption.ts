@@ -1,17 +1,22 @@
-import { queryOptions } from '@tanstack/react-query';
+import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
 import { GetSearchReviewListRequest, GetReviewItemRequest, reviewApi } from '.';
 
 const reviewQueryOption = {
   all: ['review'] as const,
-  lists: ({ itemId, cursorId, size }: GetSearchReviewListRequest) =>
-    queryOptions({
-      queryKey: [...reviewQueryOption.all, itemId] as const,
-      queryFn: () => reviewApi.getSearchReviewList({ itemId, cursorId, size }),
-    }),
   detail: ({ itemId, reviewId }: GetReviewItemRequest) =>
     queryOptions({
       queryKey: [...reviewQueryOption.all, reviewId] as const,
       queryFn: () => reviewApi.getReviewItem({ itemId, reviewId }),
+    }),
+  infiniteList: ({ itemId, size }: GetSearchReviewListRequest) =>
+    infiniteQueryOptions({
+      queryKey: [...reviewQueryOption.all, itemId] as const,
+      queryFn: ({ pageParam: cursorId }) =>
+        reviewApi.getSearchReviewList({ itemId, cursorId, size }),
+      initialPageParam: '',
+      getNextPageParam: ({ nextCursorId }) => {
+        return nextCursorId;
+      },
     }),
 };
 

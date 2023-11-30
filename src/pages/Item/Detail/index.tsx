@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import {
   CommonButton,
   CommonDivider,
@@ -10,6 +10,7 @@ import {
   Header,
 } from '@/shared/components';
 import { useAuthCheck } from '@/shared/hooks';
+import { useIntersectionObserver } from '@/shared/hooks';
 import { formatNumber } from '@/shared/utils';
 import {
   Container,
@@ -19,7 +20,6 @@ import {
   CommentNumberWrapper,
   CommentsContainer,
   Box,
-  ReviewBox,
 } from './style';
 import { ItemComment } from '@/features/item/components';
 import { useTakeItem } from '@/features/item/hooks';
@@ -48,19 +48,19 @@ const ItemDetail = () => {
     data: reviewInfo,
     isPending: reviewPending,
     isError: reviewError,
-  } = useQuery({
-    ...reviewQueryOption.lists({ itemId: Number(itemId), cursorId: '', size: 10 }),
-    initialData: {
-      itemReviewTotalCount: 0,
-      nextCursorId: '',
-      totalCount: 0,
-      reviews: [],
-    },
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    ...reviewQueryOption.infiniteList({ itemId: Number(itemId), size: 3 }),
   });
+
+  const ref = useIntersectionObserver({ onObserve: fetchNextPage });
 
   const { mutate: itemTakeMutate } = useTakeItem();
 
-  const isReviewed = reviewInfo.reviews.findIndex((value) => value.isReviewed);
+  const isReviewed = reviewInfo?.pages
+    .map(({ reviews }) => reviews)[0]
+    .findIndex(({ isReviewed }) => isReviewed);
 
   const handleItem = () => {
     itemTakeMutate([String(data.itemInfo.id)]);
@@ -107,40 +107,47 @@ const ItemDetail = () => {
           type="mdFull"
           isDisabled={isLogin === false}
           onClick={() =>
-            isReviewed > -1
-              ? navigate(`/${itemId}/review/${reviewInfo.reviews[isReviewed].reviewId}/edit`)
+            isReviewed! > -1
+              ? navigate(
+                  `/${itemId}/review/${
+                    reviewInfo.pages.map(({ reviews }) => reviews)[0][isReviewed!].reviewId
+                  }/edit`
+                )
               : navigate(`/item/${itemId}/review/create`)
           }
         >
-          {isReviewed > -1 ? '리뷰 수정' : '리뷰 작성'}
+          {isReviewed! > -1 ? '리뷰 수정' : '리뷰 작성'}
         </CommonButton>
       </Container>
       <div>
         <CommonDivider size="lg" />
         <CommentNumberWrapper>
-          <CommonText type="normalInfo">총 {reviewInfo.totalCount}개의 댓글</CommonText>
+          <CommonText type="normalInfo">
+            총 {reviewInfo.pages[0].itemReviewTotalCount}개의 댓글
+          </CommonText>
         </CommentNumberWrapper>
         <CommonDivider size="sm" />
       </div>
       <CommentsContainer>
-        {reviewInfo.reviews.length !== 0 ? (
-          reviewInfo.reviews.map(({ content, createdAt, memberInfo, reviewId, isReviewed }) => (
-            <Fragment key={reviewId}>
-              <ItemComment
-                content={content}
-                createAt={createdAt}
-                memberInfo={memberInfo}
-                itemId={itemId!}
-                reviewId={reviewId}
-                isReviewed={isReviewed}
-                editPath={`/${itemId}/review/${reviewId}/edit`}
-              />
-              <CommonDivider size="sm" />
-            </Fragment>
-          ))
-        ) : (
-          <ReviewBox>리뷰가 없습니다...</ReviewBox>
-        )}
+        <>
+          {reviewInfo.pages.map(({ reviews }) =>
+            reviews.map(({ content, createdAt, memberInfo, reviewId, isReviewed }) => (
+              <Fragment key={reviewId}>
+                <ItemComment
+                  content={content}
+                  createAt={createdAt}
+                  memberInfo={memberInfo}
+                  itemId={itemId!}
+                  reviewId={reviewId}
+                  isReviewed={isReviewed}
+                  editPath={`/${itemId}/review/${reviewId}/edit`}
+                />
+                <CommonDivider size="sm" />
+              </Fragment>
+            ))
+          )}
+          {hasNextPage && <div ref={ref} style={{ height: '1rem' }} />}
+        </>
       </CommentsContainer>
     </>
   );
