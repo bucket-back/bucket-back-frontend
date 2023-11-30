@@ -23,6 +23,7 @@ import {
   CommentBox,
   CommentNumber,
   BucketInfoBox,
+  ImageBorder,
 } from './style';
 
 interface FeedItemProps {
@@ -118,7 +119,9 @@ const FeedItem = ({
           }}
         >
           {feedItems.map((item) => (
-            <CommonImage key={item.id} size="sm" src={item.image} />
+            <ImageBorder key={item.id}>
+              <CommonImage size="sm" src={item.image} />
+            </ImageBorder>
           ))}
         </ImageBox>
         <DetailInfoWrapper>

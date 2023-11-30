@@ -7,7 +7,15 @@ import {
   CommonText,
 } from '@/shared/components';
 import { formatNumber } from '@/shared/utils';
-import { Body, Container, ImageInput, ImageLabel, ItemBox, ItemsWrapper } from './style';
+import {
+  Body,
+  Container,
+  ImageBorder,
+  ImageInput,
+  ImageLabel,
+  ItemBox,
+  ItemsWrapper,
+} from './style';
 import { GetMyItemsResponse } from '@/features/item/service';
 
 interface SelectedItem {
@@ -47,7 +55,9 @@ const BucketSelectItem = ({ items, onClick }: BucketSelectItemPorps) => {
                 onChange={() => handleClick({ id: itemInfo.id, src: itemInfo.image })}
               />
               <ImageLabel htmlFor={String(itemInfo.id)}>
-                <CommonImage size="sm" src={itemInfo.image} />
+                <ImageBorder>
+                  <CommonImage size="sm" src={itemInfo.image} />
+                </ImageBorder>
               </ImageLabel>
               <CommonText type="normalInfo">{formatNumber(itemInfo.price)}</CommonText>
               <CommonText type="smallInfo">{itemInfo.name}</CommonText>
