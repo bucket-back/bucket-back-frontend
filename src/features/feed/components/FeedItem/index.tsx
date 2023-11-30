@@ -91,7 +91,11 @@ const FeedItem = ({
           />
         )}
       </ProfileWrapper>
-      <ContentsWrapper onClick={() => onClick(feedId)}>
+      <ContentsWrapper
+        onClick={() => {
+          !isDetail && onClick(feedId);
+        }}
+      >
         {feedContent && (
           <CommonText type="normalInfo" color="inherit" noOfLines={isDetail ? 10 : 3}>
             {feedContent}
@@ -108,7 +112,11 @@ const FeedItem = ({
             )}
           </BucketInfoBox>
         )}
-        <ImageBox>
+        <ImageBox
+          onClick={() => {
+            isDetail && onClick(feedId);
+          }}
+        >
           {feedItems.map((item) => (
             <CommonImage key={item.id} size="sm" src={item.image} />
           ))}
