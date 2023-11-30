@@ -85,8 +85,8 @@ const FeedCreate = () => {
                 {...register('textarea', {
                   required: '내용을 필수로 입력해주세요.',
                   maxLength: {
-                    value: 1000,
-                    message: '1000글자 이하로 입력해주세요.',
+                    value: 200,
+                    message: '200글자 이하로 입력해주세요.',
                   },
                 })}
               />

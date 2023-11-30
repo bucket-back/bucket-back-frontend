@@ -129,13 +129,13 @@ const FeedDetail = () => {
             size="md"
             type="text"
             width="100%"
-            placeholder="댓글을 수정해주세요"
+            placeholder="댓글을 수정해주세요 (100자 이하)"
             rightIcon={
               <CommonButton type="mdFull" isSubmit>
                 수정
               </CommonButton>
             }
-            {...register('content', { required: true, minLength: 1, maxLength: 1000 })}
+            {...register('content', { required: true, minLength: 1, maxLength: 100 })}
           />
         </CommentInputContainer>
       ) : (
@@ -144,14 +144,14 @@ const FeedDetail = () => {
             size="md"
             type="text"
             width="100%"
-            placeholder={isLogin ? '댓글을 입력해주세요' : '로그인후 이용가능합니다'}
+            placeholder={isLogin ? '댓글을 입력해주세요 (100자 이하)' : '로그인후 이용가능합니다'}
             isDisabled={!isLogin}
             rightIcon={
               <CommonButton type="mdFull" isSubmit isDisabled={!isLogin}>
                 등록
               </CommonButton>
             }
-            {...register('content', { required: true, minLength: 1, maxLength: 1000 })}
+            {...register('content', { required: true, minLength: 1, maxLength: 100 })}
           />
         </CommentInputContainer>
       )}
