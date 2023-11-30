@@ -18,7 +18,7 @@ import { searchQueryOption } from '@/features/search/service';
 
 const SearchVoteList = ({ keyword }: SearchListItemProp) => {
   const { data, isPending, isError, hasNextPage, fetchNextPage } = useInfiniteQuery({
-    ...searchQueryOption.infiniteVoteList({ keyword: encodeURIComponent(keyword), size: 3 }),
+    ...searchQueryOption.infiniteVoteList({ keyword: encodeURIComponent(keyword), size: 12 }),
     select: (data) => {
       return {
         totalCount: data.pages.flatMap(({ totalCount }) => totalCount),

@@ -20,7 +20,10 @@ export interface SearchListItemProp {
 
 const SearchItemList = ({ keyword }: SearchListItemProp) => {
   const { data, isPending, isError, hasNextPage, fetchNextPage } = useInfiniteQuery({
-    ...searchQueryOption.infiniteKeywordItemList({ keyword: encodeURIComponent(keyword), size: 3 }),
+    ...searchQueryOption.infiniteKeywordItemList({
+      keyword: encodeURIComponent(keyword),
+      size: 12,
+    }),
     select: (data) => {
       return {
         totalCount: data.pages.flatMap(({ totalCount }) => totalCount),
