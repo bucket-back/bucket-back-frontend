@@ -45,7 +45,9 @@ const SearchResult = () => {
             value: TABS.VOTE.VALUE,
             content: (
               <SearchWrapper>
-                <SearchVoteList keyword={keyword} />
+                <SearchBox>
+                  <SearchVoteList keyword={keyword} />
+                </SearchBox>
               </SearchWrapper>
             ),
           },
