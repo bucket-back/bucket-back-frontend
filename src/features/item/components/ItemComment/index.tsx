@@ -24,6 +24,7 @@ const ItemComment = ({
   isReviewed,
 }: ItemCommentProps) => {
   const navigate = useNavigate();
+
   const { mutate: reviewDeleteMutate } = useDeleteReview(itemId);
 
   const handleDeleteClick = () => {

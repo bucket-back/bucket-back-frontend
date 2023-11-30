@@ -27,7 +27,6 @@ import { itemQueryOption } from '@/features/item/service';
 import { reviewQueryOption } from '@/features/review/service';
 
 const ItemDetail = () => {
-  // 로그인 시 리뷰 클릭이 가능하도록 하기
   const { itemId } = useParams();
 
   const navigate = useNavigate();
@@ -52,15 +51,19 @@ const ItemDetail = () => {
     fetchNextPage,
   } = useInfiniteQuery({
     ...reviewQueryOption.infiniteList({ itemId: Number(itemId), size: 3 }),
+    select: (data) => {
+      return {
+        totalCount: data.pages[0].itemReviewTotalCount,
+        reviews: data.pages.flatMap(({ reviews }) => reviews),
+      };
+    },
   });
 
   const ref = useIntersectionObserver({ onObserve: fetchNextPage });
 
   const { mutate: itemTakeMutate } = useTakeItem();
 
-  const isReviewed = reviewInfo?.pages
-    .map(({ reviews }) => reviews)[0]
-    .findIndex(({ isReviewed }) => isReviewed);
+  const isReviewed = reviewInfo?.reviews.findIndex(({ isReviewed }) => isReviewed);
 
   const handleItem = () => {
     itemTakeMutate([String(data.itemInfo.id)]);
@@ -108,11 +111,7 @@ const ItemDetail = () => {
           isDisabled={isLogin === false}
           onClick={() =>
             isReviewed! > -1
-              ? navigate(
-                  `/${itemId}/review/${
-                    reviewInfo.pages.map(({ reviews }) => reviews)[0][isReviewed!].reviewId
-                  }/edit`
-                )
+              ? navigate(`/${itemId}/review/${reviewInfo.reviews[isReviewed!].reviewId}/edit`)
               : navigate(`/item/${itemId}/review/create`)
           }
         >
@@ -122,30 +121,26 @@ const ItemDetail = () => {
       <div>
         <CommonDivider size="lg" />
         <CommentNumberWrapper>
-          <CommonText type="normalInfo">
-            총 {reviewInfo.pages[0].itemReviewTotalCount}개의 댓글
-          </CommonText>
+          <CommonText type="normalInfo">총 {reviewInfo.totalCount}개의 댓글</CommonText>
         </CommentNumberWrapper>
         <CommonDivider size="sm" />
       </div>
       <CommentsContainer>
         <>
-          {reviewInfo.pages.map(({ reviews }) =>
-            reviews.map(({ content, createdAt, memberInfo, reviewId, isReviewed }) => (
-              <Fragment key={reviewId}>
-                <ItemComment
-                  content={content}
-                  createAt={createdAt}
-                  memberInfo={memberInfo}
-                  itemId={itemId!}
-                  reviewId={reviewId}
-                  isReviewed={isReviewed}
-                  editPath={`/${itemId}/review/${reviewId}/edit`}
-                />
-                <CommonDivider size="sm" />
-              </Fragment>
-            ))
-          )}
+          {reviewInfo.reviews.map(({ content, createdAt, memberInfo, reviewId, isReviewed }) => (
+            <Fragment key={reviewId}>
+              <ItemComment
+                content={content}
+                createAt={createdAt}
+                memberInfo={memberInfo}
+                itemId={itemId!}
+                reviewId={reviewId}
+                isReviewed={isReviewed}
+                editPath={`/${itemId}/review/${reviewId}/edit`}
+              />
+              <CommonDivider size="sm" />
+            </Fragment>
+          ))}
           {hasNextPage && <div ref={ref} style={{ height: '1rem' }} />}
         </>
       </CommentsContainer>
