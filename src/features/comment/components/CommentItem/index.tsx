@@ -61,7 +61,7 @@ const CommentItem = ({
           </CommonButton>
           {isOwnFeed && !hasAdoptedComment && userInfo?.nickname !== memberInfo.nickName && (
             <CommonButton type="xsText" onClick={() => adoptComment.mutate({ feedId, commentId })}>
-              채택하기
+              • 채택하기
             </CommonButton>
           )}
         </InteractPanel>

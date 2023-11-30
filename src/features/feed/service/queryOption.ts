@@ -7,7 +7,7 @@ const feedQueryOption = {
     hobbyName,
     nickname,
     onlyNicknameLikeFeeds,
-    sortCondition = 'RECENT',
+    sortCondition = 'recent',
     size = 5,
   }: GetFeedsRequest) =>
     infiniteQueryOptions({

@@ -19,6 +19,7 @@ export const ContentsWrapper = styled.div`
   flex-direction: column;
   gap: 0.3rem;
   padding: 0 2.5rem;
+  cursor: pointer;
 `;
 
 export const BucketInfoBox = styled.div`

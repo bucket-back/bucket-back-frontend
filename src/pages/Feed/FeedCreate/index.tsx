@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useQuery } from '@tanstack/react-query';
 import {
   CommonButton,
   CommonDrawer,
@@ -18,7 +17,6 @@ import {
   ButtonWrapper,
   SelectedBucketBox,
 } from './style';
-import { bucketQueryOption } from '@/features/bucket/service';
 import { FeedSelectBucket } from '@/features/feed/components';
 import { useCreateFeed } from '@/features/feed/hooks';
 import { HobbyRadio } from '@/features/hobby/components';
@@ -35,23 +33,21 @@ interface Textarea {
 const FeedCreate = () => {
   const [selectedHobby, setSelectedHobby] = useState('');
   const [selectedBucket, setSelectedBucket] = useState<SelectedBucket | null>(null);
+
+  const userInfo = useUserInfo();
+  const createFeed = useCreateFeed();
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm<Textarea>({ mode: 'onBlur' });
-  const userInfo = useUserInfo();
-
-  const createFeed = useCreateFeed();
-  const bucketList = useQuery(
-    bucketQueryOption.list({ hobby: selectedHobby, nickname: userInfo?.nickname || '' })
-  );
-
   const onSubmit: SubmitHandler<Textarea> = (data) => {
     if (selectedBucket) {
       createFeed.mutate({ bucketId: selectedBucket.id, content: data.textarea });
     }
   };
+
   const { isOpen, onOpen, onClose } = useDrawer();
 
   return (
@@ -117,10 +113,11 @@ const FeedCreate = () => {
           isDisabled={!selectedBucket}
           footerButtonText="선택 완료"
         >
-          {bucketList.data && (
+          {userInfo && (
             <FeedSelectBucket
+              hobby={selectedHobby}
+              nickname={userInfo.nickname}
               selectedBucket={selectedBucket?.id || 0}
-              bucketList={bucketList.data}
               onClick={setSelectedBucket}
             />
           )}

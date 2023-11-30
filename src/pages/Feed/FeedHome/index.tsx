@@ -42,7 +42,7 @@ const FeedHome = () => {
 
                   setSearchParams({
                     hobby: searchParams.get('hobby') || '',
-                    sort: sort.toUpperCase(),
+                    sort: sort,
                   });
                 }}
               />

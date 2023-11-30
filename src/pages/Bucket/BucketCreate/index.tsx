@@ -9,7 +9,7 @@ import {
   CommonText,
   Header,
 } from '@/shared/components';
-import { useDrawer } from '@/shared/hooks';
+import { useDrawer, useValidateForm } from '@/shared/hooks';
 import { Box, ButtonWrapper, Container, Form, SelectedItemsBox, Wrapper } from './style';
 import { BucketSelectItem } from '@/features/bucket/components';
 import { useCreateBucket } from '@/features/bucket/hooks';
@@ -35,6 +35,7 @@ const BucketCreate = () => {
   const [selectedHobby, setSelectedHobby] = useState<Hobby>({ english: '', hangul: '' });
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
   const createBucket = useCreateBucket();
+  const registerOptions = useValidateForm();
   const {
     register,
     handleSubmit,
@@ -64,10 +65,16 @@ const BucketCreate = () => {
         <CommonText type="normalTitle" noOfLines={0}>
           새 버킷만들기
         </CommonText>
+        <div>
+          <CommonText type="normalInfo" noOfLines={0}>
+            버킷은 나의 아이템 중에서 하나이상을 선택해서 만들 수 있어요. 아이템은 직접 추가하거나
+            아이템 담기를 통해 추가할 수 있어요.
+          </CommonText>
+        </div>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Wrapper>
             <Box>
-              <CommonText type="normalInfo" noOfLines={0}>
+              <CommonText type="normalInfo" noOfLines={1}>
                 버킷 이름
               </CommonText>
               <CommonInput
@@ -123,7 +130,7 @@ const BucketCreate = () => {
                 type="text"
                 width="full"
                 error={errors.budget}
-                {...register('budget', { minLength: 1 })}
+                {...register('budget', ...registerOptions.budget)}
               />
             </Box>
           </Wrapper>

@@ -42,7 +42,7 @@ const SearchItemList = ({ keyword }: SearchListItemProp) => {
           {data.items.map(({ itemSummary }) => (
             <GridItem key={itemSummary.id} onClick={() => navigate(`/item/${itemSummary.id}`)}>
               <CommonImage size="sm" src={itemSummary.image} />
-              <CommonText type="normalInfo">{formatNumber(itemSummary.price)}원</CommonText>
+              <CommonText type="normalInfo">{formatNumber(itemSummary.price)}</CommonText>
               <CommonText type="smallInfo">{itemSummary.name}</CommonText>
             </GridItem>
           ))}

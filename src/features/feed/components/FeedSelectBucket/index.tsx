@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import {
   CommonButton,
   CommonDivider,
@@ -5,16 +7,18 @@ import {
   CommonText,
   DividerImage,
 } from '@/shared/components';
+import { useIntersectionObserver } from '@/shared/hooks';
 import {
   Container,
-  ContentsWrapper,
   BucketListWrapper,
   BucketBox,
   AddBucketButtonBox,
   ImageInput,
   ImageLabel,
+  AddBucketWrapper,
+  TitleWrapper,
 } from './style';
-import { GetBucketsResponse } from '@/features/bucket/service';
+import { bucketQueryOption } from '@/features/bucket/service';
 
 interface SelectedBucket {
   id: number;
@@ -22,8 +26,9 @@ interface SelectedBucket {
 }
 
 interface FeedSelectBucketProps {
+  hobby: string;
+  nickname: string;
   selectedBucket: number;
-  bucketList: GetBucketsResponse;
   onClick: React.Dispatch<React.SetStateAction<SelectedBucket | null>>;
 }
 
@@ -36,16 +41,44 @@ const reduceImgUrl = (itemImages: ItemImages[]) => {
   return itemImages.reduce<string[]>((acc, cur) => [...acc, cur.imgUrl], []);
 };
 
-const FeedSelectBucket = ({ selectedBucket, bucketList, onClick }: FeedSelectBucketProps) => {
+const FeedSelectBucket = ({ hobby, nickname, selectedBucket, onClick }: FeedSelectBucketProps) => {
+  const navigate = useNavigate();
+
+  const bucketList = useInfiniteQuery(bucketQueryOption.list({ hobby, nickname, size: 18 }));
+
+  const observedRef = useIntersectionObserver({ onObserve: bucketList.fetchNextPage });
+
+  if (bucketList.isPending) {
+    return;
+  }
+
+  if (bucketList.isError) {
+    return;
+  }
+
   return (
     <Container>
-      <ContentsWrapper>
+      <TitleWrapper>
         <CommonText type="normalTitle">버킷 선택하기</CommonText>
-        <CommonText type="subStrongInfo">총 {bucketList.buckets.length}개의 버킷</CommonText>
-      </ContentsWrapper>
-      {bucketList.buckets.length > 0 ? (
-        <BucketListWrapper>
-          {bucketList.buckets.map((bucket) => (
+        <CommonText type="subStrongInfo">
+          총 {bucketList.data.pages[0].totalBucketCount}개의 버킷
+        </CommonText>
+      </TitleWrapper>
+      {bucketList.data.pages[0].buckets.length === 0 && (
+        <>
+          <CommonDivider size="sm" />
+          <AddBucketWrapper>
+            <CommonText type="smallInfo">취미에 맞는 버킷이 없습니다!</CommonText>
+            <AddBucketButtonBox onClick={() => navigate('/bucket/create')}>
+              <CommonButton type="text">버킷 추가하러 가기</CommonButton>
+              <CommonIcon type="chevronRight" />
+            </AddBucketButtonBox>
+          </AddBucketWrapper>
+        </>
+      )}
+      <BucketListWrapper>
+        {bucketList.data.pages.map((page) =>
+          page.buckets.map((bucket) => (
             <BucketBox key={bucket.bucketId}>
               <ImageInput
                 type="checkbox"
@@ -64,20 +97,10 @@ const FeedSelectBucket = ({ selectedBucket, bucketList, onClick }: FeedSelectBuc
               </ImageLabel>
               <CommonText type="smallInfo">{bucket.name}</CommonText>
             </BucketBox>
-          ))}
-        </BucketListWrapper>
-      ) : (
-        <>
-          <CommonDivider size="sm" />
-          <ContentsWrapper>
-            <CommonText type="smallInfo">취미에 맞는 버킷이 없습니다!</CommonText>
-            <AddBucketButtonBox>
-              <CommonButton type="text">버킷 추가하러 가기</CommonButton>
-              <CommonIcon type="chevronRight" />
-            </AddBucketButtonBox>
-          </ContentsWrapper>
-        </>
-      )}
+          ))
+        )}
+        {bucketList.hasNextPage && <div ref={observedRef} />}
+      </BucketListWrapper>
     </Container>
   );
 };
