@@ -24,7 +24,7 @@ const FOOTER_INFO = [
     TEXT: '아이템목록',
   },
   {
-    ICON: 'user',
+    ICON: 'member',
     TEXT: 'MY',
   },
 ];
@@ -33,7 +33,7 @@ interface FooterProps {
   children?: ReactNode;
 }
 
-type FooterIcon = 'home' | 'search' | 'bucket' | 'item' | 'user';
+type FooterIcon = 'home' | 'search' | 'bucket' | 'item' | 'member';
 
 const Footer = ({ children }: FooterProps) => {
   const navigate = useNavigate();
@@ -62,7 +62,7 @@ const Footer = ({ children }: FooterProps) => {
         authNavigate('/item');
         break;
       }
-      case 'user': {
+      case 'member': {
         authNavigate(`/member/${userInfo?.nickname}`);
         break;
       }
