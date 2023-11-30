@@ -10,7 +10,15 @@ import {
   Header,
 } from '@/shared/components';
 import { useDrawer, useValidateForm } from '@/shared/hooks';
-import { Box, ButtonWrapper, Container, Form, SelectedItemsBox, Wrapper } from './style';
+import {
+  Box,
+  ButtonWrapper,
+  Container,
+  Form,
+  SelectedItemsBox,
+  TitleWrapper,
+  Wrapper,
+} from './style';
 import { BucketSelectItem } from '@/features/bucket/components';
 import { useCreateBucket } from '@/features/bucket/hooks';
 import { HobbySelector } from '@/features/hobby/components';
@@ -62,15 +70,15 @@ const BucketCreate = () => {
     <>
       <Header type="back" />
       <Container>
-        <CommonText type="normalTitle" noOfLines={0}>
-          새 버킷만들기
-        </CommonText>
-        <div>
+        <TitleWrapper>
+          <CommonText type="normalTitle" noOfLines={0}>
+            새 버킷만들기
+          </CommonText>
           <CommonText type="normalInfo" noOfLines={0}>
             버킷은 나의 아이템 중에서 하나이상을 선택해서 만들 수 있어요. 아이템은 직접 추가하거나
             아이템 담기를 통해 추가할 수 있어요.
           </CommonText>
-        </div>
+        </TitleWrapper>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Wrapper>
             <Box>
