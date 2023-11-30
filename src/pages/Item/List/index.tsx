@@ -30,6 +30,12 @@ const ItemList = () => {
 
   const { data, hasNextPage, fetchNextPage, isPending, isError } = useInfiniteQuery({
     ...itemQueryOption.infinityList({ size: 3 }),
+    select: (data) => {
+      return {
+        summaries: data.pages.flatMap(({ summaries }) => summaries),
+        totalCount: data.pages.flatMap(({ totalCount }) => totalCount),
+      };
+    },
   });
 
   const ref = useIntersectionObserver({ onObserve: fetchNextPage });
@@ -62,9 +68,7 @@ const ItemList = () => {
     return <>Error...</>;
   }
 
-  const totalCount = data.pages
-    .map(({ totalCount }) => totalCount)
-    .reduce((prev, next) => prev + next, 0);
+  const totalCount = data.totalCount.reduce((prev, next) => prev + next, 0);
 
   return (
     <>
@@ -90,20 +94,18 @@ const ItemList = () => {
         </ItemTextContaienr>
         <Grid>
           <>
-            {data.pages.map(({ summaries }) =>
-              summaries.map(({ itemInfo: { id, image, name, price } }) => (
-                <ListItem
-                  key={id}
-                  id={id}
-                  image={image}
-                  price={price}
-                  name={name}
-                  isDelete={isDelete}
-                  isDeleteMode={deleteData.includes(id)}
-                  handleChange={handleChange}
-                />
-              ))
-            )}
+            {data.summaries.map(({ itemInfo: { id, image, name, price } }) => (
+              <ListItem
+                key={id}
+                id={id}
+                image={image}
+                price={price}
+                name={name}
+                isDelete={isDelete}
+                isDeleteMode={deleteData.includes(id)}
+                handleChange={handleChange}
+              />
+            ))}
             {hasNextPage && <div ref={ref} />}
           </>
         </Grid>
