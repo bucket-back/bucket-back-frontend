@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useQuery } from '@tanstack/react-query';
 import {
   CommonButton,
   CommonDrawer,
@@ -22,7 +21,6 @@ import {
 import { BucketSelectItem } from '@/features/bucket/components';
 import { useCreateBucket } from '@/features/bucket/hooks';
 import { HobbySelector } from '@/features/hobby/components';
-import { itemQueryOption } from '@/features/item/service';
 
 interface Hobby {
   english: string;
@@ -59,10 +57,6 @@ const BucketCreate = () => {
       });
     }
   };
-
-  const items = useQuery(
-    itemQueryOption.myItems({ hobbyName: selectedHobby ? selectedHobby.english : '' })
-  );
 
   const { isOpen, onOpen, onClose } = useDrawer();
 
@@ -168,7 +162,7 @@ const BucketCreate = () => {
           isFull={true}
           footerButtonText="선택 완료"
         >
-          <BucketSelectItem items={items.data!} onClick={setSelectedItems} />
+          <BucketSelectItem hobby={selectedHobby.english} onClick={setSelectedItems} />
         </CommonDrawer>
       </Container>
     </>
