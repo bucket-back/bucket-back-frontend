@@ -26,10 +26,10 @@ const ItemList = () => {
     mutate: itemMutate,
     isError: itemDeleteError,
     isPending: itemDeletePending,
-  } = useDeleteItem({ cursorId: '', size: 10 });
+  } = useDeleteItem({ cursorId: '', size: 3 });
 
   const { data, hasNextPage, fetchNextPage, isPending, isError } = useInfiniteQuery({
-    ...itemQueryOption.infinityList({ size: 3 }),
+    ...itemQueryOption.infinityList({ size: 13 }),
     select: (data) => {
       return {
         summaries: data.pages.flatMap(({ summaries }) => summaries),
