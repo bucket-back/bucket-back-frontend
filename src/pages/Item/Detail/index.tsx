@@ -9,8 +9,7 @@ import {
   CommonText,
   Header,
 } from '@/shared/components';
-import { useAuthCheck } from '@/shared/hooks';
-import { useIntersectionObserver } from '@/shared/hooks';
+import { useAuthCheck, useIntersectionObserver } from '@/shared/hooks';
 import { formatNumber } from '@/shared/utils';
 import {
   Container,
@@ -20,6 +19,7 @@ import {
   CommentNumberWrapper,
   CommentsContainer,
   Box,
+  NoResult,
 } from './style';
 import { ItemComment } from '@/features/item/components';
 import { useTakeItem } from '@/features/item/hooks';
@@ -50,7 +50,7 @@ const ItemDetail = () => {
     hasNextPage,
     fetchNextPage,
   } = useInfiniteQuery({
-    ...reviewQueryOption.infiniteList({ itemId: Number(itemId), size: 3 }),
+    ...reviewQueryOption.infiniteList({ itemId: Number(itemId), size: 2 }),
     select: (data) => {
       return {
         totalCount: data.pages[0].itemReviewTotalCount,
@@ -77,7 +77,9 @@ const ItemDetail = () => {
     return <>Error...</>;
   }
 
-  console.log(reviewInfo.reviews);
+  if (reviewInfo.totalCount === 0) {
+    return <NoResult>등록된 리뷰가 없습니다...</NoResult>;
+  }
 
   return (
     <>
