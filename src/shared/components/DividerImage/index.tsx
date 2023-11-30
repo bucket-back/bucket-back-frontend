@@ -84,7 +84,7 @@ const DividerImage = ({ images, type }: DividerImageProps) => {
     ),
   };
 
-  return <>{Boolean(count <= 4) && dividerImage[type]}</>;
+  return <>{dividerImage[type]}</>;
 };
 
 export default DividerImage;
