@@ -1,4 +1,4 @@
-import { queryOptions } from '@tanstack/react-query';
+import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
 import { GetSearchItemRequest, searchApi } from '.';
 
 const searchQueryOption = {
@@ -17,6 +17,24 @@ const searchQueryOption = {
     queryOptions({
       queryKey: [...searchQueryOption.all, keyword, 'vote'] as const,
       queryFn: () => searchApi.getVoteKeyword({ keyword, cursorId, size }),
+    }),
+  infiniteKeywordItemList: ({ keyword, size = 10 }: GetSearchItemRequest) =>
+    infiniteQueryOptions({
+      queryKey: [...searchQueryOption.all, keyword] as const,
+      queryFn: ({ pageParam: cursorId }) => searchApi.getSearchItem({ keyword, cursorId, size }),
+      initialPageParam: '',
+      getNextPageParam: ({ nextCursorId }) => {
+        return nextCursorId;
+      },
+    }),
+  infiniteVoteList: ({ keyword, size }: GetSearchItemRequest) =>
+    infiniteQueryOptions({
+      queryKey: [...searchQueryOption.all, keyword, 'vote'] as const,
+      queryFn: ({ pageParam: cursorId }) => searchApi.getVoteKeyword({ keyword, cursorId, size }),
+      initialPageParam: '',
+      getNextPageParam: ({ nextCursorId }) => {
+        return nextCursorId;
+      },
     }),
 };
 
