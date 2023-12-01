@@ -28,7 +28,7 @@ export const GridItemList = styled.li`
   align-items: center;
   gap: 0 0.3rem;
 
-  &::before:nth-child(1) {
+  &:nth-child(-n + 3)::before {
     color: blue; /* 첫 번째부터 세 번째까지의 항목에만 적용할 스타일 */
   }
 `;
