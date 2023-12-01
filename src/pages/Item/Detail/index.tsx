@@ -83,13 +83,13 @@ const ItemDetail = () => {
 
   return (
     <>
-      <Header type="back" />
+      <Header type="back" height="3.5rem" />
       <Container>
         <div>
           <CommonImage size="md" src={data.itemInfo.image} alt={data.itemInfo.name} />
         </div>
         <ItemWrapper>
-          <CommonText type="normalTitle" noOfLines={0}>
+          <CommonText type="strongInfo" noOfLines={0}>
             {data.itemInfo.name}
           </CommonText>
           <ItemBox>
