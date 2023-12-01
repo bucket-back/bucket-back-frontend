@@ -48,7 +48,9 @@ const CommentItem = ({
         )}
       </ProfileWrapper>
       <ContentsWrapper>
-        <CommonText type="smallInfo">{content}</CommonText>
+        <CommonText type="smallInfo" noOfLines={4}>
+          {content}
+        </CommonText>
       </ContentsWrapper>
       <ContentsWrapper>
         <DateText createdDate={createdAt} />
