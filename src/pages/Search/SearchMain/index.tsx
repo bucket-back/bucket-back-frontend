@@ -18,7 +18,7 @@ const SearchMain = () => {
         <LatelySearch onInput={onInput} />
       </Wrapper>
       <Wrapper>
-        <RankList />
+        <RankList onInput={onInput} />
       </Wrapper>
     </Container>
   ) : (

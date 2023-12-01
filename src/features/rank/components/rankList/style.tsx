@@ -9,12 +9,12 @@ export const WrapperTitle = styled.div`
 export const Grid = styled.ul`
   overflow: hidden;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 50%);
   grid-template-rows: repeat(5, auto);
   /* grid-template: repeat(5, auto) repeat(2, 1fr); */
   grid-auto-flow: column;
   counter-reset: orderList 0;
-  gap: 1rem 0;
+  gap: 1.5rem 0;
 `;
 
 export const GridItemList = styled.li`
@@ -28,7 +28,9 @@ export const GridItemList = styled.li`
   align-items: center;
   gap: 0 0.3rem;
 
-  &:nth-child(-n + 3)::before {
+  &:nth-of-type(-n + 3)::before {
     color: blue; /* 첫 번째부터 세 번째까지의 항목에만 적용할 스타일 */
   }
 `;
+
+export const Item = styled.a``;
