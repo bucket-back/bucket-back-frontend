@@ -18,8 +18,7 @@ import {
   CommentInputContainer,
 } from './style';
 import { CommentList } from '@/features/comment/components';
-import { useDeleteComment, useUpdateComment } from '@/features/comment/hooks';
-import useAddComment from '@/features/comment/hooks/useAddComment';
+import { useDeleteComment, useUpdateComment, useAddComment } from '@/features/comment/hooks';
 import { commentQueryQption } from '@/features/comment/service';
 import { FeedItemsDetail, FeedItem } from '@/features/feed/components';
 import { useDeleteFeed } from '@/features/feed/hooks';
@@ -37,24 +36,24 @@ const FeedDetail = () => {
   const feedIdNumber = Number(feedId);
   const isLogin = useAuthCheck();
   const userInfo = useUserInfo();
-  const deleteFeed = useDeleteFeed();
   const navigate = useNavigate();
 
   const feedDetail = useQuery(feedQueryOption.detail(feedIdNumber));
   const comment = useQuery(commentQueryQption.list({ feedId: feedIdNumber }));
 
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [updatingCommentId, setUpdatingCommentId] = useState(0);
+  const [selectedCommentId, setSelectedCommentId] = useState(0);
+  const deleteFeed = useDeleteFeed();
+  const addComment = useAddComment(feedIdNumber, userInfo?.nickname || '');
+  const updateComment = useUpdateComment(feedIdNumber);
+  const deleteComment = useDeleteComment();
+
   const { register, handleSubmit, reset, setValue } = useForm<CommentContent>();
-  const addComment = useAddComment(feedIdNumber);
   const onCreateComment: SubmitHandler<CommentContent> = (data) => {
     addComment.mutate({ feedId: feedIdNumber, content: data.content });
     reset();
   };
-
-  const [isUpdating, setIsUpdating] = useState(false);
-  const [updatingCommentId, setUpdatingCommentId] = useState(0);
-  const [selectedCommentId, setSelectedCommentId] = useState(0);
-  const updateComment = useUpdateComment(feedIdNumber);
-  const deleteComment = useDeleteComment();
 
   const onUpdateComment: SubmitHandler<CommentContent> = (data) => {
     updateComment.mutate({
