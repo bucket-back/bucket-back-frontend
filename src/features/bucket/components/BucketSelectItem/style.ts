@@ -2,10 +2,10 @@ import styled from '@emotion/styled';
 import { COMMON } from '@/shared/styles/Common';
 
 export const Body = styled.main`
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  height: 100%;
 `;
 
 export const Container = styled.div`
@@ -14,9 +14,11 @@ export const Container = styled.div`
 `;
 
 export const ItemsWrapper = styled.div`
+  max-height: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
+  overflow-y: auto;
 `;
 
 export const ItemBox = styled.div`
