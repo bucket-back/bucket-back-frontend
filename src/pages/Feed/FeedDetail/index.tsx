@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
   CommonButton,
@@ -37,17 +37,19 @@ const FeedDetail = () => {
   const isLogin = useAuthCheck();
   const userInfo = useUserInfo();
   const navigate = useNavigate();
+  const { state: path } = useLocation();
+  const deleteFeed = useDeleteFeed(path);
 
   const feedDetail = useQuery(feedQueryOption.detail(feedIdNumber));
+
   const comment = useQuery(commentQueryQption.list({ feedId: feedIdNumber }));
+  const addComment = useAddComment(feedIdNumber, userInfo?.nickname || '');
+  const updateComment = useUpdateComment(feedIdNumber);
+  const deleteComment = useDeleteComment();
 
   const [isUpdating, setIsUpdating] = useState(false);
   const [updatingCommentId, setUpdatingCommentId] = useState(0);
   const [selectedCommentId, setSelectedCommentId] = useState(0);
-  const deleteFeed = useDeleteFeed();
-  const addComment = useAddComment(feedIdNumber, userInfo?.nickname || '');
-  const updateComment = useUpdateComment(feedIdNumber);
-  const deleteComment = useDeleteComment();
 
   const { register, handleSubmit, reset, setValue } = useForm<CommentContent>();
   const onCreateComment: SubmitHandler<CommentContent> = (data) => {
@@ -128,13 +130,13 @@ const FeedDetail = () => {
             size="md"
             type="text"
             width="100%"
-            placeholder="댓글을 수정해주세요"
+            placeholder="댓글을 수정해주세요 (100자 이하)"
             rightIcon={
               <CommonButton type="mdFull" isSubmit>
                 수정
               </CommonButton>
             }
-            {...register('content', { required: true, minLength: 1, maxLength: 1000 })}
+            {...register('content', { required: true, minLength: 1, maxLength: 100 })}
           />
         </CommentInputContainer>
       ) : (
@@ -143,14 +145,14 @@ const FeedDetail = () => {
             size="md"
             type="text"
             width="100%"
-            placeholder={isLogin ? '댓글을 입력해주세요' : '로그인후 이용가능합니다'}
+            placeholder={isLogin ? '댓글을 입력해주세요 (100자 이하)' : '로그인후 이용가능합니다'}
             isDisabled={!isLogin}
             rightIcon={
               <CommonButton type="mdFull" isSubmit isDisabled={!isLogin}>
                 등록
               </CommonButton>
             }
-            {...register('content', { required: true, minLength: 1, maxLength: 1000 })}
+            {...register('content', { required: true, minLength: 1, maxLength: 100 })}
           />
         </CommentInputContainer>
       )}
