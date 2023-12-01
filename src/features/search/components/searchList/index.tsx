@@ -6,16 +6,11 @@ import { WordWrapper, NoResult } from './style';
 import { searchQueryOption, searchLocalStorage } from '@/features/search/service';
 import { SearchListProps } from '@/pages/Search/SearchMain';
 
-// TODO:
-// 리크트 클릭시
-// input창에 자동완성 -> 최상위에서 상태 관리 -> 변할시 input창 영향 + router 이동
-//결과페이지로 이동!
-
 const SearchList = ({ keyword, onInput }: SearchListProps) => {
   const navigate = useNavigate();
 
   const { data, isPending, isError } = useQuery({
-    ...searchQueryOption.keywordList(keyword),
+    ...searchQueryOption.keywordList(encodeURIComponent(keyword)),
   });
 
   const handleClick = (itemName: string) => {

@@ -42,7 +42,7 @@ const itemApi = {
     return await axiosClient.delete<null>(url, { params });
   },
 
-  getMyItems: async ({ hobbyName, cursorId, size = 10 }: GetMyItemsRequest) => {
+  getMyItems: async ({ hobbyName, cursorId, size = 24 }: GetMyItemsRequest) => {
     const queryString = hobbyName ? `hobbyName=${hobbyName}` : '';
     const url = `${BASE_URL}/myitems?${queryString}`;
     const params = cursorId ? { cursorId, size } : { size };

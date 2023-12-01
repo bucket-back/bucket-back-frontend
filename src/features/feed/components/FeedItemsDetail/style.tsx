@@ -11,11 +11,20 @@ export const Container = styled.div`
 export const ContentsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
 `;
 
 export const ButtonBox = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+`;
+
+export const PriceBox = styled.div`
+  display: flex;
+  justify-content: end;
+`;
+
+export const ImageBox = styled.div`
+  border: 1px solid #e2e8f0;
 `;

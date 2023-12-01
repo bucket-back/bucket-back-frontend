@@ -40,6 +40,9 @@ const SearchForm = ({ keyword: currentKeyword, onInput }: SearchFormProps) => {
   const onSubmit: SubmitHandler<SearchProps> = (data, event) => {
     event?.preventDefault();
     const { keyword } = data;
+    if (keyword.length === 0) {
+      return;
+    }
     searchLocalStorage(keyword);
     onInput && onInput(keyword);
     navigate(`/search/result?keyword=${encodeURIComponent(keyword)}`);
@@ -88,7 +91,7 @@ const SearchForm = ({ keyword: currentKeyword, onInput }: SearchFormProps) => {
         }
         width="full"
         bg="white"
-        {...register('keyword', { minLength: 1 })}
+        {...register('keyword', { minLength: 1, required: '한글자 이상 입력해주세요!' })}
       />
     </Form>
   );

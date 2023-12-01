@@ -20,4 +20,5 @@ export const SearchContainer = styled.section`
   border-top-left-radius: 1.875rem;
   background-color: #fff;
   height: 100%;
+  overflow-y: scroll;
 `;

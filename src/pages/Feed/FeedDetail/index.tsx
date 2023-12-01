@@ -44,7 +44,7 @@ const FeedDetail = () => {
   const comment = useQuery(commentQueryQption.list({ feedId: feedIdNumber }));
 
   const { register, handleSubmit, reset, setValue } = useForm<CommentContent>();
-  const addComment = useAddComment();
+  const addComment = useAddComment(feedIdNumber);
   const onCreateComment: SubmitHandler<CommentContent> = (data) => {
     addComment.mutate({ feedId: feedIdNumber, content: data.content });
     reset();
@@ -104,7 +104,9 @@ const FeedDetail = () => {
       <div>
         <CommonDivider size="lg" />
         <CommentNumberWrapper>
-          <CommonText type="normalInfo">총 {comment.data?.totalCount || 0}개의 댓글</CommonText>
+          <CommonText type="normalInfo">
+            총 {comment.data?.totalCommentCount || 0}개의 댓글
+          </CommonText>
         </CommentNumberWrapper>
         <CommonDivider size="sm" />
       </div>

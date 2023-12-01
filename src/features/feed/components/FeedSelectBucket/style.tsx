@@ -4,19 +4,23 @@ import { COMMON } from '@/shared/styles/Common';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
 `;
 
-export const ContentsWrapper = styled.div`
+export const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  padding-bottom: 1rem;
 `;
 
 export const BucketListWrapper = styled.div`
+  height: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
-  padding: 2rem 0;
+  padding: 0.5rem 0;
+  overflow-y: auto;
 `;
 
 export const BucketBox = styled.div`
@@ -26,10 +30,18 @@ export const BucketBox = styled.div`
   gap: 0.25rem;
 `;
 
+export const AddBucketWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-top: 1rem;
+`;
+
 export const AddBucketButtonBox = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  cursor: pointer;
 `;
 
 export const ImageInput = styled.input`

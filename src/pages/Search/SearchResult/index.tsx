@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { CommonTabs } from '@/shared/components';
-import { SearchWrapper } from './style';
+import { SearchWrapper, SearchBox } from './style';
 import { SearchItemList, SearchVoteList } from '@/features/search/components';
 import { SearchListProps } from '@/pages/Search/SearchMain';
 
@@ -34,7 +34,9 @@ const SearchResult = () => {
             value: TABS.ITEM.VALUE,
             content: (
               <SearchWrapper>
-                <SearchItemList keyword={keyword} />
+                <SearchBox>
+                  <SearchItemList keyword={keyword} />
+                </SearchBox>
               </SearchWrapper>
             ),
           },
@@ -43,7 +45,9 @@ const SearchResult = () => {
             value: TABS.VOTE.VALUE,
             content: (
               <SearchWrapper>
-                <SearchVoteList keyword={keyword} />
+                <SearchBox>
+                  <SearchVoteList keyword={keyword} />
+                </SearchBox>
               </SearchWrapper>
             ),
           },
