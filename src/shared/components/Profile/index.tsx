@@ -20,7 +20,7 @@ const Profile = ({ nickname, src, levelNumber, isAdopted }: ProfileProps) => {
     <Flex alignItems="center">
       <CommonAvatar isOwner={false} size="3rem" onClick={handleClick} src={src} />
       <Box ml="0.8rem" onClick={handleClick} cursor="pointer">
-        <CommonText type="smallTitle" color="blue.900" noOfLines={1}>
+        <CommonText type="normalInfo" weight={700} color="blue.900" noOfLines={1}>
           {nickname}
         </CommonText>
         <HStack spacing="0.25rem">
