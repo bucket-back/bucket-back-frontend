@@ -6,3 +6,9 @@ export const Container = styled.article`
   flex-direction: column;
   gap: 1rem 0;
 `;
+
+export const Wrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem 0;
+`;
