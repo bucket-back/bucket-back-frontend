@@ -28,6 +28,7 @@ import {
   Grid,
   IconBox,
   AddBox,
+  ContentsContainer,
 } from './style';
 import { useLeave, useLogout } from '@/features/member/hooks';
 import { memberQueryOption } from '@/features/member/service';
@@ -87,7 +88,7 @@ const MemberHome = () => {
           </CommonText>
         </MemberIntroWrapper>
         <CommonDivider size="lg" />
-        <div style={{ height: '100%', overflowY: 'scroll' }}>
+        <ContentsContainer>
           <ContentsWrapper onClick={() => navigate(`/member/${nickname}/inventory`)}>
             <ContentsPanel>
               <div>
@@ -175,7 +176,7 @@ const MemberHome = () => {
             </ContentsPanel>
           </ContentsWrapper>
           <CommonDivider size="sm" />
-        </div>
+        </ContentsContainer>
       </Container>
       <Footer />
 

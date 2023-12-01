@@ -33,6 +33,11 @@ export const MemberIntroWrapper = styled.div`
   padding: 1.5rem 3.5rem;
 `;
 
+export const ContentsContainer = styled.div`
+  height: 100%;
+  overflow-y: auto;
+`;
+
 export const ContentsWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -64,7 +69,7 @@ export const Grid = styled.div`
 `;
 
 export const IconBox = styled.div`
-  padding-right: 0.75rem;
+  padding-right: 0.3rem;
 `;
 
 export const AddBox = styled.div`
