@@ -1,6 +1,6 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import {
   CommonButton,
   CommonDivider,
@@ -8,6 +8,7 @@ import {
   CommonImage,
   CommonText,
 } from '@/shared/components';
+import { useIntersectionObserver } from '@/shared/hooks';
 import { formatNumber } from '@/shared/utils';
 import { Container, Grid, GridItem, ImageInput, ImageLabel, Wrapper } from './style';
 import { SelectedItem } from '@/features/inventory/service';
@@ -21,10 +22,17 @@ interface VoteSelectItemProps {
 
 const VoteSelectItem = ({ selectedItems, onChange, selectedHobby }: VoteSelectItemProps) => {
   const navigate = useNavigate();
-  const { data: myItemsData } = useQuery({
-    ...itemQueryOption.myItems({
+  const { data: myItemsData, fetchNextPage } = useInfiniteQuery({
+    ...itemQueryOption.infinityList({
       hobbyName: selectedHobby,
+      size: 12,
     }),
+    select: (data) => {
+      return {
+        totalCount: data.pages.flatMap(({ totalCount }) => totalCount),
+        summaries: data?.pages.flatMap(({ summaries }) => summaries),
+      };
+    },
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>, src: string) => {
@@ -38,6 +46,8 @@ const VoteSelectItem = ({ selectedItems, onChange, selectedHobby }: VoteSelectIt
       e.target.checked = false;
     }
   };
+
+  const ref = useIntersectionObserver({ onObserve: fetchNextPage });
 
   return (
     <>
@@ -61,6 +71,7 @@ const VoteSelectItem = ({ selectedItems, onChange, selectedHobby }: VoteSelectIt
             </GridItem>
           ))}
         </Grid>
+        <div ref={ref} />
         <CommonDivider size="sm" />
         <div>
           <CommonText type="smallInfo">원하시는 아이템이 없나요?</CommonText>
