@@ -25,6 +25,7 @@ import { ItemComment } from '@/features/item/components';
 import { useTakeItem } from '@/features/item/hooks';
 import { itemQueryOption } from '@/features/item/service';
 import { reviewQueryOption } from '@/features/review/service';
+import { ImageBorder } from '@/shared/styles/ImageBorder';
 
 const ItemDetail = () => {
   // 로그인 시 리뷰 클릭이 가능하도록 하기
@@ -78,9 +79,9 @@ const ItemDetail = () => {
     <>
       <Header type="back" />
       <Container>
-        <div>
+        <ImageBorder>
           <CommonImage size="md" src={data.itemInfo.image} alt={data.itemInfo.name} />
-        </div>
+        </ImageBorder>
         <ItemWrapper>
           <CommonText type="normalTitle" noOfLines={0}>
             {data.itemInfo.name}
