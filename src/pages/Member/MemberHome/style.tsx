@@ -30,7 +30,7 @@ export const MemberInfoBox = styled.div`
 
 export const MemberIntroWrapper = styled.div`
   display: flex;
-  padding: 1.5rem 3.5rem;
+  padding: 1rem 3.5rem;
 `;
 
 export const ContentsContainer = styled.div`
