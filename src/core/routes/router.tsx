@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
+import NotFound from '@/pages/404';
 import App from '@/App';
 import {
   FeedCreate,
@@ -160,7 +161,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '*',
-        element: <div>404</div>,
+        element: <NotFound />,
       },
     ],
   },

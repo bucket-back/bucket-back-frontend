@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { CommonIconButton, CommonText, Header, Footer } from '@/shared/components';
+import { CommonIconButton, CommonText, Header, Footer, CommonSpinner } from '@/shared/components';
 import { useAuthNavigate, useIntersectionObserver } from '@/shared/hooks';
 import { formatNumber } from '@/shared/utils';
 import {
@@ -10,6 +10,7 @@ import {
   AddContainer,
   Grid,
   ButtonBox,
+  NoResult,
 } from './style';
 import { ListItem } from '@/features/item/components';
 import { useDeleteItem } from '@/features/item/hooks';
@@ -33,7 +34,7 @@ const ItemList = () => {
     select: (data) => {
       return {
         summaries: data.pages.flatMap(({ summaries }) => summaries),
-        totalCount: data.pages.flatMap(({ totalCount }) => totalCount),
+        totalCount: data.pages[0].totalMemberItemCount,
       };
     },
   });
@@ -61,14 +62,16 @@ const ItemList = () => {
   };
 
   if (isPending || itemDeletePending) {
-    return <>Loading..</>;
+    return (
+      <NoResult>
+        <CommonSpinner size="xl" />
+      </NoResult>
+    );
   }
 
   if (isError || itemDeleteError) {
-    return <>Error...</>;
+    return <NoResult>Error...</NoResult>;
   }
-
-  const totalCount = data.totalCount.reduce((prev, next) => prev + next, 0);
 
   return (
     <>
@@ -89,7 +92,7 @@ const ItemList = () => {
           <CommonText type="smallInfo">
             {isDelete
               ? `총 삭제할 ${formatNumber(deleteData.length)}개의 아이템`
-              : `총 ${formatNumber(totalCount)}개의 아이템`}
+              : `총 ${formatNumber(data.totalCount)}개의 아이템`}
           </CommonText>
         </ItemTextContaienr>
         <Grid>

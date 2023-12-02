@@ -6,9 +6,10 @@ import {
   CommonDivider,
   CommonIcon,
   CommonImage,
+  CommonSpinner,
   CommonText,
 } from '@/shared/components';
-import { useIntersectionObserver } from '@/shared/hooks';
+import { useAuthNavigate, useIntersectionObserver } from '@/shared/hooks';
 import { formatNumber } from '@/shared/utils';
 import { Wrapper, Box, TextBox, NoResult } from './style';
 import { searchQueryOption } from '@/features/search/service';
@@ -36,12 +37,18 @@ const SearchItemList = ({ keyword }: SearchListItemProp) => {
 
   const navigate = useNavigate();
 
+  const authNavigate = useAuthNavigate();
+
   if (isPending) {
-    return <>Loading...</>;
+    return (
+      <NoResult>
+        <CommonSpinner size="xl" />
+      </NoResult>
+    );
   }
 
   if (isError) {
-    return <>Error...</>;
+    return <NoResult>Error...</NoResult>;
   }
 
   if (data.totalCount[0] === 0) {
@@ -67,7 +74,7 @@ const SearchItemList = ({ keyword }: SearchListItemProp) => {
         <CommonDivider size="sm" />
         <div>
           <CommonText type="smallInfo">원하시는 아이템이 없나요?</CommonText>
-          <Wrapper onClick={() => navigate('/item/create')}>
+          <Wrapper onClick={() => authNavigate('/item/create')}>
             <CommonButton type="text">아이템 추가하러가기</CommonButton>
             <CommonIcon type="chevronRight" />
           </Wrapper>

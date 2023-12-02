@@ -8,6 +8,7 @@ import {
   CommonIcon,
   CommonImage,
   CommonSlider,
+  CommonSpinner,
   CommonText,
   CommonTextarea,
   Header,
@@ -25,6 +26,7 @@ import {
   Form,
   FormWrapper,
   ItemBoxColumn,
+  NoResult,
 } from './style';
 import { itemQueryOption } from '@/features/item/service';
 import { usePostReview } from '@/features/review/hooks';
@@ -48,7 +50,7 @@ const ItemReview = () => {
 
   const userInfo = useUserInfo();
 
-  const { mutate: reviewMutate } = usePostReview(userInfo!.nickname);
+  const { mutate: reviewMutate } = usePostReview(userInfo?.nickname as string);
 
   const onSubmit: SubmitHandler<FormProps> = (data) => {
     reviewMutate({ itemId: Number(itemId), content: data.review, rating: value });
@@ -56,11 +58,15 @@ const ItemReview = () => {
   };
 
   if (isPending) {
-    return <>Loading...</>;
+    return (
+      <NoResult>
+        <CommonSpinner size="xl" />
+      </NoResult>
+    );
   }
 
   if (isError) {
-    return <>Error...</>;
+    return <NoResult>Error...</NoResult>;
   }
 
   return (
