@@ -1,7 +1,8 @@
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { CommonButton, CommonIcon, CommonImage, CommonText } from '@/shared/components';
+import { useIntersectionObserver } from '@/shared/hooks';
 import { formatNumber } from '@/shared/utils';
 import { SelectedItem, inventoryQueryOption } from '../../service';
 import { Container, Grid, GridItem, ImageInput, ImageLabel, Wrapper } from './style';
@@ -20,8 +21,13 @@ const InventorySelectItem = ({
   inventoryId,
 }: InventorySelectItemProps) => {
   const navigate = useNavigate();
-  const { data: myItemsData } = useQuery({
-    ...inventoryQueryOption.myItems({ hobbyName: selectedHobby, inventoryId: Number(inventoryId) }),
+  const { data: myItemsData, fetchNextPage } = useInfiniteQuery({
+    ...inventoryQueryOption.myItems({
+      hobbyName: selectedHobby,
+      inventoryId: Number(inventoryId),
+      size: 12,
+    }),
+    select: (data) => data.pages.flatMap(({ reviewedItems }) => reviewedItems),
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>, src: string) => {
@@ -33,27 +39,27 @@ const InventorySelectItem = ({
 
   const updatedItems = useMemo(
     () =>
-      myItemsData?.reviewedItems
-        .filter((item) => item.isSelected)
+      myItemsData
+        ?.filter((item) => item.isSelected)
         .map((item) => {
           return { id: item.itemInfo.id, src: item.itemInfo.image };
         }) || [],
-    [myItemsData?.reviewedItems]
+    [myItemsData]
   );
 
   useEffect(() => {
     onChange(() => updatedItems);
   }, [onChange, updatedItems]);
 
+  const ref = useIntersectionObserver({ onObserve: fetchNextPage });
+
   return (
     <>
       <Container>
         <CommonText type="normalTitle">인벤토리 아이템 선택</CommonText>
-        <CommonText type="subStrongInfo">
-          총{myItemsData?.reviewedItems?.length}개의 아이템
-        </CommonText>
+        <CommonText type="subStrongInfo">총{myItemsData?.length}개의 아이템</CommonText>
         <Grid>
-          {myItemsData?.reviewedItems?.map(({ itemInfo, isSelected }) => (
+          {myItemsData?.map(({ itemInfo, isSelected }) => (
             <GridItem key={itemInfo.id}>
               <ImageInput
                 type="checkbox"
@@ -69,6 +75,7 @@ const InventorySelectItem = ({
             </GridItem>
           ))}
         </Grid>
+        <div ref={ref} />
 
         <div>
           <CommonText type="smallInfo">원하시는 아이템이 없나요?</CommonText>

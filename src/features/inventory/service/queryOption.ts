@@ -1,12 +1,17 @@
-import { queryOptions } from '@tanstack/react-query';
+import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
 import { GetInventoryDetailRequest, GetInventoryItemsRequest, inventoryApi } from '.';
 
 const inventoryQueryOption = {
   all: ['inventory'] as const,
-  myItems: ({ inventoryId, hobbyName, cursorId, size = 10 }: GetInventoryItemsRequest) =>
-    queryOptions({
+  myItems: ({ inventoryId, hobbyName, size = 10 }: GetInventoryItemsRequest) =>
+    infiniteQueryOptions({
       queryKey: [...inventoryQueryOption.all, inventoryId, hobbyName] as const,
-      queryFn: () => inventoryApi.getInventoryItems({ inventoryId, hobbyName, cursorId, size }),
+      queryFn: ({ pageParam: cursorId }) =>
+        inventoryApi.getInventoryItems({ inventoryId, hobbyName, cursorId, size }),
+      initialPageParam: '',
+      getNextPageParam: ({ nextCursorId }) => {
+        return nextCursorId;
+      },
     }),
   list: (nickname: string) =>
     queryOptions({
