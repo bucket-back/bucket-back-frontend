@@ -12,6 +12,7 @@ import {
   CommonTextarea,
   Header,
 } from '@/shared/components';
+import { useUserInfo } from '@/shared/hooks';
 import { formatNumber } from '@/shared/utils';
 import {
   Container,
@@ -57,7 +58,8 @@ const ItemReviewEdit = () => {
 
   const [value, setValue] = useState<number>(0);
 
-  const { mutate: reviewMutate } = useEditReview();
+  const userInfo = useUserInfo();
+  const { mutate: reviewMutate } = useEditReview(userInfo!.nickname);
 
   const onSubmit: SubmitHandler<FormProps> = (data) => {
     reviewMutate({

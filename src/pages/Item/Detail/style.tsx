@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.main`
-  padding: 0 2.44rem 2.44rem 2.44rem;
+  padding: 0 2.44rem 1rem 2.44rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -43,6 +43,14 @@ export const CommentNumberWrapper = styled.div`
 export const ReviewBox = styled.article`
   height: 100%;
   display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const NoResult = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;

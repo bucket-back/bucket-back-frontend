@@ -24,6 +24,7 @@ const ItemComment = ({
   isReviewed,
 }: ItemCommentProps) => {
   const navigate = useNavigate();
+
   const { mutate: reviewDeleteMutate } = useDeleteReview(itemId);
 
   const handleDeleteClick = () => {
@@ -33,7 +34,11 @@ const ItemComment = ({
   return (
     <Container>
       <ProfileWrapper>
-        <Profile nickname={memberInfo.nickName} levelNumber={2} src={memberInfo.profileImage} />
+        <Profile
+          nickname={memberInfo.nickName}
+          levelNumber={memberInfo.level}
+          src={memberInfo.profileImage}
+        />
         {isReviewed && (
           <CommonMenu
             type="update"

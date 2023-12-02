@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import {
   CommonButton,
   CommonDivider,
@@ -9,7 +9,7 @@ import {
   CommonText,
   Header,
 } from '@/shared/components';
-import { useAuthCheck } from '@/shared/hooks';
+import { useAuthCheck, useIntersectionObserver } from '@/shared/hooks';
 import { formatNumber } from '@/shared/utils';
 import {
   Container,
@@ -19,7 +19,7 @@ import {
   CommentNumberWrapper,
   CommentsContainer,
   Box,
-  ReviewBox,
+  NoResult,
 } from './style';
 import { ItemComment } from '@/features/item/components';
 import { useTakeItem } from '@/features/item/hooks';
@@ -28,7 +28,6 @@ import { reviewQueryOption } from '@/features/review/service';
 import { ImageBorder } from '@/shared/styles/ImageBorder';
 
 const ItemDetail = () => {
-  // 로그인 시 리뷰 클릭이 가능하도록 하기
   const { itemId } = useParams();
 
   const navigate = useNavigate();
@@ -49,19 +48,23 @@ const ItemDetail = () => {
     data: reviewInfo,
     isPending: reviewPending,
     isError: reviewError,
-  } = useQuery({
-    ...reviewQueryOption.lists({ itemId: Number(itemId), cursorId: '', size: 10 }),
-    initialData: {
-      itemReviewTotalCount: 0,
-      nextCursorId: '',
-      totalCount: 0,
-      reviews: [],
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    ...reviewQueryOption.infiniteList({ itemId: Number(itemId), size: 2 }),
+    select: (data) => {
+      return {
+        totalCount: data.pages[0].itemReviewTotalCount,
+        reviews: data.pages.flatMap(({ reviews }) => reviews),
+      };
     },
   });
 
+  const ref = useIntersectionObserver({ onObserve: fetchNextPage });
+
   const { mutate: itemTakeMutate } = useTakeItem();
 
-  const isReviewed = reviewInfo.reviews.findIndex((value) => value.isReviewed);
+  const isReviewed = reviewInfo?.reviews.findIndex(({ isReviewed }) => isReviewed);
 
   const handleItem = () => {
     itemTakeMutate([String(data.itemInfo.id)]);
@@ -75,15 +78,19 @@ const ItemDetail = () => {
     return <>Error...</>;
   }
 
+  if (reviewInfo.totalCount === 0) {
+    return <NoResult>등록된 리뷰가 없습니다...</NoResult>;
+  }
+
   return (
     <>
-      <Header type="back" />
+      <Header type="back" height="3.5rem" />
       <Container>
         <ImageBorder>
           <CommonImage size="md" src={data.itemInfo.image} alt={data.itemInfo.name} />
         </ImageBorder>
         <ItemWrapper>
-          <CommonText type="normalTitle" noOfLines={0}>
+          <CommonText type="strongInfo" noOfLines={0}>
             {data.itemInfo.name}
           </CommonText>
           <ItemBox>
@@ -108,12 +115,12 @@ const ItemDetail = () => {
           type="mdFull"
           isDisabled={isLogin === false}
           onClick={() =>
-            isReviewed > -1
-              ? navigate(`/${itemId}/review/${reviewInfo.reviews[isReviewed].reviewId}/edit`)
+            isReviewed! > -1
+              ? navigate(`/${itemId}/review/${reviewInfo.reviews[isReviewed!].reviewId}/edit`)
               : navigate(`/item/${itemId}/review/create`)
           }
         >
-          {isReviewed > -1 ? '리뷰 수정' : '리뷰 작성'}
+          {isReviewed! > -1 ? '리뷰 수정' : '리뷰 작성'}
         </CommonButton>
       </Container>
       <div>
@@ -124,8 +131,8 @@ const ItemDetail = () => {
         <CommonDivider size="sm" />
       </div>
       <CommentsContainer>
-        {reviewInfo.reviews.length !== 0 ? (
-          reviewInfo.reviews.map(({ content, createdAt, memberInfo, reviewId, isReviewed }) => (
+        <>
+          {reviewInfo.reviews.map(({ content, createdAt, memberInfo, reviewId, isReviewed }) => (
             <Fragment key={reviewId}>
               <ItemComment
                 content={content}
@@ -138,10 +145,9 @@ const ItemDetail = () => {
               />
               <CommonDivider size="sm" />
             </Fragment>
-          ))
-        ) : (
-          <ReviewBox>리뷰가 없습니다...</ReviewBox>
-        )}
+          ))}
+          {hasNextPage && <div ref={ref} style={{ height: '1rem' }} />}
+        </>
       </CommentsContainer>
     </>
   );

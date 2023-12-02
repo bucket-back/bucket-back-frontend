@@ -12,6 +12,7 @@ import {
   CommonTextarea,
   Header,
 } from '@/shared/components';
+import { useUserInfo } from '@/shared/hooks';
 import { formatNumber } from '@/shared/utils';
 import {
   Container,
@@ -45,7 +46,9 @@ const ItemReview = () => {
 
   const { data, isPending, isError } = useQuery({ ...itemQueryOption.detail(Number(itemId)) });
 
-  const { mutate: reviewMutate } = usePostReview();
+  const userInfo = useUserInfo();
+
+  const { mutate: reviewMutate } = usePostReview(userInfo!.nickname);
 
   const onSubmit: SubmitHandler<FormProps> = (data) => {
     reviewMutate({ itemId: Number(itemId), content: data.review, rating: value });
