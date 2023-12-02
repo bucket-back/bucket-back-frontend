@@ -8,7 +8,7 @@ const useCreateVote = () => {
   return useMutation({
     mutationFn: voteApi.postVotes,
     onSuccess: (data) => {
-      navigate(`/vote/${data.voteId}`);
+      navigate(`/vote/${data.voteId}`, { replace: true });
     },
   });
 };
