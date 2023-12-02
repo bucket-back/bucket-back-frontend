@@ -29,7 +29,7 @@ const VoteSelectItem = ({ selectedItems, onChange, selectedHobby }: VoteSelectIt
     }),
     select: (data) => {
       return {
-        totalCount: data.pages.flatMap(({ totalCount }) => totalCount),
+        totalMemberItemCount: data?.pages[0].totalMemberItemCount,
         summaries: data?.pages.flatMap(({ summaries }) => summaries),
       };
     },
@@ -53,7 +53,9 @@ const VoteSelectItem = ({ selectedItems, onChange, selectedHobby }: VoteSelectIt
     <>
       <Container>
         <CommonText type="normalTitle">투표 아이템 선택</CommonText>
-        <CommonText type="subStrongInfo">총 {myItemsData?.totalCount}개의 아이템</CommonText>
+        <CommonText type="subStrongInfo">
+          총 {myItemsData?.totalMemberItemCount}개의 아이템
+        </CommonText>
         <Grid>
           {myItemsData?.summaries.map(({ itemInfo }) => (
             <GridItem key={itemInfo.id}>
