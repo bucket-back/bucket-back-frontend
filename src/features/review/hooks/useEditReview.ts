@@ -4,7 +4,9 @@ import { AxiosResponse } from 'axios';
 import { useCustomToast } from '@/shared/hooks';
 import { EditReviewItemResponse, PutEditReviewItemRequest, reviewApi } from '../service';
 import { itemQueryOption } from '@/features/item/service';
-const useEditReview = () => {
+import { memberQueryOption } from '@/features/member/service';
+
+const useEditReview = (nickname: string) => {
   const queryClient = useQueryClient();
   const toast = useCustomToast();
   const navigate = useNavigate();
@@ -13,7 +15,12 @@ const useEditReview = () => {
     mutationFn: ({ itemId, reviewId, content, rating }: PutEditReviewItemRequest) =>
       reviewApi.putEditReviewItem({ itemId, reviewId, content, rating }),
     onSuccess: ({ itemId }: EditReviewItemResponse) => {
-      queryClient.invalidateQueries({ queryKey: [...itemQueryOption.detail(itemId).queryKey] });
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: [...itemQueryOption.detail(itemId).queryKey] }),
+        queryClient.invalidateQueries({
+          queryKey: [...memberQueryOption.detail(nickname).queryKey],
+        }),
+      ]);
       toast({ message: '리뷰가 수정되었습니다!', type: 'success' });
       navigate(`/item/${itemId}`, { replace: true });
     },
