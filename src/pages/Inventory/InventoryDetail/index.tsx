@@ -43,7 +43,7 @@ const InventoryDetail = () => {
         <Grid>
           {inventoryDetailData?.inventoryItemInfos.map(({ image, name, price, id }, index) => (
             <GridItem key={index} onClick={() => navigate(`/item/${id}`)}>
-              <CommonImage size="sm" src={image} />
+              <CommonImage size="sm" src={image} border="1px solid #e2e8f0 " />
               <CommonText type="smallInfo">{name}</CommonText>
               <CommonText type="smallInfo">{formatNumber(price)}</CommonText>
             </GridItem>

@@ -64,7 +64,7 @@ const VoteSelectItem = ({ selectedItems, onChange, selectedHobby }: VoteSelectIt
               />
 
               <ImageLabel htmlFor={String(itemInfo.id)}>
-                <CommonImage size="sm" src={itemInfo.image} />
+                <CommonImage size="sm" src={itemInfo.image} border="1px solid #e2e8f0 " />
               </ImageLabel>
               <CommonText type="normalInfo">{formatNumber(itemInfo.price)}</CommonText>
               <CommonText type="smallInfo">{itemInfo.name}</CommonText>

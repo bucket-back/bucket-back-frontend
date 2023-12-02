@@ -68,7 +68,7 @@ const InventorySelectItem = ({
                 onChange={(e) => handleChange(e, itemInfo.image)}
               />
               <ImageLabel htmlFor={String(itemInfo.id)}>
-                <CommonImage size="sm" src={itemInfo.image} />
+                <CommonImage size="sm" src={itemInfo.image} border="1px solid #e2e8f0 " />
               </ImageLabel>
               <CommonText type="smallInfo">{formatNumber(itemInfo.price)}</CommonText>
               <CommonText type="smallInfo">{itemInfo.name}</CommonText>
