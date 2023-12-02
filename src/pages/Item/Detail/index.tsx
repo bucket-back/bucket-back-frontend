@@ -41,6 +41,7 @@ const ItemDetail = () => {
       itemUrl: '',
       itemAvgRate: 0,
       isMemberItem: false,
+      isReviewed: false,
     },
   });
 
@@ -116,7 +117,7 @@ const ItemDetail = () => {
               : navigate(`/item/${itemId}/review/create`)
           }
         >
-          {isReviewed! > -1 ? '리뷰 수정' : '리뷰 작성'}
+          {data.isReviewed ? '리뷰 수정' : '리뷰 작성'}
         </CommonButton>
       </Container>
       <div>

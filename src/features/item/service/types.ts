@@ -21,6 +21,7 @@ export interface GetDetailItemResponse {
   itemUrl: string;
   itemAvgRate: number;
   isMemberItem: boolean;
+  isReviewed: boolean;
 }
 
 export interface GetMyItemsRequest {

@@ -48,7 +48,7 @@ const ItemReview = () => {
 
   const userInfo = useUserInfo();
 
-  const { mutate: reviewMutate } = usePostReview(userInfo!.nickname);
+  const { mutate: reviewMutate } = usePostReview(userInfo?.nickname as string);
 
   const onSubmit: SubmitHandler<FormProps> = (data) => {
     reviewMutate({ itemId: Number(itemId), content: data.review, rating: value });

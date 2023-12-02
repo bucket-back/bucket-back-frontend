@@ -8,7 +8,7 @@ const NotFound = () => {
       <Header type="back" />
       <Container>
         <img src={NotImage} alt="not_found" height="50%" />
-        <CommonText type="smallTitle">잘못된 페이지 입니다...</CommonText>
+        <CommonText type="smallTitle">잘못된 페이지 입니다.</CommonText>
       </Container>
     </>
   );
