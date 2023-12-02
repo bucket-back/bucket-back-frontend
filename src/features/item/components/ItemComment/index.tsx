@@ -64,18 +64,18 @@ const ItemComment = ({
       <ContentsWrapper>
         <DateText createdDate={createAt} />
         <InteractPanel>
-          <CommonButton
-            type="xsText"
-            onClick={() => navigate(`/member/${memberInfo.nickName}/inventory`)}
-          >
-            인벤토리
-          </CommonButton>
           <RateBox>
             <CommonIcon type="fillStar" color="blue.300" />
             <CommonText type="smallInfo" noOfLines={0}>
               {rate} / 5
             </CommonText>
           </RateBox>
+          <CommonButton
+            type="xsText"
+            onClick={() => navigate(`/member/${memberInfo.nickName}/inventory`)}
+          >
+            인벤토리
+          </CommonButton>
         </InteractPanel>
       </ContentsWrapper>
     </Container>

@@ -74,7 +74,7 @@ const FeedItem = ({
   };
 
   return (
-    <Container>
+    <Container style={{ paddingTop: isDetail ? 0 : undefined }}>
       <ProfileWrapper>
         <Profile
           nickname={memberInfo.nickName}

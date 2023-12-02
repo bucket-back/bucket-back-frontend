@@ -26,5 +26,5 @@ export const TitleWrapper = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
-  padding: 1rem 0 1rem 0;
+  padding: 0.5rem 0;
 `;

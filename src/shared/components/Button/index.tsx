@@ -113,6 +113,7 @@ const CommonButton = ({
         px="1rem"
         href={src}
         as="a"
+        target="_blank"
       >
         {children}
       </Button>

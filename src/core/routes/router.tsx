@@ -104,7 +104,7 @@ export const router = createBrowserRouter([
         element: <ItemReview />,
       },
       {
-        path: ':itemId/review/:reviewId/edit',
+        path: 'item/:itemId/review/:reviewId/edit',
         element: <ItemReviewEdit />,
       },
       {

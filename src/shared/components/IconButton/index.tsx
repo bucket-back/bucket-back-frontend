@@ -27,8 +27,8 @@ const CommonIconButton = ({ type, width, height, fontSize, onClick }: CommonIcon
         isRound
         color="white"
         bgColor="blue.300"
-        w={width || '4.0625rem'}
-        h={height || '4.0625rem'}
+        w={width || '3.5rem'}
+        h={height || '3.5rem'}
         fontSize={fontSize || '1.4375rem'}
         aria-label={`${type}`}
         icon={<CommonIcon type="pen" />}
@@ -64,8 +64,8 @@ const CommonIconButton = ({ type, width, height, fontSize, onClick }: CommonIcon
         isRound
         color="white"
         bgColor="blue.300"
-        w={width || '4.0625rem'}
-        h={height || '4.0625rem'}
+        w={width || '3.5rem'}
+        h={height || '3.5rem'}
         fontSize={fontSize || '1.4375rem'}
         aria-label={`${type}`}
         icon={<CommonIcon type="plus" />}
