@@ -14,6 +14,10 @@ export const ItemWrapper = styled.section`
   gap: 1rem 0;
 `;
 
+export const ItemContentsBox = styled.div`
+  width: 100%;
+`;
+
 export const ItemBox = styled.div`
   display: flex;
   width: 100%;
@@ -24,6 +28,7 @@ export const ItemBox = styled.div`
 export const Box = styled.div`
   display: flex;
   align-items: center;
+  gap: 0.3rem;
 `;
 
 export const ButtonWrapper = styled.div`

@@ -5,6 +5,7 @@ export const SearchWrapper = styled.main`
   flex-direction: column;
   gap: 1rem;
   height: calc(100vh - 14rem);
+  overflow-y: auto;
 `;
 
 export const SearchBox = styled.div`

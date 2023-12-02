@@ -21,7 +21,6 @@ import {
 import { BucketSelectItem } from '@/features/bucket/components';
 import { useCreateBucket } from '@/features/bucket/hooks';
 import { HobbySelector } from '@/features/hobby/components';
-import { ImageBorder } from '@/shared/styles/ImageBorder';
 
 interface Hobby {
   english: string;
@@ -111,16 +110,15 @@ const BucketCreate = () => {
                   />
                 ) : (
                   selectedItems.map(({ id, src }) => (
-                    <ImageBorder key={id}>
-                      <CommonImage
-                        size="sm"
-                        src={src}
-                        onClick={() => {
-                          onOpen();
-                          setSelectedItems([]);
-                        }}
-                      />
-                    </ImageBorder>
+                    <CommonImage
+                      key={id}
+                      size="sm"
+                      src={src}
+                      onClick={() => {
+                        onOpen();
+                        setSelectedItems([]);
+                      }}
+                    />
                   ))
                 )}
               </SelectedItemsBox>

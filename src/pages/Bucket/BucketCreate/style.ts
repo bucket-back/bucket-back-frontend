@@ -44,7 +44,7 @@ export const Box = styled.div`
 export const SelectedItemsBox = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 0.3rem;
+  gap: 0.1rem;
   overflow-y: auto;
   height: 6.6rem;
 `;

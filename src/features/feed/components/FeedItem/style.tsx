@@ -67,8 +67,3 @@ export const CommentBox = styled.span`
 export const CommentNumber = styled.span`
   font-size: 0.75rem;
 `;
-
-export const ImageBorder = styled.div`
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-`;

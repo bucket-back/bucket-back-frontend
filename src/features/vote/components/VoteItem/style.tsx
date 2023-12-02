@@ -23,3 +23,10 @@ export const VoteImageWrapper = styled.div`
   align-items: center;
   width: 50%;
 `;
+
+export const VoteItemContentsBox = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-left: 0.5rem;
+`;

@@ -1,2 +1,2 @@
-export { default as ListItem } from './ItemList';
+export { default as ListItem } from './ListItem';
 export { default as ItemComment } from './ItemComment';

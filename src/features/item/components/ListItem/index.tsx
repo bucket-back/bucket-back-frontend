@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { CommonImage, CommonText } from '@/shared/components';
 import { ellipsisName, formatNumber } from '@/shared/utils';
 import { PositionWrapper, ItemListWrapper, ImageInput, ImageLabel } from './style';
-import { ImageBorder } from '@/shared/styles/ImageBorder';
 import { ItemSummary } from '@/shared/types/item';
 
 interface ItemListProps {
@@ -38,26 +37,26 @@ const ListItem = ({
       <ItemListWrapper>
         <ImageInput type="checkbox" id={String(id)} onChange={() => handleChange(id)} />
         <ImageLabel htmlFor={String(id)}>
-          <ImageBorder>
-            <CommonImage size="sm" src={image} />
-          </ImageBorder>
+          <CommonImage size="sm" src={image} />
         </ImageLabel>
-        <CommonText type="normalInfo">{formatNumber(price)}</CommonText>
-        <CommonText type="smallInfo" noOfLines={0}>
-          {ellipsisName(name, 20)}
-        </CommonText>
+        <div>
+          <CommonText type="normalInfo">{formatNumber(price)}</CommonText>
+          <CommonText type="smallInfo" noOfLines={0}>
+            {ellipsisName(name, 20)}
+          </CommonText>
+        </div>
       </ItemListWrapper>
     </PositionWrapper>
   ) : (
     <PositionWrapper>
       <ItemListWrapper onClick={handleClick}>
-        <ImageBorder>
-          <CommonImage size="sm" alt={name} src={image} />
-        </ImageBorder>
-        <CommonText type="normalInfo">{formatNumber(price)}</CommonText>
-        <CommonText type="smallInfo" noOfLines={0}>
-          {ellipsisName(name, 20)}
-        </CommonText>
+        <CommonImage size="sm" alt={name} src={image} />
+        <div>
+          <CommonText type="normalInfo">{formatNumber(price)}</CommonText>
+          <CommonText type="smallInfo" noOfLines={0}>
+            {ellipsisName(name, 20)}
+          </CommonText>
+        </div>
       </ItemListWrapper>
     </PositionWrapper>
   );

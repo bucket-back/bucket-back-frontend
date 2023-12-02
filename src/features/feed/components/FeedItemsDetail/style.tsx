@@ -24,7 +24,3 @@ export const PriceBox = styled.div`
   display: flex;
   justify-content: end;
 `;
-
-export const ImageBox = styled.div`
-  border: 1px solid #e2e8f0;
-`;
