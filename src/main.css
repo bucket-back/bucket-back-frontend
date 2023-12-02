@@ -12,6 +12,12 @@
   font-style: normal;
 }
 
+#root {
+  width: 100%;
+  height: 100vh;
+  background-color: #e2e8f0;
+}
+
 ::-webkit-scrollbar {
   width: 14px;
   height: 14px;

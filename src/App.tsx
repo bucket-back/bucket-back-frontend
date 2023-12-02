@@ -37,7 +37,6 @@ const AppContainer = styled.div`
   max-width: 26.875rem;
   width: 100%;
   height: 100vh;
-  border: 1px solid black;
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -45,4 +44,5 @@ const AppContainer = styled.div`
   right: 0;
   margin: auto;
   overflow: hidden;
+  background-color: white;
 `;
