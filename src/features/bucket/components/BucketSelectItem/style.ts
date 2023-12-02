@@ -29,11 +29,6 @@ export const ImageInput = styled.input`
   display: none;
 `;
 
-export const ImageBorder = styled.div`
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-`;
-
 export const ImageLabel = styled.label`
   position: relative;
   &::before {

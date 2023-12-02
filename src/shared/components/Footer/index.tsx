@@ -63,7 +63,7 @@ const Footer = ({ children }: FooterProps) => {
         break;
       }
       case 'member': {
-        authNavigate(`/member/${userInfo?.nickname}`);
+        authNavigate(`/member/${userInfo.nickname}`);
         break;
       }
     }

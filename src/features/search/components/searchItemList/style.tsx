@@ -6,7 +6,6 @@ export const Wrapper = styled.a`
 `;
 
 export const Box = styled.div`
-  overflow-y: scroll;
   display: flex;
   flex-direction: column;
   gap: 1rem 0;

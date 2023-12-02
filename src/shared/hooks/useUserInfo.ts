@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Storage } from '../utils';
 
 interface UserInfo {
@@ -6,18 +5,8 @@ interface UserInfo {
   nickname: string;
 }
 
-const useUserInfo = () => {
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-
-  useEffect(() => {
-    const storageData = Storage.getLocalStoraged('userInfo');
-
-    if (storageData) {
-      setUserInfo(storageData);
-    }
-  }, []);
-
-  return userInfo;
+const useUserInfo = (): UserInfo => {
+  return Storage.getLocalStoraged('userInfo');
 };
 
 export default useUserInfo;

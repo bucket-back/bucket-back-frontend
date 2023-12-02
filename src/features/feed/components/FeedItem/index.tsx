@@ -23,7 +23,6 @@ import {
   CommentBox,
   CommentNumber,
   BucketInfoBox,
-  ImageBorder,
 } from './style';
 
 interface FeedItemProps {
@@ -75,7 +74,7 @@ const FeedItem = ({
   };
 
   return (
-    <Container>
+    <Container style={{ paddingTop: isDetail ? 0 : undefined }}>
       <ProfileWrapper>
         <Profile
           nickname={memberInfo.nickName}
@@ -119,9 +118,7 @@ const FeedItem = ({
           }}
         >
           {feedItems.slice(0, 6).map((item) => (
-            <ImageBorder key={item.id}>
-              <CommonImage size="sm" src={item.image} />
-            </ImageBorder>
+            <CommonImage key={item.id} size="sm" src={item.image} />
           ))}
         </ImageBox>
         <DetailInfoWrapper>

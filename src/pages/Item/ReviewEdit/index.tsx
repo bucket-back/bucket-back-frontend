@@ -61,7 +61,8 @@ const ItemReviewEdit = () => {
   const [value, setValue] = useState<number>(0);
 
   const userInfo = useUserInfo();
-  const { mutate: reviewMutate } = useEditReview(userInfo!.nickname);
+
+  const { mutate: reviewMutate } = useEditReview(userInfo.nickname);
 
   const onSubmit: SubmitHandler<FormProps> = (data) => {
     reviewMutate({

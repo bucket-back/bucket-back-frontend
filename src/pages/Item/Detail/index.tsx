@@ -21,12 +21,12 @@ import {
   CommentsContainer,
   Box,
   NoResult,
+  ItemContentsBox,
 } from './style';
 import { ItemComment } from '@/features/item/components';
 import { useTakeItem } from '@/features/item/hooks';
 import { itemQueryOption } from '@/features/item/service';
 import { reviewQueryOption } from '@/features/review/service';
-import { ImageBorder } from '@/shared/styles/ImageBorder';
 
 const ItemDetail = () => {
   const { itemId } = useParams();
@@ -88,13 +88,13 @@ const ItemDetail = () => {
     <>
       <Header type="back" />
       <Container>
-        <ImageBorder>
-          <CommonImage size="md" src={data.itemInfo.image} alt={data.itemInfo.name} />
-        </ImageBorder>
+        <CommonImage size="md" src={data.itemInfo.image} alt={data.itemInfo.name} />
         <ItemWrapper>
-          <CommonText type="strongInfo" noOfLines={0}>
-            {data.itemInfo.name}
-          </CommonText>
+          <ItemContentsBox>
+            <CommonText type="strongInfo" noOfLines={0}>
+              {data.itemInfo.name}
+            </CommonText>
+          </ItemContentsBox>
           <ItemBox>
             <CommonText type="normalInfo">{formatNumber(data.itemInfo.price)}</CommonText>
             <Box>
@@ -118,7 +118,7 @@ const ItemDetail = () => {
           isDisabled={isLogin === false}
           onClick={() =>
             isReviewed! > -1
-              ? navigate(`/${itemId}/review/${reviewInfo.reviews[isReviewed!].reviewId}/edit`)
+              ? navigate(`/item/${itemId}/review/${reviewInfo.reviews[isReviewed!].reviewId}/edit`)
               : navigate(`/item/${itemId}/review/create`)
           }
         >
@@ -134,6 +134,7 @@ const ItemDetail = () => {
       </div>
       <CommentsContainer>
         <>
+          {reviewInfo.totalCount === 0 && <NoResult>등록된 리뷰가 없습니다.</NoResult>}
           {reviewInfo.reviews.map(
             ({ content, createdAt, memberInfo, reviewId, isReviewed, rate }) => (
               <Fragment key={reviewId}>
@@ -145,17 +146,13 @@ const ItemDetail = () => {
                   reviewId={reviewId}
                   isReviewed={isReviewed}
                   rate={rate}
-                  editPath={`/${itemId}/review/${reviewId}/edit`}
+                  editPath={`/item/${itemId}/review/${reviewId}/edit`}
                 />
                 <CommonDivider size="sm" />
               </Fragment>
             )
           )}
-          {hasNextPage ? (
-            <div ref={ref} style={{ height: '1rem' }} />
-          ) : (
-            <NoResult>등록된 리뷰가 없습니다...</NoResult>
-          )}
+          {hasNextPage && <div ref={ref} style={{ height: '1rem' }} />}
         </>
       </CommentsContainer>
     </>

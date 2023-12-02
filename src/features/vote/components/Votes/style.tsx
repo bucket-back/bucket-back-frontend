@@ -11,7 +11,7 @@ export const ContentsWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: calc(100vh - 29.542rem);
   padding: 1rem 0;
 `;

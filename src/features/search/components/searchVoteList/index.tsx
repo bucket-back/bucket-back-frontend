@@ -3,6 +3,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import {
   CommonButton,
   CommonCard,
+  CommonDivider,
   CommonIcon,
   CommonImage,
   CommonSpinner,
@@ -20,6 +21,7 @@ import {
   Box,
   TextBox,
   NoResult,
+  VoteItemContentsBox,
 } from './style';
 import { searchQueryOption } from '@/features/search/service';
 
@@ -77,8 +79,10 @@ const SearchVoteList = ({ keyword }: SearchListItemProp) => {
                 <ContentsWrapper>
                   <VoteImageWrapper>
                     <CommonImage size="base" src={item1Info.image} />
-                    <CommonText type="smallInfo">{formatNumber(item1Info.price)}</CommonText>
-                    <CommonText type="smallInfo">{item1Info.name}</CommonText>
+                    <VoteItemContentsBox>
+                      <CommonText type="smallInfo">{formatNumber(item1Info.price)}</CommonText>
+                      <CommonText type="smallInfo">{item1Info.name}</CommonText>
+                    </VoteItemContentsBox>
                   </VoteImageWrapper>
                   <VsBox>
                     <CommonText type="smallInfo" noOfLines={0}>
@@ -87,8 +91,10 @@ const SearchVoteList = ({ keyword }: SearchListItemProp) => {
                   </VsBox>
                   <VoteImageWrapper>
                     <CommonImage size="base" src={item2Info.image} />
-                    <CommonText type="smallInfo">{formatNumber(item2Info.price)}</CommonText>
-                    <CommonText type="smallInfo">{item2Info.name}</CommonText>
+                    <VoteItemContentsBox>
+                      <CommonText type="smallInfo">{formatNumber(item2Info.price)}</CommonText>
+                      <CommonText type="smallInfo">{item2Info.name}</CommonText>
+                    </VoteItemContentsBox>
                   </VoteImageWrapper>
                 </ContentsWrapper>
               </ContentsContainer>
@@ -96,6 +102,7 @@ const SearchVoteList = ({ keyword }: SearchListItemProp) => {
           ))}
           {hasNextPage && <div ref={ref} />}
         </>
+        <CommonDivider size="sm" />
         <div>
           <CommonText type="smallInfo">투표 검색결과 페이지가 없습니다!</CommonText>
           <Wrapper onClick={() => authNavigate('/vote/create')}>
