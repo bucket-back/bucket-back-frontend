@@ -3,7 +3,14 @@ import { useQuery } from '@tanstack/react-query';
 import { CommonDrawer, CommonImage, CommonMenu, CommonText, Header } from '@/shared/components';
 import { useDrawer, useUserInfo } from '@/shared/hooks';
 import { formatNumber } from '@/shared/utils';
-import { Container, ContentsBox, ContentsWrapper, TitlePanel, TitleWrapper } from './style';
+import {
+  Container,
+  ContentsBox,
+  ContentsWrapper,
+  ImageBorder,
+  TitlePanel,
+  TitleWrapper,
+} from './style';
 import { useDeleteBucket } from '@/features/bucket/hooks';
 import { bucketQueryOption } from '@/features/bucket/service';
 import { hobbyQueryOption } from '@/features/hobby/service';
@@ -36,10 +43,12 @@ const BucketDetail = () => {
         <TitleWrapper>
           <TitlePanel>
             <CommonText type="normalTitle">{buckDetail.data?.name}</CommonText>
-            <CommonText type="normalTitle">아이템 전체보기</CommonText>
-            <CommonText type="subStrongInfo">
-              총 {buckDetail.data?.itemInfos.length || 0}개의 아이템
-            </CommonText>
+            <div>
+              <CommonText type="smallTitle">아이템 전체보기</CommonText>
+              <CommonText type="normalInfo">
+                총 {buckDetail.data?.itemInfos.length || 0}개의 아이템
+              </CommonText>
+            </div>
           </TitlePanel>
           {userInfo?.nickname === nickname && (
             <CommonMenu
@@ -58,7 +67,9 @@ const BucketDetail = () => {
           <ContentsWrapper>
             {buckDetail.data.itemInfos.map(({ id, image, name, price }) => (
               <ContentsBox key={id} onClick={() => navigate(`/item/${id}`)}>
-                <CommonImage size="sm" src={image} />
+                <ImageBorder>
+                  <CommonImage size="sm" src={image} />
+                </ImageBorder>
                 <CommonText type="smallInfo">{name}</CommonText>
                 <CommonText type="smallInfo">{formatNumber(price)}</CommonText>
               </ContentsBox>

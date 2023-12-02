@@ -43,7 +43,7 @@ const ICONS = {
   cubes: FaCubes,
   bucket: FaBasketShopping,
   item: FaBagShopping,
-  user: FaRegFaceGrin,
+  member: FaRegFaceGrin,
   eye: FaEye,
   eyeSlash: FaEyeSlash,
   arrowUp: FaArrowUp,

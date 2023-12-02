@@ -99,10 +99,15 @@ const MemberEditForm = ({ nickname, image, introduction }: MemberEditFormProps) 
         <div>
           <CommonText type="strongInfo">자기소개</CommonText>
           <CommonTextarea
-            placeholder="자기소개를 작성해주세요"
+            placeholder="자기소개를 작성해주세요 (100자 이하)"
             size="base"
             error={errors.introduction}
-            {...register('introduction')}
+            {...register('introduction', {
+              maxLength: {
+                value: 100,
+                message: '100글자 이하로 입력해주세요.',
+              },
+            })}
           />
         </div>
       </InputWrapper>

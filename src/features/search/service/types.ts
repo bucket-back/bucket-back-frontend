@@ -10,6 +10,7 @@ export interface GetSearchItemResponse {
   nextCursorId: string;
   items: Item[];
   totalCount: number;
+  itemTotalCount: number;
 }
 
 export interface GetSearchKeywordResponse {

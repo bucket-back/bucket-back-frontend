@@ -23,6 +23,7 @@ import {
   CommentBox,
   CommentNumber,
   BucketInfoBox,
+  ImageBorder,
 } from './style';
 
 interface FeedItemProps {
@@ -91,7 +92,11 @@ const FeedItem = ({
           />
         )}
       </ProfileWrapper>
-      <ContentsWrapper onClick={() => onClick(feedId)}>
+      <ContentsWrapper
+        onClick={() => {
+          !isDetail && onClick(feedId);
+        }}
+      >
         {feedContent && (
           <CommonText type="normalInfo" color="inherit" noOfLines={isDetail ? 10 : 3}>
             {feedContent}
@@ -108,9 +113,15 @@ const FeedItem = ({
             )}
           </BucketInfoBox>
         )}
-        <ImageBox>
-          {feedItems.map((item) => (
-            <CommonImage key={item.id} size="sm" src={item.image} />
+        <ImageBox
+          onClick={() => {
+            isDetail && onClick(feedId);
+          }}
+        >
+          {feedItems.slice(0, 6).map((item) => (
+            <ImageBorder key={item.id}>
+              <CommonImage size="sm" src={item.image} />
+            </ImageBorder>
           ))}
         </ImageBox>
         <DetailInfoWrapper>

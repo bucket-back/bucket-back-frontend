@@ -4,7 +4,11 @@ import { ROOT_PATH } from '@/shared/constants';
 import { useCustomToast } from '@/shared/hooks';
 import { feedApi, feedQueryOption } from '../service';
 
-const useDeleteFeed = () => {
+interface Path {
+  from: string;
+}
+
+const useDeleteFeed = (path: Path | null) => {
   const openToast = useCustomToast();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -14,7 +18,11 @@ const useDeleteFeed = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [...feedQueryOption.all] });
       openToast({ message: '피드가 성공적으로 삭제되었습니다.', type: 'success' });
-      navigate(ROOT_PATH);
+      if (path) {
+        navigate(path.from);
+      } else {
+        navigate(ROOT_PATH);
+      }
     },
   });
 };

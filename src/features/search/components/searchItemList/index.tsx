@@ -26,7 +26,7 @@ const SearchItemList = ({ keyword }: SearchListItemProp) => {
     }),
     select: (data) => {
       return {
-        totalCount: data.pages.flatMap(({ totalCount }) => totalCount),
+        totalCount: data.pages.flatMap(({ itemTotalCount }) => itemTotalCount),
         items: data.pages.flatMap(({ items }) => items),
       };
     },
@@ -48,13 +48,11 @@ const SearchItemList = ({ keyword }: SearchListItemProp) => {
     return <NoResult>검색결과가 없습니다.</NoResult>;
   }
 
-  const totalCount = data.totalCount.reduce((prev, next) => prev + next, 0);
-
   return (
     <>
       <Box>
         <TextBox>
-          <CommonText type="subStrongInfo">총 {totalCount}개의 아이템</CommonText>
+          <CommonText type="subStrongInfo">총 {data.totalCount[0]}개의 아이템</CommonText>
         </TextBox>
         <Grid padding="0 1rem" templateColumns="repeat(3,1fr)" gap="0.25rem">
           {data.items.map(({ itemSummary }) => (

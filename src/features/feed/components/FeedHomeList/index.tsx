@@ -63,7 +63,7 @@ const FeedHomeList = ({ hobbyName, sortCondition }: FeedHomeListProps) => {
           )
         )
       )}
-      {feeds.hasNextPage && <ObservedBox ref={observedRef} />}
+      {feeds.hasNextPage ? <ObservedBox ref={observedRef} /> : <ObservedBox />}
     </>
   );
 };

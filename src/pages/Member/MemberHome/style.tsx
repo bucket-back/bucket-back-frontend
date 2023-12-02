@@ -2,6 +2,9 @@ import styled from '@emotion/styled';
 
 export const Container = styled.div`
   height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const MemberInfoWrapper = styled.div`
