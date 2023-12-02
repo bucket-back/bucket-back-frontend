@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -14,7 +14,9 @@ import {
   Footer,
   Header,
 } from '@/shared/components';
+import { PROFILE_IMAGE_KEY } from '@/shared/constants';
 import { useDrawer, useUserInfo } from '@/shared/hooks';
+import { Storage } from '@/shared/utils';
 import {
   Container,
   MemberInfoWrapper,
@@ -39,7 +41,7 @@ type Level = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 const MemberHome = () => {
   const { nickname } = useParams();
   const userInfo = useUserInfo();
-  const isSelf = userInfo?.nickname === nickname;
+  const isSelf = userInfo.nickname === nickname;
 
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDrawer();
@@ -49,17 +51,32 @@ const MemberHome = () => {
   const logout = useLogout();
   const leave = useLeave();
 
+  useEffect(() => {
+    window.addEventListener('beforeunload', () => {
+      Storage.removeLocalStoraged(PROFILE_IMAGE_KEY);
+    });
+  }, []);
+
+  if (member.isPending) {
+    return;
+  }
+
+  if (member.isError) {
+    return;
+  }
+
+  const currentProfileImage =
+    Storage.getLocalStoraged(PROFILE_IMAGE_KEY) || member.data.memberProfile.profileImage;
+
   return (
     <>
       <Header type="logo" />
       <Container>
         <MemberInfoWrapper>
           <MemberInfoPanel>
-            {member.isSuccess && (
-              <CommonAvatar size="5rem" src={member.data.memberProfile.profileImage} />
-            )}
+            <CommonAvatar size="5rem" src={currentProfileImage} />
             <MemberInfoBox>
-              <CommonBadge type="level" levelNumber={member.data?.memberProfile.level as Level} />
+              <CommonBadge type="level" levelNumber={member.data.memberProfile.level as Level} />
               <CommonText type="smallTitle">{nickname}</CommonText>
               {isSelf && (
                 <CommonButton type="profile" onClick={() => navigate('/member/edit')}>
@@ -85,7 +102,7 @@ const MemberHome = () => {
         </MemberInfoWrapper>
         <MemberIntroWrapper>
           <CommonText type="normalInfo" noOfLines={3}>
-            {member.data?.memberProfile.introduction}
+            {member.data.memberProfile.introduction}
           </CommonText>
         </MemberIntroWrapper>
         <CommonDivider size="lg" />
@@ -105,7 +122,7 @@ const MemberHome = () => {
                 <CommonIcon type="chevronRight" size="0.8rem" />
               </IconBox>
             </ContentsPanel>
-            {member.isSuccess && member.data.inventoryProfiles.length > 0 ? (
+            {member.data.inventoryProfiles.length > 0 ? (
               <ImagePanel>
                 <Grid>
                   {member.data.inventoryProfiles.map((inventory) => (
@@ -145,7 +162,7 @@ const MemberHome = () => {
                 <CommonIcon type="chevronRight" size="0.8rem" />
               </IconBox>
             </ContentsPanel>
-            {member.isSuccess && member.data.bucketProfiles.length > 0 ? (
+            {member.data.bucketProfiles.length > 0 ? (
               <ImagePanel>
                 <Grid>
                   {member.data?.bucketProfiles.map((bucket) => (

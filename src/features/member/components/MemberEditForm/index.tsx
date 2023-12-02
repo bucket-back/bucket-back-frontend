@@ -8,7 +8,9 @@ import {
   CommonText,
   CommonTextarea,
 } from '@/shared/components';
+import { PROFILE_IMAGE_KEY } from '@/shared/constants';
 import { useValidateForm } from '@/shared/hooks';
+import { Storage } from '@/shared/utils';
 import useUpdateImage from '../../hooks/useUpdateImage';
 import { AvatarBox, ButtonWrapper, FileInput, Form, InputBox, InputWrapper } from './style';
 import { useCheckNickname, useUpateMemberInfo } from '@/features/member/hooks';
@@ -61,6 +63,7 @@ const MemberEditForm = ({ nickname, image, introduction }: MemberEditFormProps) 
     if (typeof currentImage !== 'string') {
       const file = currentImage[0];
       setImagePreview(URL.createObjectURL(file));
+      Storage.setLocalStoraged(PROFILE_IMAGE_KEY, URL.createObjectURL(file));
     }
   }, [currentImage]);
 
@@ -69,7 +72,6 @@ const MemberEditForm = ({ nickname, image, introduction }: MemberEditFormProps) 
       <InputWrapper>
         <div>
           <CommonText type="strongInfo">프로필 사진</CommonText>
-
           <AvatarBox>
             <CommonAvatar src={imagePreview || image || ''} isOwner>
               <FileInput type="file" {...register('image')} />

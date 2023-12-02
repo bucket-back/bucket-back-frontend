@@ -6,9 +6,9 @@ import { MemberEditForm } from '@/features/member/components';
 import { memberQueryOption } from '@/features/member/service';
 
 const MemberEdit = () => {
-  const userInfo = useUserInfo()!;
+  const userInfo = useUserInfo();
   const member = useQuery({
-    ...memberQueryOption.detail(userInfo?.nickname),
+    ...memberQueryOption.detail(userInfo.nickname),
     select: (data) => data.memberProfile,
   });
 
