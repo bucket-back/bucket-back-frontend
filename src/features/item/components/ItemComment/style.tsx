@@ -14,6 +14,7 @@ export const ProfileWrapper = styled.div`
 
 export const ContentsWrapper = styled.div`
   display: flex;
+  align-items: center;
   padding: 0.25rem 0.5rem;
 `;
 
@@ -27,4 +28,9 @@ export const InteractPanel = styled.div`
   display: flex;
   gap: 0.2rem;
   padding-left: 0.2rem;
+`;
+
+export const RateBox = styled.div`
+  display: flex;
+  align-items: center;
 `;

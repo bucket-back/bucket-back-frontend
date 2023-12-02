@@ -78,13 +78,9 @@ const ItemDetail = () => {
     return <>Error...</>;
   }
 
-  if (reviewInfo.totalCount === 0) {
-    return <NoResult>등록된 리뷰가 없습니다...</NoResult>;
-  }
-
   return (
     <>
-      <Header type="back" height="3.5rem" />
+      <Header type="back" />
       <Container>
         <ImageBorder>
           <CommonImage size="md" src={data.itemInfo.image} alt={data.itemInfo.name} />
@@ -126,27 +122,34 @@ const ItemDetail = () => {
       <div>
         <CommonDivider size="lg" />
         <CommentNumberWrapper>
-          <CommonText type="normalInfo">총 {reviewInfo.totalCount}개의 댓글</CommonText>
+          <CommonText type="normalInfo">총 {reviewInfo.totalCount}개의 리뷰</CommonText>
         </CommentNumberWrapper>
         <CommonDivider size="sm" />
       </div>
       <CommentsContainer>
         <>
-          {reviewInfo.reviews.map(({ content, createdAt, memberInfo, reviewId, isReviewed }) => (
-            <Fragment key={reviewId}>
-              <ItemComment
-                content={content}
-                createAt={createdAt}
-                memberInfo={memberInfo}
-                itemId={itemId!}
-                reviewId={reviewId}
-                isReviewed={isReviewed}
-                editPath={`/${itemId}/review/${reviewId}/edit`}
-              />
-              <CommonDivider size="sm" />
-            </Fragment>
-          ))}
-          {hasNextPage && <div ref={ref} style={{ height: '1rem' }} />}
+          {reviewInfo.reviews.map(
+            ({ content, createdAt, memberInfo, reviewId, isReviewed, rate }) => (
+              <Fragment key={reviewId}>
+                <ItemComment
+                  content={content}
+                  createAt={createdAt}
+                  memberInfo={memberInfo}
+                  itemId={itemId!}
+                  reviewId={reviewId}
+                  isReviewed={isReviewed}
+                  rate={rate}
+                  editPath={`/${itemId}/review/${reviewId}/edit`}
+                />
+                <CommonDivider size="sm" />
+              </Fragment>
+            )
+          )}
+          {hasNextPage ? (
+            <div ref={ref} style={{ height: '1rem' }} />
+          ) : (
+            <NoResult>등록된 리뷰가 없습니다...</NoResult>
+          )}
         </>
       </CommentsContainer>
     </>
