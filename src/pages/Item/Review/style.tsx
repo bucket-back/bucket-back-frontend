@@ -21,11 +21,13 @@ export const ItemBoxFlex = styled.div`
 export const ItemBoxLeft = styled.div`
   display: flex;
   flex-direction: column;
+  padding-left: 1rem;
 `;
 
 export const ItemBoxLeftBottomRate = styled.div`
   display: flex;
   align-items: center;
+  gap: 0.3rem;
 `;
 
 export const Rate = styled.div`
