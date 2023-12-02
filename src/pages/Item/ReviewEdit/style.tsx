@@ -4,7 +4,7 @@ export const Container = styled.main`
   padding: 0 1.75rem 1.75rem;
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 100%;
 `;
 
