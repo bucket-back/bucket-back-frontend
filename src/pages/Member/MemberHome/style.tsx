@@ -68,6 +68,12 @@ export const Grid = styled.div`
   gap: 1rem;
 `;
 
+export const ImageBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const IconBox = styled.div`
   padding-right: 0.3rem;
 `;
