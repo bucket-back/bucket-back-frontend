@@ -5,9 +5,10 @@ import { CommonIconButton } from '@/shared/components';
 interface HeaderProps {
   type: 'logo' | 'back';
   path?: string;
+  height?: string;
 }
 
-const Header = ({ type, path }: HeaderProps) => {
+const Header = ({ type, path, height = '5rem' }: HeaderProps) => {
   const navigate = useNavigate();
 
   const headerType = {
@@ -20,7 +21,7 @@ const Header = ({ type, path }: HeaderProps) => {
   };
 
   return (
-    <Box height="5rem" pl="1.75rem" width="full" flexShrink={0} as="header">
+    <Box height={height} pl="1.75rem" width="full" flexShrink={0} as="header">
       <Flex h="full" alignItems="center">
         {headerType[type]}
       </Flex>
