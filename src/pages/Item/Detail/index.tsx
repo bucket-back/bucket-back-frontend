@@ -6,6 +6,7 @@ import {
   CommonDivider,
   CommonIcon,
   CommonImage,
+  CommonSpinner,
   CommonText,
   Header,
 } from '@/shared/components';
@@ -72,11 +73,15 @@ const ItemDetail = () => {
   };
 
   if (isPending || reviewPending) {
-    return <>Loading...</>;
+    return (
+      <NoResult>
+        <CommonSpinner size="xl" />
+      </NoResult>
+    );
   }
 
   if (isError || reviewError) {
-    return <>Error...</>;
+    return <NoResult>Error...</NoResult>;
   }
 
   return (

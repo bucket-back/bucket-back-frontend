@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { CommonIconButton, CommonText, Header, Footer } from '@/shared/components';
+import { CommonIconButton, CommonText, Header, Footer, CommonSpinner } from '@/shared/components';
 import { useAuthNavigate, useIntersectionObserver } from '@/shared/hooks';
 import { formatNumber } from '@/shared/utils';
 import {
@@ -10,6 +10,7 @@ import {
   AddContainer,
   Grid,
   ButtonBox,
+  NoResult,
 } from './style';
 import { ListItem } from '@/features/item/components';
 import { useDeleteItem } from '@/features/item/hooks';
@@ -61,11 +62,15 @@ const ItemList = () => {
   };
 
   if (isPending || itemDeletePending) {
-    return <>Loading..</>;
+    return (
+      <NoResult>
+        <CommonSpinner size="xl" />
+      </NoResult>
+    );
   }
 
   if (isError || itemDeleteError) {
-    return <>Error...</>;
+    return <NoResult>Error...</NoResult>;
   }
 
   return (

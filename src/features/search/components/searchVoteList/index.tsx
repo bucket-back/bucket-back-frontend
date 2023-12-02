@@ -1,6 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { CommonButton, CommonCard, CommonIcon, CommonImage, CommonText } from '@/shared/components';
+import {
+  CommonButton,
+  CommonCard,
+  CommonIcon,
+  CommonImage,
+  CommonSpinner,
+  CommonText,
+} from '@/shared/components';
 import { useAuthNavigate, useIntersectionObserver } from '@/shared/hooks';
 import { formatNumber } from '@/shared/utils';
 import { SearchListItemProp } from '../searchItemList';
@@ -34,11 +41,15 @@ const SearchVoteList = ({ keyword }: SearchListItemProp) => {
   const ref = useIntersectionObserver({ onObserve: fetchNextPage });
 
   if (isPending) {
-    return <>Loading...</>;
+    return (
+      <NoResult>
+        <CommonSpinner size="xl" />
+      </NoResult>
+    );
   }
 
   if (isError) {
-    return <>Error...</>;
+    return <NoResult>Error...</NoResult>;
   }
 
   if (data.totalCount === 0) {

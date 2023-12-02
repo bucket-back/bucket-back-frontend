@@ -8,6 +8,7 @@ import {
   CommonIcon,
   CommonImage,
   CommonSlider,
+  CommonSpinner,
   CommonText,
   CommonTextarea,
   Header,
@@ -25,6 +26,7 @@ import {
   Form,
   FormWrapper,
   ItemBoxColumn,
+  NoResult,
 } from './style';
 import { itemQueryOption } from '@/features/item/service';
 import { useEditReview } from '@/features/review/hooks';
@@ -84,11 +86,15 @@ const ItemReviewEdit = () => {
   }, [reviewInfo]);
 
   if (isPending || reviewPending) {
-    return <>Loading...</>;
+    return (
+      <NoResult>
+        <CommonSpinner size="xl" />
+      </NoResult>
+    );
   }
 
   if (isError || reviewError) {
-    return <>Error...</>;
+    return <NoResult>Error...</NoResult>;
   }
 
   return (

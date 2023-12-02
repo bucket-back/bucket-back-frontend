@@ -6,6 +6,7 @@ import {
   CommonDivider,
   CommonIcon,
   CommonImage,
+  CommonSpinner,
   CommonText,
 } from '@/shared/components';
 import { useAuthNavigate, useIntersectionObserver } from '@/shared/hooks';
@@ -39,11 +40,15 @@ const SearchItemList = ({ keyword }: SearchListItemProp) => {
   const authNavigate = useAuthNavigate();
 
   if (isPending) {
-    return <>Loading...</>;
+    return (
+      <NoResult>
+        <CommonSpinner size="xl" />
+      </NoResult>
+    );
   }
 
   if (isError) {
-    return <>Error...</>;
+    return <NoResult>Error...</NoResult>;
   }
 
   if (data.totalCount[0] === 0) {

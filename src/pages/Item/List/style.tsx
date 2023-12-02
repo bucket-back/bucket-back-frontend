@@ -46,3 +46,11 @@ export const Grid = styled.div`
   grid-template-columns: repeat(3, minmax(6rem, 1fr));
   gap: 0.5rem;
 `;
+
+export const NoResult = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
