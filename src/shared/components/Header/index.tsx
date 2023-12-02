@@ -8,7 +8,7 @@ interface HeaderProps {
   height?: string;
 }
 
-const Header = ({ type, path, height = '5rem' }: HeaderProps) => {
+const Header = ({ type, path, height = '4rem' }: HeaderProps) => {
   const navigate = useNavigate();
 
   const headerType = {
@@ -17,11 +17,17 @@ const Header = ({ type, path, height = '5rem' }: HeaderProps) => {
         버킷백
       </Text>
     ),
-    back: <CommonIconButton type="back" onClick={() => (path ? navigate(path) : navigate(-1))} />,
+    back: (
+      <CommonIconButton
+        type="back"
+        fontSize="1rem"
+        onClick={() => (path ? navigate(path) : navigate(-1))}
+      />
+    ),
   };
 
   return (
-    <Box height={height} pl="1.75rem" width="full" flexShrink={0} as="header">
+    <Box height={height} pl="1.25rem" width="full" flexShrink={0} as="header">
       <Flex h="full" alignItems="center">
         {headerType[type]}
       </Flex>

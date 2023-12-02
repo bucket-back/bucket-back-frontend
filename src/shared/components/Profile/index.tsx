@@ -7,9 +7,10 @@ interface ProfileProps {
   nickname: string;
   levelNumber: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
   isAdopted?: boolean;
+  imageSize?: string;
 }
 
-const Profile = ({ nickname, src, levelNumber, isAdopted }: ProfileProps) => {
+const Profile = ({ nickname, src, levelNumber, isAdopted, imageSize = '3rem' }: ProfileProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -18,9 +19,9 @@ const Profile = ({ nickname, src, levelNumber, isAdopted }: ProfileProps) => {
 
   return (
     <Flex alignItems="center">
-      <CommonAvatar isOwner={false} size="3rem" onClick={handleClick} src={src} />
+      <CommonAvatar isOwner={false} size={imageSize} onClick={handleClick} src={src} />
       <Box ml="0.8rem" onClick={handleClick} cursor="pointer">
-        <CommonText type="smallTitle" color="blue.900" noOfLines={1}>
+        <CommonText type="normalInfo" weight={700} color="blue.900" noOfLines={1}>
           {nickname}
         </CommonText>
         <HStack spacing="0.25rem">

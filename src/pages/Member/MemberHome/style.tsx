@@ -30,7 +30,12 @@ export const MemberInfoBox = styled.div`
 
 export const MemberIntroWrapper = styled.div`
   display: flex;
-  padding: 1.5rem 3.5rem;
+  padding: 1rem 3.5rem;
+`;
+
+export const ContentsContainer = styled.div`
+  height: 100%;
+  overflow-y: auto;
 `;
 
 export const ContentsWrapper = styled.div`
@@ -63,8 +68,14 @@ export const Grid = styled.div`
   gap: 1rem;
 `;
 
+export const ImageBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const IconBox = styled.div`
-  padding-right: 0.75rem;
+  padding-right: 0.3rem;
 `;
 
 export const AddBox = styled.div`

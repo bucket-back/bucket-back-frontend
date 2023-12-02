@@ -16,6 +16,7 @@ export const NoResult = styled.div`
 export const SelectWrapper = styled.div`
   display: flex;
   justify-content: end;
-  padding-top: 1rem;
+  padding-top: 0.5rem;
   padding-right: 1.5rem;
+  padding-bottom: 0.75rem;
 `;

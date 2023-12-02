@@ -25,6 +25,7 @@ import { ItemComment } from '@/features/item/components';
 import { useTakeItem } from '@/features/item/hooks';
 import { itemQueryOption } from '@/features/item/service';
 import { reviewQueryOption } from '@/features/review/service';
+import { ImageBorder } from '@/shared/styles/ImageBorder';
 
 const ItemDetail = () => {
   const { itemId } = useParams();
@@ -77,17 +78,13 @@ const ItemDetail = () => {
     return <>Error...</>;
   }
 
-  if (reviewInfo.totalCount === 0) {
-    return <NoResult>등록된 리뷰가 없습니다...</NoResult>;
-  }
-
   return (
     <>
-      <Header type="back" height="3.5rem" />
+      <Header type="back" />
       <Container>
-        <div>
+        <ImageBorder>
           <CommonImage size="md" src={data.itemInfo.image} alt={data.itemInfo.name} />
-        </div>
+        </ImageBorder>
         <ItemWrapper>
           <CommonText type="strongInfo" noOfLines={0}>
             {data.itemInfo.name}
@@ -125,27 +122,34 @@ const ItemDetail = () => {
       <div>
         <CommonDivider size="lg" />
         <CommentNumberWrapper>
-          <CommonText type="normalInfo">총 {reviewInfo.totalCount}개의 댓글</CommonText>
+          <CommonText type="normalInfo">총 {reviewInfo.totalCount}개의 리뷰</CommonText>
         </CommentNumberWrapper>
         <CommonDivider size="sm" />
       </div>
       <CommentsContainer>
         <>
-          {reviewInfo.reviews.map(({ content, createdAt, memberInfo, reviewId, isReviewed }) => (
-            <Fragment key={reviewId}>
-              <ItemComment
-                content={content}
-                createAt={createdAt}
-                memberInfo={memberInfo}
-                itemId={itemId!}
-                reviewId={reviewId}
-                isReviewed={isReviewed}
-                editPath={`/${itemId}/review/${reviewId}/edit`}
-              />
-              <CommonDivider size="sm" />
-            </Fragment>
-          ))}
-          {hasNextPage && <div ref={ref} style={{ height: '1rem' }} />}
+          {reviewInfo.reviews.map(
+            ({ content, createdAt, memberInfo, reviewId, isReviewed, rate }) => (
+              <Fragment key={reviewId}>
+                <ItemComment
+                  content={content}
+                  createAt={createdAt}
+                  memberInfo={memberInfo}
+                  itemId={itemId!}
+                  reviewId={reviewId}
+                  isReviewed={isReviewed}
+                  rate={rate}
+                  editPath={`/${itemId}/review/${reviewId}/edit`}
+                />
+                <CommonDivider size="sm" />
+              </Fragment>
+            )
+          )}
+          {hasNextPage ? (
+            <div ref={ref} style={{ height: '1rem' }} />
+          ) : (
+            <NoResult>등록된 리뷰가 없습니다...</NoResult>
+          )}
         </>
       </CommentsContainer>
     </>

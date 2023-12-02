@@ -7,6 +7,6 @@ const formatNumber = (price: number) => {
     return `${firstCount},${lastCount} 원`;
   }
 
-  return String(price);
+  return `${price}원`;
 };
 export default formatNumber;

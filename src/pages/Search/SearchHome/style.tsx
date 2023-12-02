@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 export const HeaderBox = styled.div``;
 
 export const Container = styled.div`
-  height: 100%;
+  height: 106%;
   overflow: hidden;
 `;
 

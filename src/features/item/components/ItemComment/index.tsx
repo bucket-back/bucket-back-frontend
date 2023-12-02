@@ -1,7 +1,14 @@
 import { useNavigate } from 'react-router-dom';
-import { CommonButton, CommonMenu, CommonText, DateText, Profile } from '@/shared/components';
+import {
+  CommonButton,
+  CommonIcon,
+  CommonMenu,
+  CommonText,
+  DateText,
+  Profile,
+} from '@/shared/components';
 import { Review } from '@/shared/types';
-import { Container, ProfileWrapper, ContentsWrapper, InteractPanel } from './style';
+import { Container, ProfileWrapper, ContentsWrapper, InteractPanel, RateBox } from './style';
 import { useDeleteReview } from '@/features/review/hooks';
 
 export interface ItemCommentProps {
@@ -11,6 +18,7 @@ export interface ItemCommentProps {
   reviewId: Review['reviewId'];
   editPath: string;
   itemId: string;
+  rate: number;
   isReviewed: boolean;
 }
 
@@ -19,6 +27,7 @@ const ItemComment = ({
   createAt,
   memberInfo,
   itemId,
+  rate,
   reviewId,
   editPath,
   isReviewed,
@@ -38,6 +47,7 @@ const ItemComment = ({
           nickname={memberInfo.nickName}
           levelNumber={memberInfo.level}
           src={memberInfo.profileImage}
+          imageSize="2.5rem"
         />
         {isReviewed && (
           <CommonMenu
@@ -56,12 +66,16 @@ const ItemComment = ({
         <InteractPanel>
           <CommonButton
             type="xsText"
-            onClick={() =>
-              navigate(`/member/${memberInfo.nickName}/inventory/${memberInfo.memberId}`)
-            }
+            onClick={() => navigate(`/member/${memberInfo.nickName}/inventory`)}
           >
             인벤토리
           </CommonButton>
+          <RateBox>
+            <CommonIcon type="fillStar" color="blue.300" />
+            <CommonText type="smallInfo" noOfLines={0}>
+              {rate} / 5
+            </CommonText>
+          </RateBox>
         </InteractPanel>
       </ContentsWrapper>
     </Container>

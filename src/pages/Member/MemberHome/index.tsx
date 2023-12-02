@@ -28,6 +28,8 @@ import {
   Grid,
   IconBox,
   AddBox,
+  ContentsContainer,
+  ImageBox,
 } from './style';
 import { useLeave, useLogout } from '@/features/member/hooks';
 import { memberQueryOption } from '@/features/member/service';
@@ -87,7 +89,7 @@ const MemberHome = () => {
           </CommonText>
         </MemberIntroWrapper>
         <CommonDivider size="lg" />
-        <div style={{ height: '100%', overflowY: 'scroll' }}>
+        <ContentsContainer>
           <ContentsWrapper onClick={() => navigate(`/member/${nickname}/inventory`)}>
             <ContentsPanel>
               <div>
@@ -107,7 +109,12 @@ const MemberHome = () => {
               <ImagePanel>
                 <Grid>
                   {member.data.inventoryProfiles.map((inventory) => (
-                    <DividerImage key={inventory.id} type="base" images={inventory.images} />
+                    <ImageBox key={inventory.id}>
+                      <DividerImage type="base" images={inventory.images} />
+                      <CommonText type="smallInfo" weight={600}>
+                        {inventory.hobby}
+                      </CommonText>
+                    </ImageBox>
                   ))}
                 </Grid>
               </ImagePanel>
@@ -142,7 +149,12 @@ const MemberHome = () => {
               <ImagePanel>
                 <Grid>
                   {member.data?.bucketProfiles.map((bucket) => (
-                    <DividerImage key={bucket.id} type="base" images={bucket.images} />
+                    <ImageBox key={bucket.id}>
+                      <DividerImage key={bucket.id} type="base" images={bucket.images} />
+                      <CommonText type="smallInfo" weight={600}>
+                        {bucket.hobby}
+                      </CommonText>
+                    </ImageBox>
                   ))}
                 </Grid>
               </ImagePanel>
@@ -175,7 +187,7 @@ const MemberHome = () => {
             </ContentsPanel>
           </ContentsWrapper>
           <CommonDivider size="sm" />
-        </div>
+        </ContentsContainer>
       </Container>
       <Footer />
 

@@ -25,7 +25,7 @@ const CommonAvatar = ({
     <>
       {isOwner ? (
         <Box position="relative" width="8em">
-          <Avatar src={src} width="8rem" height="8rem" />
+          <Avatar border="1px solid #e2e8f0" src={src} width="8rem" height="8rem" />
           <Circle
             size="8"
             bg="gray.100"
@@ -42,7 +42,14 @@ const CommonAvatar = ({
         </Box>
       ) : (
         <Box>
-          <Avatar src={src} width={size} height={size} onClick={handleClick} cursor="pointer" />
+          <Avatar
+            border="1px solid #e2e8f0"
+            src={src}
+            width={size}
+            height={size}
+            onClick={handleClick}
+            cursor="pointer"
+          />
         </Box>
       )}
     </>
