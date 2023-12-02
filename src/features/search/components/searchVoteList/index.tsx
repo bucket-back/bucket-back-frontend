@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { CommonButton, CommonCard, CommonIcon, CommonImage, CommonText } from '@/shared/components';
-import { useIntersectionObserver } from '@/shared/hooks';
+import { useAuthNavigate, useIntersectionObserver } from '@/shared/hooks';
 import { formatNumber } from '@/shared/utils';
 import { SearchListItemProp } from '../searchItemList';
 import {
@@ -21,11 +21,13 @@ const SearchVoteList = ({ keyword }: SearchListItemProp) => {
     ...searchQueryOption.infiniteVoteList({ keyword: encodeURIComponent(keyword), size: 12 }),
     select: (data) => {
       return {
-        totalCount: data.pages.flatMap(({ totalCount }) => totalCount),
+        totalCount: data.pages[0].totalVoteCount,
         votes: data.pages.flatMap(({ votes }) => votes),
       };
     },
   });
+
+  const authNavigate = useAuthNavigate();
 
   const navigate = useNavigate();
 
@@ -39,17 +41,15 @@ const SearchVoteList = ({ keyword }: SearchListItemProp) => {
     return <>Error...</>;
   }
 
-  if (data.totalCount[0] === 0) {
+  if (data.totalCount === 0) {
     return <NoResult>검색결과가 없습니다...</NoResult>;
   }
-
-  const totalCount = data.totalCount.reduce((prev, next) => prev + next, 0);
 
   return (
     <>
       <Box>
         <TextBox>
-          <CommonText type="subStrongInfo">총 {totalCount}개의 투표</CommonText>
+          <CommonText type="subStrongInfo">총 {data.totalCount}개의 투표</CommonText>
         </TextBox>
         <>
           {data.votes.map(({ item1Info, item2Info, voteInfo }) => (
@@ -87,7 +87,7 @@ const SearchVoteList = ({ keyword }: SearchListItemProp) => {
         </>
         <div>
           <CommonText type="smallInfo">투표 검색결과 페이지가 없습니다!</CommonText>
-          <Wrapper onClick={() => navigate('/vote/create')}>
+          <Wrapper onClick={() => authNavigate('/vote/create')}>
             <CommonButton type="text">투표 작성하러 가기</CommonButton>
             <CommonIcon type="chevronRight" />
           </Wrapper>

@@ -27,3 +27,4 @@ export { default as BucketHome } from './Bucket/BucketHome';
 export { default as BucketDetail } from './Bucket/BucketDetail';
 export { default as BucketUpdate } from './Bucket/BucketUpdate';
 export { default as FeedMember } from './Feed/FeedMember';
+export { default as NotFound } from './404';

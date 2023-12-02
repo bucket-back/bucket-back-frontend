@@ -33,7 +33,7 @@ const ItemList = () => {
     select: (data) => {
       return {
         summaries: data.pages.flatMap(({ summaries }) => summaries),
-        totalCount: data.pages.flatMap(({ totalCount }) => totalCount),
+        totalCount: data.pages[0].totalMemberItemCount,
       };
     },
   });
@@ -68,8 +68,6 @@ const ItemList = () => {
     return <>Error...</>;
   }
 
-  const totalCount = data.totalCount.reduce((prev, next) => prev + next, 0);
-
   return (
     <>
       <Header type="logo" />
@@ -89,7 +87,7 @@ const ItemList = () => {
           <CommonText type="smallInfo">
             {isDelete
               ? `총 삭제할 ${formatNumber(deleteData.length)}개의 아이템`
-              : `총 ${formatNumber(totalCount)}개의 아이템`}
+              : `총 ${formatNumber(data.totalCount)}개의 아이템`}
           </CommonText>
         </ItemTextContaienr>
         <Grid>

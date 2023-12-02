@@ -18,6 +18,7 @@ export interface GetSearchKeywordResponse {
 }
 
 export interface GetSearchVoteResponse {
+  totalVoteCount: number;
   nextCursorId: string;
   totalCount: number;
   votes: VotesInfo[];
