@@ -120,6 +120,8 @@ const CommonButton = ({
     sm: (
       <Button
         size="sm"
+        fontSize="0.75rem"
+        height="1.75rem"
         colorScheme="blue"
         variant="outline"
         borderColor="blue.300"
