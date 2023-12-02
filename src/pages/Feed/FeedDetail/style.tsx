@@ -12,7 +12,7 @@ export const CommentsContainer = styled.div`
 `;
 
 export const CommentNumberWrapper = styled.div`
-  padding: 1rem 1.75rem;
+  padding: 0.75rem 1.75rem;
 `;
 
 export const CommentInputContainer = styled.form`

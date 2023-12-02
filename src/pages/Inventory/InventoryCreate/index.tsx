@@ -74,6 +74,7 @@ const InventoryCreate = () => {
                 {selectedItems.map(({ id, src }) => (
                   <GridItem key={id}>
                     <CommonImage
+                      border="1px solid #e2e8f0 "
                       src={src}
                       size="sm"
                       onClick={() => {

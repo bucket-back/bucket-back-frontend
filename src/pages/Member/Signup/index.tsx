@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { CommonButton } from '@/shared/components';
+import { CommonButton, Header } from '@/shared/components';
 import { useCustomToast } from '@/shared/hooks';
 import { Container, Form, InputWrapper } from './style';
 import MemberEmailForm from '@/features/member/components/MemberEmailForm';
@@ -35,6 +35,7 @@ const SignUp = () => {
 
   return (
     <FormProvider {...methods}>
+      <Header type="back" />
       <Container>
         <Form onSubmit={methods.handleSubmit(onSubmit)}>
           <InputWrapper>
@@ -48,7 +49,11 @@ const SignUp = () => {
             <MemberPassword />
           </InputWrapper>
           <InputWrapper>
-            <MemberNicknameForm setSubmitValue={setSubmitValue} nickname={nickname} />
+            <MemberNicknameForm
+              setSubmitValue={setSubmitValue}
+              nickname={nickname}
+              submitValue={submitValue}
+            />
           </InputWrapper>
           <CommonButton type="mdFull" isSubmit={true}>
             회원가입

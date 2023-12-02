@@ -46,5 +46,5 @@ export const SelectedItemsBox = styled.div`
   flex-wrap: wrap;
   gap: 0.3rem;
   overflow-y: auto;
-  height: 6.5rem;
+  height: 6.6rem;
 `;

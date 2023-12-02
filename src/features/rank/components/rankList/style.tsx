@@ -32,4 +32,6 @@ export const GridItemList = styled.li`
   }
 `;
 
-export const Item = styled.a``;
+export const Item = styled.a`
+  cursor: pointer;
+`;

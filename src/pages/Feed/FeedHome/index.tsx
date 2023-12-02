@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { CommonSelect, CommonTabs } from '@/shared/components';
+import { CommonDivider, CommonSelect, CommonTabs } from '@/shared/components';
 import { Container, SelectWrapper } from './style';
 import { FeedHomeList } from '@/features/feed/components';
 import { hobbyQueryOption } from '@/features/hobby/service';
@@ -47,6 +47,7 @@ const FeedHome = () => {
                 }}
               />
             </SelectWrapper>
+            <CommonDivider size="sm" />
             <FeedHomeList
               hobbyName={searchParams.get('hobby') || hobbies.data[0].name}
               sortCondition={searchParams.get('sort') || 'recent'}

@@ -42,6 +42,7 @@ const CommentItem = ({
           nickname={memberInfo.nickName}
           levelNumber={memberInfo.level}
           isAdopted={isAdopted}
+          imageSize="2.5rem"
         />
         {userInfo?.nickname === memberInfo.nickName && (
           <CommonMenu type="update" iconSize="0.25rem" onDelete={onDelete} onUpdate={onUpdate} />

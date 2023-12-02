@@ -10,9 +10,10 @@ import { submitValue } from '@/pages/Member/Signup';
 interface MemberNicknameFormProps {
   setSubmitValue: React.Dispatch<React.SetStateAction<submitValue>>;
   nickname: string;
+  submitValue: submitValue;
 }
 
-const MemberNicknameForm = ({ setSubmitValue, nickname }: MemberNicknameFormProps) => {
+const MemberNicknameForm = ({ setSubmitValue, nickname, submitValue }: MemberNicknameFormProps) => {
   const {
     register,
     formState: { errors },
@@ -25,7 +26,7 @@ const MemberNicknameForm = ({ setSubmitValue, nickname }: MemberNicknameFormProp
   } = useCheckNickname();
 
   const handleCheckNickname = () => {
-    if (errors.nickname || !nickname) {
+    if (errors.nickname || !nickname || nickname === submitValue.nickname) {
       return;
     }
     checkNicknameMutate(nickname);
