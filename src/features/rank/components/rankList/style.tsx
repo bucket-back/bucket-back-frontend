@@ -9,11 +9,11 @@ export const WrapperTitle = styled.div`
 export const Grid = styled.ul`
   overflow: hidden;
   display: grid;
-  grid-template-columns: repeat(2, 50%);
+  grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(5, auto);
   grid-auto-flow: column;
   counter-reset: orderList 0;
-  gap: 1.5rem 0;
+  gap: 1.5rem 1rem;
 `;
 
 export const GridItemList = styled.li`
