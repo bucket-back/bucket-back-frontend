@@ -14,7 +14,11 @@ const VoteList = ({ label }: VoteListProps) => {
   const getHobby = searchParams.get('hobby');
   const getStatus = searchParams.get('status');
   const getSort = searchParams.get('sort');
-  const { data: votesData, fetchNextPage } = useInfiniteQuery({
+  const {
+    data: votesData,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
     ...voteQueryOption.list({
       hobby: getHobby || '',
       status: (getStatus as GetVotesRequest['status']) || 'completed',
@@ -37,7 +41,7 @@ const VoteList = ({ label }: VoteListProps) => {
           />
         );
       })}
-      <div ref={ref} />
+      {hasNextPage && <div ref={ref} />}
     </>
   ) : (
     <NoResult>{`${label}가 존재하지 않습니다.`}</NoResult>
