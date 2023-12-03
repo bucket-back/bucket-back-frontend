@@ -9,7 +9,11 @@ const VoteInProgress = () => {
   const [searchParams] = useSearchParams();
   const getHobby = searchParams.get('hobby');
   const navigate = useNavigate();
-  const { data: votesInProgressData, fetchNextPage } = useInfiniteQuery({
+  const {
+    data: votesInProgressData,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
     ...voteQueryOption.list({
       hobby: getHobby || '',
       status: 'inprogress',
@@ -40,7 +44,7 @@ const VoteInProgress = () => {
                 </ContentsBox>
               );
             })}
-            <div ref={ref} />
+            {hasNextPage && <div ref={ref} />}
           </ContentsWrapper>
         </>
       ) : (
