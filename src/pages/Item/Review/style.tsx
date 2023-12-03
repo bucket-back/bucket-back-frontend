@@ -4,7 +4,7 @@ export const Container = styled.main`
   padding: 0 1.75rem 1.75rem;
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 100%;
 `;
 
@@ -21,11 +21,13 @@ export const ItemBoxFlex = styled.div`
 export const ItemBoxLeft = styled.div`
   display: flex;
   flex-direction: column;
+  padding-left: 1rem;
 `;
 
 export const ItemBoxLeftBottomRate = styled.div`
   display: flex;
   align-items: center;
+  gap: 0.3rem;
 `;
 
 export const Rate = styled.div`

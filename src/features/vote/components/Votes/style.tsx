@@ -12,7 +12,7 @@ export const ContentsWrapper = styled.div`
   align-items: center;
   gap: 1rem;
   overflow-y: auto;
-  height: calc(100vh - 29.542rem);
+  height: calc(100vh - 27.601rem);
   padding: 1rem 0;
 `;
 

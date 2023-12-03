@@ -3,7 +3,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { CommonButton, CommonIcon, CommonInput, Header } from '@/shared/components';
 import { useValidateForm } from '@/shared/hooks';
-import { ButtonWrapper, Container, Form, IconWrapper, InputWrapper } from './style';
+import { ButtonWrapper, Container, Form, IconWrapper, InputWrapper, Logo } from './style';
+import logo from '@/assets/images/logo.png';
 import { useLogin } from '@/features/member/hooks';
 import { PostLoginRequest } from '@/features/member/service';
 
@@ -26,6 +27,7 @@ const Login = () => {
     <>
       <Header type="back" />
       <Container>
+        <Logo src={logo} />
         <Form onSubmit={handleSubmit(onSubmit)}>
           <InputWrapper>
             <CommonInput

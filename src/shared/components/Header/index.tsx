@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, Image, Text } from '@chakra-ui/react';
 import { CommonIconButton } from '@/shared/components';
+import logo from '@/assets/images/logo.png';
 
 interface HeaderProps {
   type: 'logo' | 'back';
@@ -13,9 +14,12 @@ const Header = ({ type, path, height = '4rem' }: HeaderProps) => {
 
   const headerType = {
     logo: (
-      <Text fontSize="2xl" as="b" color="blue.900">
-        버킷백
-      </Text>
+      <>
+        <Image src={logo} width="3rem" />
+        <Text fontSize="xl" as="b" color="blue.900">
+          버킷백
+        </Text>
+      </>
     ),
     back: (
       <CommonIconButton

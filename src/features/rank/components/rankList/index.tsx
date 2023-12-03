@@ -38,7 +38,7 @@ const RankList = ({ onInput }: RankSearchProp) => {
         </CommonText>
       </WrapperTitle>
       <Grid>
-        {data?.itemRanking.map(({ rank, itemName }) => (
+        {data.itemRanking.slice(0, 10).map(({ rank, itemName }) => (
           <GridItemList key={rank}>
             <Item onClick={() => handleClick(itemName)}>
               <CommonText type="smallInfo">{itemName}</CommonText>

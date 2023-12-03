@@ -38,7 +38,7 @@ export const ButtonWrapper = styled.div`
 
 export const CommentsContainer = styled.section`
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 export const CommentNumberWrapper = styled.div`

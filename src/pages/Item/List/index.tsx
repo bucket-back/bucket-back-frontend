@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { CommonIconButton, CommonText, Header, Footer, CommonSpinner } from '@/shared/components';
 import { useAuthNavigate, useIntersectionObserver } from '@/shared/hooks';
-import { formatNumber } from '@/shared/utils';
 import {
   CommonContainer,
   TitleContainer,
@@ -91,8 +90,8 @@ const ItemList = () => {
         <ItemTextContaienr>
           <CommonText type="smallInfo">
             {isDelete
-              ? `총 삭제할 ${formatNumber(deleteData.length)}개의 아이템`
-              : `총 ${formatNumber(data.totalCount)}개의 아이템`}
+              ? `총 삭제할 ${deleteData.length}개의 아이템`
+              : `총 ${data.totalCount}개의 아이템`}
           </CommonText>
         </ItemTextContaienr>
         <Grid>
