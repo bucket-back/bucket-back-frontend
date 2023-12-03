@@ -125,7 +125,7 @@ const BucketCreate = () => {
             </Box>
             <Box>
               <CommonText type="normalInfo" noOfLines={0}>
-                아이템의 가격보다 높은 예산을 입력해주세요. (선택)
+                본인의 예산을 입력해주세요. (선택)
               </CommonText>
               <CommonInput
                 placeholder="예산을 입력해주세요."

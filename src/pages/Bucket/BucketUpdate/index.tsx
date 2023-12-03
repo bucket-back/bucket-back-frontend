@@ -101,9 +101,7 @@ const BucketUpdate = () => {
               </div>
             </ContentsPanel>
             <ContentsPanel>
-              <CommonText type="normalInfo">
-                아이템의 가격보다 높은 예산을 입력해주세요. (선택)
-              </CommonText>
+              <CommonText type="normalInfo">본인의 예산을 입력해주세요. (선택)</CommonText>
               <CommonInput
                 placeholder="예산을 입력해주세요."
                 type="text"
