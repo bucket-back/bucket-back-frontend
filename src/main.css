@@ -1,0 +1,41 @@
+@font-face {
+  font-family: 'Cafe24Bold';
+  src: url('./assets/fonts/Cafe24Ohsquare-v2.0.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Cafe24Regular';
+  src: url('./assets/fonts/Cafe24OhsquareAir-v2.0.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+#root {
+  width: 100%;
+  height: 100vh;
+  background-color: #e2e8f0;
+}
+
+::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+
+::-webkit-scrollbar-thumb {
+  outline: none;
+  border-radius: 10px;
+  border: 4px solid transparent;
+  box-shadow: inset 6px 6px 0 rgba(34, 34, 34, 0.15);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  border: 4px solid transparent;
+  box-shadow: inset 6px 6px 0 rgba(34, 34, 34, 0.3);
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: none;
+  background-color: transparent;
+}
