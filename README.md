@@ -1,4 +1,11 @@
-# bucket-back-frontend
+<div align="center">
+  <img width="200px" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/90bead7d-b143-4cf8-bb1e-8c7772efdd31"/>
+  <h1>Bucket Back - 버킷백</h1>
+  <p>취미 아이템 구매 결정을 도와주는 서비스</p>
+  <a href="https://bucket-back-frontend.vercel.app/">버킷백 바로가기</a>
+</div>
+
+## 팀원
 
 <table>
  <tr>
