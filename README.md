@@ -94,3 +94,70 @@
     </td>
   </tr>
 </table>
+
+## 주요 기능
+
+### 피드
+<kbd>
+  <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/45010910-3fad-417e-b09d-25d8e84e2546" />
+</kbd>
+&nbsp
+<kbd>
+  <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/fa84aaa9-89f2-4d2c-97db-f4b7193e5908" />
+</kbd>
+&nbsp
+<kbd>
+  <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/a43bbff8-dcfe-409b-ba12-9e00e7ec5aa8" />
+</kbd>
+
+### 투표
+<kbd>
+  <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/618749c1-cf15-4c97-8434-7339e2ad9f7b" />
+</kbd>
+&nbsp
+<kbd>
+  <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/f0c7db6c-c563-4b75-ad78-a96331596784" />
+</kbd>
+&nbsp
+<kbd>
+  <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/6db3803b-68dc-4a2e-a3e1-08f17b6b73c5" />
+</kbd>
+
+### 검색
+<kbd>
+  <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/9bc38a90-572e-49fd-9ee8-df2eb762ba8a" />
+</kbd>
+&nbsp
+<kbd>
+  <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/21dc7f98-1d1c-47b3-8173-6c8224ed9bf6" />
+</kbd>
+&nbsp
+<kbd>
+  <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/37330289-a419-432f-bb37-d09eaa5f1e82" />
+</kbd>
+
+### 버킷
+<kbd>
+  <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/e7efb79e-8382-47cb-81b9-ad8097d65b5b" />
+</kbd>
+&nbsp
+<kbd>
+  <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/b5621dc0-b8b1-4f18-b9eb-4e35d9903a6f" />
+</kbd>
+&nbsp
+<kbd>
+  <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/67e48ae7-79ad-4c60-a7b1-73700785e25f" />
+</kbd>
+
+### 아이템
+<kbd>
+  <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/a44b1fd0-5a8a-4d96-acbf-85184708db84" />
+</kbd>
+&nbsp
+<kbd>
+  <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/6765d00c-2a5f-455e-9308-291a2737f108" />
+</kbd>
+&nbsp
+<kbd>
+  <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/a6d1d548-7c70-475a-a467-34cfeaeb4b41" />
+</kbd>
