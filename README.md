@@ -8,16 +8,22 @@
 ## 팀원
 
 <table>
- <tr>
-    <td align="center"><a href="https://github.com/GBAJS754"><img src="https://avatars.githubusercontent.com/GBAJS754" width="130px;" alt=""></a></td>
-    <td align="center"><a href="https://github.com/khakhid"><img src="https://avatars.githubusercontent.com/seeyoujeong" width="130px;" alt=""></a></td>
-    <td align="center"><a href="https://github.com/wukdddang"><img src="https://avatars.githubusercontent.com/perfumeplaylist" width="130px;" alt=""></a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href="https://github.com/GBAJS754"><b>김다은</b></a></td>
-    <td align="center"><a href="https://github.com/GBAJS754"><b>정찬욱</b></a></td>
-    <td align="center"><a href="https://github.com/GBAJS754"><b>김정호</b></a></td>
-  </tr>
+   <tr>
+      <td align="center">
+        <a href="https://github.com/GBAJS754"><img src="https://avatars.githubusercontent.com/GBAJS754" width="130px;" alt=""></a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/khakhid"><img src="https://avatars.githubusercontent.com/seeyoujeong" width="130px;" alt=""></a>
+      </td>
+      <td align="center">
+        <a href="https://github.com/wukdddang"><img src="https://avatars.githubusercontent.com/perfumeplaylist" width="130px;" alt=""></a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center"><a href="https://github.com/GBAJS754"><b>김다은</b></a></td>
+      <td align="center"><a href="https://github.com/GBAJS754"><b>정찬욱</b></a></td>
+      <td align="center"><a href="https://github.com/GBAJS754"><b>김정호</b></a></td>
+    </tr>
 </table>
 
 ## 기술 스택
@@ -95,9 +101,22 @@
   </tr>
 </table>
 
+## 기획 배경
+
+- 전문성을 요구하는 취미에 대한 정보 획득의 한계
+- 소유하고 있는 상품에 대한 관리의 어려움
+- 비슷한 취미 경력과 비슷한 예산에 맞는 상품을 가지고 있는 정보에 대한 부족함
+
+## 차별성
+
+- 각 쇼핑몰에서만 판매하는 아이템은 각 쇼핑몰의 장바구니에만 담을 수 있다.
+- 검증되지 않은 사용자 피드백 혹은 정리되지 않은 글이 존재한다.
+
 ## 주요 기능
 
 ### 피드
+
+<p>평가받고 싶은 피드를 생성할 수 있습니다.</p>
 <kbd>
   <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/45010910-3fad-417e-b09d-25d8e84e2546" />
 </kbd>
@@ -111,6 +130,8 @@
 </kbd>
 
 ### 투표
+
+<p>평가받고 싶은 아이템을 투표할 수 있습니다</p>
 <kbd>
   <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/618749c1-cf15-4c97-8434-7339e2ad9f7b" />
 </kbd>
@@ -124,6 +145,8 @@
 </kbd>
 
 ### 검색
+
+<p>등록된 아이템과 투표에 대해서 검색할 수 있습니다</p>
 <kbd>
   <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/9bc38a90-572e-49fd-9ee8-df2eb762ba8a" />
 </kbd>
@@ -137,6 +160,8 @@
 </kbd>
 
 ### 버킷
+
+<p>취미에 맞는 아이템을 가지고 와서 버킷을 생성할 수 있습니다</p>
 <kbd>
   <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/e7efb79e-8382-47cb-81b9-ad8097d65b5b" />
 </kbd>
@@ -150,6 +175,8 @@
 </kbd>
 
 ### 아이템
+
+<p>취미별로 아이템을 생성할 수 있습니다</p>
 <kbd>
   <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/a44b1fd0-5a8a-4d96-acbf-85184708db84" />
 </kbd>
