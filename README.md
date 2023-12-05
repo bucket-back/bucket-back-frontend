@@ -103,14 +103,16 @@
 
 ## 기획 배경
 
-- 전문성을 요구하는 취미에 대한 정보 획득의 한계
-- 소유하고 있는 상품에 대한 관리의 어려움
-- 비슷한 취미 경력과 비슷한 예산에 맞는 상품을 가지고 있는 정보에 대한 부족함
+아래와 같은 문제를 해결하기 위해 버킷백을 기획하게 되었습니다.
+- 전문성을 요구하는 취미에 대한 정보 획득의 한계가 있습니다.
+- 소유하고 있는 상품에 대한 관리의 어려움이 있습니다.
+- 비슷한 취미 경력과 비슷한 예산에 맞는 상품을 가지고 있는 정보에 대한 부족합니다.
 
 ## 차별성
 
-- 각 쇼핑몰에서만 판매하는 아이템은 각 쇼핑몰의 장바구니에만 담을 수 있다.
-- 검증되지 않은 사용자 피드백 혹은 정리되지 않은 글이 존재한다.
+기존 서비스들과의 차별점은 아래와 같습니다.
+- 각 쇼핑몰에서만 판매하는 아이템은 각 쇼핑몰의 장바구니에만 담을 수 있지만 저희 서비스를 이용하면 모아서 볼 수 있습니다.
+- 레벨 시스템으로 전문성을 가지고 있는 검증된 사용자만의 피드백 혹은 글을 확인할 수 있습니다.
 
 ## 주요 기능
 
@@ -131,7 +133,7 @@
 
 ### 투표
 
-<p>평가받고 싶은 아이템을 투표할 수 있습니다</p>
+<p>평가받고 싶은 아이템을 투표할 수 있습니다.</p>
 <kbd>
   <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/618749c1-cf15-4c97-8434-7339e2ad9f7b" />
 </kbd>
@@ -146,7 +148,7 @@
 
 ### 검색
 
-<p>등록된 아이템과 투표에 대해서 검색할 수 있습니다</p>
+<p>등록된 아이템과 투표에 대해서 검색할 수 있습니다.</p>
 <kbd>
   <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/9bc38a90-572e-49fd-9ee8-df2eb762ba8a" />
 </kbd>
@@ -161,7 +163,7 @@
 
 ### 버킷
 
-<p>취미에 맞는 아이템을 가지고 와서 버킷을 생성할 수 있습니다</p>
+<p>취미에 맞는 아이템을 가지고 와서 버킷을 생성할 수 있습니다.</p>
 <kbd>
   <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/e7efb79e-8382-47cb-81b9-ad8097d65b5b" />
 </kbd>
@@ -176,7 +178,7 @@
 
 ### 아이템
 
-<p>취미별로 아이템을 생성할 수 있습니다</p>
+<p>취미별로 아이템을 생성할 수 있습니다.</p>
 <kbd>
   <img height="500px" style="border: 1px solid black" src="https://github.com/bucket-back/bucket-back-frontend/assets/40534414/a44b1fd0-5a8a-4d96-acbf-85184708db84" />
 </kbd>
