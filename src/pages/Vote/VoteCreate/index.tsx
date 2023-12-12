@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { CommonButton, CommonDrawer, CommonTextarea, Header } from '@/shared/components';
+import {
+  CommonButton,
+  CommonDrawer,
+  CommonText,
+  CommonTextarea,
+  Header,
+} from '@/shared/components';
 import { useCustomToast, useDrawer } from '@/shared/hooks';
 import { SelectedHobby, SelectedItem } from '@/shared/types';
 import { FormContainer, TextareaWrapper } from './style';
@@ -45,6 +51,11 @@ const VoteCreate = () => {
     <>
       <Header type="back" />
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <CommonText type="normalTitle" noOfLines={0}>
+            투표 생성하기
+          </CommonText>
+        </div>
         <CreateTemplate
           setSelectedHobby={setSelectedHobby}
           selectedHobby={selectedHobby}

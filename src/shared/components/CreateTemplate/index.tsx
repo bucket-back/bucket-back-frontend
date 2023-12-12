@@ -23,10 +23,6 @@ const CreateTemplate = ({
   type,
 }: CreateTemplateProps) => {
   const openToast = useCustomToast();
-  const title = {
-    vote: '투표',
-    inventory: '인벤토리',
-  };
 
   const selection = {
     vote: '아이템을 두개 선택해주세요.',
@@ -35,11 +31,6 @@ const CreateTemplate = ({
 
   return (
     <>
-      <Wrapper>
-        <CommonText type="normalTitle" noOfLines={0}>
-          {title[type]} 생성하기
-        </CommonText>
-      </Wrapper>
       <Wrapper>
         <CommonText type="normalInfo" noOfLines={0}>
           {type === 'inventory' && (

@@ -14,3 +14,8 @@ export const CreateWrapper = styled.div`
   flex-direction: column;
   gap: 1.5rem;
 `;
+
+export const Wrapper = styled.article`
+  display: flex;
+  flex-direction: column;
+`;

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CommonButton, CommonDrawer, Header } from '@/shared/components';
+import { CommonButton, CommonDrawer, CommonText, Header } from '@/shared/components';
 import { useCustomToast, useDrawer } from '@/shared/hooks';
 import { Container, CreateWrapper } from './style';
 import InventorySelectItem from '@/features/inventory/components/InventorySelectItem';
@@ -40,6 +40,9 @@ const InventoryCreate = () => {
       <Header type="back" />
       <Container>
         <CreateWrapper>
+          <CommonText type="normalTitle" noOfLines={0}>
+            인벤토리 생성하기
+          </CommonText>
           <CreateTemplate
             setSelectedHobby={setSelectedHobby}
             selectedHobby={selectedHobby}
