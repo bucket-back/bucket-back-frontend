@@ -28,3 +28,8 @@ export interface MyItemSummary {
   cursorId: string;
   itemInfo: ItemInfo;
 }
+
+export interface SelectedItem {
+  id: number;
+  src: string;
+}
