@@ -11,7 +11,10 @@ const InventoryHome = () => {
   const authNavigate = useAuthNavigate();
   const navigate = useNavigate();
   const { nickname } = useParams();
-  const { data: inventoryData } = useQuery({ ...inventoryQueryOption.list(nickname!) });
+  const { data: inventoryData } = useQuery({
+    ...inventoryQueryOption.list(nickname!),
+    staleTime: Infinity,
+  });
   const isOwner = nickname === Storage.getLocalStoraged('userInfo').nickname;
 
   return (

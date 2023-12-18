@@ -21,6 +21,7 @@ const InventoryDetail = () => {
       nickname: nickname,
       inventoryId: numberInventoryId,
     }),
+    staleTime: Infinity,
   });
 
   return (
