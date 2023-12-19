@@ -33,6 +33,7 @@ const VoteSelectItem = ({ selectedItems, onChange, selectedHobby }: VoteSelectIt
         summaries: data?.pages.flatMap(({ summaries }) => summaries),
       };
     },
+    staleTime: Infinity,
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>, src: string) => {
