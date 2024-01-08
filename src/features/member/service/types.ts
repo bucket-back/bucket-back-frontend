@@ -6,7 +6,7 @@ export interface PostLoginRequest {
 }
 
 export interface PostLoginResponse {
-  jwtToken: string;
+  accessToken: string;
   memberId: number;
   nickname: string;
 }
