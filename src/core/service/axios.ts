@@ -1,4 +1,5 @@
 import axios, { AxiosError, isAxiosError } from 'axios';
+import { TOKEN_KEY } from '@/shared/constants';
 import { Storage } from '@/shared/utils';
 
 const BASE_ENDPOINT_URL = import.meta.env.VITE_ENDPOINT_URL;
@@ -6,11 +7,12 @@ const BASE_ENDPOINT_URL = import.meta.env.VITE_ENDPOINT_URL;
 export const axiosClient = axios.create({
   baseURL: BASE_ENDPOINT_URL,
   timeout: 15000,
+  withCredentials: true,
 });
 
 axiosClient.interceptors.request.use(
   (config) => {
-    const token = Storage.getLocalStoraged('token');
+    const token = Storage.getLocalStoraged(TOKEN_KEY);
 
     if (token?.trim().length) {
       config.headers.Authorization = `Bearer ${token}`;
