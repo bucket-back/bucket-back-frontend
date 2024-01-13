@@ -1,8 +1,23 @@
 import axios, { AxiosError, isAxiosError } from 'axios';
-import { TOKEN_KEY } from '@/shared/constants';
+import { TOKEN_KEY, USER_INFO_KEY } from '@/shared/constants';
+import { useCustomToast } from '@/shared/hooks';
 import { Storage } from '@/shared/utils';
+import { memberApi } from '@/features/member/service';
+import { OpenToastProps } from '@/shared/hooks/useCustomToast';
 
 const BASE_ENDPOINT_URL = import.meta.env.VITE_ENDPOINT_URL;
+
+const redirectionLocation = (
+  removeStorage: string[],
+  href: string,
+  openToast: ({ message, type }: OpenToastProps) => void
+) => {
+  if (removeStorage.length >= 1) {
+    removeStorage.forEach((removeKey) => Storage.removeLocalStoraged(removeKey));
+  }
+  window.location.href = href;
+  openToast({ message: '다시 로그인 해주세요!', type: 'error' });
+};
 
 export const axiosClient = axios.create({
   baseURL: BASE_ENDPOINT_URL,
@@ -25,17 +40,39 @@ axiosClient.interceptors.request.use(
 
 axiosClient.interceptors.response.use(
   (response) => response,
-  (error: AxiosError) => {
+  async (error: AxiosError) => {
     if (!isAxiosError(error)) {
       return Promise.reject(error);
     }
 
-    // TODO:code가 주어진다면 error 코드에 따라서 다르게 처리
-    // 1. 만료가 되었다면
-    // 1-1)토큰을 찾고 -> 있다면 -> 다시 요청 보내느 훅을 만들어서 보내고 -> 토큰을 다시 저장
-    // 1-2)있는데 오류가 나온다면 -> 토큰 삭제 후 로그인 다시 실행?
-    // 2. 다른 에러라면
-    // 2-1) redirection하는 코드 작성
+    console.log('refresh 시작');
+
+    const { code, config } = error;
+    const openToast = useCustomToast();
+
+    switch (code) {
+      case 'COMMON_011': {
+        try {
+          const accessToken = await memberApi.postRefresh();
+
+          Storage.removeLocalStoraged(TOKEN_KEY);
+
+          accessToken && Storage.setLocalStoraged(TOKEN_KEY, accessToken);
+
+          return axios(config!);
+        } catch (error) {
+          console.log('refresh 요청을 했지만 실패');
+          redirectionLocation([TOKEN_KEY, USER_INFO_KEY], 'login', openToast);
+        }
+        break;
+      }
+      case 'COMMON_012':
+      case 'COMMON_013': {
+        console.log('refresh 토큰이 만료 / 토큰이 유효하지 않는 경우 실패');
+        redirectionLocation([TOKEN_KEY, USER_INFO_KEY], 'login', openToast);
+        break;
+      }
+    }
 
     return Promise.reject(error.response);
   }
