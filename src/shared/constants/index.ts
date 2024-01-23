@@ -1,3 +1,3 @@
 export * from './storage';
 export * from './path';
-export * from './errorCode';
+export { default as ERRORCODE } from './errorCode';
