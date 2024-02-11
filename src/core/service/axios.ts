@@ -1,12 +1,8 @@
 import axios, { AxiosError, isAxiosError } from 'axios';
 import { ERRORCODE, TOKEN_KEY, USER_INFO_KEY } from '@/shared/constants';
 import { Storage } from '@/shared/utils';
+import { ResponseData } from './types';
 import { memberApi } from '@/features/member/service';
-interface ResponseData {
-  error: string;
-  code: string;
-  message: string;
-}
 
 const BASE_ENDPOINT_URL = import.meta.env.VITE_ENDPOINT_URL;
 
@@ -38,12 +34,12 @@ axiosClient.interceptors.request.use(
 
 axiosClient.interceptors.response.use(
   (response) => response,
-  async (error: AxiosError) => {
+  async (error: AxiosError<ResponseData>) => {
     if (!isAxiosError(error)) {
       return Promise.reject(error);
     }
 
-    const { code } = error.response?.data as ResponseData;
+    const { code } = error.response!.data;
 
     const { config } = error;
 
