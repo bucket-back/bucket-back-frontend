@@ -8,6 +8,7 @@ import {
   PutMemberImageRequest,
   PutMemberRequest,
 } from './types';
+
 import { axiosClient } from '@/core/service/axios';
 
 const BASE_URL = 'members';
@@ -36,6 +37,14 @@ const memberApi = {
       email,
       password,
     });
+
+    return response.data;
+  },
+
+  postRefresh: async () => {
+    const url = `${BASE_URL}/refresh`;
+
+    const response = await axiosClient.post<Pick<PostLoginResponse, 'accessToken'>>(url);
 
     return response.data;
   },
