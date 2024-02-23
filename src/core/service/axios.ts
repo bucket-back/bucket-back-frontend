@@ -1,8 +1,17 @@
 import axios, { AxiosError, isAxiosError } from 'axios';
-import { TOKEN_KEY } from '@/shared/constants';
+import { ERRORCODE, TOKEN_KEY, USER_INFO_KEY } from '@/shared/constants';
 import { Storage } from '@/shared/utils';
+import { ResponseData } from './types';
+import { memberApi } from '@/features/member/service';
 
 const BASE_ENDPOINT_URL = import.meta.env.VITE_ENDPOINT_URL;
+
+const redirectionLocation = (removeStorage: string[], href: string) => {
+  if (removeStorage.length >= 1) {
+    removeStorage.forEach((removeKey) => Storage.removeLocalStoraged(removeKey));
+  }
+  window.location.href = href;
+};
 
 export const axiosClient = axios.create({
   baseURL: BASE_ENDPOINT_URL,
@@ -15,7 +24,7 @@ axiosClient.interceptors.request.use(
     const token = Storage.getLocalStoraged(TOKEN_KEY);
 
     if (token?.trim().length) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.set('Authorization', `Bearer ${token}`);
     }
 
     return config;
@@ -25,17 +34,37 @@ axiosClient.interceptors.request.use(
 
 axiosClient.interceptors.response.use(
   (response) => response,
-  (error: AxiosError) => {
+  async (error: AxiosError<ResponseData>) => {
     if (!isAxiosError(error)) {
       return Promise.reject(error);
     }
 
-    // TODO:code가 주어진다면 error 코드에 따라서 다르게 처리
-    // 1. 만료가 되었다면
-    // 1-1)토큰을 찾고 -> 있다면 -> 다시 요청 보내느 훅을 만들어서 보내고 -> 토큰을 다시 저장
-    // 1-2)있는데 오류가 나온다면 -> 토큰 삭제 후 로그인 다시 실행?
-    // 2. 다른 에러라면
-    // 2-1) redirection하는 코드 작성
+    const { code } = error.response!.data;
+
+    const { config } = error;
+
+    switch (code) {
+      case ERRORCODE.COMMON_008: {
+        try {
+          const data = await memberApi.postRefresh();
+
+          if (data.accessToken) {
+            config?.headers.set('Authorization', `Bearer ${data.accessToken}`);
+            Storage.setLocalStoraged(TOKEN_KEY, data.accessToken);
+          }
+
+          return axios(config!);
+        } catch (error) {
+          redirectionLocation([TOKEN_KEY, USER_INFO_KEY], 'login');
+        }
+        break;
+      }
+      case ERRORCODE.COMMON_012:
+      case ERRORCODE.COMMON_013: {
+        redirectionLocation([TOKEN_KEY, USER_INFO_KEY], 'login');
+        break;
+      }
+    }
 
     return Promise.reject(error.response);
   }
