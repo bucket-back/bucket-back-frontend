@@ -9,7 +9,8 @@ import {
   PostBucketResponse,
   PutBucketRequest,
 } from '.';
-import { axiosClient } from '@/core/service/axios';
+
+import httpClient from '@/core/service/httpClient';
 
 const BASE_URL = 'buckets';
 
@@ -18,17 +19,13 @@ const bucketApi = {
     const url = `${nickname}/${BASE_URL}?hobby=${hobby}`;
     const params = cursorId ? { cursorId, size } : { size };
 
-    const response = await axiosClient.get<GetBucketsResponse>(url, { params });
-
-    return response.data;
+    return await httpClient.get<GetBucketsResponse>(url, { params });
   },
 
   getBucketDetail: async ({ nickname, bucketId }: GetBucketDetailRequest) => {
     const url = `${nickname}/${BASE_URL}/${bucketId}`;
 
-    const response = await axiosClient.get<GetBucketDetailResponse>(url);
-
-    return response.data;
+    return await httpClient.get<GetBucketDetailResponse>(url);
   },
 
   getBucketMyItems: async ({ bucketId, hobbyName, cursorId, size }: GetBucketMyItemsRequest) => {
@@ -38,37 +35,28 @@ const bucketApi = {
     const url = `${BASE_URL}/myitems?${bucketIdQueryString}${hobbyNameQueryString}`;
     const params = cursorId ? { cursorId, size } : { size };
 
-    const response = await axiosClient.get<GetBucketMyItemsResponse>(url, { params });
-
-    return response.data;
+    return await httpClient.get<GetBucketMyItemsResponse>(url, { params });
   },
 
   postBucket: async ({ hobbyValue, name, budget, itemIds }: PostBucketRequest) => {
-    const response = await axiosClient.post<PostBucketResponse>(BASE_URL, {
-      hobbyValue,
-      name,
-      budget,
-      itemIds,
-    });
+    const body = { hobbyValue, name, budget, itemIds };
 
-    return response.data;
+    return await httpClient.post<PostBucketResponse, typeof body>(BASE_URL, {
+      ...body,
+    });
   },
 
   putBucket: async ({ bucketId, hobbyValue, name, budget, itemIds }: PutBucketRequest) => {
     const url = `${BASE_URL}/${bucketId}`;
+    const body = { hobbyValue, name, budget, itemIds };
 
-    return await axiosClient.put<null>(url, {
-      hobbyValue,
-      name,
-      budget,
-      itemIds,
-    });
+    return await httpClient.put<null, typeof body>(url, { ...body });
   },
 
   deleteBucket: async (bucketId: number) => {
     const url = `${BASE_URL}/${bucketId}`;
 
-    return await axiosClient.delete<null>(url);
+    return await httpClient.delete<null>(url);
   },
 };
 
