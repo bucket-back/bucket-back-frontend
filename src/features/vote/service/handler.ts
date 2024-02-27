@@ -25,18 +25,14 @@ const voteApi = {
   postVotes: async ({ hobby, content, item1Id, item2Id }: PostVotesRequest) => {
     const body = { hobby, content, item1Id, item2Id };
 
-    return await httpClient.post<PostVotesResponse, typeof body>(BASE_URL, {
-      ...body,
-    });
+    return await httpClient.post<PostVotesResponse, typeof body>(BASE_URL, body);
   },
 
   postVoteParticipation: async ({ voteId, itemId }: PostVoteParticipationRequest) => {
     const url = `${BASE_URL}/${voteId}/participation`;
     const body = { itemId };
 
-    return await httpClient.post<null, typeof body>(url, {
-      ...body,
-    });
+    return await httpClient.post<null, typeof body>(url, body);
   },
 
   getVoteDetail: async (voteId: number) => {
