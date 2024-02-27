@@ -1,9 +1,9 @@
-import axios, { CreateAxiosDefaults, AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 export default class axiosClient {
   private http;
 
-  constructor(axiosClient: CreateAxiosDefaults | undefined) {
+  constructor(axiosClient: AxiosRequestConfig) {
     this.http = axios.create({
       ...axiosClient,
     });

@@ -1,12 +1,13 @@
-import { CreateAxiosDefaults } from 'axios';
+import { AxiosRequestConfig } from 'axios';
 import { AxiosError, isAxiosError } from 'axios';
 import { ERRORCODE, TOKEN_KEY, USER_INFO_KEY } from '@/shared/constants';
 import { Storage } from '@/shared/utils';
 import axiosClient from './axiosClient';
 import type { ResponseData } from './types';
 import { memberApi } from '@/features/member/service';
+
 class HttpClient extends axiosClient {
-  constructor(client: CreateAxiosDefaults) {
+  constructor(client: AxiosRequestConfig) {
     super(client);
     this.setRequestInterceptors();
     this.setResponseInterceptors();
