@@ -1,5 +1,5 @@
 import { ItemResponse } from './type';
-import { axiosClient } from '@/core/service/axios';
+import httpClient from '@/core/service/httpClient';
 
 const BASE_URL = 'items';
 
@@ -7,9 +7,7 @@ const rankApi = {
   getRankItem: async () => {
     const url = `${BASE_URL}/ranking`;
 
-    const response = await axiosClient.get<ItemResponse>(url);
-
-    return response.data;
+    return await httpClient.get<ItemResponse>(url);
   },
 };
 

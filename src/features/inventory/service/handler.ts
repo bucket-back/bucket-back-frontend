@@ -8,38 +8,37 @@ import {
   PostCreateInventoryResponse,
   PutEditInventoryRequest,
 } from './types';
-import { axiosClient } from '@/core/service/axios';
+
+import httpClient from '@/core/service/httpClient';
+
 const BASE_URL = 'inventories';
 
 const inventoryApi = {
   putEditInventory: async ({ inventoryId, itemIds }: PutEditInventoryRequest) => {
     const url = `${BASE_URL}/${inventoryId}`;
-    const params = { itemIds };
+    const body = { itemIds };
 
-    return await axiosClient.put<null>(url, params);
+    return await httpClient.put<null, typeof body>(url, { ...body });
   },
   deleteInventory: async (inventoryId: number) => {
     const url = `${BASE_URL}/${inventoryId}`;
 
-    return await axiosClient.delete<null>(url);
+    return await httpClient.delete<null>(url);
   },
   postCreateInventory: async ({ hobbyValue, itemIds }: PostCreateInventoryRequest) => {
-    const params = { hobbyValue, itemIds };
-    const response = await axiosClient.post<PostCreateInventoryResponse>(BASE_URL, params);
+    const body = { hobbyValue, itemIds };
 
-    return response.data;
+    return await httpClient.post<PostCreateInventoryResponse, typeof body>(BASE_URL, body);
   },
   getInventory: async (nickname: string) => {
     const url = `${nickname}/${BASE_URL}`;
-    const response = await axiosClient.get<GetInventoryResponse>(url);
 
-    return response.data;
+    return await httpClient.get<GetInventoryResponse>(url);
   },
   getInventoryDetail: async ({ nickname, inventoryId }: GetInventoryDetailRequest) => {
     const url = `${nickname}/${BASE_URL}/${inventoryId}`;
-    const response = await axiosClient.get<GetInventoryDetailResponse>(url);
 
-    return response.data;
+    return await httpClient.get<GetInventoryDetailResponse>(url);
   },
   getInventoryItems: async ({
     inventoryId,
@@ -52,9 +51,7 @@ const inventoryApi = {
     const params = cursorId ? { cursorId, size } : { size };
     const url = `${BASE_URL}/myitems?${inventoryIdQueryString}${hobbyQueryString}`;
 
-    const response = await axiosClient.get<GetInventoryItemsResponse>(url, { params });
-
-    return response.data;
+    return await httpClient.get<GetInventoryItemsResponse>(url, { params });
   },
 };
 
