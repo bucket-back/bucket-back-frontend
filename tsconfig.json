@@ -22,7 +22,9 @@
     "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "esModuleInterop": true,
+    "types": ["jest"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
