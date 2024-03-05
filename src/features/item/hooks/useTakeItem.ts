@@ -13,7 +13,9 @@ const useTakeItem = () => {
       toast({ message: '아이템 담기에 성공했습니다!', type: 'success' });
     },
     onError: (reponse) => {
-      throw new Error(reponse);
+      if (response instanceof Error) {
+        throw new Error(reponse.message);
+      }
     },
   });
 };
