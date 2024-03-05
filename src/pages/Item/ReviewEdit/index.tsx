@@ -84,7 +84,7 @@ const ItemReviewEdit = () => {
       setValue(0);
       reset();
     };
-  }, [reviewInfo]);
+  }, [reviewInfo, reset]);
 
   if (isPending || reviewPending) {
     return (
