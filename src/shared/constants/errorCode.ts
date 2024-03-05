@@ -1,0 +1,7 @@
+const ERRORCODE = {
+  COMMON_008: 'COMMON_008',
+  COMMON_012: 'COMMON_012',
+  COMMON_013: 'COMMON_013',
+};
+
+export default ERRORCODE;

@@ -6,7 +6,8 @@ import {
   PostFeedResponse,
   PutFeedRequest,
 } from './types';
-import { axiosClient } from '@/core/service/axios';
+
+import httpClient from '@/core/service/httpClient';
 
 const BASE_URL = 'feeds';
 
@@ -28,47 +29,44 @@ const feedApi = {
     const url = `${BASE_URL}?hobbyName=${hobbyName}${nicknameQueryString}${onlyNicknameLikeFeedsQueryString}${sortConditionQueryString}`;
     const params = cursorId ? { cursorId, size } : { size };
 
-    const response = await axiosClient.get<GetFeedsResponse>(url, { params });
-
-    return response.data;
+    return await httpClient.get<GetFeedsResponse>(url, { params });
   },
 
   getFeedDetail: async (feedId: number) => {
     const url = `${BASE_URL}/${feedId}`;
 
-    const response = await axiosClient.get<GetFeedDetailResponse>(url);
-
-    return response.data;
+    return await httpClient.get<GetFeedDetailResponse>(url);
   },
 
   postFeed: async ({ bucketId, content }: PostFeedRequest) => {
-    const response = await axiosClient.post<PostFeedResponse>(BASE_URL, { bucketId, content });
+    const body = { bucketId, content };
 
-    return response.data;
+    return await httpClient.post<PostFeedResponse, typeof body>(BASE_URL, body);
   },
 
   postFeedLike: async (feedId: number) => {
     const url = `${BASE_URL}/${feedId}/like`;
 
-    return await axiosClient.post<null>(url);
+    return await httpClient.post<null>(url);
   },
 
   putFeed: async ({ feedId, content }: PutFeedRequest) => {
     const url = `${BASE_URL}/${feedId}`;
+    const body = { content };
 
-    return await axiosClient.put<null>(url, { content });
+    return await httpClient.put<null, typeof body>(url, body);
   },
 
   deleteFeed: async (feedId: number) => {
     const url = `${BASE_URL}/${feedId}`;
 
-    return await axiosClient.delete<null>(url);
+    return await httpClient.delete<null>(url);
   },
 
   deleteFeedLike: async (feedId: number) => {
     const url = `${BASE_URL}/${feedId}/unlike`;
 
-    return await axiosClient.delete<null>(url);
+    return await httpClient.delete<null>(url);
   },
 };
 

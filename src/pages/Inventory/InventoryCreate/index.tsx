@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { CommonButton, CommonDrawer, CommonImage, CommonText, Header } from '@/shared/components';
+import { CommonButton, CommonDrawer, CommonText, Header } from '@/shared/components';
 import { useCustomToast, useDrawer } from '@/shared/hooks';
-import { Box, Container, Grid, GridItem, RadioBox, Wrapper } from './style';
-import HobbySelector from '@/features/hobby/components/HobbySelector';
+import { Container, CreateWrapper } from './style';
 import InventorySelectItem from '@/features/inventory/components/InventorySelectItem';
 import { useCreateInventory } from '@/features/inventory/hook';
 import { SelectedItem } from '@/features/inventory/service';
+import CreateTemplate from '@/shared/components/CreateTemplate';
 
 interface Hobby {
   english: string;
@@ -39,62 +39,28 @@ const InventoryCreate = () => {
     <>
       <Header type="back" />
       <Container>
-        <Wrapper>
-          <Box>
-            <CommonText type="normalTitle" noOfLines={0}>
-              인벤토리 생성하기
-            </CommonText>
-          </Box>
-          <Box>
-            <CommonText type="normalInfo" noOfLines={0}>
-              취미별 인벤토리를 생성할 수 있습니다.
-            </CommonText>
-            <CommonText type="normalInfo" noOfLines={0}>
-              취미를 선택해주세요.
-            </CommonText>
-            <RadioBox>
-              <HobbySelector onChange={setSelectedHobby} />
-            </RadioBox>
-          </Box>
-          <Box>
-            <CommonText type="normalInfo" noOfLines={0}>
-              리뷰한 아이템을 선택해주세요.
-            </CommonText>
-            {selectedItems.length < 1 ? (
-              <CommonButton
-                type="custom"
-                onClick={() => {
-                  !selectedHobby.english
-                    ? openToast({ type: 'info', message: '취미를 선택해주세요.' })
-                    : onOpen();
-                }}
-              />
-            ) : (
-              <Grid>
-                {selectedItems.map(({ id, src }) => (
-                  <GridItem key={id}>
-                    <CommonImage
-                      src={src}
-                      size="sm"
-                      onClick={() => {
-                        onOpen();
-                        setSelectedItems([]);
-                      }}
-                    />
-                  </GridItem>
-                ))}
-              </Grid>
-            )}
-          </Box>
-        </Wrapper>
-
-        <CommonButton
-          type="mdFull"
-          onClick={onSubmit}
-          isDisabled={!selectedHobby || !selectedItems.length}
-        >
-          생성 완료
-        </CommonButton>
+        <CreateWrapper>
+          <CommonText type="normalTitle" noOfLines={0}>
+            인벤토리 생성하기
+          </CommonText>
+          <CreateTemplate
+            setSelectedHobby={setSelectedHobby}
+            selectedHobby={selectedHobby}
+            selectedItems={selectedItems}
+            setSelectedItems={setSelectedItems}
+            onOpen={onOpen}
+            type="inventory"
+          />
+        </CreateWrapper>
+        <div>
+          <CommonButton
+            type="mdFull"
+            onClick={onSubmit}
+            isDisabled={!selectedHobby || !selectedItems.length}
+          >
+            생성 완료
+          </CommonButton>
+        </div>
       </Container>
       <CommonDrawer
         isOpen={isOpen}

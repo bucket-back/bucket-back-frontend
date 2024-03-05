@@ -28,6 +28,7 @@ const InventorySelectItem = ({
       size: 12,
     }),
     select: (data) => data.pages.flatMap(({ reviewedItems }) => reviewedItems),
+    staleTime: Infinity,
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>, src: string) => {

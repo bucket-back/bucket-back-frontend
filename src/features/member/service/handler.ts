@@ -8,7 +8,8 @@ import {
   PutMemberImageRequest,
   PutMemberRequest,
 } from './types';
-import { axiosClient } from '@/core/service/axios';
+
+import httpClient from '@/core/service/httpClient';
 
 const BASE_URL = 'members';
 
@@ -16,46 +17,40 @@ const memberApi = {
   getMember: async (nickname: string) => {
     const url = `${BASE_URL}/${nickname}`;
 
-    const response = await axiosClient.get<GetMemberResponse>(url);
-
-    return response.data;
+    return await httpClient.get<GetMemberResponse>(url);
   },
 
   getCheckJWT: async () => {
     const url = `${BASE_URL}/check/jwt`;
 
-    const response = await axiosClient.get<GetCheckJWTResponse>(url);
-
-    return response.data;
+    return await httpClient.get<GetCheckJWTResponse>(url);
   },
 
   postLogin: async ({ email, password }: PostLoginRequest) => {
     const url = `${BASE_URL}/login`;
+    const body = { email, password };
 
-    const response = await axiosClient.post<PostLoginResponse>(url, {
-      email,
-      password,
-    });
+    return await httpClient.post<PostLoginResponse, typeof body>(url, body);
+  },
 
-    return response.data;
+  postRefresh: async () => {
+    const url = `${BASE_URL}/refresh`;
+
+    return await httpClient.post<Pick<PostLoginResponse, 'accessToken'>>(url);
   },
 
   postCheckEmail: async (email: string) => {
     const url = `${BASE_URL}/check/email`;
+    const body = { email };
 
-    const response = await axiosClient.post<PostCheckEmailResponse>(url, {
-      email,
-    });
-
-    return response.data;
+    return await httpClient.post<PostCheckEmailResponse, typeof body>(url, body);
   },
 
   postCheckNickname: async (nickname: string) => {
     const url = `${BASE_URL}/check/nickname`;
+    const body = { nickname };
 
-    return await axiosClient.post<null>(url, {
-      nickname,
-    });
+    return await httpClient.post<null, typeof body>(url, body);
   },
 
   postSignup: async ({
@@ -64,40 +59,37 @@ const memberApi = {
     nickname,
   }: Omit<PostSignupRequest, 'passwordConfirm' | 'emailAuthNumber'>) => {
     const url = `${BASE_URL}/signup`;
+    const body = { email, password, nickname };
 
-    return await axiosClient.post<null>(url, {
-      email,
-      password,
-      nickname,
-    });
+    return await httpClient.post<null, typeof body>(url, body);
   },
 
   putMember: async ({ nickname, introduction }: PutMemberRequest) => {
     const url = `${BASE_URL}/profile`;
+    const body = { nickname, introduction };
 
-    return await axiosClient.put<null>(url, { nickname, introduction });
+    return await httpClient.put<null, typeof body>(url, body);
   },
 
   putMemberPassword: async (password: string) => {
     const url = `${BASE_URL}/password`;
+    const body = { password };
 
-    return await axiosClient.put<null>(url, { password });
+    return await httpClient.put<null, typeof body>(url, body);
   },
 
   putMemberImage: async ({ image }: PutMemberImageRequest) => {
     const url = `${BASE_URL}/profile/image`;
+    const body = { image: image[0] };
+    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
 
-    return await axiosClient.put<null>(
-      url,
-      { image: image[0] },
-      { headers: { 'Content-Type': 'multipart/form-data' } }
-    );
+    return await httpClient.put<null, typeof body>(url, body, config);
   },
 
   deleteMember: async () => {
     const url = `${BASE_URL}/delete`;
 
-    return await axiosClient.delete<null>(url);
+    return await httpClient.delete<null>(url);
   },
 };
 
