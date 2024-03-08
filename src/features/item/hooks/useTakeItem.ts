@@ -12,9 +12,6 @@ const useTakeItem = () => {
       queryClient.invalidateQueries({ queryKey: itemQueryOption.all });
       toast({ message: '아이템 담기에 성공했습니다!', type: 'success' });
     },
-    onError: (reponse) => {
-      console.error(reponse);
-    },
   });
 };
 

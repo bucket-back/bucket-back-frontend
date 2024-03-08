@@ -36,7 +36,7 @@ const MemberNicknameForm = ({ setSubmitValue, nickname, submitValue }: MemberNic
     if (checkNicknameSuccess) {
       setSubmitValue((prev) => ({ ...prev, nickname: nickname }));
     }
-  }, [checkNicknameSuccess]);
+  }, [checkNicknameSuccess, nickname, setSubmitValue]);
 
   return (
     <>

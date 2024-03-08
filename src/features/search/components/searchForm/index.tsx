@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CommonInput, CommonIcon, CommonIconButton } from '@/shared/components';
@@ -53,11 +53,13 @@ const SearchForm = ({ keyword: currentKeyword, onInput }: SearchFormProps) => {
     navigate('/search');
   };
 
-  const handleDocumentClick = (event: MouseEvent) => {
-    if (formRef.current?.contains(event.target as Node) === false && isFocus) {
-      setIsFocus(false);
-    }
-  };
+  const handleDocumentClick = useCallback(() => {
+    (event: MouseEvent) => {
+      if (formRef.current?.contains(event.target as Node) === false && isFocus) {
+        setIsFocus(false);
+      }
+    };
+  }, [isFocus]);
 
   useEffect(() => {
     document.addEventListener('click', handleDocumentClick);
@@ -65,7 +67,7 @@ const SearchForm = ({ keyword: currentKeyword, onInput }: SearchFormProps) => {
     return () => {
       document.removeEventListener('click', handleDocumentClick);
     };
-  }, [isFocus]);
+  }, [isFocus, handleDocumentClick]);
 
   useEffect(() => {
     if (currentKeyword !== keyword) {
@@ -74,7 +76,7 @@ const SearchForm = ({ keyword: currentKeyword, onInput }: SearchFormProps) => {
       }
       onInput && onInput(keyword);
     }
-  }, [keyword]);
+  }, [keyword, currentKeyword, pathname, navigate, onInput]);
 
   return (
     <Form isFocus={isFocus} ref={formRef} onSubmit={handleSubmit(onSubmit)}>
