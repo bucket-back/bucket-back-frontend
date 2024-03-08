@@ -9,7 +9,7 @@ import {
   GetReviewItemRequest,
 } from './types';
 
-import { axiosClient } from '@/core/service/axios';
+import httpClient from '@/core/service/httpClient';
 
 const BASE_URL = 'items';
 
@@ -18,41 +18,35 @@ const reviewApi = {
     const params = cursorId ? { cursorId, size } : { size };
     const url = `${BASE_URL}/${itemId}/reviews`;
 
-    const response = await axiosClient.get<GetSearchReviewListResponse>(url, {
+    return await httpClient.get<GetSearchReviewListResponse>(url, {
       params,
     });
-
-    return response.data;
   },
 
   getReviewItem: async ({ itemId, reviewId }: GetReviewItemRequest) => {
     const url = `${BASE_URL}/${itemId}/reviews/${reviewId}`;
 
-    const response = await axiosClient.get<GetReviewItemResponse>(url);
-
-    return response.data;
+    return await httpClient.get<GetReviewItemResponse>(url);
   },
 
   postReviewItem: async ({ itemId, content, rating }: PostReviewItemRequest) => {
     const url = `${BASE_URL}/${itemId}/reviews`;
+    const body = { content, rating };
 
-    const response = await axiosClient.post<EditReviewItemResponse>(url, { content, rating });
-
-    return response.data;
+    return await httpClient.post<EditReviewItemResponse, typeof body>(url, { ...body });
   },
 
   putEditReviewItem: async ({ itemId, reviewId, content, rating }: PutEditReviewItemRequest) => {
     const url = `${BASE_URL}/${itemId}/reviews/${reviewId}`;
+    const body = { content, rating };
 
-    const response = await axiosClient.put<EditReviewItemResponse>(url, { content, rating });
-
-    return response.data;
+    return await httpClient.put<EditReviewItemResponse, typeof body>(url, { ...body });
   },
 
   deleteReviewItem: async ({ itemId, reviewId }: DeleteReviewItemRequest) => {
     const url = `${BASE_URL}/${itemId}/reviews/${reviewId}`;
 
-    return await axiosClient.delete<null>(url);
+    return await httpClient.delete<null>(url);
   },
 };
 
