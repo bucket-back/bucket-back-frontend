@@ -25,7 +25,7 @@ export default class axiosClient {
     return response.data;
   }
 
-  public async put<T, P>(url: string, body?: P, config?: AxiosRequestConfig) {
+  public async put<T, P = null>(url: string, body?: P, config?: AxiosRequestConfig) {
     const response = await this.http.put<T>(url, body, config);
 
     return response.data;
